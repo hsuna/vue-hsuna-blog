@@ -8,8 +8,6 @@
 export default {
   name: "App"
 };
-
-//https://www.jianshu.com/p/92fa50ea0b84
 </script>
 
 <style lang="scss">

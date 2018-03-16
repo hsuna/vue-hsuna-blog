@@ -2,8 +2,12 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from "vue";
 import App from "./App";
-import router from "./router";
-import store from "./store";
+import Router from "./router";
+import Store from "./store";
+
+/* 添加axios拦截器 */
+import Axios from './axios';
+Vue.prototype.$http = Axios;
 
 Vue.config.productionTip = false;
 
@@ -15,8 +19,8 @@ Vue.use(Element);
 /* eslint-disable no-new */
 new Vue({
   el: "#app",
-  router,
-  store,
+  Router,
+  Store,
   components: {
     App
   },
