@@ -1,14 +1,28 @@
+/* jshint esversion: 6 */
+/*
+ * @Description axios拦截器自定义
+ * @Author: Hsuan 
+ * @Date: 2018-03-17 10:09:18 
+ * @Last Modified by: Hsuan
+ * @Last Modified time: 2018-03-17 10:15:38
+ */
+
 import Axios from "axios";
 import qs from "qs";
 
-Axios.defaults.baseURL = "https://api.example.com";
-Axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
-Axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+Axios.defaults.timeout = 600000000;
+Axios.defaults.withCredentials = true;
+Axios.header = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
 
 //添加请求拦截器
 Axios.interceptors.request.use(
   cfg => {
     //在发送请求之前做某事
+    if (cfg.method === "post") {
+      cfg.data = qs.stringify(cfg.data);
+    }
     return cfg;
   },
   err => {
@@ -38,3 +52,5 @@ Axios.interceptors.response.use(
     return Promise.reject(err.response.data);
   }
 );
+
+export default Axios;
