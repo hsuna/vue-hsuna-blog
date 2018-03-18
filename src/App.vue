@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" style="height: 100%;">
     <router-view />
   </div>
 </template>
@@ -11,8 +11,7 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  height: 100%;
-}
+@import "assets/styles/reset.scss";
+@import "assets/styles/hsuna.scss";
 </style>
 

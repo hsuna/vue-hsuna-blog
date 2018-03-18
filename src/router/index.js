@@ -1,10 +1,10 @@
 /* jshint esversion: 6 */
 /*
- * @Description 
- * @Author: Hsuan 
- * @Date: 2018-03-17 10:13:19 
- * @Last Modified by: Hsuan 
- * @Last Modified time: 2018-03-17 10:13:19 
+ * @Description
+ * @Author: Hsuan
+ * @Date: 2018-03-17 10:13:19
+ * @Last Modified by: Hsuna
+ * @Last Modified time: 2018-03-18 09:25:55
  */
 
 import Vue from "vue";

@@ -1,10 +1,10 @@
 /* jshint esversion: 6 */
 /*
  * @Description 主入口
- * @Author: Hsuan 
- * @Date: 2018-03-17 10:15:47 
- * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-17 10:16:09
+ * @Author: Hsuan
+ * @Date: 2018-03-17 10:15:47
+ * @Last Modified by: Hsuna
+ * @Last Modified time: 2018-03-18 20:20:42
  */
 
 // The Vue build version to load with the `import` command
@@ -12,14 +12,8 @@
 import Vue from "vue";
 import App from "./App";
 
-/**添加-vue路由器 */
-import Router from "./router";
-
-/**添加- */
-import Store from "./store";
-
 /* 添加-axios拦截器 */
-import Axios from './axios';
+import Axios from "./axios";
 Vue.prototype.$http = Axios;
 
 /**注册-全局mixin */
@@ -35,16 +29,21 @@ Object.keys(Filters).forEach(key => {
 
 /* 引用-element-ui */
 import Element from "element-ui";
-import "element-ui/lib/theme-chalk/index.css";
-Vue.use(Element);
+import "assets/styles/element-variables.scss";
+Vue.use(Element, { size: "small" });
 
 Vue.config.productionTip = false;
+
+/**添加-vue路由器 */
+import router from "./router";
+/**添加-store */
+import store from "./store";
 
 /* eslint-disable no-new */
 new Vue({
   el: "#app",
-  Router,
-  Store,
+  router,
+  store,
   components: {
     App
   },
