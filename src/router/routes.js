@@ -4,7 +4,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:14:33
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-18 17:29:20
+ * @Last Modified time: 2018-03-19 23:46:40
  */
 
 export default [
@@ -46,8 +46,8 @@ export default [
         hidden: true
       },
       {
-        path: "classList",
-        component: resolve => require(["views/article/ClassList.vue"], resolve),
+        path: "categoryList",
+        component: resolve => require(["views/article/CategoryList.vue"], resolve),
         name: "分类管理"
       }
     ]

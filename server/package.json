@@ -1,0 +1,18 @@
+{
+  "name": "server-hsuna-blog",
+  "version": "1.0.0",
+  "description": "Hsuna'Blog Server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hsuna",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "expresss": "0.0.0",
+    "jsonwebtoken": "^8.2.0",
+    "mongoose": "^5.0.10",
+    "morgan": "^1.9.0"
+  }
+}
