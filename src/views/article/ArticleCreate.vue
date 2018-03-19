@@ -46,9 +46,9 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row style="margin-top: 30px;">
-              <el-col :span="21" :push="3">
-                <el-form-item>
+            <el-row style="margin-top: 20px;">
+              <el-col :span="21" :push="1">
+                <el-form-item label-width="100px">
                   <el-button type="primary" :loading="load">立即发布</el-button>
                   <el-button type="primary" :loading="load">暂存草稿</el-button>
                   <el-button :loading="load">取消</el-button>
