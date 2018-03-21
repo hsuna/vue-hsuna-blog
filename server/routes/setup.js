@@ -21,4 +21,4 @@ router.get("/", (req, res) => {
   }); //加入数据库，并判断是否成功
 });
 
-module.exports = router; //导出路由
+export default router;

@@ -4,13 +4,17 @@
   "description": "Hsuna'Blog Server",
   "main": "app.js",
   "scripts": {
+    "dev": "node start.js",
+    "start": "NODE_ENV=production node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Hsuna",
   "license": "ISC",
   "dependencies": {
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
     "body-parser": "^1.18.2",
-    "expresss": "0.0.0",
+    "express": "^4.16.3",
     "jsonwebtoken": "^8.2.0",
     "mongoose": "^5.0.10",
     "morgan": "^1.9.0"

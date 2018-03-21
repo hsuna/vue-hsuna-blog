@@ -35,7 +35,7 @@ const removeClassify = id => {
   return Classify.remove({ _id: id }).exec();
 };
 
-export default {
+export {
   getAllClassify,
   createClassify,
   updateClassify,
