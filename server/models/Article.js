@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 module.exports = mongoose.model(
-  "Blog",
+  "Article",
   new Schema({
     title: String,
     body: String,

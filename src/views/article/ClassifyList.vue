@@ -42,17 +42,10 @@ export default {
   data() {
     return {
       dialogFormVisible: false,
-
-listLoading:false,
-
-
+      listLoading: false,
       breadcrumbs: [{ text: "首页", path: "/admin" }, { text: "分类管理" }],
       classList: [],
-
-
-      form:{
-
-      }
+      form: {}
     };
   },
   components: {
