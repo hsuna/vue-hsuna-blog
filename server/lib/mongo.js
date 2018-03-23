@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import config from "../config"; //读取配置文件config.js信息
 
 const mongo = app => {
+  mongoose.Promise = Promise;
+  
   const db = mongoose.createConnection(config.DATABASE); // 连接数据库
 
   /** 连接成功 */

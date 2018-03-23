@@ -16,4 +16,7 @@ const createUser = user => {
   return User.create(user).exec();
 };
 
-export { getUserByName, createUser };
+export default {
+  getUserByName, 
+  createUser 
+};

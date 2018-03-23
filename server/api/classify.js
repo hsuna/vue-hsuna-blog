@@ -4,10 +4,10 @@ import { Classify } from "../models";
  * 查看所有分类
  */
 const getAllClassify = () => {
-  return Classify.find()
-    .addCreateAt()
-    .sort({ _id: -1 })
-    .exec();
+  return Classify.find();
+    // .addCreateAt()
+    // .sort({ _id: -1 })
+    // .exec();
 };
 
 /**
@@ -15,7 +15,7 @@ const getAllClassify = () => {
  * @param {object} classify
  */
 const createClassify = classify => {
-  return Classify.create(classify).exec();
+  return Classify.create(classify);
 };
 
 /**
@@ -35,4 +35,9 @@ const removeClassify = id => {
   return Classify.remove({ _id: id }).exec();
 };
 
-export { getAllClassify, createClassify, updateClassify, removeClassify };
+export default { 
+  getAllClassify, 
+  createClassify, 
+  updateClassify, 
+  removeClassify 
+};

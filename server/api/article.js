@@ -61,7 +61,7 @@ const removeArticle = id => {
   return Article.remove({ _id: id }).exec();
 };
 
-export {
+export default {
   getAllArticles,
   getArticlesByClassify,
   createArticle,

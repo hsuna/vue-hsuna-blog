@@ -7,7 +7,7 @@ const router = express.Router();
  * 获取所有文章
  */
 router.get("/all", (req, res) => {
-  let { page, limit } = req.body;
+  let { page, limit } = req.query;
   api
     .getAllArticles(page, limit)
     .then(result => {

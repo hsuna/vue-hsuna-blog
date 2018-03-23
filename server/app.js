@@ -9,7 +9,8 @@ const { PORT } = mongo(app);
 //use-routes
 import Routes from "./routes";
 Object.keys(Routes).forEach(key => {
-  app.use('/api', Routes[key]);
+  //console.log(key);
+  app.use('/api/'+key, Routes[key]);
 });
 
 //用body parser 来解析post和url信息中的参数

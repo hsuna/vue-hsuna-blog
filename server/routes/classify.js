@@ -9,10 +9,10 @@ const router = express.Router();
 router.get("/all", (req, res) => {
   api
     .getAllClassify()
-    .then(result => {
+    .then(reply => {
       res.send({
         code: 200,
-        data: result
+        data: reply
       });
     })
     .catch(err => {
@@ -33,7 +33,7 @@ router.post("/", (req, res) => {
     .then(result => {
       res.send({
         code: 200,
-        message: "添加分类成功"
+        message: "添加分类成功",
       });
     })
     .catch(err => {
