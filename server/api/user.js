@@ -1,4 +1,4 @@
-import User from "../modules/User";
+import { User } from "../models";
 
 /**
  * 通过用户名获取用户信息
@@ -16,7 +16,4 @@ const createUser = user => {
   return User.create(user).exec();
 };
 
-export {
-  getUserByName,
-  createUser
-};
+export { getUserByName, createUser };

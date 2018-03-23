@@ -1,4 +1,4 @@
-import Classify from "../modules/Classify";
+import { Classify } from "../models";
 
 /**
  * 查看所有分类
@@ -35,9 +35,4 @@ const removeClassify = id => {
   return Classify.remove({ _id: id }).exec();
 };
 
-export {
-  getAllClassify,
-  createClassify,
-  updateClassify,
-  removeClassify
-};
+export { getAllClassify, createClassify, updateClassify, removeClassify };

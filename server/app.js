@@ -1,15 +1,15 @@
 import express from "express";
 import bodyParser from "body-parser";
 import morgan from "morgan";
-import mongoose from "./lib/mongo";
+import mongo from "./lib/mongo";
 
-const { port } = mongoose(app);
 const app = express();
+const { PORT } = mongo(app);
 
 //use-routes
-import * as Routes from "./routes";
-Object.keys(Routes).forEach(url => {
-  app.use(url, Routes[url]);
+import Routes from "./routes";
+Object.keys(Routes).forEach(key => {
+  app.use('/api', Routes[key]);
 });
 
 //用body parser 来解析post和url信息中的参数
@@ -30,5 +30,5 @@ app.get("/", (req, res) => {
 });
 
 // 启动服务
-app.listen(port);
-console.log("Magic happens at http://localhost:" + port);
+app.listen(PORT);
+console.log("Magic happens at http://localhost:" + PORT);

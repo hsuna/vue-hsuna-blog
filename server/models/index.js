@@ -1,5 +1,5 @@
 import Article from "./Article";
-import Category from "./Category";
+import Classify from "./Classify";
 import User from "./User";
 
-export { Article, Category, User };
+export { Article, Classify, User };
