@@ -1,12 +1,12 @@
 <template>
-  <div class="container">
+  <div class="login-container">
     <el-form :model="user" :rules="rules" ref="user" label-position="left" label-width="0px" v-loading="loadingflag" element-loading-text="页面跳转中">
      <h3 class="title">欢迎登录后台管理系统</h3>
      <el-form-item prop="name">
        <el-input type="text" v-model="user.name" auto-complete="off" placeholder="账号"></el-input>
      </el-form-item>
-     <el-form-item prop="passwork">
-       <el-input type="password" v-model="user.passwork" auto-complete="off" placeholder="密码"></el-input>
+     <el-form-item prop="password">
+       <el-input type="password" v-model="user.password" auto-complete="off" placeholder="密码"></el-input>
      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="handleSubmit">登录</el-button>
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import $api from "api/admin";
+
 export default {
   data() {
     //自定义验证函数
@@ -26,24 +28,31 @@ export default {
 
       user: {
         name: "",
-        passwork: ""
+        password: ""
       },
       rules: {
         name: [{ required: true, message: "请输入账号", trigger: "blur" }],
-        passwork: [{ required: true, message: "请输入密码", trigger: "blur" }]
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
       }
     };
   },
   methods: {
-    handleSubmit(){
-
+    handleSubmit() {
+      this.$http.post($api.login, this.user).then(data => {
+        if (200 == data.code) {
+          this.$message({
+            message: data.message,
+            type: "success"
+          });
+        }
+      });
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.container {
+.login-container {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -53,5 +62,11 @@ export default {
   width: 400px;
   text-align: center;
   box-shadow: 0 0 1px #ccc;
+
+  .title {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-size: 24px;
+  }
 }
 </style>

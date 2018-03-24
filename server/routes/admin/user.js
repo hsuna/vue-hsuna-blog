@@ -33,7 +33,7 @@ router.get("/setup", (req, res) => {
     })
     .catch(err => {
       res.send({
-        code: 401,
+        code: -200,
         message: err.message || "管理员创建失败"
       });
     });
@@ -43,12 +43,15 @@ router.get("/setup", (req, res) => {
  * 登录用户
  */
 router.post("/login", (req, res) => {
-  let { name, password } = req.query;
+  let { name, password } = req.body;
   api
     .getUserByName(name)
     .then(model => {
       if (!model) {
-        return Promise.reject({ message: "认证失败，用户名找不到" });
+        res.send({
+          code: -200,
+          message: "登录失败，该用户不存在"
+        });
       }
       verifyHash(password, model.password)
         .then(() => {
@@ -59,13 +62,16 @@ router.post("/login", (req, res) => {
           });
         })
         .catch(err => {
-          return Promise.reject({ message: "认证失败，密码错误" });
+          res.send({
+            code: -200,
+            message: "登录失败，密码错误"
+          });
         });
     })
     .catch(err => {
       res.send({
-        code: 401,
-        message: err.message || "登录失败"
+        code: -200,
+        message: "登录失败"
       });
     });
 });

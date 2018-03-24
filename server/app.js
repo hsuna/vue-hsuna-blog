@@ -5,6 +5,14 @@ import mongo from "./lib/mongo";
 const app = express();
 const { PORT, API_HOST } = mongo(app);
 
+//用body parser 来解析post和url信息中的参数
+app.use(
+  bodyParser.urlencoded({
+    extended: false
+  })
+);
+app.use(bodyParser.json());
+
 //use-routes
 import Routes from "./routes";
 //基础路由
@@ -17,13 +25,6 @@ Object.keys(Routes).forEach(url => {
   app.use(API_HOST + url, Routes[url]);
 });
 
-//用body parser 来解析post和url信息中的参数
-app.use(
-  bodyParser.urlencoded({
-    extended: false
-  })
-);
-app.use(bodyParser.json());
 
 // 启动服务
 app.listen(PORT);
