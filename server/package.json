@@ -2,10 +2,10 @@
   "name": "server-hsuna-blog",
   "version": "1.0.0",
   "description": "Hsuna'Blog Server",
-  "main": "app.js",
+  "main": "start.js",
   "scripts": {
     "dev": "node start.js",
-    "start": "NODE_ENV=production node app.js",
+    "start": "NODE_ENV=production node v.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Hsuna",
@@ -13,6 +13,7 @@
   "dependencies": {
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.2.0",

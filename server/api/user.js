@@ -5,7 +5,7 @@ import { User } from "../models";
  * @param {string} name
  */
 const getUserByName = name => {
-  return User.findOne({ name }).exec();
+  return User.findOne({ name });
 };
 
 /**
@@ -13,10 +13,10 @@ const getUserByName = name => {
  * @param {object} user
  */
 const createUser = user => {
-  return User.create(user).exec();
+  return new User(user).save();
 };
 
 export default {
-  getUserByName, 
-  createUser 
+  getUserByName,
+  createUser
 };

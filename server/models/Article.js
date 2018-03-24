@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-module.exports = mongoose.model(
+const Article = mongoose.model(
   "Article",
   new Schema({
     title: String,
@@ -19,3 +19,5 @@ module.exports = mongoose.model(
     }
   })
 );
+
+export default Article;
