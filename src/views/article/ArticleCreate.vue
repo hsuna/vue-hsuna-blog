@@ -8,7 +8,7 @@
             <el-row>
               <el-col :span='10' :push="1">
                 <el-form-item label="文章标题：" label-width="100px" prop="title">
-                  <el-input v-model="article.title" placeholder="请在此处输入标题"></el-input>
+                  <el-input v-model="article.title" placeholder="请输入标题"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="10" :push="3" >
@@ -16,6 +16,13 @@
                   <el-select v-model="article.classify" placeholder="请选择分类">
                     <el-option v-for="(item,index) in classifyList" :label="item.classify" :value="item.classify" v-bind:key="index"></el-option>
                   </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+               <el-col :span='23' :push="1">
+                <el-form-item label="文章简介：" label-width="100px" prop="title">
+                  <el-input v-model="article.synopsis" placeholder="请输入简介"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -72,7 +79,7 @@ import hsunaHeader from "components/hsuna-header";
 export default {
   data() {
     return {
-      activeName: 'preview',
+      activeName: "preview",
 
       breadcrumbs: [
         { text: "首页", path: "/admin" },
@@ -80,15 +87,17 @@ export default {
         { text: "创建文章" }
       ],
       article: {
-        classify: "", //文章所属分类
         title: "", //文章标题
+        synopsis: "", //文章简介
+        classify: "", //文章所属分类
         content: "" //文章内容
       },
       classifyList: [],
       createRules: {
         title: [{ required: true, message: "请填写标题", trigger: "blur" }],
+        synopsis: [{ required: true, message: "请填写简介", trigger: "blur" }],
+        classify: [{ required: true, message: "请选择分类", trigger: "change" }],
         content: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        classify: [{ required: true, message: "请选择分类", trigger: "change" }]
       },
       load: false,
       btnText: "立即发布"
@@ -108,19 +117,17 @@ export default {
       return marked(this.article.content);
     }
   },
-  methods:{
-
-  }
+  methods: {}
 };
 </script>
 
 <style lang="scss" scoped>
-.article-tab-pane{
+.article-tab-pane {
   padding: 15px;
   border: 1px solid #e4e7ed;
   border-top-width: 0;
 }
-.article-edit-area{
+.article-edit-area {
   overflow-y: auto;
   height: 520px;
   margin-left: 10px;

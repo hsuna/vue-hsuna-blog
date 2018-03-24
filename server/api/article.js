@@ -3,25 +3,20 @@ import { Article } from "../models";
 /**
  * 获取所有文章
  * @param {number} page
- * @param {number} limit
+ * @param {number} limit 默认10
  */
-const getAllArticles = (page, limit) => {
+const getAllArticles = (page, limit = 10) => {
   if (page && limit) {
-    var skip = (page - 1) * limit;
+    let skip = (page - 1) * limit;
     return Promise.all([
       Article.find()
-        .addCreateAt()
         .sort({ _id: -1 })
         .skip(skip)
-        .limit(limit)
-        .exec(),
-      Article.count().exec()
+        .limit(limit),
+      Article.count()
     ]);
   } else {
-    return Article.find()
-      .addCreateAt()
-      .sort({ _id: -1 })
-      .exec();
+    return Article.find().sort({ _id: -1 });
   }
 };
 

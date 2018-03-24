@@ -4,15 +4,15 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:13:19
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-18 09:25:55
+ * @Last Modified time: 2018-03-25 01:36:52
  */
 
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "store";
+import routes from "./routes";
 
 Vue.use(VueRouter);
-
-import routes from "./routes";
 const router = new VueRouter({
   mode: "history",
   routes
@@ -20,22 +20,17 @@ const router = new VueRouter({
 
 // 路由钩子
 if (process.env.NODE_ENV === "production") {
-  router.beforeEach((to, from, next) => {
-    // if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
-    //   let isLogined = window.localStorage.getItem('isLogined');
-    //   if (!isLogined || 'false' === isLogined) { //判断当前是否登录
-    //     next({
-    //       path: '/login',
-    //       query: {
-    //         redirect: to.fullPath
-    //       } // 将跳转的路由path作为参数，登录成功后跳转到该路由
-    //     });
-    //   } else {
-    //     next();
-    //   }
-    // } else {
+  router.beforeEach(({ meta, path }, from, next) => {
+    if (true === meta.auth) {
+      if (Boolean(store.state.token)) {
+        if (path == "/login" || path == "/reg") {
+          return next({ path: "/admin" });
+        }
+      } else if (path !== "/login") {
+        return next({ path: "/login" });
+      }
+    }
     next();
-    // }
   });
 }
 

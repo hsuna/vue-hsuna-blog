@@ -38,12 +38,14 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.$http.post($api.login, this.user).then(data => {
+      this.$http.post($api.postLogin, this.user).then(data => {
         if (200 == data.code) {
+          this.$store.dispatch("userLogin", data.token);
           this.$message({
             message: data.message,
             type: "success"
           });
+          this.$router.replace({ path: "/admin" });
         }
       });
     }

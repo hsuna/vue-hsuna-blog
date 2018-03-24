@@ -7,8 +7,8 @@ const Article = mongoose.model(
   new Schema({
     title: String,
     body: String,
-    antuor: String,
-    category: String,
+    classify: String,
+    synopsis: String,
     comment: [{ body: String, date: Date }],
     tags: [{ title: String }],
     date: { type: Date, default: Date.now },

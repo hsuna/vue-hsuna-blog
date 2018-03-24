@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="hsuna-table">
-        <el-table style='width:100%' align="center" :data="articleLists"  v-loading="listLoading" element-loading-text="拼命加载中">
+        <el-table style='width:100%' align="center" :data="articleList"  v-loading="listLoading" element-loading-text="拼命加载中">
           <el-table-column type='index' width="60" ></el-table-column>
           <el-table-column prop="title" min-width="180" label="文章标题" ></el-table-column>
           <el-table-column prop="classify" min-width="150" label="所属分类" ></el-table-column>
@@ -28,20 +28,39 @@
 
 <script>
 import hsunaHeader from "components/hsuna-header";
+import $api from "api/admin";
+
 export default {
   data() {
     return {
+      listLoading: false,
       breadcrumbs: [{ text: "首页", path: "/admin" }, { text: "文章管理" }],
       articleList: []
     };
   },
+  created() {
+    this.getArticleList(1);
+  },
+  methods: {
+    toEditArticle(articleId) {
+      this.$router.push({ path: `/admin/articleEdit/${articleId}` });
+    },
+    getArticleList(page) {
+      this.listLoading = true;
+      this.$http
+        .get($api.getArticleAll, {
+          param: {
+            page
+          }
+        })
+        .then(res => {
+          this.listLoading = false;
+          this.articleList = res.data;
+        });
+    }
+  },
   components: {
     "hsuna-header": hsunaHeader
-  },
-  methods:{
-    toEditArticle(articleId){
-      this.$router.push({path: `/admin/articleEdit/${articleId}`});
-    }
   }
 };
 </script>
