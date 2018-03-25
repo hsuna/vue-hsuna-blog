@@ -13,7 +13,8 @@
           <el-table-column prop="title" min-width="180" label="文章标题" ></el-table-column>
           <el-table-column prop="classify" min-width="150" label="所属分类" ></el-table-column>
           <el-table-column prop="created_at" min-width="200" label="创建时间" ></el-table-column>
-          <el-table-column min-width="180" label="操作" >
+          <el-table-column prop="created_at" min-width="200" label="更新时间" ></el-table-column>
+          <el-table-column min-width="100" label="操作" fixed="right">
             <template slot-scope="scope">
               <el-button @click="read(scope.row._id)">查看</el-button>
               <el-button type='primary' @click="toEditArticle(scope.row._id)">编辑</el-button>

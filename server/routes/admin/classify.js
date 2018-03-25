@@ -74,19 +74,19 @@ router.put("/", verifyRouteToken, (req, res) => {
  * @param {number} id
  */
 router.delete("/", verifyRouteToken, (req, res) => {
-  let { id } = req.body;
+  let { id } = req.query;
   api
     .removeClassify(id)
     .then(result => {
       res.send({
         code: 200,
-        message: "删除分类失败"
+        message: "删除分类成功"
       });
     })
     .catch(err => {
       res.send({
         code: -200,
-        message: "删除分类成功"
+        message: "删除分类失败"
       });
     });
 });

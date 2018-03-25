@@ -25,10 +25,7 @@ const getAllArticles = (page, limit = 10) => {
  * @param {string} classify
  */
 const getArticlesByClassify = classify => {
-  return Article.find({ classify })
-    .addCreateAt()
-    .sort({ _id: -1 })
-    .exec();
+  return Article.find({ classify });
 };
 
 /**
@@ -36,7 +33,7 @@ const getArticlesByClassify = classify => {
  * @param {object} article
  */
 const createArticle = article => {
-  return Article.create(article).exec();
+  return Article.create(article);
 };
 
 /**
@@ -45,7 +42,8 @@ const createArticle = article => {
  * @param {object} article
  */
 const updateArticle = (id, article) => {
-  return Article.update({ _id: id }, { $set: article }).exec();
+  article.updateAt = new Date;
+  return Article.update({ _id: id }, { $set: article });
 };
 
 /**
@@ -53,7 +51,7 @@ const updateArticle = (id, article) => {
  * @param {number} id
  */
 const removeArticle = id => {
-  return Article.remove({ _id: id }).exec();
+  return Article.remove({ _id: id });
 };
 
 export default {

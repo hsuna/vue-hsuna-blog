@@ -4,7 +4,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:17:16
  * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-19 12:46:44
+ * @Last Modified time: 2018-03-25 13:53:49
  */
 
 const WEEKDAY = {
@@ -15,8 +15,8 @@ const WEEKDAY = {
 /**
  * 时间格式化
  * @param {date} date 时间
- * @param {string} fmt 格式
- * @return {string} yy-mm-dd
+ * @param {string} fmt 默认: yyyy-MM-dd hh:mm:ss"
+ * @return {string}
  */
 const dateFormat = (date, fmt = "yyyy-MM-dd hh:mm:ss") => {
   if (!date) return "";
@@ -50,13 +50,16 @@ const dateFormat = (date, fmt = "yyyy-MM-dd hh:mm:ss") => {
 /**
  * 时间戳格式化
  * @param {number} timeStamp 时间戳
- * @param {string} fmt 格式
- * @return {string} yy-mm-dd
+ * @param {string} fmt 格式 默认: yyyy-MM-dd hh:mm:ss"
+ * @return {string}
  */
-const timeStampFormat = (timeStamp, fmt = "yyyy-MM-dd hh:mm:ss") => {
+const timeStampFormat = (timeStamp, fmt) => {
   if (!timeStamp) return "";
   let date = new Date(timeStamp);
-  return dateFormat(date);
+  return dateFormat(date, fmt);
 };
 
-export { dateFormat, timeStampFormat };
+export {
+  dateFormat,
+  timeStampFormat
+};

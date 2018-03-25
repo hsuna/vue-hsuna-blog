@@ -14,7 +14,7 @@
               <el-col :span="10" :push="3" >
                 <el-form-item label="所属分类：" label-width="100px" prop="classify">
                   <el-select v-model="article.classify" placeholder="请选择分类">
-                    <el-option v-for="(item,index) in classifyList" :label="item.classify" :value="item.classify" v-bind:key="index"></el-option>
+                    <el-option v-for="(item,index) in classifyList" :label="item.title" :value="item.title" v-bind:key="index"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -76,6 +76,8 @@ import "highlight.js/styles/atom-one-dark.css";
 
 import hsunaHeader from "components/hsuna-header";
 
+import $api from "api/admin";
+
 export default {
   data() {
     return {
@@ -96,16 +98,24 @@ export default {
       createRules: {
         title: [{ required: true, message: "请填写标题", trigger: "blur" }],
         synopsis: [{ required: true, message: "请填写简介", trigger: "blur" }],
-        classify: [{ required: true, message: "请选择分类", trigger: "change" }],
-        content: [{ required: true, message: "请输入内容", trigger: "blur" }],
+        classify: [
+          { required: true, message: "请选择分类", trigger: "change" }
+        ],
+        content: [{ required: true, message: "请输入内容", trigger: "blur" }]
       },
       load: false,
       btnText: "立即发布"
     };
   },
-  components: {
-    "hsuna-header": hsunaHeader
+  created() {
+    //获取分类列表
+    this.$http.get($api.getClassifyAll).then(res => {
+      if (200 == res.code) {
+        this.classifyList = res.data;
+      }
+    });
   },
+  methods: {},
   computed: {
     markedToHtml() {
       marked.setOptions({
@@ -117,7 +127,9 @@ export default {
       return marked(this.article.content);
     }
   },
-  methods: {}
+  components: {
+    "hsuna-header": hsunaHeader
+  }
 };
 </script>
 

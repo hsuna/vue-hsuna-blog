@@ -5,9 +5,6 @@ import { Classify } from "../models";
  */
 const getAllClassify = () => {
   return Classify.find();
-    // .addCreateAt()
-    // .sort({ _id: -1 })
-    // .exec();
 };
 
 /**
@@ -24,6 +21,7 @@ const createClassify = classify => {
  * @param {object} classify
  */
 const updateClassify = (id, classify) => {
+  classify.updateAt = new Date;
   return Classify.update({ _id: id }, { $set: classify }).exec();
 };
 
