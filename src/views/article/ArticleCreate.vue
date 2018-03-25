@@ -118,9 +118,9 @@ export default {
 </script>
 
 <style>
-@import "simplemde/dist/simplemde.min.css";
-@import "github-markdown-css";
-@import "highlight.js/styles/atom-one-dark.css";
+@import "~simplemde/dist/simplemde.min.css";
+@import "~github-markdown-css";
+@import "~highlight.js/styles/atom-one-dark.css";
 </style>
 
 <style lang="scss" scoped>

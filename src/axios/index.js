@@ -1,10 +1,9 @@
-/* jshint esversion: 6 */
 /*
  * @Description axios拦截器自定义
  * @Author: Hsuan
  * @Date: 2018-03-17 10:09:18
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-25 23:53:44
+ * @Last Modified time: 2018-03-26 01:48:48
  */
 
 import Axios from "axios";

@@ -102,25 +102,3 @@ html {
   clear: both;
   visibility: hidden;
 }
-
-/*** element-ui-reset ***/
-.el-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-.el-main {
-  padding: 0;
-}
-.el-input--small {
-  font-size: 14px;
-}
-.el-input__inner {
-  padding: 0 10px;
-}
-.el-textarea__inner {
-  padding: 8px 10px;
-}
-.el-tabs__header {
-  margin-bottom: 0;
-}
