@@ -20,6 +20,19 @@
               </el-col>
             </el-row>
             <el-row>
+               <el-col :span='10' :push="1">
+                <el-form-item label="文章标签：" label-width="100px" prop="tags">
+                  <el-select v-model="article.tags" placeholder="请添加标签" style="width:100%;" multiple filterable allow-create>
+                    <el-option v-for="(item,index) in tagList" :label="item.tag" :value="item.tag" v-bind:key="index"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span='10' :push="3">
+                <el-radio v-model="article.hidden" label="0">公开</el-radio>
+                <el-radio v-model="article.hidden" label="1">私有</el-radio>
+              </el-col>
+            </el-row>
+            <el-row>
                <el-col :span='23' :push="1">
                 <el-form-item label="文章简介：" label-width="100px" prop="title">
                   <el-input v-model="article.synopsis" placeholder="请输入简介"></el-input>
@@ -29,27 +42,7 @@
             <el-row>
               <el-col :span="23" :push="1">
                 <el-form-item label="文章内容：" label-width="100px" class="show" prop="content" >
-                  <el-tabs v-model="activeName" type="card">
-                    <el-tab-pane label="预览模式" name="preview"></el-tab-pane>
-                    <el-tab-pane label="编辑模式" name="edit"></el-tab-pane>
-                    <el-tab-pane label="查看语法" name="grammar"></el-tab-pane>
-                  </el-tabs>
-                  <el-row class="article-tab-pane">
-                    <!-- 编辑区 -->
-                    <el-col :span="'edit'==activeName ? 24 : 12 ">
-                      <el-input type="textarea" v-model="article.content" :rows="24" placeholder="请在此处编辑文章" resize="none"></el-input>
-                    </el-col>
-                    <!-- 展示区 -->
-                    <el-col :span="12" v-if="'preview' == activeName">
-                      <div v-html="markedToHtml" class="article-edit-area"></div>
-                    </el-col>
-                    <!-- 语法区 -->
-                    <el-col :span="12" v-if="'grammar' == activeName">
-                      <div style="padding: 0 10px;">
-                        [h1~h6] # ~ ######
-                      </div>
-                    </el-col>
-                  </el-row>
+                  <markdown-editor></markdown-editor>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -70,9 +63,7 @@
 </template>
 
 <script>
-import marked from "marked";
-import highlight from "highlight.js";
-import "highlight.js/styles/atom-one-dark.css";
+import markdownEditor from "vue-simplemde/src/markdown-editor";
 
 import hsunaHeader from "components/hsuna-header";
 
@@ -92,8 +83,11 @@ export default {
         title: "", //文章标题
         synopsis: "", //文章简介
         classify: "", //文章所属分类
-        content: "" //文章内容
+        content: "", //文章内容
+        tags: "", //文章标签
+        hidden: "0"
       },
+      tagList: [{ tag: "HTML" }, { tag: "CSS" }, { tag: "JavaScript" }],
       classifyList: [],
       createRules: {
         title: [{ required: true, message: "请填写标题", trigger: "blur" }],
@@ -116,22 +110,18 @@ export default {
     });
   },
   methods: {},
-  computed: {
-    markedToHtml() {
-      marked.setOptions({
-        highlight: function(code) {
-          return highlight.highlightAuto(code).value;
-        }
-      });
-      // console.log(this.article.content);
-      return marked(this.article.content);
-    }
-  },
   components: {
-    "hsuna-header": hsunaHeader
+    "hsuna-header": hsunaHeader,
+    "markdown-editor": markdownEditor
   }
 };
 </script>
+
+<style>
+@import "simplemde/dist/simplemde.min.css";
+@import "github-markdown-css";
+@import "highlight.js/styles/atom-one-dark.css";
+</style>
 
 <style lang="scss" scoped>
 .article-tab-pane {

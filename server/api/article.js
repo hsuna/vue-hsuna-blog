@@ -42,7 +42,7 @@ const createArticle = article => {
  * @param {object} article
  */
 const updateArticle = (id, article) => {
-  article.updateAt = new Date;
+  article.updateAt = Date.now();
   return Article.update({ _id: id }, { $set: article });
 };
 

@@ -24,8 +24,8 @@
     </div>
 
     <el-dialog :title="-1 == dialogData.id ? '添加分类' : '修改分类'" :visible.sync="dialogVisible">
-      <el-form :model="dialogData">
-        <el-form-item label="分类名称：" label-width="100px">
+      <el-form :model="dialogData" :rules="dialogRules" ref="dialog">
+        <el-form-item label="分类名称：" label-width="100px" prop="title">
           <el-input v-model="dialogData.title" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
@@ -50,6 +50,9 @@ export default {
       classList: [],
       dialogData: {
         id: -1
+      },
+      dialogRules: {
+        title: [{ required: true, message: "请输入名称", trigger: "blur" }]
       }
     };
   },
@@ -75,33 +78,37 @@ export default {
         });
     },
     handleUpdateClassify() {
-      let { id, title } = this.dialogData;
-      if (-1 == this.dialogData.id) {
-        //创建分类
-        this.$http.post($api.postClassify, { title }).then(res => {
-          if (200 == res.code) {
-            this.dialogVisible = false;
-            this.$message({
-              message: res.message,
-              type: "success"
+      this.$refs.dialog.validate(valid => {
+        if (valid) {
+          let { id, title } = this.dialogData;
+          if (-1 == this.dialogData.id) {
+            //创建分类
+            this.$http.post($api.postClassify, { title }).then(res => {
+              if (200 == res.code) {
+                this.dialogVisible = false;
+                this.$message({
+                  message: res.message,
+                  type: "success"
+                });
+                this.getClassifyList();
+              }
             });
-            this.getClassifyList();
-          }
-        });
-      } else {
-        //修改分类
+          } else {
+            //修改分类
 
-        this.$http.put($api.putClassify, { id, title }).then(res => {
-          if (200 == res.code) {
-            this.dialogVisible = false;
-            this.$message({
-              message: res.message,
-              type: "success"
+            this.$http.put($api.putClassify, { id, title }).then(res => {
+              if (200 == res.code) {
+                this.dialogVisible = false;
+                this.$message({
+                  message: res.message,
+                  type: "success"
+                });
+                this.getClassifyList();
+              }
             });
-            this.getClassifyList();
           }
-        });
-      }
+        }
+      });
     },
     handleRemoveClassify(id) {
       this.$confirm("确认删除该分类？")

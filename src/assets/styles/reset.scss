@@ -1,30 +1,5 @@
 /*** CSS初始化 ***/
-body,
-div,
-dl,
-dt,
-dd,
-ul,
-ol,
-li,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-pre,
-code,
-form,
-fieldset,
-legend,
-input,
-button,
-textarea,
-p,
-blockquote,
-th,
-td {
+* {
   margin: 0;
   padding: 0;
 }
@@ -137,15 +112,15 @@ html {
 .el-main {
   padding: 0;
 }
-.el-input--small{
+.el-input--small {
   font-size: 14px;
 }
-.el-input__inner{
+.el-input__inner {
   padding: 0 10px;
 }
-.el-textarea__inner{
+.el-textarea__inner {
   padding: 8px 10px;
 }
-.el-tabs__header{
+.el-tabs__header {
   margin-bottom: 0;
 }

@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.2.2",
+    "github-markdown-css": "^2.10.0",
     "highlight.js": "^9.12.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
@@ -61,6 +62,7 @@
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
     "vue-loader": "^13.3.0",
+    "vue-simplemde": "^0.4.6",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",

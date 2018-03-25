@@ -21,8 +21,8 @@ const createClassify = classify => {
  * @param {object} classify
  */
 const updateClassify = (id, classify) => {
-  classify.updateAt = new Date;
-  return Classify.update({ _id: id }, { $set: classify }).exec();
+  classify.updateAt = Date.now();
+  return Classify.update({ _id: id }, { $set: classify });
 };
 
 /**
@@ -30,12 +30,12 @@ const updateClassify = (id, classify) => {
  * @param {number} id
  */
 const removeClassify = id => {
-  return Classify.remove({ _id: id }).exec();
+  return Classify.remove({ _id: id });
 };
 
-export default { 
-  getAllClassify, 
-  createClassify, 
-  updateClassify, 
-  removeClassify 
+export default {
+  getAllClassify,
+  createClassify,
+  updateClassify,
+  removeClassify
 };

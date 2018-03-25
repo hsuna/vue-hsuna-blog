@@ -30,6 +30,14 @@ router.get("/all", verifyRouteToken, (req, res) => {
  * @param {string} title
  */
 router.post("/", verifyRouteToken, (req, res) => {
+  let { title } = req.body;
+  if (!title || "" == title) {
+    res.send({
+      code: -200,
+      message: "分类名称为空"
+    });
+    return;
+  }
   api
     .createClassify(req.body)
     .then(result => {
@@ -39,9 +47,13 @@ router.post("/", verifyRouteToken, (req, res) => {
       });
     })
     .catch(err => {
+      let message = "添加分类失败";
+      if (11000 == err.code) {
+        message = "分类名称已存在";
+      }
       res.send({
         code: -200,
-        message: "添加分类失败"
+        message
       });
     });
 });
@@ -52,7 +64,14 @@ router.post("/", verifyRouteToken, (req, res) => {
  * @param {string} title
  */
 router.put("/", verifyRouteToken, (req, res) => {
-  let { id } = req.body;
+  let { id, title } = req.body;
+  if (!title || "" == title) {
+    res.send({
+      code: -200,
+      message: "分类名称为空"
+    });
+    return;
+  }
   api
     .updateClassify(id, req.body)
     .then(result => {
@@ -62,9 +81,13 @@ router.put("/", verifyRouteToken, (req, res) => {
       });
     })
     .catch(err => {
+      let message = "更新分类失败";
+      if (11000 == err.code) {
+        message = "分类名称已存在";
+      }
       res.send({
         code: -200,
-        message: "更新分类失败"
+        message
       });
     });
 });

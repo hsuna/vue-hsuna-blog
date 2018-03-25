@@ -38,14 +38,25 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.$http.post($api.postLogin, this.user).then(data => {
-        if (200 == data.code) {
-          this.$store.dispatch("userLogin", data.token);
-          this.$message({
-            message: data.message,
-            type: "success"
+      this.loadingflag = true;
+      this.$refs.user.validate(valid => {
+        if (valid) {
+          this.$http.post($api.postLogin, this.user).then(data => {
+            this.loadingflag = false;
+            if (200 == data.code) {
+              this.$store.dispatch("userLogin", {
+                token: data.token,
+                name: this.user.name
+              });
+              this.$message({
+                message: data.message,
+                type: "success"
+              });
+              this.$router.replace({ path: "/admin" });
+            }
           });
-          this.$router.replace({ path: "/admin" });
+        } else {
+          this.loadingflag = false;
         }
       });
     }

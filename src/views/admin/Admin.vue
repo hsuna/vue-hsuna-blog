@@ -3,12 +3,12 @@
     <div class="header">
       <div class="header-logo">HSUNA</div>
       <div class="header-option">
-        <span>{{adminName}}</span>
-        <el-dropdown>
+        <span class="user-name">欢迎回来，{{adminName}}</span>
+        <el-dropdown @command="handleDropdown">
           <i class="el-icon-setting"></i>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>返回首页</el-dropdown-item>
-            <el-dropdown-item>退出登录</el-dropdown-item>
+            <el-dropdown-item command="admin">返回首页</el-dropdown-item>
+            <el-dropdown-item command="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -35,12 +35,31 @@
 export default {
   data() {
     return {
-      adminName: 'Hsuan'
+      adminName: this.$store.state.user.name
     };
   },
   methods: {
     handleMenu(path) {
       this.$router.push({ path });
+    },
+    handleDropdown(command) {
+      switch (command) {
+        case "admin":
+          this.$router.push({ path: "/admin" });
+          break;
+        case "logout":
+          this.$confirm("是否退出登录？")
+            .then(res => {
+              this.$store.dispatch("userLogout");
+              this.$message({
+                message: "退出登录成功!",
+                type: "success"
+              });
+              this.$router.replace({ path: "/login" });
+            })
+            .catch(err => {});
+          break;
+      }
     }
   }
 };
