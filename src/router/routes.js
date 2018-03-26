@@ -2,8 +2,8 @@
  * @Description
  * @Author: Hsuan
  * @Date: 2018-03-17 10:14:33
- * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-26 17:58:00
+ * @Last Modified by: Hsuna
+ * @Last Modified time: 2018-03-26 22:33:18
  */
 
 export default [
@@ -67,7 +67,7 @@ export default [
       },
       {
         path: "articleCreate",
-        component: resolve => require(["admin/article/ArticleEdit.vue"], resolve),
+        component: resolve => require(["admin/article/ArticleCreate.vue"], resolve),
         meta: {
           auth: true
         },

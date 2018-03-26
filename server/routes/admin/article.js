@@ -6,36 +6,18 @@ import { verifyRouteToken } from "../../utils/token";
 const router = express.Router();
 
 /**
- * 获取所有文章
- */
-router.get("/all", verifyRouteToken, (req, res) => {
-  let { page, limit } = req.query;
-  api
-    .getAllArticles(page, limit)
-    .then(result => {
-      res.send({
-        code: 200,
-        data: result
-      });
-    })
-    .catch(err => {
-      res.send({
-        code: -200,
-        message: "获取文章失败"
-      });
-    });
-});
-
-/**
  * 查找文章
  */
 router.get("/", verifyRouteToken, (req, res) => {
   api
-    .getArticles(req.body)
+    .getArticles(req.query)
     .then(result => {
       res.send({
         code: 200,
-        data: result
+        data: {
+          list: result[0],
+          total: result[1] || result[0].length
+        }
       });
     })
     .catch(err => {
@@ -51,14 +33,14 @@ router.get("/", verifyRouteToken, (req, res) => {
  */
 router.post("/", verifyRouteToken, (req, res) => {
   api
-  .createArticle(req.body)
-  .then(result => {
-      if(1 == result._doc.isDraft || 0 == result._doc.isPublic){
+    .createArticle(req.body)
+    .then(result => {
+      if (1 == result._doc.isDraft || 0 == result._doc.isPublic) {
         res.send({
           code: 200,
           message: "文章保存成功"
         });
-      }else{
+      } else {
         res.send({
           code: 200,
           message: "文章发布成功"

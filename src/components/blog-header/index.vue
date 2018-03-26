@@ -67,7 +67,7 @@ export default {
   methods: {
     getClassifyList() {
       this.$http
-        .get($api.getClassifyAll)
+        .get($api.getClassify)
         .then(res => {
           if (200 == res.code) {
             this.classifyList = res.data;

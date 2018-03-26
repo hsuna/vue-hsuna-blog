@@ -2,8 +2,8 @@
  * @Description: Hsuna
  * @Author: Hsuna
  * @Date: 2018-03-26 01:49:00
- * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-26 14:36:58
+ * @Last Modified by: Hsuna
+ * @Last Modified time: 2018-03-27 01:06:25
  */
 
 import express from "express";
@@ -14,15 +14,18 @@ import { verifyRouteToken } from "../../utils/token";
 const router = express.Router();
 
 /**
- * 查看所有分类
+ * 查找分类
  */
-router.get("/all", verifyRouteToken, (req, res) => {
+router.get("/", verifyRouteToken, (req, res) => {
   api
-    .getAllClassify()
+    .getClassify()
     .then(result => {
       res.send({
         code: 200,
-        data: result
+        data: {
+          list: result[0],
+          total: result[1] || result[0].length
+        }
       });
     })
     .catch(err => {

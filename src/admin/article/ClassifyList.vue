@@ -66,7 +66,7 @@ export default {
     getClassifyList() {
       this.listLoading = true;
       this.$http
-        .get($api.getClassifyAll)
+        .get($api.getClassify)
         .then(res => {
           if (200 == res.code) {
             this.classList = res.data;

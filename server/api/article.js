@@ -2,38 +2,33 @@
  * @Description: Hsuna
  * @Author: Hsuna
  * @Date: 2018-03-26 01:48:53
- * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-26 18:35:28
+ * @Last Modified by: Hsuna
+ * @Last Modified time: 2018-03-27 01:09:21
  */
 
 import { Article } from "../models";
 
 /**
- * 获取所有文章
- * @param {number} page
- * @param {number} limit 默认10
+ * 查找文章
+ * @param {object} query
  */
-const getAllArticles = (page, limit = 10) => {
-  if (page && limit) {
+const getArticles = query => {
+  let { id, page = -1, limit = 10 } = query;
+  let promiseList = [];
+  if (id) {
+    promiseList = [Article.find({ _id: id })];
+  } else if (-1 == page) {
+    promiseList = [Article.find(query)];
+  } else {
     let skip = (page - 1) * limit;
-    return Promise.all([
+    promiseList = [
       Article.find()
-        .sort({ _id: -1 })
         .skip(skip)
         .limit(limit),
-      Article.count()
-    ]);
-  } else {
-    return Article.find().sort({ _id: -1 });
+      Article.find().count()
+    ];
   }
-};
-
-/**
- * 查找获取文章
- * @param {object} data
- */
-const getArticles = data => {
-  return Article.find(data.id?{ _id: data.id }:data);
+  return Promise.all(promiseList);
 };
 
 /**
@@ -63,7 +58,6 @@ const removeArticle = id => {
 };
 
 export default {
-  getAllArticles,
   getArticles,
   createArticle,
   updateArticle,

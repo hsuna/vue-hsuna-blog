@@ -3,20 +3,17 @@ import api from "../api/classify";
 
 const router = express.Router();
 
-
 /**
  * 查看所有分类
  */
-router.get("/all", (req, res) => {
+router.get("/", (req, res) => {
   api
     .getAllClassify()
     .then(result => {
       res.send({
         code: 200,
-        data: result.map(({
-          title
-        }) => title)
-      })
+        data: result.map(({ title }) => title)
+      });
     })
     .catch(err => {
       res.send({

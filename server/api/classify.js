@@ -1,10 +1,24 @@
 import { Classify } from "../models";
 
 /**
- * 查看所有分类
+ * 查找分类
+ * @param {number} page -1表示返回全部
+ * @param {number} limit 默认10
  */
-const getAllClassify = () => {
-  return Classify.find();
+const getClassify = (page = -1, limit = 10) => {
+  let promiseList;
+  if (-1 == page) {
+    promiseList = [Classify.find()];
+  } else {
+    let skip = (page - 1) * limit;
+    promiseList = [
+      Classify.find()
+        .skip(skip)
+        .limit(limit),
+      Classify.count()
+    ];
+  }
+  return Promise.all(promiseList);
 };
 
 /**
@@ -34,7 +48,7 @@ const removeClassify = id => {
 };
 
 export default {
-  getAllClassify,
+  getClassify,
   createClassify,
   updateClassify,
   removeClassify
