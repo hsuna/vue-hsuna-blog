@@ -3,7 +3,7 @@
  * @Author: Hsuan 
  * @Date: 2018-03-25 12:04:21 
  * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-25 13:38:41
+ * @Last Modified time: 2018-03-26 18:39:59
  */
 import mongoose from "mongoose";
 
@@ -17,10 +17,12 @@ const Article = mongoose.model(
     content: { type: String },  //内容 
     about: { type: String },  //简介
     //comment: [{ body: String, date: Date }],
-    tags: [{ title: String }], //标签
+    tags: { type: Array }, //标签
     createdAt: { type: Number, default: Date.now }, //创建时间
+    publishAt: { type: Number, default: Date.now }, //发布时间
     updateAt: { type: Number, default: Date.now }, //更新时间
-    hidden: { type: Boolean },  //
+    isPublic: { type: Number, default: 0 },  //是否发布
+    isDraft: { type: Number, default: 1 }  //是否草稿
   })
 );
 

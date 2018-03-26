@@ -42,6 +42,7 @@ module.exports = {
       assets: resolve("src/assets"),
       components: resolve("src/components"),
       store: resolve("src/store"),
+      admin: resolve("src/admin"),
       views: resolve("src/views")
     }
   },

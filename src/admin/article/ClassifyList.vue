@@ -11,9 +11,9 @@
         <el-table style='width:100%' align="center" :data="classList"  v-loading="listLoading" element-loading-text="拼命加载中">
           <el-table-column type='index' width="60" ></el-table-column>
           <el-table-column prop="title" min-width="150" label="分类名称" ></el-table-column>
-          <el-table-column prop="createdAt" min-width="200" label="创建时间" :formatter="row => $filter.timeStampFormat(row.createdAt)"></el-table-column>
-          <el-table-column prop="updateAt" min-width="200" label="更新时间" :formatter="row => $filter.timeStampFormat(row.updateAt)"></el-table-column>
-          <el-table-column min-width="100" label="操作" fixed="right">
+          <el-table-column prop="createdAt" min-width="200" label="创建时间" :formatter="row => $filter.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
+          <el-table-column prop="updateAt" min-width="200" label="更新时间" :formatter="row => $filter.timeStampFormat(row.updateAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
+          <el-table-column min-width="150" label="操作" fixed="right" align="center">
             <template slot-scope='scope'>
               <el-button type='primary' @click="showClassifyDialg({id:scope.row._id, title:scope.row.title})">编辑</el-button>
               <el-button type='danger' @click="handleRemoveClassify(scope.row._id)">删除</el-button>

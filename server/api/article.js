@@ -2,8 +2,8 @@
  * @Description: Hsuna
  * @Author: Hsuna
  * @Date: 2018-03-26 01:48:53
- * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-26 01:48:53
+ * @Last Modified by: Hsuan
+ * @Last Modified time: 2018-03-26 18:35:28
  */
 
 import { Article } from "../models";
@@ -29,11 +29,11 @@ const getAllArticles = (page, limit = 10) => {
 };
 
 /**
- * 通过分类获取文章
- * @param {string} classify
+ * 查找获取文章
+ * @param {object} data
  */
-const getArticlesByClassify = classify => {
-  return Article.find({ classify });
+const getArticles = data => {
+  return Article.find(data.id?{ _id: data.id }:data);
 };
 
 /**
@@ -64,7 +64,7 @@ const removeArticle = id => {
 
 export default {
   getAllArticles,
-  getArticlesByClassify,
+  getArticles,
   createArticle,
   updateArticle,
   removeArticle

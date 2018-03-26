@@ -2,8 +2,8 @@
  * @Description: Hsuna
  * @Author: Hsuna
  * @Date: 2018-03-26 01:49:00
- * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-26 01:49:00
+ * @Last Modified by: Hsuan
+ * @Last Modified time: 2018-03-26 14:36:58
  */
 
 import express from "express";
@@ -19,10 +19,10 @@ const router = express.Router();
 router.get("/all", verifyRouteToken, (req, res) => {
   api
     .getAllClassify()
-    .then(reply => {
+    .then(result => {
       res.send({
         code: 200,
-        data: reply
+        data: result
       });
     })
     .catch(err => {

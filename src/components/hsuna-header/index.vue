@@ -43,7 +43,7 @@ export default {
 .el-icon-location{
   float: left;
   font-size: 20px;
-  color: #08A2BA;
+  color: #0084ff;
 
   &+.el-breadcrumb{
     padding-left: 25px;

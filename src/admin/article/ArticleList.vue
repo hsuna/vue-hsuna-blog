@@ -12,13 +12,13 @@
           <el-table-column type='index' width="60" ></el-table-column>
           <el-table-column prop="title" min-width="180" label="文章标题" ></el-table-column>
           <el-table-column prop="classify" min-width="150" label="所属分类" ></el-table-column>
-          <el-table-column prop="created_at" min-width="200" label="创建时间" ></el-table-column>
-          <el-table-column prop="created_at" min-width="200" label="更新时间" ></el-table-column>
-          <el-table-column min-width="100" label="操作" fixed="right">
+          <el-table-column prop="createdAt" min-width="200" label="创建时间" :formatter="row => $filter.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
+          <el-table-column prop="updateAt" min-width="200" label="更新时间" :formatter="row => $filter.timeStampFormat(row.updateAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
+          <el-table-column min-width="150" label="操作" fixed="right" align="center">
             <template slot-scope="scope">
               <el-button @click="read(scope.row._id)">查看</el-button>
               <el-button type='primary' @click="toEditArticle(scope.row._id)">编辑</el-button>
-              <el-button type='danger' @click="remove(scope.row._id)">删除</el-button>
+              <el-button type='danger' @click="handleRemoveArticle(scope.row._id)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -58,7 +58,24 @@ export default {
           this.listLoading = false;
           this.articleList = res.data;
         });
-    }
+    },
+    handleRemoveArticle(id) {
+      this.$confirm("确认删除该文章？")
+        .then(res => {
+          this.$http
+            .delete($api.deleteArticle, { params: { id } })
+            .then(res => {
+              if (200 == res.code) {
+                this.$message({
+                  message: res.message,
+                  type: "success"
+                });
+                this.getArticleList();
+              }
+            });
+        })
+        .catch(err => {});
+    },
   },
   components: {
     "hsuna-header": hsunaHeader

@@ -27,12 +27,11 @@ router.get("/all", verifyRouteToken, (req, res) => {
 });
 
 /**
- * 通过分类查找文章
+ * 查找文章
  */
-router.get("/classify", verifyRouteToken, (req, res) => {
-  let { classify } = req.body;
+router.get("/", verifyRouteToken, (req, res) => {
   api
-    .getArticlesByClassify(classify)
+    .getArticles(req.body)
     .then(result => {
       res.send({
         code: 200,
@@ -52,12 +51,19 @@ router.get("/classify", verifyRouteToken, (req, res) => {
  */
 router.post("/", verifyRouteToken, (req, res) => {
   api
-    .createArticle(req.body)
-    .then(result => {
-      res.send({
-        code: 200,
-        message: "文章发布成功"
-      });
+  .createArticle(req.body)
+  .then(result => {
+      if(1 == result._doc.isDraft || 0 == result._doc.isPublic){
+        res.send({
+          code: 200,
+          message: "文章保存成功"
+        });
+      }else{
+        res.send({
+          code: 200,
+          message: "文章发布成功"
+        });
+      }
     })
     .catch(err => {
       res.send({
@@ -93,7 +99,7 @@ router.put("/", verifyRouteToken, (req, res) => {
  * @param {number} id
  */
 router.delete("/", verifyRouteToken, (req, res) => {
-  let { id } = req.body;
+  let { id } = req.query;
   api
     .removeArticle(id)
     .then(result => {
