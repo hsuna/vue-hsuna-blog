@@ -10,10 +10,10 @@
                 </div> -->
                 <el-menu :default-active="activeIndex" class="header-nav" mode="horizontal" @select="handleSelect">
                     <el-menu-item index="home">首页</el-menu-item>
-                    <el-submenu index="classify">
+                    <!-- <el-submenu index="classify">
                         <template slot="title">分类</template>
                         <el-menu-item v-for="item in classifyList" :index="item._id" :key="item._id"><span>[{{item.count}}]</span>{{item._id}}</el-menu-item>
-                    </el-submenu>
+                    </el-submenu> -->
                     <el-menu-item index="comment">留言</el-menu-item>
                     <el-menu-item index="about">关于</el-menu-item>
                 </el-menu>
@@ -62,7 +62,7 @@ export default {
     };
   },
   created() {
-    this.getClassifyList();
+    //this.getClassifyList();
   },
   methods: {
     getClassifyList() {

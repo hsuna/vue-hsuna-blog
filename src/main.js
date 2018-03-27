@@ -2,8 +2,8 @@
  * @Description 主入口
  * @Author: Hsuan
  * @Date: 2018-03-17 10:15:47
- * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-25 13:28:55
+ * @Last Modified by: Hsuna
+ * @Last Modified time: 2018-03-28 00:36:21
  */
 
 // The Vue build version to load with the `import` command
@@ -30,6 +30,9 @@ Object.keys(Filters).forEach(key => {
 import Element from "element-ui";
 import "assets/styles/element-variables.scss";
 Vue.use(Element, { size: "small" });
+
+/* 引用-fa字体库 */
+import "font-awesome/scss/font-awesome.scss";
 
 Vue.config.productionTip = false;
 

@@ -1,17 +1,16 @@
 <template>
   <div class="blog-profile">
     <div class="profile-side">
-    
     </div>
     <div class="profile-main">
       <div class="profile-main-card" v-for="profile in profileList" :key="profile.id">
         <div class="card-title"><a>{{profile.title}}</a></div>
-        <div class="card-date">{{profile.publishAt | timeStampFormat}}</div>
+        <div class="card-date" :data-date="$filter.timeStampFormat(profile.publishAt)">{{profile.publishAt | timeAgoFormat}}</div>
         <div class="card-tags">
           <el-tag size="mini" v-for="tag in profile.tags" :key="tag">{{tag}}</el-tag>
         </div>
         <div class="card-content">&nbsp;&nbsp;&nbsp;&nbsp;{{profile.about}}
-          <el-button type="text" @click="$router.push(`/ArticleDetail/${profile.id}`)">阅读全文<i class="el-icon-arrow-down"></i></el-button>
+          <el-button type="text" @click="$router.push(`/ArticleDetail/${profile.id}`)">阅读全文<i class="el-icon-arrow-right"></i></el-button>
         </div>
       </div>
     </div>
@@ -22,10 +21,6 @@
 <script>
 export default {
   props: {
-    classifyList: {
-      type: Array,
-      default: () => []
-    },
     profileList: {
       type: Array,
       default: () => []
@@ -59,7 +54,7 @@ export default {
   .profile-main-card {
     position: relative;
     margin: 0 10px;
-    padding: 15px 10px;
+    padding: 20px 10px;
     line-height: 1.6;
     border-bottom: 1px solid #dadada;
 
@@ -71,16 +66,23 @@ export default {
 
     .card-date {
       position: absolute;
-      top: 24px;
+      top: 28px;
       right: 26px;
     }
 
+    .card-tags{
+      padding-top: 5px;
+    }
+
     .card-content {
+      padding-top: 10px;
+      line-height: 2;
       font-size: 16px;
       word-break: break-all;
 
       .el-button {
-        font-size: 16px;
+        padding: 0;
+        font-size: inherit;
       }
     }
 

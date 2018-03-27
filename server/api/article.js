@@ -2,8 +2,8 @@
  * @Description: Hsuna
  * @Author: Hsuna
  * @Date: 2018-03-26 01:48:53
- * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-27 17:28:36
+ * @Last Modified by: Hsuna
+ * @Last Modified time: 2018-03-28 00:05:36
  */
 
 import { Article } from "../models";
@@ -16,27 +16,25 @@ import { Article } from "../models";
  */
 const getArticles = (query, page, limit = 10) => {
   //设置为不可枚举
-  ['id', 'page', 'limit'].forEach(key => {
-    Object.defineProperty(query, key, {enumerable:false});
+  ["id", "page", "limit", "sort"].forEach(key => {
+    Object.defineProperty(query, key, { enumerable: false });
   });
+
   let promiseList;
-  let { id } = query;
+  let { id, sort = { _id: -1 } } = query;
   if (id) {
-    promiseList = [ Article.findById(id) ];
+    promiseList = [Article.findById(id)];
   } else if (page && limit) {
     let skip = (page - 1) * limit;
     promiseList = [
       Article.find(query)
-      .skip(skip)
-      .limit(limit)
-      .sort({_id: -1}),
+        .sort(sort)
+        .skip(skip)
+        .limit(limit),
       Article.find(query).count()
     ];
   } else {
-    promiseList = [
-      Article.find(query)
-      .sort({_id: -1})
-    ];
+    promiseList = [Article.find(query).sort(sort)];
   }
   return Promise.all(promiseList);
 };
@@ -55,15 +53,18 @@ const createArticle = article => {
  * @param {object} article
  */
 const updateArticle = (id, article) => {
-  if(1 == article.status){
+  if (1 == article.status) {
     article.publishAt = Date.now();
   }
   article.updateAt = Date.now();
-  return Article.update({
-    _id: id
-  }, {
-    $set: article
-  });
+  return Article.update(
+    {
+      _id: id
+    },
+    {
+      $set: article
+    }
+  );
 };
 
 /**
@@ -82,10 +83,10 @@ const removeArticle = id => {
  */
 const getCountByClassify = match => {
   return Article.aggregate([
-    { $match: match},
-    { $group: { _id : "$classify" , count:{ $sum:1 } } }
+    { $match: match },
+    { $group: { _id: "$classify", count: { $sum: 1 } } }
   ]);
-}
+};
 
 export default {
   getArticles,

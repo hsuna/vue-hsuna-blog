@@ -3,8 +3,8 @@
  * @Description 过滤器
  * @Author: Hsuan
  * @Date: 2018-03-17 10:17:16
- * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-25 13:53:49
+ * @Last Modified by: Hsuna
+ * @Last Modified time: 2018-03-28 00:00:11
  */
 
 const WEEKDAY = {
@@ -59,7 +59,30 @@ const timeStampFormat = (timeStamp, fmt) => {
   return dateFormat(date, fmt);
 };
 
-export {
-  dateFormat,
-  timeStampFormat
+const agoStamp = [
+  { text: "刚刚", time: 10 * 1000 },
+  { text: "{time}秒前", time: 60 * 1000 },
+  { text: "{time}分钟前", time: 60 * 60 * 1000 },
+  { text: "{time}小时前", time: 24 * 60 * 60 * 1000 },
+  { text: "昨天", time: 2 * 24 * 60 * 60 * 1000 },
+  { text: "前天", time: 3 * 24 * 60 * 60 * 1000 },
+  { text: "{time}天前", time: 7 * 24 * 60 * 60 * 1000 },
+  { text: "{time}周前", time: 30 * 24 * 60 * 60 * 1000 },
+  { text: "{time}月前", time: 365 * 24 * 60 * 60 * 1000 },
+  { text: "{time}年前" }
+];
+const timeAgoFormat = (timeStamp, fmt) => {
+  if (!timeStamp) return "";
+  let difftime = Date.now() - timeStamp;
+  let divisor = 1;
+  for (let i = 0; i < agoStamp.length; i++) {
+    let { text, time } = agoStamp[i];
+    if (difftime < time) {
+      return text.replace("{time}", Math.floor(difftime / divisor));
+    } else {
+      divisor = time;
+    }
+  }
 };
+
+export { dateFormat, timeStampFormat, timeAgoFormat };

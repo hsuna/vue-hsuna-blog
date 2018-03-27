@@ -1,6 +1,6 @@
 <template>
     <div class="blog-body">
-      <blog-personal></blog-personal>
+      <blog-personal :articleCount="articleCount" :classifyList="classifyList" @click-classify="handleClassify"></blog-personal>
       <blog-profile :profileList="profileList"></blog-profile>
     </div>
 </template>
@@ -14,19 +14,37 @@ import $api from "api/guest";
 export default {
   data() {
     return {
+      articleCount: 0,
       classifyList: [],
       profileList: []
     };
   },
   created() {
-    this.$http.get($api.getArticle, {params: this.$route.query}).then(res=>{
-      if(200 == res.code){
-        this.profileList = res.data.list;
-      }
-    })
-   
+    this.getProfileList();
+    this.getClassifyCount();
   },
-  methods: {},
+  methods: {
+    getClassifyCount() {
+      this.$http.get($api.getClassifyCount).then(res => {
+        if (200 == res.code) {
+          this.classifyList = res.data;
+        }
+      });
+    },
+    getProfileList(query) {
+      this.$http.get($api.getArticle, { params: query }).then(res => {
+        if (200 == res.code) {
+          this.profileList = res.data.list;
+          if(!query){
+            this.articleCount = res.data.total;
+          }
+        }
+      });
+    },
+    handleClassify(classify) {
+      this.getProfileList({ classify });
+    }
+  },
   components: {
     "blog-personal": blogPersonal,
     "blog-profile": blogProfile
@@ -35,4 +53,5 @@ export default {
 </script>
 
 <style lang="scss">
+
 </style>
