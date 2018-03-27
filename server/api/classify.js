@@ -7,6 +7,11 @@ import { Classify } from "../models";
  * @param {number} limit 默认10
  */
 const getClassify = (query, page, limit = 10) => {
+  //设置为不可枚举
+  ['id', 'page', 'limit'].forEach(key => {
+    Object.defineProperty(query, key, {enumerable:false});
+  });
+
   let promiseList;
   if (page && limit) {
     let skip = (page - 1) * limit;

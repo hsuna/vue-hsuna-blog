@@ -12,7 +12,7 @@
                     <el-menu-item index="home">首页</el-menu-item>
                     <el-submenu index="classify">
                         <template slot="title">分类</template>
-                        <el-menu-item v-for="title in classifyList" :index="title" v-bind:key="title">{{title}}</el-menu-item>
+                        <el-menu-item v-for="item in classifyList" :index="item.title" :key="item.title">{{item.title}}</el-menu-item>
                     </el-submenu>
                     <el-menu-item index="comment">留言</el-menu-item>
                     <el-menu-item index="about">关于</el-menu-item>
@@ -70,7 +70,7 @@ export default {
         .get($api.getClassify)
         .then(res => {
           if (200 == res.code) {
-            this.classifyList = res.data;
+            this.classifyList = res.data.list;
           }
         })
         .catch(err => {});

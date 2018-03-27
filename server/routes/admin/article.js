@@ -9,18 +9,16 @@ const router = express.Router();
  * 查找文章
  */
 router.get("/", verifyRouteToken, (req, res) => {
-  let query = Object.assign({}, req.query), { id, page, limit } = req.query;
-  Object.defineProperty(query, 'page', {enumerable:false});//设置为不可枚举
-  Object.defineProperty(query, 'limit', {enumerable:false});
+  let { page, limit } = req.query;
   api
-    .getArticles(query, page, limit)
+    .getArticles(req.query, page, limit)
     .then(result => {
       let [ list, total ] = result;
       res.send({
         code: 200,
-        data: id ? list : {//id查询直接返回数据
-          list,
-          total: total || list.length
+        data: {
+          list: Array.isArray(list) ? list : [list],
+          total: total || list.length || 0
         }
       });
     })

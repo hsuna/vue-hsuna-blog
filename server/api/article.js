@@ -3,7 +3,7 @@
  * @Author: Hsuna
  * @Date: 2018-03-26 01:48:53
  * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-27 14:54:55
+ * @Last Modified time: 2018-03-27 15:59:21
  */
 
 import { Article } from "../models";
@@ -15,6 +15,11 @@ import { Article } from "../models";
  * @param {number} limit 默认10
  */
 const getArticles = (query, page, limit = 10) => {
+  //设置为不可枚举
+  ['id', 'page', 'limit'].forEach(key => {
+    Object.defineProperty(query, key, {enumerable:false});
+  });
+  
   let promiseList;
   let { id } = query;
   if (id) {
@@ -51,6 +56,9 @@ const createArticle = article => {
  * @param {object} article
  */
 const updateArticle = (id, article) => {
+  if(1 == article.status){
+    article.publishAt = Date.now();
+  }
   article.updateAt = Date.now();
   return Article.update({
     _id: id

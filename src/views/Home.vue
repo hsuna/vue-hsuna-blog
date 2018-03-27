@@ -1,7 +1,7 @@
 <template>
     <div class="blog-body">
       <blog-personal></blog-personal>
-      <blog-profile></blog-profile>
+      <blog-profile :profileList="profileList"></blog-profile>
     </div>
 </template>
 
@@ -9,11 +9,21 @@
 import blogPersonal from "components/blog-personal";
 import blogProfile from "components/blog-profile";
 
+import $api from "api/guest";
+
 export default {
   data() {
-    return {};
+    return {
+      profileList: []
+    };
   },
-  created() {},
+  created() {
+    this.$http.get($api.getArticle).then(res=>{
+      if(200 == res.code){
+        this.profileList = res.data.list;
+      }
+    })
+  },
   methods: {},
   components: {
     "blog-personal": blogPersonal,

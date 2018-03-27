@@ -3,16 +3,26 @@ import api from "../api/classify";
 
 const router = express.Router();
 
+const guestFilter = ({_id, title}) => ({
+  id: _id,
+  title
+});
+
 /**
- * 查看所有分类
+ * 查找分类
  */
 router.get("/", (req, res) => {
+  let { page, limit } = req.query;
   api
-    .getClassify()
+    .getClassify(req.query, page, limit)
     .then(result => {
+      let [ list, total ] = result;
       res.send({
         code: 200,
-        data: result.map(({ title }) => title)
+        data: {
+          list: list.map(guestFilter),
+          total: total || list.length
+        }
       });
     })
     .catch(err => {

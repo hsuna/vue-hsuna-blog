@@ -4,7 +4,7 @@
       test
     </div>
     <div class="profile-main">
-      <div class="profile-main-card" v-for="profile in profileList" v-bind:key="profile.id">
+      <div class="profile-main-card" v-for="profile in profileList" :key="profile.id">
         <div class="card-title"><a>{{profile.title}}</a></div>
         <div class="card-date">{{profile.publishAt}}</div>
         <div class="card-tags">

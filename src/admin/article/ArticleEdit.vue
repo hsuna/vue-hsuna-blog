@@ -31,8 +31,9 @@ export default {
       })
       .then(res => {
         if (200 == res.code) {
-          if (res.data) {
-            Object.assign(this.article, res.data);
+          let { list } = res.data;
+          if (list && list.length>0) {
+            Object.assign(this.article, list[0]);
           } else {
             this.$router.replace({ path: "/admin/articleList" });
             this.$message.error("不存在该文章");
