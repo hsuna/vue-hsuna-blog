@@ -3,7 +3,7 @@
  * @Author: Hsuan 
  * @Date: 2018-03-27 09:57:58 
  * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-27 16:07:12
+ * @Last Modified time: 2018-03-27 17:28:20
  */
 
 import express from "express";
@@ -17,7 +17,7 @@ const guestBaseFilter = (article) => ({
   classify: article.classify,
   about: article.about,
   tags: article.tags,
-  updateAt: article.publishAt
+  publishAt: article.publishAt
 });
 
 const guestDetailFilter = (article) => Object.assign(guestBaseFilter(article), {
@@ -77,6 +77,25 @@ router.get("/detail", (req, res) => {
         message: "查找文章失败"
       });
     });
+});
+
+/**
+ * 获取所有类型的数量
+ * @param {object} match
+ */
+router.get("/classifyCount", (req, res) => {
+  Object.assign(req.query, { status:1 });//游客模式只能阅读公开的文章
+  api.getCountByClassify(req.query).then(result => {
+    res.send({
+      code: 200,
+      data: result
+    });
+  }).catch(err => {
+    res.send({
+      code: -200,
+      message: "统计数量失败"
+    });
+  });
 });
 
 export default router;

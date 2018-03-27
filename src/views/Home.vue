@@ -14,15 +14,17 @@ import $api from "api/guest";
 export default {
   data() {
     return {
+      classifyList: [],
       profileList: []
     };
   },
   created() {
-    this.$http.get($api.getArticle).then(res=>{
+    this.$http.get($api.getArticle, {params: this.$route.query}).then(res=>{
       if(200 == res.code){
         this.profileList = res.data.list;
       }
     })
+   
   },
   methods: {},
   components: {

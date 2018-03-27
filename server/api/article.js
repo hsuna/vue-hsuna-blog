@@ -3,7 +3,7 @@
  * @Author: Hsuna
  * @Date: 2018-03-26 01:48:53
  * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-27 15:59:21
+ * @Last Modified time: 2018-03-27 17:28:36
  */
 
 import { Article } from "../models";
@@ -19,7 +19,6 @@ const getArticles = (query, page, limit = 10) => {
   ['id', 'page', 'limit'].forEach(key => {
     Object.defineProperty(query, key, {enumerable:false});
   });
-  
   let promiseList;
   let { id } = query;
   if (id) {
@@ -77,9 +76,22 @@ const removeArticle = id => {
   });
 };
 
+/**
+ * 统计分类数量
+ * @param {number} id
+ */
+const getCountByClassify = match => {
+  return Article.aggregate([
+    { $match: match},
+    { $group: { _id : "$classify" , count:{ $sum:1 } } }
+  ]);
+}
+
 export default {
   getArticles,
   createArticle,
   updateArticle,
-  removeArticle
+  removeArticle,
+
+  getCountByClassify
 };

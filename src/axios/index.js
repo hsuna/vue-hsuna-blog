@@ -2,8 +2,8 @@
  * @Description axios拦截器自定义
  * @Author: Hsuan
  * @Date: 2018-03-17 10:09:18
- * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-26 01:48:48
+ * @Last Modified by: Hsuan
+ * @Last Modified time: 2018-03-27 17:08:16
  */
 
 import Axios from "axios";
@@ -28,10 +28,10 @@ Axios.interceptors.request.use(
       config.headers.Authorization = store.state.user.token;
     }
     //在发送请求之前做某事
-    if (config.method === "post") {
-      //POST传参序列化
-      config.data = qs.stringify(config.data);
-    }
+    // if (config.method === "post") {//序列化了，使用RESTful
+    //   //POST传参序列化
+    //   config.data = qs.stringify(config.data);
+    // }
     return config;
   },
   err => {

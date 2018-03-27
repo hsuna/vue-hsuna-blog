@@ -1,17 +1,17 @@
 <template>
   <div class="blog-profile">
     <div class="profile-side">
-      test
+    
     </div>
     <div class="profile-main">
       <div class="profile-main-card" v-for="profile in profileList" :key="profile.id">
         <div class="card-title"><a>{{profile.title}}</a></div>
-        <div class="card-date">{{profile.publishAt}}</div>
+        <div class="card-date">{{profile.publishAt | timeStampFormat}}</div>
         <div class="card-tags">
-          <el-tag size="mini" v-for="tag in profileList.tags" v-bind:key="tag">{{tag}}</el-tag>
+          <el-tag size="mini" v-for="tag in profile.tags" :key="tag">{{tag}}</el-tag>
         </div>
         <div class="card-content">&nbsp;&nbsp;&nbsp;&nbsp;{{profile.about}}
-          <el-button type="text">阅读全文<i class="el-icon-arrow-down"></i></el-button>
+          <el-button type="text" @click="$router.push(`/ArticleDetail/${profile.id}`)">阅读全文<i class="el-icon-arrow-down"></i></el-button>
         </div>
       </div>
     </div>
@@ -22,6 +22,10 @@
 <script>
 export default {
   props: {
+    classifyList: {
+      type: Array,
+      default: () => []
+    },
     profileList: {
       type: Array,
       default: () => []
@@ -53,6 +57,7 @@ export default {
   }
 
   .profile-main-card {
+    position: relative;
     margin: 0 10px;
     padding: 15px 10px;
     line-height: 1.6;
@@ -80,7 +85,8 @@ export default {
     }
 
     .card-tags {
-      .tag {
+      .el-tag {
+        margin-right: 5px;
       }
     }
   }

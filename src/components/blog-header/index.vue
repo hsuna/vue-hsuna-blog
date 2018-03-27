@@ -12,7 +12,7 @@
                     <el-menu-item index="home">首页</el-menu-item>
                     <el-submenu index="classify">
                         <template slot="title">分类</template>
-                        <el-menu-item v-for="item in classifyList" :index="item.title" :key="item.title">{{item.title}}</el-menu-item>
+                        <el-menu-item v-for="item in classifyList" :index="item._id" :key="item._id"><span>[{{item.count}}]</span>{{item._id}}</el-menu-item>
                     </el-submenu>
                     <el-menu-item index="comment">留言</el-menu-item>
                     <el-menu-item index="about">关于</el-menu-item>
@@ -66,14 +66,11 @@ export default {
   },
   methods: {
     getClassifyList() {
-      this.$http
-        .get($api.getClassify)
-        .then(res => {
-          if (200 == res.code) {
-            this.classifyList = res.data.list;
-          }
-        })
-        .catch(err => {});
+      this.$http.get($api.getClassifyCount).then(res=>{
+        if(200 == res.code){
+          this.classifyList = res.data;
+        }
+      })
     },
     handleSelect(index, indexPath) {
       switch (indexPath[0]) {
@@ -84,8 +81,8 @@ export default {
         case "classify":
           //二级
           this.$router.push({
-            path: "/article",
-            param: {
+            path: "/",
+            query: {
               classify: indexPath[1]
             }
           });
