@@ -8,7 +8,7 @@ const router = express.Router();
  */
 router.get("/", (req, res) => {
   api
-    .getAllClassify()
+    .getClassify()
     .then(result => {
       res.send({
         code: 200,

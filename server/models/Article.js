@@ -3,7 +3,7 @@
  * @Author: Hsuan 
  * @Date: 2018-03-25 12:04:21 
  * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-26 18:39:59
+ * @Last Modified time: 2018-03-27 10:54:22
  */
 import mongoose from "mongoose";
 
@@ -21,8 +21,7 @@ const Article = mongoose.model(
     createdAt: { type: Number, default: Date.now }, //创建时间
     publishAt: { type: Number, default: Date.now }, //发布时间
     updateAt: { type: Number, default: Date.now }, //更新时间
-    isPublic: { type: Number, default: 0 },  //是否发布
-    isDraft: { type: Number, default: 1 }  //是否草稿
+    status: { type: Number, default: 0 },  //0:草稿-私有|1:草稿-公开|2:私有|3:公开
   })
 );
 

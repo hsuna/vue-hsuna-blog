@@ -2,8 +2,8 @@
  * @Description: Hsuna
  * @Author: Hsuna
  * @Date: 2018-03-26 01:48:53
- * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-27 01:09:21
+ * @Last Modified by: Hsuan
+ * @Last Modified time: 2018-03-27 14:54:55
  */
 
 import { Article } from "../models";
@@ -11,21 +11,27 @@ import { Article } from "../models";
 /**
  * 查找文章
  * @param {object} query
+ * @param {number} page  默认返回全部
+ * @param {number} limit 默认10
  */
-const getArticles = query => {
-  let { id, page = -1, limit = 10 } = query;
-  let promiseList = [];
+const getArticles = (query, page, limit = 10) => {
+  let promiseList;
+  let { id } = query;
   if (id) {
-    promiseList = [Article.find({ _id: id })];
-  } else if (-1 == page) {
-    promiseList = [Article.find(query)];
-  } else {
+    promiseList = [ Article.findById(id) ];
+  } else if (page && limit) {
     let skip = (page - 1) * limit;
     promiseList = [
-      Article.find()
-        .skip(skip)
-        .limit(limit),
-      Article.find().count()
+      Article.find(query)
+      .skip(skip)
+      .limit(limit)
+      .sort({_id: -1}),
+      Article.find(query).count()
+    ];
+  } else {
+    promiseList = [
+      Article.find(query)
+      .sort({_id: -1})
     ];
   }
   return Promise.all(promiseList);
@@ -46,7 +52,11 @@ const createArticle = article => {
  */
 const updateArticle = (id, article) => {
   article.updateAt = Date.now();
-  return Article.update({ _id: id }, { $set: article });
+  return Article.update({
+    _id: id
+  }, {
+    $set: article
+  });
 };
 
 /**
@@ -54,7 +64,9 @@ const updateArticle = (id, article) => {
  * @param {number} id
  */
 const removeArticle = id => {
-  return Article.remove({ _id: id });
+  return Article.remove({
+    _id: id
+  });
 };
 
 export default {

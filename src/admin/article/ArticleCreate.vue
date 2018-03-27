@@ -1,8 +1,5 @@
 <template lang="html">
-  <article-edit ref="articleEdit" :article="article" :breadcrumbs="breadcrumbs">
-    <el-button type="primary" @click="handlePublish(false)">{{1==article.isPublic?'公开发布':'私人保存'}}</el-button>
-    <el-button type="primary" @click="handlePublish(true)">暂存草稿</el-button>
-  </article-edit>
+  <article-edit :article="article" :breadcrumbs="breadcrumbs" @submit="handlePublish"></article-edit>
 </template>
 
 <script>
@@ -18,27 +15,36 @@ export default {
         classify: "", //文章所属分类
         content: "", //文章内容
         tags: [], //文章标签
-        isPublic: 1, //是否公开
-        isDraft: 0 //是否草稿
+        status: 1 //0:草稿 | 1:发布 | 2:收藏
       },
-      breadcrumbs: [{ text: "创建文章" }]
+      breadcrumbs: [{ text: "创建文章" }],
+      isRecord: true
     };
   },
   created() {
     Object.assign(this.article, this.$store.state.article);
-    console.log(this.article);
+  },
+  mounted() {
+    window.onbeforeunload = this.recordCacheArticle;
+  },
+  destroyed() {
+    this.recordCacheArticle();
+    window.onbeforeunload = null;
   },
   methods: {
-    handlePublish(isDraft) {
-      this.article.isDraft = isDraft ? 1 : 0;
-      this.$refs.articleEdit.validate(valid => {
-        if (valid) {
-          this.$http.post($api.postArticle, this.article).then(res => {
-            if (200 == res.code) {
-              this.$message({ message: res.message, type: "success" });
-              this.$router.replace({ path: "/admin/articleList" });
-            }
-          });
+    recordCacheArticle() {
+      if (this.isRecord) {
+        //缓存正在编辑的文章
+        this.$store.dispatch("recordArticle", this.article);
+      }
+    },
+    handlePublish() {
+      this.$http.post($api.postArticle, this.article).then(res => {
+        if (200 == res.code) {
+          this.isRecord = false;
+          this.$store.dispatch("clearArticle"); //清除缓存的文章
+          this.$message({ message: res.message, type: "success" });
+          this.$router.replace({ path: "/admin/articleList" });
         }
       });
     }

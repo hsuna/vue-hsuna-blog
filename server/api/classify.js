@@ -2,21 +2,23 @@ import { Classify } from "../models";
 
 /**
  * 查找分类
- * @param {number} page -1表示返回全部
+ * @param {object} query
+ * @param {number} page  默认返回全部
  * @param {number} limit 默认10
  */
-const getClassify = (page = -1, limit = 10) => {
+const getClassify = (query, page, limit = 10) => {
   let promiseList;
-  if (-1 == page) {
-    promiseList = [Classify.find()];
-  } else {
+  if (page && limit) {
     let skip = (page - 1) * limit;
     promiseList = [
-      Classify.find()
-        .skip(skip)
-        .limit(limit),
-      Classify.count()
+      Classify.find(query)
+      .skip(skip)
+      .limit(limit)
+      .sort({_id: -1}),
+      Classify.find(query).count()
     ];
+  } else {
+    promiseList = [Classify.find(query).sort({_id: -1})];
   }
   return Promise.all(promiseList);
 };

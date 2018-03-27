@@ -10,9 +10,9 @@
       <div class="hsuna-table">
         <el-table style='width:100%' align="center" :data="classList"  v-loading="listLoading" element-loading-text="拼命加载中">
           <el-table-column type='index' width="60" ></el-table-column>
-          <el-table-column prop="title" min-width="150" label="分类名称" ></el-table-column>
-          <el-table-column prop="createdAt" min-width="200" label="创建时间" :formatter="row => $filter.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
-          <el-table-column prop="updateAt" min-width="200" label="更新时间" :formatter="row => $filter.timeStampFormat(row.updateAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
+          <el-table-column prop="title" min-width="280" label="分类名称" ></el-table-column>
+          <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => $filter.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
+          <el-table-column prop="updateAt" min-width="140" label="更新时间" :formatter="row => $filter.timeStampFormat(row.updateAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
           <el-table-column min-width="150" label="操作" fixed="right" align="center">
             <template slot-scope='scope'>
               <el-button type='primary' @click="showClassifyDialg({id:scope.row._id, title:scope.row.title})">编辑</el-button>
@@ -69,11 +69,9 @@ export default {
         .get($api.getClassify)
         .then(res => {
           if (200 == res.code) {
-            this.classList = res.data;
+            let {list, total} = res.data;
+            this.classList = list;
           }
-          this.listLoading = false;
-        })
-        .catch(err => {
           this.listLoading = false;
         });
     },
@@ -95,7 +93,6 @@ export default {
             });
           } else {
             //修改分类
-
             this.$http.put($api.putClassify, { id, title }).then(res => {
               if (200 == res.code) {
                 this.dialogVisible = false;

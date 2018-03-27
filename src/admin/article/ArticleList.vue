@@ -13,12 +13,12 @@
           <el-table-column prop="title" min-width="180" label="文章标题" ></el-table-column>
           <el-table-column prop="about" min-width="200" label="文章简介" ></el-table-column>
           <el-table-column prop="classify" min-width="100" label="所属分类" ></el-table-column>
-          <el-table-column min-width="100" label="文章类型" :formatter="row => 1==row.isDraft ? '草稿' : (1==row.isPublic ? '公开' : '私有')"></el-table-column>
+          <el-table-column min-width="100" label="文章类型" :formatter="row => ['草稿', '公开', '私人'][row.status]"></el-table-column>
           <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => $filter.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
           <el-table-column prop="updateAt" min-width="140" label="更新时间" :formatter="row => $filter.timeStampFormat(row.updateAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
           <el-table-column min-width="220" label="操作" fixed="right" align="center">
             <template slot-scope="scope">
-              <el-button @click="read(scope.row._id)">查看</el-button>
+              <!-- <el-button @click="read(scope.row._id)">查看</el-button> -->
               <el-button type='primary' @click="toEditArticle(scope.row._id)">编辑</el-button>
               <el-button type='danger' @click="handleRemoveArticle(scope.row._id)">删除</el-button>
             </template>
@@ -51,14 +51,13 @@ export default {
     getArticleList(page) {
       this.listLoading = true;
       this.$http
-        .get($api.getArticle, {
-          params: {
-            page: 1
-          }
-        })
+        .get($api.getArticle)
         .then(res => {
+          if(200 == res.code){
+            let{list, total} = res.data;
+            this.articleList = list;
+          }
           this.listLoading = false;
-          this.articleList = res.data.list;
         });
     },
     handleTabClick(){

@@ -2,8 +2,8 @@
  * @Description: Hsuna
  * @Author: Hsuna
  * @Date: 2018-03-26 01:49:00
- * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-27 01:06:25
+ * @Last Modified by: Hsuan
+ * @Last Modified time: 2018-03-27 15:05:34
  */
 
 import express from "express";
@@ -17,14 +17,18 @@ const router = express.Router();
  * 查找分类
  */
 router.get("/", verifyRouteToken, (req, res) => {
+  let query = Object.assign({}, req.query), { id, page, limit } = req.query;
+  Object.defineProperty(query, 'page', {enumerable:false});//设置为不可枚举
+  Object.defineProperty(query, 'limit', {enumerable:false});
   api
-    .getClassify()
+    .getClassify(query, page, limit)
     .then(result => {
+      let [ list, total ] = result;
       res.send({
         code: 200,
-        data: {
-          list: result[0],
-          total: result[1] || result[0].length
+        data: id ? list : {//id查询直接返回数据
+          list,
+          total: total || list.length
         }
       });
     })

@@ -27,10 +27,6 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span='10' :push="3">
-                <el-radio v-model="article.isPublic" :label="1">公开</el-radio>
-                <el-radio v-model="article.isPublic" :label="0">私有</el-radio>
-              </el-col>
             </el-row>
             <el-row>
                <el-col :span='23' :push="1">
@@ -47,10 +43,15 @@
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="21" :push="1">
+              <el-col :span="10" :push="1">
                 <el-form-item label-width="100px">
-                  <slot></slot>
+                  <el-button type="primary" @click="handleSubmit">{{btnText}}</el-button>
                   <el-button @click="handleBack">返回</el-button>
+                  <div class="article-status">
+                    <el-radio v-model="article.status" :label="0">草稿</el-radio>
+                    <el-radio v-model="article.status" :label="1">发布</el-radio>
+                    <el-radio v-model="article.status" :label="2">私人</el-radio>
+                  </div>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -76,8 +77,7 @@ export default {
         classify: "", //文章所属分类
         content: "", //文章内容
         tags: [], //文章标签
-        isPublic: 1, //是否公开
-        isDraft: 0 //是否草稿
+        status: 1 //0:草稿 | 1:发布 | 2:收藏
       })
     },
     breadcrumbs: {
@@ -110,13 +110,27 @@ export default {
     //获取分类列表
     this.$http.get($api.getClassify).then(res => {
       if (200 == res.code) {
-        this.classifyList = res.data;
+        let { list, total } = res.data;
+        this.classifyList = list;
       }
     });
   },
+  computed: {
+    btnText: {
+      get() {
+        if (1 == this.article.status) return "公开发布";
+        else if (2 == this.article.status) return "私人保存";
+        else return "暂存草稿";
+      }
+    }
+  },
   methods: {
-    validate() {
-      return this.$refs.articleRef.validate(...arguments);
+    handleSubmit() {
+      this.$refs.articleRef.validate(valid => {
+        if (valid) {
+          this.$emit("submit");
+        }
+      });
     },
     handleBack() {
       if (this.isModify) {
@@ -142,4 +156,8 @@ export default {
 </style>
 <style lang="scss">
 @import "~assets/styles/article-markdown";
+.article-status{
+  display: inline-block;
+  margin-left: 20px;
+}
 </style>
