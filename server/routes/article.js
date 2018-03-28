@@ -2,8 +2,8 @@
  * @Description 文章接口-无权限
  * @Author: Hsuan
  * @Date: 2018-03-27 09:57:58
- * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-28 00:03:19
+ * @Last Modified by: Hsuan
+ * @Last Modified time: 2018-03-28 13:44:59
  */
 
 import express from "express";
@@ -58,13 +58,13 @@ router.get("/", (req, res) => {
 router.get("/detail", (req, res) => {
   let { id } = req.query;
   api
-    .getArticles({ id })
-    .then(result => {
-      let [data] = result[0];
-      if (3 == data.status) {
+  .getArticles({ id })
+  .then(result => {
+      let [detail] = result;
+      if (1 == detail.status) {
         res.send({
           code: 200,
-          data: guestDetailFilter(result[0])
+          data: guestDetailFilter(detail)
         });
       } else {
         res.send({

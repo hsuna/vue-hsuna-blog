@@ -1,7 +1,7 @@
 <template>
     <div class="blog-body">
-      <blog-personal :articleCount="articleCount" :classifyList="classifyList" @click-classify="handleClassify"></blog-personal>
-      <blog-profile :profileList="profileList"></blog-profile>
+      <blog-personal></blog-personal>
+      <blog-profile :profileList="profileList" :classifyList="classifyList" @click-classify="handleClassify"></blog-profile>
     </div>
 </template>
 
@@ -14,7 +14,6 @@ import $api from "api/guest";
 export default {
   data() {
     return {
-      articleCount: 0,
       classifyList: [],
       profileList: []
     };

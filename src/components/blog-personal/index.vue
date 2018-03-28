@@ -15,12 +15,6 @@
         </div>
         <el-popover ref="popover1" placement="bottom" title="标题" width="200" trigger="hover" content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。"></el-popover>
       </div>
-      <div class="user-classify">
-        <div class="tag-inner">
-          <el-tag @click.native="handleClassify()">全部<span class="tag-count" v-show="articleCount>0">{{articleCount}}</span></el-tag>
-          <el-tag v-for="item in classifyList" :key="item._id" @click.native="handleClassify(item._id)">{{item._id}}<span class="tag-count">{{item.count}}</span></el-tag>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -29,14 +23,7 @@
 <script>
 export default {
   props: {
-    articleCount: {
-      type: Number,
-      default: 0
-    },
-    classifyList: {
-      type: Array,
-      default: () => []
-    }
+  
   },
   data() {
     return {
@@ -45,9 +32,6 @@ export default {
   },
   created() {},
   methods: {
-    handleClassify(classify) {
-      this.$emit("click-classify", classify);
-    }
   }
 };
 </script>
@@ -107,48 +91,6 @@ export default {
         color: #fff;
         background-color: rgba(0, 0, 0, 0.1);
         text-align: center;
-      }
-    }
-  }
-
-  .user-classify {
-    position: relative;
-
-    .tag-inner {
-      overflow: hidden;
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 38px;
-      background: #fff;
-      border-radius: 4px;
-
-      &:hover {
-        height: auto;
-        padding-bottom: 10px;
-      }
-    }
-
-    .el-tag {
-      display: inline-block;
-      height: 30px;
-      line-height: 30px;
-      margin: 6px;
-      padding: 0 15px;
-      border-radius: 15px;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      background-color: transparent;
-      font-size: 14px;
-      color: gray;
-      cursor: pointer;
-
-      .tag-count {
-        margin-left: 3px;
-        color: #b3b3b3;
-      }
-
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.1);
       }
     }
   }

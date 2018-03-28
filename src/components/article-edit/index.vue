@@ -38,7 +38,7 @@
             <el-row>
               <el-col :span="23" :push="1">
                 <el-form-item label="文章内容：" label-width="100px" class="show" prop="content" >
-                  <markdown-editor v-model="article.content" preview-class="article-markdown" :highlight="true" :configs="configs"></markdown-editor>
+                  <markdown-editor v-model="article.content" preview-class="markdown-body" :highlight="true" :sanitize="true" :configs="configs"></markdown-editor>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -64,9 +64,12 @@
 
 <script type="text/ecmascript-6">
 import markdownEditor from "vue-simplemde/src/markdown-editor";
+import hljs from "highlight.js";
+
 import hsunaHeader from "components/hsuna-header";
 import $api from "api/admin";
 
+window.hljs = hljs;
 export default {
   props: {
     article: {
@@ -153,9 +156,10 @@ export default {
 
 <style>
 @import "simplemde/dist/simplemde.min.css";
+@import "highlight.js/styles/googlecode.css";
 </style>
 <style lang="scss">
-@import "~assets/styles/article-markdown";
+@import "~assets/styles/markdown-body";
 .article-status{
   display: inline-block;
   margin-left: 20px;

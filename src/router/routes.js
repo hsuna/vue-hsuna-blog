@@ -2,8 +2,8 @@
  * @Description
  * @Author: Hsuan
  * @Date: 2018-03-17 10:14:33
- * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-26 22:33:18
+ * @Last Modified by: Hsuan
+ * @Last Modified time: 2018-03-28 13:38:57
  */
 
 export default [
@@ -17,7 +17,7 @@ export default [
         component: resolve => require(["views/Home.vue"], resolve)
       },
       {
-        path: "/article",
+        path: "/article/:articleId",
         component: resolve => require(["views/Article.vue"], resolve)
       },
       {
