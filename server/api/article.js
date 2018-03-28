@@ -3,7 +3,7 @@
  * @Author: Hsuna
  * @Date: 2018-03-26 01:48:53
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-28 00:05:36
+ * @Last Modified time: 2018-03-29 01:57:40
  */
 
 import { Article } from "../models";
@@ -52,19 +52,26 @@ const createArticle = article => {
  * @param {number} id
  * @param {object} article
  */
-const updateArticle = (id, article) => {
-  if (1 == article.status) {
-    article.publishAt = Date.now();
+const updateArticle = (id, article, update = "$set") => {
+  if ("$set" == update) {
+    article.updateAt = Date.now();
   }
-  article.updateAt = Date.now();
-  return Article.update(
-    {
-      _id: id
-    },
-    {
-      $set: article
-    }
-  );
+  if (1 == article.status) {
+    return new Promise((resolve, reject) => {
+      Article.findById(id)
+        .then(result => {
+          //对于未发布的文章，发布了需要添加发布时间
+          if (result.status != article.status) {
+            article.publishAt = Date.now();
+          }
+          return Article.findByIdAndUpdate(id, { [update]: article });
+        })
+        .then(resolve)
+        .catch(reject);
+    });
+  } else {
+    return Article.findByIdAndUpdate(id, { [update]: article });
+  }
 };
 
 /**
@@ -72,9 +79,7 @@ const updateArticle = (id, article) => {
  * @param {number} id
  */
 const removeArticle = id => {
-  return Article.remove({
-    _id: id
-  });
+  return Article.remove({ _id: id });
 };
 
 /**

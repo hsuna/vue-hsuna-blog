@@ -45,12 +45,12 @@
             <el-row>
               <el-col :span="10" :push="1">
                 <el-form-item label-width="100px">
-                  <el-button type="primary" @click="handleSubmit">{{btnText}}</el-button>
-                  <el-button @click="handleBack">返回</el-button>
+                  <el-button type="primary" @click="handleSubmit">提 交</el-button>
+                  <el-button @click="handleBack">返 回</el-button>
                   <div class="article-status">
-                    <el-radio v-model="article.status" :label="0">草稿</el-radio>
-                    <el-radio v-model="article.status" :label="1">发布</el-radio>
-                    <el-radio v-model="article.status" :label="2">私人</el-radio>
+                    <el-radio v-model="article.status" :label="0" v-if="!isEdit">暂存草稿</el-radio>
+                    <el-radio v-model="article.status" :label="1">公开发布</el-radio>
+                    <el-radio v-model="article.status" :label="2">设为私人</el-radio>
                   </div>
                 </el-form-item>
               </el-col>
@@ -72,6 +72,10 @@ import $api from "api/admin";
 window.hljs = hljs;
 export default {
   props: {
+    isEdit: {
+      type: Boolean,
+      default: false
+    },
     article: {
       type: Object,
       default: () => ({
@@ -118,7 +122,7 @@ export default {
       }
     });
   },
-  computed: {
+  /* computed: {
     btnText: {
       get() {
         if (1 == this.article.status) return "公开发布";
@@ -126,7 +130,7 @@ export default {
         else return "暂存草稿";
       }
     }
-  },
+  }, */
   methods: {
     handleSubmit() {
       this.$refs.articleRef.validate(valid => {
@@ -160,7 +164,7 @@ export default {
 </style>
 <style lang="scss">
 @import "~assets/styles/markdown-body";
-.article-status{
+.article-status {
   display: inline-block;
   margin-left: 20px;
 }

@@ -1,5 +1,5 @@
 <template lang="html">
-  <article-edit :article="article" :breadcrumbs="breadcrumbs" @submit="handlePublish"></article-edit>
+  <article-edit :article="article" :breadcrumbs="breadcrumbs" :isEdit="true" @submit="handlePublish"></article-edit>
 </template>
 
 <script>

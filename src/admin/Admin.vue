@@ -32,10 +32,12 @@
 </template>
 
 <script>
+import { StorageKey, ActionsKey } from "store/types";
+
 export default {
   data() {
     return {
-      adminName: this.$store.state.user.name
+      adminName: this.$store.state[StorageKey.USER].name
     };
   },
   methods: {
@@ -50,7 +52,7 @@ export default {
         case "logout":
           this.$confirm("是否退出登录？")
             .then(res => {
-              this.$store.dispatch("userLogout");
+              this.$store.dispatch(ActionsKey.USER_LOGOUT);
               this.$message({
                 message: "退出登录成功!",
                 type: "success"

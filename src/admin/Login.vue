@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { ActionsKey } from "store/types";
+
 import $api from "api/admin";
 
 export default {
@@ -44,7 +46,7 @@ export default {
           this.$http.post($api.postLogin, this.user).then(data => {
             this.loadingflag = false;
             if (200 == data.code) {
-              this.$store.dispatch("userLogin", {
+              this.$store.dispatch(ActionsKey.USER_LOGIN, {
                 token: data.token,
                 name: this.user.name
               });

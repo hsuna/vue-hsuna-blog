@@ -2,8 +2,8 @@
  * @Description 文章接口-无权限
  * @Author: Hsuan
  * @Date: 2018-03-27 09:57:58
- * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-28 13:44:59
+ * @Last Modified by: Hsuna
+ * @Last Modified time: 2018-03-29 02:01:20
  */
 
 import express from "express";
@@ -20,8 +20,15 @@ const guestBaseFilter = article => ({
   publishAt: article.publishAt
 });
 
+const guestCommentFilter = comment => ({
+  name: comment.name,
+  content: comment.content,
+  createdAt: comment.createdAt
+})
+
 const guestDetailFilter = article =>
   Object.assign(guestBaseFilter(article), {
+    comments: article.comments.map(guestCommentFilter), //评论
     content: article.content //详情
   });
 
@@ -58,8 +65,8 @@ router.get("/", (req, res) => {
 router.get("/detail", (req, res) => {
   let { id } = req.query;
   api
-  .getArticles({ id })
-  .then(result => {
+    .getArticles({ id })
+    .then(result => {
       let [detail] = result;
       if (1 == detail.status) {
         res.send({
@@ -77,6 +84,28 @@ router.get("/detail", (req, res) => {
       res.send({
         code: -200,
         message: "查找文章失败"
+      });
+    });
+});
+
+/**
+ * 更新文章评论
+ */
+router.put("/comment", (req, res) => {
+  let { id } = req.body;
+  api
+    .updateArticle(id, { comments: req.body.comment }, "$push")
+    .then(result => {
+      res.send({
+        code: 200,
+        message: "提交评论成功",
+        data: guestCommentFilter(result.comments)
+      });
+    })
+    .catch(err => {
+      res.send({
+        code: -200,
+        message: "提交评论失败"
       });
     });
 });

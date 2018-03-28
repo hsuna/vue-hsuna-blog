@@ -13,7 +13,7 @@ router.get("/", verifyRouteToken, (req, res) => {
   api
     .getArticles(req.query, page, limit)
     .then(result => {
-      let [ list, total ] = result;
+      let [list, total] = result;
       res.send({
         code: 200,
         data: {
