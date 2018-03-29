@@ -2,8 +2,8 @@
  * @Description 文章接口-无权限
  * @Author: Hsuan
  * @Date: 2018-03-27 09:57:58
- * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-29 02:01:20
+ * @Last Modified by: Hsuan
+ * @Last Modified time: 2018-03-29 15:03:13
  */
 
 import express from "express";
@@ -21,6 +21,7 @@ const guestBaseFilter = article => ({
 });
 
 const guestCommentFilter = comment => ({
+  id: comment._id,
   name: comment.name,
   content: comment.content,
   createdAt: comment.createdAt
@@ -67,11 +68,11 @@ router.get("/detail", (req, res) => {
   api
     .getArticles({ id })
     .then(result => {
-      let [detail] = result;
-      if (1 == detail.status) {
+      let [article] = result;
+      if (1 == article.status) {
         res.send({
           code: 200,
-          data: guestDetailFilter(detail)
+          data: guestDetailFilter(article)
         });
       } else {
         res.send({
@@ -83,7 +84,7 @@ router.get("/detail", (req, res) => {
     .catch(err => {
       res.send({
         code: -200,
-        message: "查找文章失败"
+        message: "该文章不存在"
       });
     });
 });
@@ -96,10 +97,13 @@ router.put("/comment", (req, res) => {
   api
     .updateArticle(id, { comments: req.body.comment }, "$push")
     .then(result => {
+      return api.getArticles({ id });
+    }).then(result => {
+      let [article] = result;
       res.send({
         code: 200,
         message: "提交评论成功",
-        data: guestCommentFilter(result.comments)
+        data: article.comments.map(guestCommentFilter)
       });
     })
     .catch(err => {
