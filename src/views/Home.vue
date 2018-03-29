@@ -1,52 +1,32 @@
 <template>
     <div class="blog-body">
       <blog-personal></blog-personal>
-      <blog-profile :profileList="profileList" :classifyList="classifyList" @click-classify="handleClassify"></blog-profile>
+      <div class="blog-profile">
+        <profile-side></profile-side>
+        <profile-main></profile-main>
+      </div>
+
     </div>
 </template>
 
 <script>
 import blogPersonal from "components/blog-personal";
-import blogProfile from "components/blog-profile";
+import profileMain from "components/profile-main";
+import profileSide from "components/profile-side";
 
 import $api from "api/guest";
 
 export default {
   data() {
-    return {
-      classifyList: [],
-      profileList: []
-    };
+    return {};
   },
-  created() {
-    this.getProfileList();
-    this.getClassifyCount();
-  },
-  methods: {
-    getClassifyCount() {
-      this.$http.get($api.getClassifyCount).then(res => {
-        if (200 == res.code) {
-          this.classifyList = res.data;
-        }
-      });
-    },
-    getProfileList(query) {
-      this.$http.get($api.getArticle, { params: query }).then(res => {
-        if (200 == res.code) {
-          this.profileList = res.data.list;
-          if(!query){
-            this.articleCount = res.data.total;
-          }
-        }
-      });
-    },
-    handleClassify(classify) {
-      this.getProfileList({ classify });
-    }
-  },
+  created() {},
+
+  methods: {},
   components: {
     "blog-personal": blogPersonal,
-    "blog-profile": blogProfile
+    "profile-main": profileMain,
+    "profile-side": profileSide
   }
 };
 </script>

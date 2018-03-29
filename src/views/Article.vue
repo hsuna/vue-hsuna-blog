@@ -1,10 +1,10 @@
 <template>
-    <div class="blog-body">
+    <div class="blog-body" v-loading="loading">
       <div class="article-main">
         <div class="article-header">
           <h1 class="title">{{article.title}}</h1>
           <div class="clearfix">
-            <div class="tags"><a href="javascript:;" v-for="tag in article.tags" :key="tag">{{tag}}</a></div>
+            <div class="tags"><a class="tag" href="javascript:;" v-for="tag in article.tags" :key="tag">{{tag}}</a></div>
             <div class="classify">{{article.classify}}</div>
             <div class="time">{{article.publishAt, 'yyyy年MM月dd日' | timeStampFormat}}发布</div>
           </div>
@@ -17,10 +17,17 @@
         <!-- <div class="article-footer">
         </div> -->
       </div>
-      <div class="article-main">
+      <div class="article-main" v-show="relateArticle.length">
         <div class="article-title">相关文章</div>
         <div class="article-body">
-
+          <ul class="article-relate">
+            <li v-for="relate in relateArticle" :key="relate.id">
+              <span class="title">《<a :href="`/article/${relate.id}`">{{relate.title}}</a>》</span>
+              <div class="tags"><span class="tag" v-for="tag in relate.tags" :key="tag">{{tag}}</span></div>
+              <span class="time">{{relate.publishAt, 'yyyy-MM-dd' | timeStampFormat}}</span>
+              <p class="about">简介：{{relate.about}}</p>
+            </li>
+          </ul>
         </div>
       </div>
       <div class="article-main">
@@ -104,11 +111,13 @@ marked.setOptions({
 export default {
   data() {
     return {
+      loading: true,
       article: {
         id: this.$route.params.articleId,
         comments: []
       },
       replys: [],
+      relateArticle: [],
       comment: {
         ...this.$store.state[StorageKey.COMMENT_USER],
         checked: true
@@ -125,17 +134,6 @@ export default {
       }
     };
   },
-  created() {
-    this.$http
-      .get($api.getArticleDetail, { params: this.article })
-      .then(res => {
-        if (200 == res.code) {
-          this.article = Object.assign({}, this.article, res.data);
-        } else {
-          this.$router.replace({ path: "/" });
-        }
-      });
-  },
   computed: {
     markdownToHtml() {
       if (this.article) {
@@ -145,7 +143,36 @@ export default {
       }
     }
   },
+  created() {
+    this.getArticleDetail();
+  },
   methods: {
+    getArticleDetail() {
+      this.$http
+        .get($api.getArticleDetail, { params: this.article })
+        .then(res => {
+          if (200 == res.code) {
+            this.article = Object.assign({}, this.article, res.data);
+            this.getArticleRelate();
+            this.loading = false;
+          } else {
+            this.$router.replace({ path: "/" });
+          }
+        });
+    },
+    getArticleRelate() {
+      this.$http
+        .get($api.getArticleRelate, {
+          params: {
+            classify: this.article.classify
+          }
+        })
+        .then(res => {
+          if (200 == res.code) {
+            this.relateArticle = res.data.list;
+          }
+        });
+    },
     handleAddReply(data, index) {
       for (let i = this.replys.length - 1; i >= 0; i--) {
         if (index == this.replys[i].index) return;
@@ -159,11 +186,13 @@ export default {
     },
     handleRemoveReply(index) {
       this.replys.splice(index, 1);
+      this.commentFocus.focus = true;
     },
     handleComment() {
       this.$refs.commentRef.validate(valid => {
         if (valid) {
-          this.$http.put($api.putArticleComment, {
+          this.$http
+            .put($api.putArticleComment, {
               id: this.article.id,
               comment: Object.assign(this.comment, {
                 content: this.getAssemComment()
@@ -193,8 +222,13 @@ export default {
     },
     getAssemComment() {
       let replys = this.replys.map(reply => {
-        let content = reply.content.replace(/<blockquote>.*<\/blockquote>[\s]*/g, '');
-        return `<blockquote><pre>回复[${reply.index + 1}楼]${reply.name}的发言：</pre><p>${content}</p></blockquote>`;
+        let content = reply.content.replace(
+          /<blockquote>.*<\/blockquote>[\s]*/g,
+          ""
+        );
+        return `<blockquote><pre>回复[${reply.index + 1}楼]${
+          reply.name
+        }的发言：</pre><p>${content}</p></blockquote>`;
       });
       return replys.join("\n") + this.comment.content;
     }
@@ -214,6 +248,24 @@ export default {
   background-color: #fff;
   box-shadow: 0 1px 3px rgba(26, 26, 26, 0.1);
 
+  .tags {
+    display: inline-block;
+    .tag {
+      margin-right: 6px;
+      padding: 2px 6px;
+      border-radius: 2px;
+      text-decoration: none;
+      font-size: 12px;
+      color: #0084ff;
+      background-color: #daedff;
+
+      &:hover {
+        color: #fff;
+        background-color: #0084ff;
+      }
+    }
+  }
+
   .article-header {
     margin: 0 30px;
     padding: 30px 5px;
@@ -223,22 +275,6 @@ export default {
     .title {
       margin-bottom: 15px;
       font-size: 32px;
-    }
-
-    .tags {
-      display: inline-block;
-      a {
-        margin-right: 6px;
-        padding: 0 4px;
-        text-decoration: none;
-        color: #0084ff;
-        background-color: #daedff;
-
-        &:hover {
-          color: #fff;
-          background-color: #0084ff;
-        }
-      }
     }
 
     .classify {
@@ -299,6 +335,40 @@ export default {
     word-wrap: break-word;
     border-left: 3px solid #0084ff;
     background-color: #fafafa;
+  }
+
+  .article-relate {
+    padding: 10px 20px;
+
+    li {
+      padding: 15px 10px;
+
+      & + li {
+        border-top: 1px solid #dadada;
+      }
+
+      .title {
+        font-size: 16px;
+        font-weight: bold;
+        vertical-align: middle;
+      }
+      .tags {
+        margin-left: 4px;
+      }
+
+      .time {
+        float: right;
+        color: #999;
+      }
+      .about {
+        width: 80%;
+        padding-top: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #999;
+      }
+    }
   }
 
   .article-comments {

@@ -2,8 +2,8 @@
  * @Description 文章接口-无权限
  * @Author: Hsuan
  * @Date: 2018-03-27 09:57:58
- * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-29 15:03:13
+ * @Last Modified by: Hsuna
+ * @Last Modified time: 2018-03-30 01:04:44
  */
 
 import express from "express";
@@ -25,7 +25,7 @@ const guestCommentFilter = comment => ({
   name: comment.name,
   content: comment.content,
   createdAt: comment.createdAt
-})
+});
 
 const guestDetailFilter = article =>
   Object.assign(guestBaseFilter(article), {
@@ -90,6 +90,32 @@ router.get("/detail", (req, res) => {
 });
 
 /**
+ * 查找相关文章
+ */
+router.get("/relate", (req, res) => {
+  let { classify, page = 1, limit = 5 } = req.query;
+  api
+    .getArticles({ classify, status: 1, sort: { publishAt: -1 } }, page, limit)
+    .then(result => {
+      let [list, total] = result;
+      res.send({
+        code: 200,
+        data: {
+          //id查询直接返回数据
+          list: (Array.isArray(list) ? list : [list]).map(guestBaseFilter),
+          total: total || list.length || 0
+        }
+      });
+    })
+    .catch(err => {
+      res.send({
+        code: -200,
+        message: "获取文章失败"
+      });
+    });
+});
+
+/**
  * 更新文章评论
  */
 router.put("/comment", (req, res) => {
@@ -98,7 +124,8 @@ router.put("/comment", (req, res) => {
     .updateArticle(id, { comments: req.body.comment }, "$push")
     .then(result => {
       return api.getArticles({ id });
-    }).then(result => {
+    })
+    .then(result => {
       let [article] = result;
       res.send({
         code: 200,

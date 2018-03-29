@@ -23,6 +23,6 @@ export default {
   .blog-body{
     width: 1024px;
     margin: 0 auto;
-    padding-top: 52px;
+    margin-top: 52px;
   }
 </style>
