@@ -2,13 +2,13 @@
  * @Description axios拦截器自定义
  * @Author: Hsuan
  * @Date: 2018-03-17 10:09:18
- * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-29 02:46:25
+ * @Last Modified by: Hsuan
+ * @Last Modified time: 2018-03-30 16:55:38
  */
 
 import Axios from "axios";
 import store from "store";
-import { StorageKey } from "store/types";
+import { StoreKey } from "store/types";
 import router from "@/router";
 
 import qs from "qs";
@@ -24,9 +24,9 @@ Axios.header = {
 //添加请求拦截器
 Axios.interceptors.request.use(
   config => {
-    if (store.state[StorageKey.USER].token) {
+    if (store.state[StoreKey.USER].token) {
       // 判断是否存在token，如果存在的话，则每个http header都加上token
-      config.headers.Authorization = store.state[StorageKey.USER].token;
+      config.headers.Authorization = store.state[StoreKey.USER].token;
     }
     //在发送请求之前做某事
     // if (config.method === "post") {//序列化了，使用RESTful

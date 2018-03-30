@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { StorageKey, ActionsKey } from "store/types";
+import { StoreKey, ActionsKey } from "store/types";
 import marked from "marked";
 import hljs from "highlight.js";
 
@@ -119,7 +119,7 @@ export default {
       replys: [],
       relateArticle: [],
       comment: {
-        ...this.$store.state[StorageKey.COMMENT_USER],
+        ...this.$store.state[StoreKey.COMMENT_USER],
         checked: true
       },
       commentRules: {

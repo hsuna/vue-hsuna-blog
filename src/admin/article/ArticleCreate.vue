@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { StorageKey, ActionsKey } from "store/types";
+import { StoreKey, ActionsKey } from "store/types";
 import articleEdit from "components/article-edit";
 import $api from "api/admin";
 
@@ -23,7 +23,7 @@ export default {
     };
   },
   created() {
-    Object.assign(this.article, this.$store.state[StorageKey.ARTICLE]);
+    Object.assign(this.article, this.$store.state[StoreKey.ARTICLE]);
   },
   mounted() {
     window.onbeforeunload = this.recordCacheArticle;
