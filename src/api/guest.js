@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-26 14:42:22
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-30 01:04:40
+ * @Last Modified time: 2018-03-31 20:47:33
  */
 
 export default {
@@ -15,5 +15,6 @@ export default {
   getArticle: process.env.API_HOST + "article", //查询文章
   getArticleDetail: process.env.API_HOST + "article/detail", //查询文章详情
   getArticleRelate: process.env.API_HOST + "article/relate", //查询文章相关
-  putArticleComment: process.env.API_HOST + "article/comment" //提交文章评论
+  putArticleViewCount: process.env.API_HOST + "article/viewCount", //更新浏览次数
+  putArticleComment: process.env.API_HOST + "article/comment" //更新文章评论
 };

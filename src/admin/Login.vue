@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { ActionsKey } from "store/types";
+import { ActionName } from "store/types";
 
 import $api from "api/admin";
 
@@ -43,20 +43,11 @@ export default {
       this.loadingflag = true;
       this.$refs.user.validate(valid => {
         if (valid) {
-          this.$http.post($api.postLogin, this.user).then(data => {
-            this.loadingflag = false;
-            if (200 == data.code) {
-              this.$store.dispatch(ActionsKey.USER_LOGIN, {
-                token: data.token,
-                name: this.user.name
-              });
-              this.$message({
-                message: data.message,
-                type: "success"
-              });
-              this.$router.replace({ path: "/admin" });
-            }
-          });
+          this.$store
+            .dispatch(ActionName.USER_LOGIN, { user: this.user, vm: this })
+            .then(data => {
+              this.loadingflag = false;
+            });
         } else {
           this.loadingflag = false;
         }

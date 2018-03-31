@@ -2,8 +2,8 @@
  * @Description: Hsuna
  * @Author: Hsuna
  * @Date: 2018-03-26 01:48:53
- * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-29 14:42:30
+ * @Last Modified by: Hsuna
+ * @Last Modified time: 2018-03-31 21:30:52
  */
 
 import { Article } from "../models";
@@ -53,9 +53,6 @@ const createArticle = article => {
  * @param {object} article
  */
 const updateArticle = (id, article, update = "$set") => {
-  if ("$set" == update) {
-    article.updateAt = Date.now();
-  }
   if (1 == article.status) {
     return new Promise((resolve, reject) => {
       Article.findById(id)

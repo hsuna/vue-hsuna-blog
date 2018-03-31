@@ -2,31 +2,73 @@
  * @Description: Hsuna
  * @Author: Hsuna
  * @Date: 2018-03-26 01:48:38
- * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-30 15:00:37
+ * @Last Modified by: Hsuna
+ * @Last Modified time: 2018-03-31 21:41:15
  */
-import { ActionsKey } from "./types";
+import { ActionName, MutationName } from "./types";
+
+import $admin from "api/admin";
+import $guest from "api/guest";
 
 export default {
-  [ActionsKey.USER_LOGIN]({ commit }, user) {
-    commit(ActionsKey.USER_LOGIN, user);
+  [ActionName.USER_LOGIN]({ commit }, { user, vm }) {
+    if (vm) {
+      return new Promise((resolve, reject) => {
+        vm.$http.post($admin.postLogin, user).then(res => {
+          if (200 == res.code) {
+            commit(MutationName.SET_USER, {
+              token: res.token,
+              name: user.name
+            });
+            vm.$message({
+              message: res.message,
+              type: "success"
+            });
+            vm.$router.replace({ path: "/admin" });
+          }
+          resolve(res);
+        });
+      });
+    }
   },
-  [ActionsKey.USER_LOGOUT]({ commit }) {
-    commit(ActionsKey.USER_LOGOUT);
+  [ActionName.USER_LOGOUT]({ commit }, { vm }) {
+    if (vm) {
+      vm
+        .$confirm("是否退出登录？")
+        .then(res => {
+          commit(MutationName.CLEAR_USER);
+          vm.$message({
+            message: "退出登录成功!",
+            type: "success"
+          });
+          vm.$router.replace({ path: "/login" });
+        })
+        .catch(err => {});
+    }
   },
-  [ActionsKey.RECORD_ARTICLE]({ commit }, article) {
-    commit(ActionsKey.RECORD_ARTICLE, article);
-  },
-  [ActionsKey.CLEAR_ARTICLE]({ commit }) {
-    commit(ActionsKey.CLEAR_ARTICLE);
-  },
-  [ActionsKey.RECORD_COMMENT_USER]({ commit }, comment) {
-    commit(ActionsKey.RECORD_COMMENT_USER, comment);
-  },
-  [ActionsKey.CLEAR_COMMENT_USER]({ commit }) {
-    commit(ActionsKey.CLEAR_COMMENT_USER);
-  },
-  [ActionsKey.ADD_BROWES_TIME]({ commit }, id) {
-    commit(ActionsKey.ADD_BROWES_TIME, id);
-  },
+  [ActionName.ADD_VIEW_TIME]({ state, commit }, { article, vm }) {
+    let { visitor } = state;
+    if (!visitor.ids) {
+      visitor.ids = [];
+    }
+    return new Promise((resolve, reject) => {
+      if (!visitor.ids.includes(article.id)) {
+        if (vm) {
+          vm.$http
+            .put($guest.putArticleViewCount, {
+              id: article.id,
+              viewCount: article.viewCount + 1
+            })
+            .then(res => {
+              visitor.ids.push(article.id);
+              commit(MutationName.SET_VISITOR, visitor);
+              resolve({
+                ...res,
+                count: article.viewCount + 1
+              });
+            });
+        }
+      }
+    });
+  }
 };

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { StoreKey, ActionsKey } from "store/types";
+import { StoreKey, MutationName } from "store/types";
 import articleEdit from "components/article-edit";
 import $api from "api/admin";
 
@@ -23,7 +23,7 @@ export default {
     };
   },
   created() {
-    Object.assign(this.article, this.$store.state[StoreKey.ARTICLE]);
+    Object.assign(this.article, this.$store.state.article);
   },
   mounted() {
     window.onbeforeunload = this.recordCacheArticle;
@@ -36,14 +36,14 @@ export default {
     recordCacheArticle() {
       if (this.isRecord) {
         //缓存正在编辑的文章
-        this.$store.dispatch(ActionsKey.RECORD_ARTICLE, this.article);
+        this.$store.commit(MutationName.SET_ARTICLE, this.article);
       }
     },
     handlePublish() {
       this.$http.post($api.postArticle, this.article).then(res => {
         if (200 == res.code) {
           this.isRecord = false;
-          this.$store.dispatch(ActionsKey.CLEAR_ARTICLE);//清除缓存的文章
+          this.$store.commit(MutationName.CLEAR_ARTICLE);//清除缓存的文章
           this.$message({ message: res.message, type: "success" });
           this.$router.replace({ path: "/admin/articleList" });
         }

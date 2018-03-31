@@ -6,7 +6,11 @@
           <div class="clearfix">
             <div class="tags"><a class="tag" href="javascript:;" v-for="tag in article.tags" :key="tag">{{tag}}</a></div>
             <div class="classify">{{article.classify}}</div>
-            <div class="time">{{article.publishAt, 'yyyy年MM月dd日' | timeStampFormat}}发布</div>
+            <div class="time">
+              <span>发布于{{article.publishAt, 'yyyy-MM-dd' | timeStampFormat}}</span>
+              <span>{{article.viewCount}}次浏览</span>
+              <span>最后一次编辑是{{article.updatedAt | timeAgoFormat}}</span>
+            </div>
           </div>
         </div>
         <div class="article-body">
@@ -24,7 +28,10 @@
             <li v-for="relate in relateArticle" :key="relate.id">
               <span class="title">《<a :href="`/article/${relate.id}`">{{relate.title}}</a>》</span>
               <div class="tags"><span class="tag" v-for="tag in relate.tags" :key="tag">{{tag}}</span></div>
-              <span class="time">{{relate.publishAt, 'yyyy-MM-dd' | timeStampFormat}}</span>
+              <div class="time">
+                <span>{{relate.publishAt, 'yyyy-MM-dd' | timeStampFormat}}</span>
+                 <span>{{article.viewCount}}次浏览</span>
+              </div>
               <p class="about">简介：{{relate.about}}</p>
             </li>
           </ul>
@@ -91,7 +98,8 @@
 </template>
 
 <script>
-import { StoreKey, ActionsKey } from "store/types";
+import { ActionName, MutationName } from "store/types";
+
 import marked from "marked";
 import hljs from "highlight.js";
 
@@ -116,16 +124,23 @@ export default {
         id: this.$route.params.articleId,
         comments: []
       },
-      replys: [],
+      replys: [], //回复楼层
       relateArticle: [],
-      comment: {
-        ...this.$store.state[StoreKey.COMMENT_USER],
-        checked: true
-      },
+      comment: Object.assign(
+        { checked: true },
+        this.$store.getters.commentUser
+      ),
       commentRules: {
-        name: [{ required: true, message: "请填写昵称", trigger: "blur" }],
-        email: [{ required: true, message: "请填写邮箱", trigger: "blur" }],
-        content: [{ required: true, message: "请选择评论", trigger: "blur" }]
+        name: [{ required: true, message: "请输入昵称", trigger: "blur" }],
+        email: [
+          { required: true, message: "请输入邮箱", trigger: "blur" },
+          {
+            message: "请输入正确邮箱的格式",
+            pattern: /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/,
+            trigger: "blur"
+          }
+        ],
+        content: [{ required: true, message: "请输入评论", trigger: "blur" }]
       },
       commentFocus: {
         cls: "el-textarea",
@@ -153,6 +168,7 @@ export default {
         .then(res => {
           if (200 == res.code) {
             this.article = Object.assign({}, this.article, res.data);
+            this.updateArticleViewCount(); //更新文章的浏览次数
             this.getArticleRelate();
             this.loading = false;
           } else {
@@ -170,6 +186,18 @@ export default {
         .then(res => {
           if (200 == res.code) {
             this.relateArticle = res.data.list;
+          }
+        });
+    },
+    updateArticleViewCount() {
+      this.$store
+        .dispatch(ActionName.ADD_VIEW_TIME, {
+          article: this.article,
+          vm: this
+        })
+        .then(res => {
+          if (200 == res.code) {
+            this.article.viewCount = res.count;
           }
         });
     },
@@ -202,18 +230,17 @@ export default {
               if (200 == res.code) {
                 this.$message({ message: res.message, type: "success" });
                 this.article.comments = res.data;
+                let { name, email, checked } = this.comment;
+                this.replys = []; //清除回复楼层
                 this.$refs.commentRef.resetFields(); //清除表单状态
-                this.comment.content = "";
-                this.replys = [];
                 if (this.comment.checked) {
-                  this.$store.dispatch(
-                    ActionsKey.RECORD_COMMENT_USER,
+                  this.comment = { name, email, checked };
+                  this.$store.commit(
+                    MutationName.SET_COMMENT_USER,
                     this.comment
                   );
                 } else {
-                  this.comment.name = "";
-                  this.comment.email = "";
-                  this.$store.dispatch(ActionsKey.CLEAR_COMMENT_USER);
+                  this.$store.commit(MutationName.CLEAR_COMMENT_USER);
                 }
               }
             });
@@ -287,6 +314,11 @@ export default {
     .time {
       display: inline-block;
       color: #999;
+
+      span + span:before {
+        padding: 0 4px;
+        content: "•";
+      }
     }
   }
 
@@ -359,6 +391,11 @@ export default {
       .time {
         float: right;
         color: #999;
+
+        span + span:before {
+          content: "•";
+          padding: 0 4px;
+        }
       }
       .about {
         width: 80%;

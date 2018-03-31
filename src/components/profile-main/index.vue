@@ -5,6 +5,7 @@
       <div class="card-date" :data-date="$filter.timeStampFormat(profile.publishAt)">{{profile.publishAt | timeAgoFormat}}</div>
       <div class="card-tags">
         <el-tag size="mini" v-for="tag in profile.tags" :key="tag">{{tag}}</el-tag>
+        <span class="card-count">{{profile.comments?profile.comments.length:0}} 评论 / {{profile.viewCount}} 浏览</span>
       </div>
       <div class="card-content">&nbsp;&nbsp;&nbsp;&nbsp;{{profile.about}}
         <el-button type="text" @click="$router.push(`/article/${profile.id}`)">阅读全文<i class="el-icon-arrow-right"></i></el-button>
@@ -86,6 +87,10 @@ export default {
 
   .card-tags {
     padding-top: 5px;
+  }
+
+  .card-count {
+    color: #999;
   }
 
   .card-content {

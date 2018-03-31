@@ -62,6 +62,7 @@ router.post("/", verifyRouteToken, (req, res) => {
  */
 router.put("/", verifyRouteToken, (req, res) => {
   let { id } = req.body;
+  req.body.updatedAt = Date.now();
   api
     .updateArticle(id, req.body)
     .then(result => {

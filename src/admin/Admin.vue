@@ -3,7 +3,7 @@
     <div class="header">
       <div class="header-logo">HSUNA</div>
       <div class="header-option">
-        <span class="user-name">欢迎回来，{{adminName}}</span>
+        <span class="user-name">欢迎回来，{{userName}}</span>
         <el-dropdown @command="handleDropdown">
           <i class="el-icon-setting"></i>
           <el-dropdown-menu slot="dropdown">
@@ -32,12 +32,12 @@
 </template>
 
 <script>
-import { StorageKey, ActionsKey } from "store/types";
+import { ActionName } from "store/types";
 
 export default {
   data() {
     return {
-      adminName: this.$store.state[StorageKey.USER].name
+      userName: this.$store.getters.userName
     };
   },
   methods: {
@@ -50,16 +50,7 @@ export default {
           this.$router.push({ path: "/admin" });
           break;
         case "logout":
-          this.$confirm("是否退出登录？")
-            .then(res => {
-              this.$store.dispatch(ActionsKey.USER_LOGOUT);
-              this.$message({
-                message: "退出登录成功!",
-                type: "success"
-              });
-              this.$router.replace({ path: "/login" });
-            })
-            .catch(err => {});
+          this.$store.dispatch(ActionName.USER_LOGOUT, { vm: this });
           break;
       }
     }

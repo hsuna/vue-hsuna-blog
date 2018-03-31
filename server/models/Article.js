@@ -2,8 +2,8 @@
  * @Description 模型-文章
  * @Author: Hsuan
  * @Date: 2018-03-25 12:04:21
- * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-29 13:33:04
+ * @Last Modified by: Hsuna
+ * @Last Modified time: 2018-03-31 21:34:46
  */
 import mongoose from "mongoose";
 
@@ -25,7 +25,8 @@ const Article = mongoose.model(
     tags: { type: Array }, //标签
     createdAt: { type: Number, default: Date.now }, //创建时间
     publishAt: { type: Number, default: Date.now }, //发布时间
-    updateAt: { type: Number, default: Date.now }, //更新时间
+    updatedAt: { type: Number, default: Date.now }, //更新时间
+    viewCount: { type: Number, default: 0 }, //浏览次数
     status: { type: Number, default: 0 } //0:草稿-私有|1:草稿-公开|2:私有|3:公开
   })
 );

@@ -42,7 +42,6 @@ const createClassify = classify => {
  * @param {object} classify
  */
 const updateClassify = (id, classify) => {
-  classify.updateAt = Date.now();
   return Classify.update({ _id: id }, { $set: classify });
 };
 

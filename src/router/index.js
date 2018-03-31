@@ -3,8 +3,8 @@
  * @Description
  * @Author: Hsuan
  * @Date: 2018-03-17 10:13:19
- * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-30 16:55:50
+ * @Last Modified by: Hsuna
+ * @Last Modified time: 2018-03-31 19:58:25
  */
 
 import Vue from "vue";
@@ -21,7 +21,7 @@ const router = new VueRouter({
 
 // 路由钩子
 router.beforeEach(({ meta, path }, from, next) => {
-  let isLogin = Boolean(store.state[StoreKey.USER].token);
+  let { isLogin } = store.getters;
   if (path == "/login" || path == "/reg") {
     if (isLogin) {
       return next({ path: "/admin" });

@@ -15,7 +15,7 @@
           <el-table-column prop="classify" min-width="100" label="所属分类" ></el-table-column>
           <el-table-column min-width="100" label="文章类型" :formatter="row => ['草稿', '公开', '私人'][row.status]"></el-table-column>
           <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => $filter.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
-          <el-table-column prop="updateAt" min-width="140" label="更新时间" :formatter="row => $filter.timeStampFormat(row.updateAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
+          <el-table-column prop="updatedAt" min-width="140" label="更新时间" :formatter="row => $filter.timeStampFormat(row.updatedAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
           <el-table-column min-width="220" label="操作" fixed="right" align="center">
             <template slot-scope="scope">
               <!-- <el-button @click="read(scope.row._id)">查看</el-button> -->

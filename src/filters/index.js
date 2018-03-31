@@ -4,7 +4,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:17:16
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-28 00:00:11
+ * @Last Modified time: 2018-03-31 21:29:06
  */
 
 const WEEKDAY = {
@@ -71,7 +71,7 @@ const agoStamp = [
   { text: "{time}月前", time: 365 * 24 * 60 * 60 * 1000 },
   { text: "{time}年前" }
 ];
-const timeAgoFormat = (timeStamp, fmt) => {
+const timeAgoFormat = (timeStamp, fmt=agoStamp) => {
   if (!timeStamp) return "";
   let difftime = Date.now() - timeStamp;
   let divisor = 1;

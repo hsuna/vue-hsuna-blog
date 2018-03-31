@@ -1,29 +1,45 @@
-import { StorageKey, ActionsKey } from "./types";
+/*
+ * @Description: Hsuna
+ * @Author: Hsuna
+ * @Date: 2018-03-31 19:16:27
+ * @Last Modified by: Hsuna
+ * @Last Modified time: 2018-03-31 21:59:00
+ */
+
+import { storage, StorageKey } from "./storage";
+import { MutationName } from "./types";
 
 export default {
-  [ActionsKey.USER_LOGIN](state, user) {
-    state.setStorage(StorageKey.USER, user);
+  [MutationName.SET_USER](state, user) {
+    if (!user) throw "Param user is undefined.";
+    state.user = user;
+    storage.set(StorageKey.USER, user);
   },
-  [ActionsKey.USER_LOGOUT](state) {
-    state.removeStorage(StorageKey.USER);
+  [MutationName.CLEAR_USER](state) {
+    state.user = {};
+    storage.remove(StorageKey.USER);
   },
-  [ActionsKey.RECORD_ARTICLE](state, article) {
-    state.setStorage(StorageKey.ARTICLE, article);
+  [MutationName.SET_ARTICLE](state, article) {
+    if (!article) throw "Param article is undefined.";
+    state.article = article;
+    storage.set(StorageKey.ARTICLE, article);
   },
-  [ActionsKey.CLEAR_ARTICLE](state) {
-    state.removeStorage(StorageKey.ARTICLE);
+  [MutationName.CLEAR_ARTICLE](state) {
+    state.article = {};
+    storage.remove(StorageKey.ARTICLE);
   },
-  [ActionsKey.RECORD_COMMENT_USER](state, comment) {
-    state.setStorage(StorageKey.COMMENT_USER, comment);
+  [MutationName.SET_VISITOR](state, visitor) {
+    if (!visitor) throw "Param visitor is undefined.";
+    state.visitor = visitor;
+    storage.set(StorageKey.VISITOR, visitor);
   },
-  [ActionsKey.CLEAR_COMMENT_USER](state) {
-    state.removeStorage(StorageKey.COMMENT_USER);
+  [MutationName.SET_COMMENT_USER](state, comment) {
+    if (!comment) throw "Param comment is undefined.";
+    state.visitor.comment = comment;
+    storage.set(StorageKey.VISITOR, state.visitor);
   },
-  [ActionsKey.ADD_BROWES_TIME](state, id) {
-    let browesTimes = state.getStorage(StorageKey.BROWES_TIME) || [];
-    if(-1 == browesTimeList.indexOf(id)){
-      browesTimeList.push(id);
-    }
-    state.setStorage(StorageKey.BROWES_TIME, browesTimeList);
+  [MutationName.CLEAR_COMMENT_USER](state) {
+    state.visitor.comment = {};
+    storage.set(StorageKey.VISITOR, state.visitor);
   }
 };

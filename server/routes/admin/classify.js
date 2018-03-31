@@ -3,7 +3,7 @@
  * @Author: Hsuna
  * @Date: 2018-03-26 01:49:00
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-29 00:24:40
+ * @Last Modified time: 2018-03-31 21:33:33
  */
 
 import express from "express";
@@ -21,7 +21,7 @@ router.get("/", verifyRouteToken, (req, res) => {
   api
     .getClassify(req.query, page, limit)
     .then(result => {
-      let [ list, total ] = result;
+      let [list, total] = result;
       res.send({
         code: 200,
         data: {
@@ -85,6 +85,7 @@ router.put("/", verifyRouteToken, (req, res) => {
     });
     return;
   }
+  req.body.updatedAt = Date.now();
   api
     .updateClassify(id, req.body)
     .then(result => {

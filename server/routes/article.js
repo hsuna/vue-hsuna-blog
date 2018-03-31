@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-27 09:57:58
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-30 01:04:44
+ * @Last Modified time: 2018-03-31 21:27:11
  */
 
 import express from "express";
@@ -17,6 +17,8 @@ const guestBaseFilter = article => ({
   classify: article.classify,
   about: article.about,
   tags: article.tags,
+  viewCount: article.viewCount,
+  updatedAt: article.updatedAt,
   publishAt: article.publishAt
 });
 
@@ -111,6 +113,27 @@ router.get("/relate", (req, res) => {
       res.send({
         code: -200,
         message: "获取文章失败"
+      });
+    });
+});
+
+/**
+ * 更新浏览次数
+ */
+router.put("/viewCount", (req, res) => {
+  let { id } = req.body;
+  api
+    .updateArticle(id, { viewCount: req.body.viewCount })
+    .then(result => {
+      res.send({
+        code: 200,
+        message: "更新次数成功"
+      });
+    })
+    .catch(err => {
+      res.send({
+        code: -200,
+        message: "更新次数成功"
       });
     });
 });
