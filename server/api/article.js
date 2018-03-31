@@ -3,7 +3,7 @@
  * @Author: Hsuna
  * @Date: 2018-03-26 01:48:53
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-31 21:30:52
+ * @Last Modified time: 2018-04-01 03:53:34
  */
 
 import { Article } from "../models";
@@ -23,18 +23,23 @@ const getArticles = (query, page, limit = 10) => {
   let promiseList;
   let { id, sort = { _id: -1 } } = query;
   if (id) {
-    promiseList = [Article.findById(id)];
+    promiseList = [Article.findById(id).populate("comments")];
   } else if (page && limit) {
     let skip = (page - 1) * limit;
     promiseList = [
       Article.find(query)
+        .populate("comments")
         .sort(sort)
         .skip(skip)
         .limit(limit),
       Article.find(query).count()
     ];
   } else {
-    promiseList = [Article.find(query).sort(sort)];
+    promiseList = [
+      Article.find(query)
+        .populate("comments")
+        .sort(sort)
+    ];
   }
   return Promise.all(promiseList);
 };

@@ -1,13 +1,12 @@
 <template>
   <div class="item-side">
     <div class="side-header">热门文章</div>
-    <div class="side-body">
+    <div class="side-body" v-loading="loading">
       <template v-if="hotArticleList.length>0">
         <ul class="hot-article">
           <li v-for="article in hotArticleList" :key="article.id">
-            &middot;
             <a :href="`/article/${article.id}`">{{article.title}}</a>
-            <span class="time">{{article.publishAt, 'yyyy年MM月dd日' | timeStampFormat}}</span>
+            <div class="time">{{article.commentCount}} 评论 / {{article.viewCount}} 浏览</div>
           </li>
         </ul>
       </template>
@@ -24,18 +23,20 @@ import $api from "api/guest";
 export default {
   data() {
     return {
+      loading: true,
       hotArticleList: []
     };
   },
   created() {
-    //this.getClassifyCount();
+    this.getHotArticle();
   },
   methods: {
-    getClassifyCount() {
-      this.$http.get($api.getClassifyCount).then(res => {
+    getHotArticle() {
+      this.$http.get($api.getArticleHot).then(res => {
         if (200 == res.code) {
-          this.classifyList = res.data;
+          this.hotArticleList = res.data;
         }
+        this.loading = false;
       });
     }
   }
@@ -45,9 +46,23 @@ export default {
 <style lang="scss" scoped>
 .hot-article {
   li {
-    padding: 4px;
+    &:before {
+      content: "•";
+    }
+
+    display: flex;
+    padding: 4px 0;
+
     a {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       padding-left: 8px;
+    }
+
+    .time {
+      color: #999;
     }
   }
 }

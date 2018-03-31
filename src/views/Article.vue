@@ -38,10 +38,10 @@
         </div>
       </div>
       <div class="article-main">
-        <div class="article-title">留言<span class="num-title" v-if="article.comments.length>0">（{{article.comments.length}}条）</span></div>
+        <div class="article-title">留言<span class="num-title" v-if="article.commentCount>0">（{{article.commentCount}}条）</span></div>
         <div class="article-body">
           <ul class="article-comments">
-            <template v-if="article.comments.length>0">
+            <template v-if="article.commentCount>0">
               <li v-for="(comment, index) in article.comments" :key="index" :id="'comment-'+comment.id">
                 <div class="comment-floor">
                   <div class="comment-name">{{comment.name}}<i class="verify"></i>&nbsp;说：</div>
@@ -230,6 +230,7 @@ export default {
               if (200 == res.code) {
                 this.$message({ message: res.message, type: "success" });
                 this.article.comments = res.data;
+                this.article.commentCount = res.data.length;
                 let { name, email, checked } = this.comment;
                 this.replys = []; //清除回复楼层
                 this.$refs.commentRef.resetFields(); //清除表单状态

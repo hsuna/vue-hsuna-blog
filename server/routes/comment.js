@@ -3,11 +3,11 @@
  * @Author: Hsuan
  * @Date: 2018-03-27 09:57:58
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-01 03:48:23
+ * @Last Modified time: 2018-04-01 03:56:29
  */
 
 import express from "express";
-import api from "../api/article";
+import api from "../api/comment";
 
 const router = express.Router();
 

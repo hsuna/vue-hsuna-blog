@@ -1,5 +1,6 @@
 import admin from "./admin";
 import classify from "./classify";
+import comment from "./comment";
 import article from "./article";
 
 let routes = {};

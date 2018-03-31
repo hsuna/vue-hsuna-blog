@@ -2,20 +2,12 @@
   <div class="item-side">
     <div class="side-header">
       最新留言
-      <a href="/comment" class="more">更多<i class="fa fa-angle-double-right"></i></a>
+      <!-- <a href="/comment" class="more">更多<i class="fa fa-angle-double-right"></i></a> -->
     </div>
     <div class="side-body">
       <template v-if="commentList.length>0">
         <ul class="new-comment">
           <li>
-            <p><span class="name">sdfsf</span><span class="time">1天前</span></p>
-            <p class="content">sdfsdfsdfs</p>
-          </li>
-            <li>
-            <p><span class="name">sdfsf</span><span class="time">1天前</span></p>
-            <p class="content">sdfsdfsdfs</p>
-          </li>
-            <li>
             <p><span class="name">sdfsf</span><span class="time">1天前</span></p>
             <p class="content">sdfsdfsdfs</p>
           </li>
@@ -38,13 +30,13 @@ export default {
     };
   },
   created() {
-    //  this.getClassifyCount();
+    this.getArticleNewComment();
   },
   methods: {
-    getClassifyCount() {
-      this.$http.get($api.getClassifyCount).then(res => {
+    getArticleNewComment() {
+      this.$http.get($api.getArticleNewComment).then(res => {
         if (200 == res.code) {
-          this.classifyList = res.data;
+          this.commentList = res.data;
         }
       });
     }

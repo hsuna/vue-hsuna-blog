@@ -4,8 +4,8 @@
       <div class="card-title"><a :href="`/article/${profile.id}`">{{profile.title}}</a></div>
       <div class="card-date" :data-date="$filter.timeStampFormat(profile.publishAt)">{{profile.publishAt | timeAgoFormat}}</div>
       <div class="card-tags">
+        <span class="card-count">{{profile.commentCount}} 评论 / {{profile.viewCount}} 浏览</span>
         <el-tag size="mini" v-for="tag in profile.tags" :key="tag">{{tag}}</el-tag>
-        <span class="card-count">{{profile.comments?profile.comments.length:0}} 评论 / {{profile.viewCount}} 浏览</span>
       </div>
       <div class="card-content">&nbsp;&nbsp;&nbsp;&nbsp;{{profile.about}}
         <el-button type="text" @click="$router.push(`/article/${profile.id}`)">阅读全文<i class="el-icon-arrow-right"></i></el-button>
@@ -67,7 +67,10 @@ export default {
   margin: 0 20px;
   padding: 20px 10px;
   line-height: 1.6;
-  border-bottom: 1px solid #dadada;
+
+  &+.profile-main-card{
+    border-top: 1px solid #dadada;
+  }
 
   .card-title {
     font-size: 24px;
@@ -90,6 +93,7 @@ export default {
   }
 
   .card-count {
+    margin-right: 10px;
     color: #999;
   }
 

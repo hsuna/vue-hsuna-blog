@@ -3,9 +3,10 @@
  * @Author: Hsuan
  * @Date: 2018-03-25 12:06:52
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-26 00:18:13
+ * @Last Modified time: 2018-04-01 03:32:05
  */
 import mongoose from "mongoose";
+import Refs from "./refs";
 import { encryptHash } from "../utils/hash";
 
 const { Schema } = mongoose;
@@ -28,6 +29,6 @@ UserSchema.pre("save", function(next, data) {
     });
 });
 
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.model(Refs.User, UserSchema);
 
 export default User;
