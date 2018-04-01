@@ -49,7 +49,7 @@
                 </div>
                 <div class="comment-content" v-html="comment.content"><template ></template></div>
                 <div class="comment-reply">
-                  <span class="mark-view-time">{{comment.createdAt | timeStampFormat}}</span>|<a :href="'#comment-'+comment.id">#</a>|<a href="javascript:void(0)" @click="handleAddReply(comment, index)">回复</a>
+                  <span class="mark-view-time">{{comment.createdAt | timeStampFormat}}</span>|<a href="javascript:;" @click="goCommentHash('comment-'+comment.id)">#</a>|<a href="javascript:;" @click="handleAddReply(comment, index)">回复</a>
                 </div>
               </li>
             </template>
@@ -85,7 +85,7 @@
               <el-row>
                 <el-col :span="24">
                   <el-form-item label="" label-width="80px" prop="checked">
-                    <el-button type="primary" @click="handleComment">提　交</el-button>
+                    <el-button type="primary" :loading="commentLoading" @click="handleComment">{{commentLoading?'提交中':'提　交'}}</el-button>
                     <el-checkbox v-model="comment.checked" style="padding-left: 10px;">记住个人信息？</el-checkbox>
                   </el-form-item>
                 </el-col>
@@ -142,6 +142,7 @@ export default {
         ],
         content: [{ required: true, message: "请输入评论", trigger: "blur" }]
       },
+      commentLoading: false,
       commentFocus: {
         cls: "el-textarea",
         tag: "textarea",
@@ -170,6 +171,7 @@ export default {
             this.article = Object.assign({}, this.article, res.data);
             this.updateArticleViewCount(); //更新文章的浏览次数
             this.getArticleRelate();
+            this.$nextTick(this.goCommentHash);
             this.loading = false;
           } else {
             this.$router.replace({ path: "/" });
@@ -188,6 +190,13 @@ export default {
             this.relateArticle = res.data.list;
           }
         });
+    },
+    getAssemComment() {
+      let replys = this.replys.map(reply => {
+        let content = reply.content.replace(/<blockquote>.*<\/blockquote>[\s]*/g, "");
+        return `<blockquote><pre>回复[${reply.index + 1}楼]${reply.name}的发言：</pre><p>${content}</p></blockquote>`;
+      });
+      return replys.join("\n") + this.comment.content;
     },
     updateArticleViewCount() {
       this.$store
@@ -219,18 +228,20 @@ export default {
     handleComment() {
       this.$refs.commentRef.validate(valid => {
         if (valid) {
+          this.commentLoading = true;
           this.$http
-            .put($api.putArticleComment, {
+            .post($api.postComment, {
               id: this.article.id,
-              comment: Object.assign(this.comment, {
+              comment: Object.assign({}, this.comment, {
+                articleId: this.article.id,
                 content: this.getAssemComment()
               })
             })
             .then(res => {
               if (200 == res.code) {
                 this.$message({ message: res.message, type: "success" });
-                this.article.comments = res.data;
-                this.article.commentCount = res.data.length;
+                this.article.comments.push(res.data);
+                this.article.commentCount += 1;
                 let { name, email, checked } = this.comment;
                 this.replys = []; //清除回复楼层
                 this.$refs.commentRef.resetFields(); //清除表单状态
@@ -244,21 +255,18 @@ export default {
                   this.$store.commit(MutationName.CLEAR_COMMENT_USER);
                 }
               }
+              this.commentLoading = false;
             });
         }
       });
     },
-    getAssemComment() {
-      let replys = this.replys.map(reply => {
-        let content = reply.content.replace(
-          /<blockquote>.*<\/blockquote>[\s]*/g,
-          ""
-        );
-        return `<blockquote><pre>回复[${reply.index + 1}楼]${
-          reply.name
-        }的发言：</pre><p>${content}</p></blockquote>`;
-      });
-      return replys.join("\n") + this.comment.content;
+    goCommentHash(id) {
+      id = id || window.location.hash.replace("#", "");
+      let elem = document.getElementById(id);
+      if (elem) {
+        document.body.scrollTop = document.documentElement.scrollTop =
+          elem.offsetTop - 15;
+      }
     }
   }
 };

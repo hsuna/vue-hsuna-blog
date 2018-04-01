@@ -11,7 +11,7 @@ const router = express.Router();
 router.get("/", verifyRouteToken, (req, res) => {
   let { page, limit } = req.query;
   api
-    .getArticles(req.query, page, limit)
+    .getArticle(req.query, page, limit)
     .then(result => {
       let [list, total] = result;
       res.send({

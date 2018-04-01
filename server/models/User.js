@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-25 12:06:52
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-01 03:32:05
+ * @Last Modified time: 2018-04-01 13:07:09
  */
 import mongoose from "mongoose";
 import Refs from "./refs";
@@ -29,6 +29,4 @@ UserSchema.pre("save", function(next, data) {
     });
 });
 
-const User = mongoose.model(Refs.User, UserSchema);
-
-export default User;
+export default mongoose.model(Refs.User, UserSchema);

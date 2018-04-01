@@ -1,6 +1,8 @@
 <template>
     <div class="blog-body">
-   about
+      <div class="blog-profile">
+        <profile-side></profile-side>
+      </div>
     </div>
 </template>
 

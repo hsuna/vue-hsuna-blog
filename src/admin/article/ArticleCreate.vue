@@ -39,14 +39,15 @@ export default {
         this.$store.commit(MutationName.SET_ARTICLE, this.article);
       }
     },
-    handlePublish() {
+    handlePublish(callback) {
       this.$http.post($api.postArticle, this.article).then(res => {
         if (200 == res.code) {
           this.isRecord = false;
-          this.$store.commit(MutationName.CLEAR_ARTICLE);//清除缓存的文章
+          this.$store.commit(MutationName.CLEAR_ARTICLE); //清除缓存的文章
           this.$message({ message: res.message, type: "success" });
           this.$router.replace({ path: "/admin/articleList" });
         }
+        callback && callback();
       });
     }
   },

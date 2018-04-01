@@ -3,7 +3,7 @@
  * @Author: Hsuna
  * @Date: 2018-03-26 01:48:53
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-01 03:53:34
+ * @Last Modified time: 2018-04-01 11:36:07
  */
 
 import { Article } from "../models";
@@ -14,7 +14,7 @@ import { Article } from "../models";
  * @param {number} page  默认返回全部
  * @param {number} limit 默认10
  */
-const getArticles = (query, page, limit = 10) => {
+const getArticle = (query, page, limit = 10) => {
   //设置为不可枚举
   ["id", "page", "limit", "sort"].forEach(key => {
     Object.defineProperty(query, key, { enumerable: false });
@@ -96,7 +96,7 @@ const getCountByClassify = match => {
 };
 
 export default {
-  getArticles,
+  getArticle,
   createArticle,
   updateArticle,
   removeArticle,

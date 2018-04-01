@@ -25,7 +25,14 @@ body {
 }
 .blog-body {
   width: 1024px;
+  min-height: 800px;
   margin: 0 auto;
   margin-top: 60px;
+
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
 }
 </style>

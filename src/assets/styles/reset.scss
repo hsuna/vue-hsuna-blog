@@ -4,9 +4,16 @@
   padding: 0;
 }
 
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
 body {
+  overflow-y: scroll;
   background: #fff;
-  color: #2B3F52;
+  color: #2b3f52;
 }
 input,
 select,
@@ -52,9 +59,6 @@ li {
 }
 table {
   border-collapse: collapse;
-}
-html {
-  overflow-y: scroll;
 }
 
 /*盒子模式通用组合样式*/

@@ -32,7 +32,7 @@ export default {
       .then(res => {
         if (200 == res.code) {
           let { list } = res.data;
-          if (list && list.length>0) {
+          if (list && list.length > 0) {
             Object.assign(this.article, list[0]);
           } else {
             this.$router.replace({ path: "/admin/articleList" });
@@ -42,12 +42,13 @@ export default {
       });
   },
   methods: {
-    handlePublish() {
+    handlePublish(callback) {
       this.$http.put($api.putArticle, this.article).then(res => {
         if (200 == res.code) {
           this.$message({ message: res.message, type: "success" });
           this.$router.replace({ path: "/admin/articleList" });
         }
+        callback && callback();
       });
     }
   },

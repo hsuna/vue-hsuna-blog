@@ -25,6 +25,7 @@ let analysisRoutes = function(route, path = "") {
 analysisRoutes({
   admin,
   classify,
+  comment,
   article
 });
 

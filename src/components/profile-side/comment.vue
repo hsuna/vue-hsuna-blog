@@ -7,9 +7,12 @@
     <div class="side-body">
       <template v-if="commentList.length>0">
         <ul class="new-comment">
-          <li>
-            <p><span class="name">sdfsf</span><span class="time">1天前</span></p>
-            <p class="content">sdfsdfsdfs</p>
+          <li v-for="comment in commentList" :key="comment.id">
+            <p>
+              <a class="name" :href="`/article/${comment.articleId}#comment-${comment.id}`">{{comment.name}}</a>
+              <span class="time">{{comment.createdAt | timeAgoFormat}}</span>
+            </p>
+            <p class="content">{{comment.content}}</p>
           </li>
         </ul>
       </template>
@@ -30,11 +33,11 @@ export default {
     };
   },
   created() {
-    this.getArticleNewComment();
+    this.getNewComment();
   },
   methods: {
-    getArticleNewComment() {
-      this.$http.get($api.getArticleNewComment).then(res => {
+    getNewComment() {
+      this.$http.get($api.getCommentNew).then(res => {
         if (200 == res.code) {
           this.commentList = res.data;
         }
@@ -57,9 +60,8 @@ export default {
     }
 
     .name {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
-      color: #333;
     }
     .time {
       float: right;

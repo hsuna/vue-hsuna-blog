@@ -45,7 +45,7 @@
             <el-row>
               <el-col :span="10" :push="1">
                 <el-form-item label-width="100px">
-                  <el-button type="primary" @click="handleSubmit">提 交</el-button>
+                  <el-button type="primary" @click="handleSubmit" :loading="submiting">{{submiting?'提交中':'提 交'}}</el-button>
                   <el-button @click="handleBack">返 回</el-button>
                   <div class="article-status">
                     <el-radio v-model="article.status" :label="0" v-if="!isEdit">暂存草稿</el-radio>
@@ -95,6 +95,7 @@ export default {
   data() {
     return {
       isModify: false,
+      submiting: false,
       routerList: [
         { text: "首页", path: "/admin" },
         { text: "文章管理", path: "/admin/articleList" },
@@ -103,7 +104,9 @@ export default {
       articleRules: {
         title: [{ required: true, message: "请填写标题", trigger: "blur" }],
         about: [{ required: true, message: "请填写简介", trigger: "blur" }],
-        classify: [{ required: true, message: "请选择分类", trigger: "change" }],
+        classify: [
+          { required: true, message: "请选择分类", trigger: "change" }
+        ],
         content: [{ required: true, message: "请输入内容", trigger: "change" }]
       },
       tagList: [{ tag: "HTML" }, { tag: "CSS" }, { tag: "JavaScript" }],
@@ -135,7 +138,10 @@ export default {
     handleSubmit() {
       this.$refs.articleRef.validate(valid => {
         if (valid) {
-          this.$emit("submit");
+          this.submiting = true;
+          this.$emit("submit", () => {
+            this.submiting = false;
+          });
         }
       });
     },

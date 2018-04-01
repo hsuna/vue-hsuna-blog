@@ -11,8 +11,6 @@ import profileSideHot from "./hot";
 import profileSideClassify from "./classify";
 import profileSideComment from "./comment";
 
-import $api from "api/guest";
-
 export default {
   components: {
     "profile-side-hot": profileSideHot,
