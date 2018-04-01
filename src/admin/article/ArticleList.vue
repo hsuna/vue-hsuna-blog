@@ -1,13 +1,13 @@
 <template>
-  <div class="hsuna">
-    <hsuna-header :routerList="breadcrumbs"></hsuna-header>
-    <div class="hsuna-body">
-      <div class="hsuna-toolbar">
+  <div class="admin">
+    <admin-header :routerList="breadcrumbs"></admin-header>
+    <div class="admin-body">
+      <div class="admin-toolbar">
         <div class="btn-group">
           <el-button type="primary" @click="$router.push({path: '/admin/articleCreate'})">创建文章</el-button>
         </div>
       </div>
-      <div class="hsuna-table">
+      <div class="admin-table">
         <el-table style='width:100%' align="center" :data="articleList"  v-loading="listLoading" element-loading-text="拼命加载中">
           <el-table-column type='index' width="60" ></el-table-column>
           <el-table-column prop="title" min-width="180" label="文章标题" ></el-table-column>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import hsunaHeader from "components/hsuna-header";
+import adminHeader from "components/admin-header";
 import $api from "api/admin";
 
 export default {
@@ -82,7 +82,7 @@ export default {
     },
   },
   components: {
-    "hsuna-header": hsunaHeader
+    "admin-header": adminHeader
   }
 };
 </script>

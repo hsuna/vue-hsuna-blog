@@ -1,7 +1,7 @@
 <template lang="html">
-  <div class="hsuna">
-    <hsuna-header :routerList="routerList"></hsuna-header>
-    <div class="hsuna-body">
+  <div class="admin">
+    <admin-header :routerList="routerList"></admin-header>
+    <div class="admin-body">
       <el-row style="margin-top: 20px;">
         <el-col :span="24">
           <el-form ref="articleRef" :model="article" :rules="articleRules">
@@ -66,7 +66,7 @@
 import markdownEditor from "vue-simplemde/src/markdown-editor";
 import hljs from "highlight.js";
 
-import hsunaHeader from "components/hsuna-header";
+import adminHeader from "components/admin-header";
 import $api from "api/admin";
 
 window.hljs = hljs;
@@ -158,7 +158,7 @@ export default {
     }
   },
   components: {
-    "hsuna-header": hsunaHeader,
+    "admin-header": adminHeader,
     "markdown-editor": markdownEditor
   }
 };

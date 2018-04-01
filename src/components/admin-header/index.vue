@@ -1,6 +1,6 @@
 <template>
-  <div class="hsuna-header">
-    <div class="hsuna-breadcrumb">
+  <div class="admin-header">
+    <div class="admin-breadcrumb">
       <i class="el-icon-location"></i>
       <el-breadcrumb separator="/">
         <el-breadcrumb-item v-for="(router, index) in routerList" v-bind:key="index" :to="router.path?{ path:router.path }:null">
@@ -8,13 +8,13 @@
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class="hsuna-date">{{date, 'yyyy年MM月dd日&nbsp;hh:mm&nbsp;&nbsp;W' | dateFormat}}</div>
+    <div class="admin-date">{{date, 'yyyy年MM月dd日&nbsp;hh:mm&nbsp;&nbsp;W' | dateFormat}}</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "hsunaHeader",
+  name: "adminHeader",
   props: {
     routerList: {
       type: Array,
