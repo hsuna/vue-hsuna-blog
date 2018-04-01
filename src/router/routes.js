@@ -2,8 +2,8 @@
  * @Description
  * @Author: Hsuan
  * @Date: 2018-03-17 10:14:33
- * @Last Modified by: Hsuan
- * @Last Modified time: 2018-03-28 13:38:57
+ * @Last Modified by: Hsuna
+ * @Last Modified time: 2018-04-01 23:17:26
  */
 
 export default [
@@ -13,20 +13,35 @@ export default [
     component: resolve => require(["views/Main.vue"], resolve),
     children: [
       {
+        name: "home",
         path: "/",
+        meta: {
+          title: "首页 | HSUAN"
+        },
         component: resolve => require(["views/Home.vue"], resolve)
       },
       {
-        path: "/article/:articleId",
-        component: resolve => require(["views/Article.vue"], resolve)
+        name: "archive",
+        path: "/archive",
+        meta: {
+          title: "归档 | HSUAN"
+        },
+        component: resolve => require(["views/Archive.vue"], resolve)
       },
       {
-        path: "/comment",
-        component: resolve => require(["views/Comment.vue"], resolve)
-      },
-      {
+        name: "about",
         path: "/about",
+        meta: {
+          title: "关于我 | HSUAN"
+        },
         component: resolve => require(["views/About.vue"], resolve)
+      },
+      {
+        path: "/article/:articleId",
+        meta: {
+          title: "文章详情 | HSUAN"
+        },
+        component: resolve => require(["views/Article/index.vue"], resolve)
       }
     ]
   },
@@ -34,41 +49,53 @@ export default [
   /////////////////后台路由////////////////
   {
     path: "/login",
+    meta: {
+      title: "登录 | HSUAN"
+    },
     component: resolve => require(["admin/Login.vue"], resolve)
   },
   {
     path: "/reg",
+    meta: {
+      title: "注册 | HSUAN"
+    },
     component: resolve => require(["admin/Reg.vue"], resolve)
   },
   {
     type: "backend",
     path: "/admin",
     meta: {
+      title: "后台管理 | HSUAN",
       auth: true
     },
     component: resolve => require(["admin/Admin.vue"], resolve),
     name: "管理面板",
     children: [
       {
-        path: "",
+        path: "/",
         component: resolve => require(["admin/Workspace.vue"], resolve),
         meta: {
+          title: "后台管理 | HSUAN",
           auth: true
         },
         hidden: true
       },
       {
         path: "articleList",
-        component: resolve => require(["admin/article/ArticleList.vue"], resolve),
+        component: resolve =>
+          require(["admin/article/ArticleList.vue"], resolve),
         meta: {
+          title: "文章管理 | HSUAN",
           auth: true
         },
         name: "文章管理"
       },
       {
         path: "articleCreate",
-        component: resolve => require(["admin/article/ArticleCreate.vue"], resolve),
+        component: resolve =>
+          require(["admin/article/ArticleCreate.vue"], resolve),
         meta: {
+          title: "创建文章 | HSUAN",
           auth: true
         },
         name: "创建文章",
@@ -76,8 +103,10 @@ export default [
       },
       {
         path: "articleEdit/:articleId",
-        component: resolve => require(["admin/article/ArticleEdit.vue"], resolve),
+        component: resolve =>
+          require(["admin/article/ArticleEdit.vue"], resolve),
         meta: {
+          title: "编辑文章 | HSUAN",
           auth: true
         },
         name: "编辑文章",
@@ -85,8 +114,10 @@ export default [
       },
       {
         path: "classifyList",
-        component: resolve => require(["admin/article/ClassifyList.vue"], resolve),
+        component: resolve =>
+          require(["admin/article/ClassifyList.vue"], resolve),
         meta: {
+          title: "分类管理 | HSUAN",
           auth: true
         },
         name: "分类管理"

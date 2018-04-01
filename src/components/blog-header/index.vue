@@ -5,8 +5,10 @@
           <a>HSUNA</a>
       </div>
       <el-menu :default-active="activeIndex" class="header-nav" mode="horizontal" @select="handleSelect">
-          <el-menu-item index="home">首页</el-menu-item>
-          <el-menu-item index="about">关于</el-menu-item>
+          <el-menu-item index="home"><i class="fa fa-home"></i>首页</el-menu-item>
+          <el-menu-item index="archive"><i class="fa fa-archive"></i>档案</el-menu-item>
+          <el-menu-item index="about"><i class="fa fa-user"></i>关于</el-menu-item>
+          <el-menu-item index="admin"><i class="fa fa-cog"></i>管理</el-menu-item>
       </el-menu>
       <div class="header-search">
           <el-input placeholder="搜索" prefix-icon="el-icon-search" v-model="inputSearch"></el-input>
@@ -20,11 +22,17 @@
 import $api from "api/guest";
 
 export default {
+  name: "blogHeader",
+  props: {
+    activeIndex: {
+      type: String,
+      default: "home"
+    }
+  },
   data() {
     return {
       isFixed: true,
-      inputSearch: "",
-      activeIndex: "home"
+      inputSearch: ""
     };
   },
   created() {
@@ -60,8 +68,9 @@ export default {
             }
           });
           break;
-        case "comment":
+        case "archive":
         case "about":
+        case "admin":
           this.$router.push({ path: "/" + index });
           break;
       }
@@ -117,9 +126,19 @@ export default {
     }
 
     .el-menu-item {
+      i {
+        margin-right: 4px;
+        vertical-align: inherit;
+        font-size: 18px;
+      }
+
       &:hover {
         text-decoration: none;
         color: #0084ff;
+
+        i {
+          color: #0084ff;
+        }
       }
 
       &.is-active {

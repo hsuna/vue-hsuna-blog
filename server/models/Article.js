@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-25 12:04:21
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-01 13:06:18
+ * @Last Modified time: 2018-04-01 20:32:53
  */
 import mongoose from "mongoose";
 import Refs from "./refs";
@@ -17,9 +17,9 @@ const ArticleSchema = new Schema({
   about: { type: String }, //简介
   comments: [{ type: Schema.Types.ObjectId, ref: Refs.Comment }], //评论集合
   tags: { type: Array }, //标签
-  createdAt: { type: Number, default: Date.now }, //创建时间
-  publishAt: { type: Number, default: Date.now }, //发布时间
-  updatedAt: { type: Number, default: Date.now }, //更新时间
+  createdAt: { type: Date, default: Date.now }, //创建时间
+  publishAt: { type: Date, default: Date.now }, //发布时间
+  updatedAt: { type: Date, default: Date.now }, //更新时间
   viewCount: { type: Number, default: 0 }, //浏览次数
   status: { type: Number, default: 0 } //0:草稿-私有|1:草稿-公开|2:私有|3:公开
 });

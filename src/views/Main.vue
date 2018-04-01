@@ -1,6 +1,6 @@
 <template>
   <div class="blog">
-      <blog-header></blog-header>
+      <blog-header :activeIndex="activeIndex"></blog-header>
       <router-view />
       <blog-footer></blog-footer>
   </div>
@@ -11,6 +11,11 @@ import blogHeader from "components/blog-header";
 import blogFooter from "components/blog-footer";
 
 export default {
+  data() {
+    return {
+      activeIndex: this.$route.name
+    };
+  },
   components: {
     "blog-header": blogHeader,
     "blog-footer": blogFooter

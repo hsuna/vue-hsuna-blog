@@ -6,7 +6,7 @@
         <ul class="hot-article">
           <li v-for="article in hotArticleList" :key="article.id">
             <a :href="`/article/${article.id}`">{{article.title}}</a>
-            <div class="time">{{article.commentCount}} 评论 / {{article.viewCount}} 浏览</div>
+            <div class="time">评论({{article.commentCount}}) | 浏览({{article.viewCount}})</div>
           </li>
         </ul>
       </template>

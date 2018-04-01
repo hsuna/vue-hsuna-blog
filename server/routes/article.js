@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-27 09:57:58
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-01 13:47:53
+ * @Last Modified time: 2018-04-01 22:54:03
  */
 
 import express from "express";
@@ -35,6 +35,7 @@ router.get("/", (req, res) => {
       });
     })
     .catch(err => {
+      console.log(err);
       res.send({
         code: -200,
         message: "获取文章失败"
@@ -61,6 +62,7 @@ router.get("/hot", (req, res) => {
       });
     })
     .catch(err => {
+      console.log(err);
       res.send({
         code: -200,
         message: "获取文章失败"
@@ -125,6 +127,43 @@ router.get("/relate", (req, res) => {
 });
 
 /**
+ * 查找文章归档
+ */
+router.get("/achive", (req, res) => {
+  let { year, month, page = 1, limit = 8 } = req.query;
+  api
+    .getArticle(
+      {
+        status: 1,
+        publishAt: {
+          $gt: new Date(year, month - 1, 1),
+          $lt: new Date(year, month, 0)
+        },
+        sort: { publishAt: -1 }
+      },
+      page,
+      limit
+    )
+    .then(result => {
+      let [list, total] = result;
+      res.send({
+        code: 200,
+        data: {
+          //id查询直接返回数据
+          list: (Array.isArray(list) ? list : [list]).map(guestBaseFilter),
+          total: total || list.length || 0
+        }
+      });
+    })
+    .catch(err => {
+      res.send({
+        code: -200,
+        message: "获取文章失败"
+      });
+    });
+});
+
+/**
  * 更新浏览次数
  */
 router.put("/viewCount", (req, res) => {
@@ -152,7 +191,10 @@ router.put("/viewCount", (req, res) => {
 router.get("/classifyCount", (req, res) => {
   Object.assign(req.query, { status: 1 }); //游客模式只能阅读公开的文章
   api
-    .getCountByClassify(req.query)
+    .getArticleByAggregate([
+      { $match: req.query },
+      { $group: { _id: "$classify", count: { $sum: 1 } } }
+    ])
     .then(result => {
       res.send({
         code: 200,
@@ -162,7 +204,41 @@ router.get("/classifyCount", (req, res) => {
     .catch(err => {
       res.send({
         code: -200,
-        message: "统计数量失败"
+        message: "获取统计数量失败"
+      });
+    });
+});
+
+/**
+ * 获取所有归档的数量
+ * @param {object} match
+ */
+router.get("/achiveCount", (req, res) => {
+  Object.assign(req.query, { status: 1 }); //游客模式只能阅读公开的文章
+  api
+    .getArticleByAggregate([
+      { $match: req.query },
+      {
+        $group: {
+          _id: {
+            year: { $year: "$publishAt" },
+            month: { $month: "$publishAt" }
+          },
+          count: { $sum: 1 }
+        }
+      }
+    ])
+    .then(result => {
+      res.send({
+        code: 200,
+        data: result
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.send({
+        code: -200,
+        message: "获取归档数量失败"
       });
     });
 });

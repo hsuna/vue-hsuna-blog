@@ -3,7 +3,7 @@
  * @Author: Hsuna
  * @Date: 2018-03-26 01:48:53
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-01 11:36:07
+ * @Last Modified time: 2018-04-01 21:59:47
  */
 
 import { Article } from "../models";
@@ -16,12 +16,12 @@ import { Article } from "../models";
  */
 const getArticle = (query, page, limit = 10) => {
   //设置为不可枚举
-  ["id", "page", "limit", "sort"].forEach(key => {
+  ["id", "page", "limit", "sort", "match"].forEach(key => {
     Object.defineProperty(query, key, { enumerable: false });
   });
 
   let promiseList;
-  let { id, sort = { _id: -1 } } = query;
+  let { id, sort = { _id: -1 }, match = {} } = query;
   if (id) {
     promiseList = [Article.findById(id).populate("comments")];
   } else if (page && limit) {
@@ -85,14 +85,10 @@ const removeArticle = id => {
 };
 
 /**
- * 统计分类数量
- * @param {number} id
+ * @param {object} aggregations
  */
-const getCountByClassify = match => {
-  return Article.aggregate([
-    { $match: match },
-    { $group: { _id: "$classify", count: { $sum: 1 } } }
-  ]);
+const getArticleByAggregate = aggregations => {
+  return Article.aggregate(aggregations);
 };
 
 export default {
@@ -101,5 +97,5 @@ export default {
   updateArticle,
   removeArticle,
 
-  getCountByClassify
+  getArticleByAggregate
 };
