@@ -3,12 +3,11 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:09:18
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-31 19:58:54
+ * @Last Modified time: 2018-04-02 20:39:24
  */
 
 import Axios from "axios";
 import store from "store";
-import { StoreKey } from "store/types";
 import router from "@/router";
 
 import qs from "qs";

@@ -1,9 +1,9 @@
 <template>
   <div class="blog-header" :class="isFixed?'':'fixed-hidden'">
     <div class="header-inner">
-      <div class="header-logo">
+      <!-- <div class="header-logo">
           <a>HSUNA</a>
-      </div>
+      </div> -->
       <el-menu :default-active="activeIndex" class="header-nav" mode="horizontal" @select="handleSelect">
           <el-menu-item index="home"><i class="fa fa-home"></i>首页</el-menu-item>
           <el-menu-item index="archive"><i class="fa fa-archive"></i>档案</el-menu-item>

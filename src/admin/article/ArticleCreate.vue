@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { StoreKey, MutationName } from "store/types";
+import { ActionName, MutationName } from "store/types";
 import articleEdit from "components/article-edit";
 import $api from "api/admin";
 
@@ -43,6 +43,7 @@ export default {
       this.$http.post($api.postArticle, this.article).then(res => {
         if (200 == res.code) {
           this.isRecord = false;
+          this.$store.dispatch(ActionName.ADD_ARTICLE_TAGS, this.article.tags);
           this.$store.commit(MutationName.CLEAR_ARTICLE); //清除缓存的文章
           this.$message({ message: res.message, type: "success" });
           this.$router.replace({ path: "/admin/articleList" });

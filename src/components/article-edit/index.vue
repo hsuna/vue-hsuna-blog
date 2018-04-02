@@ -63,10 +63,10 @@
 </template>
 
 <script type="text/ecmascript-6">
-import markdownEditor from "vue-simplemde/src/markdown-editor";
 import hljs from "highlight.js";
-
+import markdownEditor from "vue-simplemde/src/markdown-editor";
 import adminHeader from "components/admin-header";
+
 import $api from "api/admin";
 
 window.hljs = hljs;
@@ -109,7 +109,7 @@ export default {
         ],
         content: [{ required: true, message: "请输入内容", trigger: "change" }]
       },
-      tagList: [{ tag: "HTML" }, { tag: "CSS" }, { tag: "JavaScript" }],
+      tagList: this.$store.getters.tagList,
       classifyList: [],
       configs: {
         status: false // 禁用底部状态栏

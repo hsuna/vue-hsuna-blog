@@ -4,6 +4,7 @@
       <div class="card-title"><a :href="`/article/${profile.id}`">{{profile.title}}</a></div>
       <div class="card-date" :data-date="$filter.timeStampFormat(profile.publishAt)">{{profile.publishAt | timeAgoFormat}}</div>
       <div class="card-tags">
+        <span class="card-count">分类：{{profile.classify}}</span>
         <span class="card-count">评论({{profile.commentCount}}) | 浏览({{profile.viewCount}})</span>
         <el-tag size="mini" v-for="tag in profile.tags" :key="tag">{{tag}}</el-tag>
       </div>

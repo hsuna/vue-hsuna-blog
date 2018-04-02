@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import { ActionName, MutationName } from "store/types";
+
 import articleEdit from "components/article-edit";
 import $api from "api/admin";
 
@@ -45,6 +47,7 @@ export default {
     handlePublish(callback) {
       this.$http.put($api.putArticle, this.article).then(res => {
         if (200 == res.code) {
+          this.$store.dispatch(ActionName.ADD_ARTICLE_TAGS, this.article.tags);
           this.$message({ message: res.message, type: "success" });
           this.$router.replace({ path: "/admin/articleList" });
         }

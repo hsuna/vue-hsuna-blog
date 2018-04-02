@@ -3,7 +3,6 @@
       <div class="blog-profile">
         <div class="profile-side">
           <profile-side-hot></profile-side-hot>
-          <profile-side-classify></profile-side-classify>
           <profile-side-about></profile-side-about>
         </div>
         <div class="profile-main">
@@ -22,11 +21,7 @@
 </template>
 
 <script>
-import {
-  profileSideAbout,
-  profileSideHot,
-  profileSideClassify
-} from "components/profile-side";
+import { profileSideAbout, profileSideHot } from "components/profile-side";
 
 export default {
   data() {
@@ -36,8 +31,7 @@ export default {
   methods: {},
   components: {
     "profile-side-about": profileSideAbout,
-    "profile-side-hot": profileSideHot,
-    "profile-side-classify": profileSideClassify
+    "profile-side-hot": profileSideHot
   }
 };
 </script>

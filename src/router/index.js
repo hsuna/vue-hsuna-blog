@@ -4,13 +4,12 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:13:19
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-01 23:12:39
+ * @Last Modified time: 2018-04-02 20:39:27
  */
 
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "store";
-import { StoreKey } from "store/types";
 import routes from "./routes";
 
 Vue.use(VueRouter);

@@ -3,7 +3,7 @@
  * @Author: Hsuna
  * @Date: 2018-03-31 19:16:27
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-31 21:59:00
+ * @Last Modified time: 2018-04-02 20:45:39
  */
 
 import { storage, StorageKey } from "./storage";
@@ -41,5 +41,10 @@ export default {
   [MutationName.CLEAR_COMMENT_USER](state) {
     state.visitor.comment = {};
     storage.set(StorageKey.VISITOR, state.visitor);
+  },
+  [MutationName.SET_TAGS](state, tags) {
+    if (!tags) throw "Param tags is undefined.";
+    state.tags = tags;
+    storage.set(StorageKey.TAGS, tags);
   }
 };

@@ -3,7 +3,7 @@
  * @Author: Hsuna
  * @Date: 2018-03-26 01:48:38
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-31 21:41:15
+ * @Last Modified time: 2018-04-02 20:43:50
  */
 import { ActionName, MutationName } from "./types";
 
@@ -45,6 +45,11 @@ export default {
         })
         .catch(err => {});
     }
+  },
+  [ActionName.ADD_ARTICLE_TAGS]({ state, commit }, addTags) {
+    let { tags } = state;
+    tags = Array.from(new Set([...tags, ...addTags]));
+    commit(MutationName.SET_TAGS, tags);
   },
   [ActionName.ADD_VIEW_TIME]({ state, commit }, { article, vm }) {
     let { visitor } = state;
