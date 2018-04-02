@@ -43,6 +43,16 @@
               </el-col>
             </el-row>
             <el-row>
+              <el-col :span="23" :push="1">
+                <el-form-item label="图片上传：" label-width="100px" class="show" prop="content" >
+                  <el-upload class="upload-demo" :action="uploadAction" :on-remove="handleRemoveFile" :file-list="fileList" list-type="picture">
+                    <el-button type="primary">点击上传</el-button>
+                    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                  </el-upload>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
               <el-col :span="10" :push="1">
                 <el-form-item label-width="100px">
                   <el-button type="primary" @click="handleSubmit" :loading="submiting">{{submiting?'提交中':'提 交'}}</el-button>
@@ -90,12 +100,14 @@ export default {
     breadcrumbs: {
       type: Array,
       default: () => []
-    }
+    },
+    uploadAction: $api.postFileUpload
   },
   data() {
     return {
       isModify: false,
       submiting: false,
+      fileList: [],
       routerList: [
         { text: "首页", path: "/admin" },
         { text: "文章管理", path: "/admin/articleList" },
@@ -135,6 +147,7 @@ export default {
     }
   }, */
   methods: {
+    handleRemoveFile() {},
     handleSubmit() {
       this.$refs.articleRef.validate(valid => {
         if (valid) {
@@ -170,6 +183,10 @@ export default {
 </style>
 <style lang="scss">
 @import "~assets/styles/markdown-body";
+.el-upload__tip {
+  display: inline-block;
+  margin-left: 10px;
+}
 .article-status {
   display: inline-block;
   margin-left: 20px;

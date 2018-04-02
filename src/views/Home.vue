@@ -9,13 +9,12 @@
         <div class="user-info clearfix">
           <span class="name">Hsuna</span>WEB前端工程师
           <div class="social">
-            <a class="icon" href="http://weibo.com/" target="_blank" ><i class="fa fa-weibo" style="background-color: rgb(221, 75, 57);"></i></a>
-            <a class="icon" href="https://github.com/hsuna" target="_blank" ><i class="fa fa-github" style="background-color: rgb(85, 172, 238);"></i></a>
-            <a class="icon" href="mailto:me@hsuna.com" target="_blank" ><i class="fa fa-envelope" style="background-color: rgb(59, 89, 152);"></i></a>
-            <a class="icon" href="http://resume.hsuna.com" target="_blank" ><i class="fa fa-address-card-o" style="background-color: rgb(128, 185, 83);"></i></a>
+            <el-tooltip content="微博"><a class="icon" href="http://weibo.com/" target="_blank" ><i class="fa fa-weibo" style="background-color: rgb(221, 75, 57);"></i></a></el-tooltip>
+            <el-tooltip content="github"><a class="icon" href="https://github.com/hsuna" target="_blank" ><i class="fa fa-github" style="background-color: rgb(85, 172, 238);"></i></a></el-tooltip>
+            <el-tooltip content="邮箱"><a class="icon" href="mailto:me@hsuna.com" target="_blank" ><i class="fa fa-envelope" style="background-color: rgb(59, 89, 152);"></i></a></el-tooltip>
+            <el-tooltip content="简历"><a class="icon" href="http://resume.hsuna.com" target="_blank" ><i class="fa fa-address-card-o" style="background-color: rgb(128, 185, 83);"></i></a></el-tooltip>
           </div>
           <div class="introduction">简介：{{introduction}}</div>
-          <el-popover ref="popover1" placement="bottom" title="标题" width="200" trigger="hover" content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。"></el-popover>
         </div>
       </div>
     </div>
@@ -46,7 +45,7 @@ export default {
   data() {
     return {
       loading: true,
-      introduction: "",
+      introduction: "敢而慎之，勇敢不错失任何机会，谨慎不忽略一丝细节",
       background: "/static/images/20180327230952.jpg",
       profileList: []
     };
@@ -97,15 +96,15 @@ export default {
 
   .personal-bottom {
     position: relative;
-    min-height: 90px;
+    min-height: 80px;
     padding-left: 180px;
-    margin: 0 20px 24px;
+    margin: 0 20px 20px;
   }
 
   .user-portrait {
     overflow: hidden;
     position: absolute;
-    top: -70px;
+    top: -80px;
     left: 0;
     width: 160px;
     height: 160px;
@@ -119,8 +118,10 @@ export default {
 
     .name {
       margin-right: 10px;
-      font-size: 20px;
+      font-size: 24px;
       font-weight: bold;
+      //text-shadow: 0 0 2px #555, 1px 2px 1px #666, 3px 4px 0px #999;
+      color: #444;
     }
 
     .social {
@@ -138,12 +139,16 @@ export default {
         color: #fff;
         background-color: rgba(0, 0, 0, 0.1);
         text-align: center;
+        transition: all 500ms;
+
+        &:hover {
+          border-radius: 4px;
+        }
       }
     }
 
     .introduction {
-      padding-top: 12px;
-      padding-left: 4px;
+      padding-top: 10px;
       color: #999;
     }
   }

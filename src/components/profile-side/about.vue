@@ -9,7 +9,7 @@
     <div class="side-body">
       <ul>
         <li>1、<a href="#aboutIntroduce">简介</a></li>
-        <li>2、<a href="#aboutHistory ">前端历程</a></li>
+        <li>2、<a href="#aboutHistory ">技能清单</a></li>
         <li>3、<a href="#aboutContact">联系我</a></li>
       </ul>
     </div>

@@ -7,6 +7,7 @@
         <el-dropdown @command="handleDropdown">
           <i class="el-icon-setting"></i>
           <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="blog">返回博客</el-dropdown-item>
             <el-dropdown-item command="admin">返回首页</el-dropdown-item>
             <el-dropdown-item command="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
@@ -46,6 +47,9 @@ export default {
     },
     handleDropdown(command) {
       switch (command) {
+        case "blog":
+          this.$router.push({ path: "/" });
+          break;
         case "admin":
           this.$router.push({ path: "/admin" });
           break;

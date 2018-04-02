@@ -1,7 +1,7 @@
 import admin from "./admin";
+import article from "./article";
 import classify from "./classify";
 import comment from "./comment";
-import article from "./article";
 
 let routes = {};
 
@@ -24,9 +24,9 @@ let analysisRoutes = function(route, path = "") {
 
 analysisRoutes({
   admin,
+  article,
   classify,
-  comment,
-  article
+  comment
 });
 
 export default routes;

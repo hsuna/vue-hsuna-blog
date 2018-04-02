@@ -8,12 +8,38 @@
         <div class="profile-main">
           <div class="about-header">关于我</div>
           <div class="about-body">
+            <!-- 简介 -->
             <h4 id="aboutIntroduce">简介</h4>
-            <p>某世界闻名的陶瓷大学2016届毕业生，目前在杭州从事前端开发工作，也是一枚PPT爱好者。所知甚少，唯善学。常以轩辕Rowboat为名混迹于江湖。</p>
-            <h4 id="aboutHistory">前端历程</h4>
-            <p>sdfsdf<a>sdfsdf</a></p>
+            <p>陈阳志 男 91年天秤座一枚 毕业于2013.6</p>
+            <p>重度强迫症码农，旅游的苦行增</p>
+
+            <!-- 技能清单 -->
+            <h4 id="aboutHistory">技能清单</h4>
+            <ul>
+              <li>
+                <h5>前端</h5>
+                <p>HTLM/HTML5, Javascript, ES6, css/css3, scss/sass</p>
+                <p>jQuery, bootstrap, Requirejs, angularjs, vue/vue-cli</p>
+              </li>
+              <li>
+                <h5>后端</h5>
+                <p>dos, shell, nodejs/koa2, mongoose/sequelize, python</p>
+              </li>
+              <li>
+                <h5>数据库</h5>
+                <p>mongodb, mysql</p>
+              </li>
+              <li>
+                <h5>代码管理及自动化工具</h5>
+                <p>git/svn, gulp, webpack</p>
+              </li>
+            </ul>
+
+            <!-- 联系我 -->
             <h4 id="aboutContact">联系我</h4>
-            <p>sdfsfs<a>sdfsdfs</a>df</p>
+            <p><strong>个人邮箱：</strong><a href="mailto:me@hsuna.com">me@hsuna.com</a></p>
+            <p><strong>个人简历：</strong><a href="http://resume.hsuna.com">http://resume.hsuna.com</a></p>
+            <p><strong>Github：</strong><a href="https://github.com/hsuna">https://github.com/hsuna</a></p>
           </div>
         </div>
       </div>
@@ -46,13 +72,20 @@ export default {
 .about-body {
   padding: 24px;
   h4 {
+    margin-top: 30px;
     line-height: 28px;
-    font-size: 18px;
+    font-size: 20px;
+
+    &:first-child {
+      margin-top: 0;
+    }
   }
 
   p {
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    padding-left: 25px;
+    font-size: 16px;
 
     code {
       color: #0084ff;
@@ -73,6 +106,26 @@ export default {
         border-bottom-style: solid;
         text-decoration: none;
       }
+    }
+  }
+
+  ul {
+    padding-left: 25px;
+
+    li {
+      list-style: circle;
+      h5 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+        line-height: 20px;
+        font-size: 18px;
+      }
+    }
+
+    p {
+      margin-top: 5px;
+      margin-bottom: 5px;
+      padding-left: 0;
     }
   }
 }
