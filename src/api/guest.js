@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-26 14:42:22
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-01 21:44:43
+ * @Last Modified time: 2018-04-03 13:45:01
  */
 
 export default {
@@ -21,8 +21,10 @@ export default {
   getAchiveCount: process.env.API_HOST + "article/achiveCount", //查询文章归档
   putArticleViewCount: process.env.API_HOST + "article/viewCount", //更新浏览次数
 
-  //////////评论模块////////
+  ////////// 评论模块 ////////
   postComment: process.env.API_HOST + "comment", //添加文章评论
-  getCommentNew: process.env.API_HOST + "comment/new" //查询最新留言
+  getCommentNew: process.env.API_HOST + "comment/new", //查询最新留言
 
+  ////////// 文件模块 ////////
+  getFileUpload: process.env.API_HOST + "file/upload" //获取文件
 };

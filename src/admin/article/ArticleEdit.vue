@@ -18,6 +18,7 @@ export default {
         classify: "", //文章所属分类
         content: "", //文章内容
         tags: [], //文章标签
+        files: [], //文章链接图片
         status: 1 //0:草稿 | 1:发布 | 2:收藏
       },
       breadcrumbs: [{ text: "编辑文章" }]

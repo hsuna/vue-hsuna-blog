@@ -44,8 +44,16 @@
             </el-row>
             <el-row>
               <el-col :span="23" :push="1">
-                <el-form-item label="图片上传：" label-width="100px" class="show" prop="content" >
-                  <el-upload class="upload-demo" :action="uploadAction" :on-remove="handleRemoveFile" :file-list="fileList" list-type="picture">
+                <el-form-item label="图片上传：" label-width="100px" class="show">
+                  <!-- :before-upload="handleBeforeUpload" -->
+                  <el-upload class="article-upload"
+                    :multiple="true"
+                    :action="fileAction"
+                    :headers="fileHeaders"
+                    :file-list="article.files"
+                    :on-success="handleSuccessFile"
+                    :on-preview="handlePreviewFile"
+                    :before-remove="handleRemoveFile" list-type="picture">
                     <el-button type="primary">点击上传</el-button>
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                   </el-upload>
@@ -94,25 +102,27 @@ export default {
         classify: "", //文章所属分类
         content: "", //文章内容
         tags: [], //文章标签
+        files: [], //文章链接图片
         status: 1 //0:草稿 | 1:发布 | 2:收藏
       })
     },
     breadcrumbs: {
       type: Array,
       default: () => []
-    },
-    uploadAction: $api.postFileUpload
+    }
   },
   data() {
     return {
       isModify: false,
       submiting: false,
-      fileList: [],
       routerList: [
         { text: "首页", path: "/admin" },
         { text: "文章管理", path: "/admin/articleList" },
         ...this.breadcrumbs
       ],
+      classifyList: [],
+      tagList: this.$store.getters.tagList,
+
       articleRules: {
         title: [{ required: true, message: "请填写标题", trigger: "blur" }],
         about: [{ required: true, message: "请填写简介", trigger: "blur" }],
@@ -121,8 +131,12 @@ export default {
         ],
         content: [{ required: true, message: "请输入内容", trigger: "change" }]
       },
-      tagList: this.$store.getters.tagList,
-      classifyList: [],
+
+      fileAction: $api.postFileUpload,
+      fileHeaders: {
+        Authorization: this.$store.getters.token
+      },
+
       configs: {
         status: false // 禁用底部状态栏
       }
@@ -147,7 +161,45 @@ export default {
     }
   }, */
   methods: {
-    handleRemoveFile() {},
+    handleBeforeUpload(file) {
+      //return false; //返回false不会自动上传
+    },
+    handleSuccessFile(res, file, fileList) {
+      if (200 == res.code) {
+        this.$message({ message: res.message, type: "success" });
+        Object.assign(file, res.data);
+        this.article.files = fileList.map(file => ({
+          id: file.id,
+          name: file.name,
+          url: $api.getFileUpload + "/" + file.id
+        }));
+      }
+    },
+    handlePreviewFile(file) {
+      window.open($api.getFileUpload + "/" + file.id);
+    },
+    handleRemoveFile(file, fileList) {
+      return new Promise((resolve, reject) => {
+        this.$http
+          .delete($api.deleteFileUpload, {
+            params: {
+              articleId: this.article.id,
+              id: file.id
+            }
+          })
+          .then(res => {
+            if (200 == res.code) {
+              resolve();
+              this.$message({ message: res.message, type: "success" });
+            } else {
+              reject();
+            }
+          })
+          .catch(err => {
+            reject();
+          });
+      });
+    },
     handleSubmit() {
       this.$refs.articleRef.validate(valid => {
         if (valid) {
@@ -186,6 +238,19 @@ export default {
 .el-upload__tip {
   display: inline-block;
   margin-left: 10px;
+}
+.article-upload {
+  .el-upload-list {
+    margin-top: 10px;
+  }
+  .el-upload-list__item {
+    display: inline-block;
+    width: 24%;
+    margin: 0 0.5%;
+  }
+  .el-upload-list__item-name {
+    margin-right: 20px;
+  }
 }
 .article-status {
   display: inline-block;

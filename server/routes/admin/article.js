@@ -23,6 +23,7 @@ router.get("/", verifyRouteToken, (req, res) => {
       });
     })
     .catch(err => {
+      console.log(err);
       res.send({
         code: -200,
         message: "获取文章失败"
@@ -50,6 +51,7 @@ router.post("/", verifyRouteToken, (req, res) => {
       }
     })
     .catch(err => {
+      console.log(err);
       res.send({
         code: -200,
         message: "文章发布失败"
@@ -72,6 +74,7 @@ router.put("/", verifyRouteToken, (req, res) => {
       });
     })
     .catch(err => {
+      console.log(err);
       res.send({
         code: -200,
         message: "更新文章失败"
@@ -94,6 +97,7 @@ router.delete("/", verifyRouteToken, (req, res) => {
       });
     })
     .catch(err => {
+      console.log(err);
       res.send({
         code: -200,
         message: "删除文章失败"

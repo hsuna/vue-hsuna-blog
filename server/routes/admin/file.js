@@ -3,69 +3,110 @@
  * @Author: Hsuna
  * @Date: 2018-04-02 23:45:05
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-03 00:19:13
+ * @Last Modified time: 2018-04-03 18:01:38
  */
 
 import express from "express";
 import fs from "fs";
+import path from "path";
+import config from "../../config";
+import api from "../../api/article";
 
-import { UPLOAD_PATH } from "../../config";
+import { IncomingForm } from "formidable";
 import { verifyRouteToken } from "../../utils/token";
-import { timeStampFormat } from "../../utils/date";
 
 const router = express.Router();
 
-const getNowDatePath = () => {
-  let timeStamp = Date.now();
-  let random = Math.floor(Math.random() * 10000);
-  return {
-    dirPath: timeStampFormat(timeStamp, "yyyy-MM-dd"),
-    fileName: timeStampFormat(timeStamp, "yyyyMMddhhmmss") + random
-  };
-};
-
-const fileRemove = (oldPath, newPath) => {
+//递归创建目录 异步方法
+const mkdirs = dirname => {
   return new Promise((resolve, reject) => {
-    // 移动文件
-    fs.rename(oldPath, newPath, err => {
-      if (err) {
-        reject(err);
-      } else {
-        // 删除临时文件夹文件,
-        fs.unlink(oldPath, err => {
-          if (err) reject(err);
-          else resolve();
-        });
-      }
+    fs.exists(dirname, err => {
+      if (err) return resolve(err);
+      mkdirs(path.dirname(dirname)).then(() => {
+        fs.mkdir(dirname, resolve);
+      });
     });
   });
 };
+
+const unlink = id => {
+  return new Promise((resolve, reject) => {
+    fs.unlink(config.UPLOAD_PATH + "/upload_" + id, err => {
+      if (err) reject(err);
+      else resolve();
+    });
+  });
+};
+
+mkdirs(config.UPLOAD_PATH);
 
 /**
  * 上传文件
  * @param {string} title
  */
 router.post("/upload", verifyRouteToken, (req, res) => {
-  // 生成新的文件目录及文件名
-  let { dirPath, fileName } = getNowDatePath();
-  // 获得文件的临时路径
-  let tmpPath = req.files.thumbnail.path;
-  let targetPath = UPLOAD_PATH + dirPath + "/" + fileName;
-
-  fileRemove(tmpPath, targetPath)
-    .then(() => {
-      res.send({
-        code: 200,
-        message: "文件上传成功",
-        data: {
-          path: dirPath + "/" + fileName
-        }
-      });
-    })
-    .catch(err => {
+  //创建上传表单
+  let form = new IncomingForm();
+  form.encoding = "utf-8"; //设置编辑
+  form.uploadDir = config.UPLOAD_PATH;
+  form.keepExtensions = false; //保留后缀
+  form.multiples = true; // 上传多个
+  form.maxFieldsSize = 2 * 1024 * 1024; //文件大小 2M
+  // 上传文件的入口文件
+  form.parse(req, (err, fields, { file }) => {
+    if (err) {
+      console.log(err);
       res.send({
         code: -200,
         message: "文件上传失败"
       });
+    } else {
+      let { name } = path.parse(file.path);
+      let id = name.replace("upload_", "");
+      res.send({
+        code: 200,
+        message: "文件上传成功",
+        data: {
+          id,
+          name: file.name,
+          type: file.type
+        }
+      });
+    }
+  });
+});
+
+/**
+ * 删除文件
+ * @param {string} articleId
+ * @param {string} id
+ */
+router.delete("/upload", verifyRouteToken, (req, res) => {
+  let { articleId, id } = req.query;
+  (articleId => {
+    if (articleId) {
+      return api
+        .updateArticle(articleId, { files: { id } }, "$pull")
+        .then(result => {
+          return unlink(id);
+        });
+    } else {
+      return unlink(id);
+    }
+  })(articleId)
+    .then(result => {
+      res.send({
+        code: 200,
+        message: "文件删除成功"
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.send({
+        code: -200,
+        message: "文件删除失败"
+      });
     });
 });
+
+export default router;
