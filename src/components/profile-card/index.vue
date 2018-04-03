@@ -12,15 +12,36 @@
         <el-button type="text" @click="$router.push(`/article/${profile.id}`)">阅读全文<i class="el-icon-arrow-right"></i></el-button>
       </div>
     </div>
+    <el-pagination background　layout="prev, pager, next" v-if="-1 != total"
+      :total="total"
+      :current-page="curPage"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"></el-pagination>
   </div>
 </template>
 
 <script>
 export default {
   props: {
+    curPage: {
+      type: Number,
+      default: 1
+    },
+    total: {
+      type: Number,
+      default: -1
+    },
     profileList: {
       type: Array,
       default: () => []
+    }
+  },
+  methods: {
+    handleSizeChange(val) {
+      this.$emit("change", "size", val);
+    },
+    handleCurrentChange(val) {
+      this.$emit("change", "page", val);
     }
   }
 };
@@ -79,5 +100,11 @@ export default {
       margin-right: 5px;
     }
   }
+}
+.el-pagination {
+  margin-top: 15px;
+  padding: 10px;
+  border-top: 1px solid #dadada;
+  text-align: center;
 }
 </style>

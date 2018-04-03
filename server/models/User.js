@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-25 12:06:52
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-02 00:42:41
+ * @Last Modified time: 2018-04-03 23:13:05
  */
 import mongoose from "mongoose";
 import Refs from "./refs";
@@ -14,6 +14,7 @@ const { Schema } = mongoose;
 const UserSchema = new Schema({
   name: { type: String, unique: true }, //用户名
   password: { type: String }, //密码
+  email:{type: String},    //邮箱
   admin: { type: Boolean, default: false }, //是否管理员
   introduction: { type: String }, //简介
   header: { type: String }, //头像

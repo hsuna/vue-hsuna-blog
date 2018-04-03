@@ -6,7 +6,12 @@
           <profile-side-hot></profile-side-hot>
         </div>
         <div class="profile-main" v-loading="loading">
-          <profile-card :profileList="archiveList"></profile-card>
+          <profile-card
+            :profileList="archiveList"
+            :curPage="Number($route.params.page || 1)"
+            :total="archiveTotal"
+            @change="handlePaginChange">
+          </profile-card>
         </div>
       </div>
     </div>
@@ -22,20 +27,51 @@ export default {
   data() {
     return {
       loading: false,
+      archiveTotal: 0,
       archiveList: []
     };
   },
-  created() {},
+  created() {
+    this.getArchiveList(this.$route.query);
+  },
+  watch: {
+    $route(to, from) {
+      this.getArchiveList(this.$route.query);
+    }
+  },
   methods: {
+    getArchiveList(query) {
+      if (query.year && query.month) {
+        this.loading = true;
+        this.$http.get($api.getArticleAchive, { params: query }).then(res => {
+          if (200 == res.code) {
+            let { list, total } = res.data;
+            this.archiveList = list;
+            this.archiveTotal = total;
+          }
+          this.loading = false;
+        });
+      }
+    },
     handleArchive(archive) {
-      this.loading = true;
-      this.$http.get($api.getArticleAchive, { params: archive }).then(res => {
-        if (200 == res.code) {
-          let { list, total } = res.data;
-          this.archiveList = list;
+      this.$router.push({
+        path: "/archive",
+        query: {
+          year: archive.year,
+          month: archive.month
         }
-        this.loading = false;
       });
+    },
+    handlePaginChange(type, val) {
+      if ("page" == type) {
+        this.$router.push({
+          path: "/archive",
+          query: {
+            ...this.$route.query,
+            page: val
+          }
+        });
+      }
     }
   },
   components: {

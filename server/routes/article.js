@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-27 09:57:58
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-01 22:54:03
+ * @Last Modified time: 2018-04-03 21:02:32
  */
 
 import express from "express";
@@ -226,7 +226,8 @@ router.get("/achiveCount", (req, res) => {
           },
           count: { $sum: 1 }
         }
-      }
+      },
+      { $sort: { "_id.year": -1, "_id.month": -1 } }
     ])
     .then(result => {
       res.send({

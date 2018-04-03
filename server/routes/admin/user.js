@@ -13,6 +13,7 @@ router.get("/setup", (req, res) => {
   let admin = {
     name: "hsuna",
     password: "123456",
+    email: "me@hsuna.com",
     admin: true
   }; //创建管理员
 

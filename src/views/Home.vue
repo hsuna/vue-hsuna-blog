@@ -25,7 +25,12 @@
         <profile-side-comment></profile-side-comment>
       </div>
       <div class="profile-main" v-loading="loading">
-        <profile-card :profileList="profileList"></profile-card>
+        <profile-card
+          :profileList="profileList"
+          :curPage="Number($route.params.page || 1)"
+          :total="profileTotal"
+          @change="handlePaginChange">
+        </profile-card>
       </div>
     </div>
   </div>
@@ -47,6 +52,7 @@ export default {
       loading: true,
       introduction: "敢而慎之，勇敢不错失任何机会，谨慎不忽略一丝细节",
       background: "/static/images/20180327230952.jpg",
+      profileTotal: 0,
       profileList: []
     };
   },
@@ -63,12 +69,20 @@ export default {
       this.$http.get($api.getArticle, { params: query }).then(res => {
         if (200 == res.code) {
           this.profileList = res.data.list;
-          if (!query) {
-            this.articleCount = res.data.total;
-          }
+          this.profileTotal = res.data.total;
         }
         this.loading = false;
       });
+    },
+    handlePaginChange(type, val) {
+      if ("page" == type) {
+        let { page, classify } = this.$route.query;
+        if (classify) {
+          this.$router.push({ path: `/?page=${val}&classify=${classify}` });
+        } else {
+          this.$router.push({ path: `/?page=${val}` });
+        }
+      }
     }
   },
   components: {
