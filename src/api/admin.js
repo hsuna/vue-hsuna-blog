@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:14:48
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-03 13:44:41
+ * @Last Modified time: 2018-04-04 02:36:50
  */
 
 export default {
@@ -21,6 +21,10 @@ export default {
   postArticle: process.env.API_HOST + "admin/article", //添加文章
   putArticle: process.env.API_HOST + "admin/article", //更新文章
   deleteArticle: process.env.API_HOST + "admin/article", //删除文章
+
+  ////////// 评论模块 ////////
+  postComment: process.env.API_HOST + "admin/comment", //添加文章评论
+  deleteComment: process.env.API_HOST + "admin/comment", //删除文章评论
 
   /////// 文件模块 ////////
   getFileUpload: process.env.API_HOST + "file/upload", //获取文件

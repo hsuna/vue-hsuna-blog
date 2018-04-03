@@ -1,20 +1,8 @@
 import { ActionName, MutationName } from "store/types";
 
-import marked from "marked";
-import hljs from "highlight.js";
+import markMixin from "../../mixin/mark";
 
 import $api from "api/guest";
-
-marked.setOptions({
-  renderer: new marked.Renderer(),
-  highlight: (code, lang) => {
-    if (lang && hljs.getLanguage(lang)) {
-      return hljs.highlight(lang, code, true).value;
-    } else {
-      return hljs.highlightAuto(code).value;
-    }
-  }
-});
 
 export default {
   data() {
@@ -50,18 +38,10 @@ export default {
       }
     };
   },
-  computed: {
-    markdownToHtml() {
-      if (this.article) {
-        return marked(this.article.content || "", { sanitize: true });
-      } else {
-        return "";
-      }
-    }
-  },
   created() {
     this.getArticleDetail();
   },
+  mixins: [markMixin],
   methods: {
     getArticleDetail() {
       this.$http

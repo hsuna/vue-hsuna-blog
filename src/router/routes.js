@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:14:33
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-03 19:54:03
+ * @Last Modified time: 2018-04-04 01:33:04
  */
 
 export default [
@@ -110,6 +110,17 @@ export default [
           auth: true
         },
         name: "编辑文章",
+        hidden: true
+      },
+      {
+        path: "articleRead/:articleId",
+        component: resolve =>
+          require(["admin/article/ArticleRead.vue"], resolve),
+        meta: {
+          title: "查看文章 | HSUAN",
+          auth: true
+        },
+        name: "查看文章",
         hidden: true
       },
       {

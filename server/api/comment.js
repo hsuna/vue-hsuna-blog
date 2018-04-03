@@ -3,13 +3,13 @@
  * @Author: Hsuna
  * @Date: 2018-03-26 01:48:53
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-04 01:10:41
+ * @Last Modified time: 2018-04-04 02:54:41
  */
 
 import { Comment } from "../models";
 
 /**
- * 查找文章
+ * 查找文章评论
  * @param {object} query
  * @param {number} page  默认返回全部
  * @param {number} limit 默认10
@@ -34,14 +34,23 @@ const getComment = (query, page, limit = 10) => {
 };
 
 /**
- * 创建文章
+ * 创建文章评论
  * @param {object} comment
  */
 const createComment = comment => {
   return Comment.create(comment);
 };
 
+/**
+ * 删除文章评论
+ * @param {number} id
+ */
+const removeComment = id => {
+  return Comment.remove({ _id: id });
+};
+
 export default {
   getComment,
-  createComment
+  createComment,
+  removeComment
 };

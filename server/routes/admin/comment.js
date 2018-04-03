@@ -3,24 +3,25 @@
  * @Author: Hsuan
  * @Date: 2018-03-27 09:57:58
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-04 02:43:39
+ * @Last Modified time: 2018-04-04 02:58:51
  */
 
 import express from "express";
-import api from "../api/comment";
-import api_article from "../api/article";
-import { guestCommentFilter } from "../utils/filters";
+import api from "../../api/comment";
+import api_article from "../../api/article";
+
+import { verifyRouteToken } from "../../utils/token";
 
 const router = express.Router();
 
 /**
  * 更新文章评论
  */
-router.post("/", (req, res) => {
+router.post("/", verifyRouteToken, (req, res) => {
   let { id } = req.body;
   let commentId;
 
-  req.body.comment.admin = false;//访客回复
+  req.body.comment.admin = true; //管理员回复
   api
     .createComment(req.body.comment)
     .then(result => {
@@ -34,7 +35,7 @@ router.post("/", (req, res) => {
       res.send({
         code: 200,
         message: "提交评论成功",
-        data: guestCommentFilter(result)
+        data: result
       });
     })
     .catch(err => {
@@ -46,26 +47,27 @@ router.post("/", (req, res) => {
 });
 
 /**
- * 查找最新留言
+ * 删除文章评论
  */
-router.get("/new", (req, res) => {
-  let { limit = 10 } = req.query;
-  Object.assign(req.query, {
-    sort: { createdAt: -1 } //根据创建时间降序
-  });
+router.delete("/", verifyRouteToken, (req, res) => {
+  let { id, articleId } = req.query;
 
-  api
-    .getComment(req.query, 1, limit)
+  api_article
+    .updateArticle(articleId, { comments: id }, "$pull") //先删除文章里的关联
+    .then(result => {
+      return api.removeComment(id);
+    })
     .then(result => {
       res.send({
         code: 200,
-        data: result.map(guestCommentFilter)
+        message: "删除评论成功"
       });
     })
     .catch(err => {
+      console.log(err);
       res.send({
         code: -200,
-        message: "获取最新留言失败"
+        message: "删除评论失败"
       });
     });
 });

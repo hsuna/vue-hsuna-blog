@@ -18,7 +18,7 @@
           <el-table-column prop="updatedAt" min-width="140" label="更新时间" :formatter="row => $filter.timeStampFormat(row.updatedAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
           <el-table-column min-width="220" label="操作" fixed="right" align="center">
             <template slot-scope="scope">
-              <!-- <el-button @click="read(scope.row._id)">查看</el-button> -->
+              <el-button type='primary' @click="toReadArticle(scope.row._id)">查看</el-button>
               <el-button type='primary' @click="toEditArticle(scope.row._id)">编辑</el-button>
               <el-button type='danger' @click="handleRemoveArticle(scope.row._id)">删除</el-button>
             </template>
@@ -64,6 +64,9 @@ export default {
   methods: {
     toEditArticle(articleId) {
       this.$router.push({ path: `/admin/articleEdit/${articleId}` });
+    },
+    toReadArticle(articleId) {
+      this.$router.push({ path: `/admin/articleRead/${articleId}` });
     },
     getArticleList() {
       this.listLoading = true;

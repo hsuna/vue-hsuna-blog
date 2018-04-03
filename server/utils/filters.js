@@ -3,7 +3,7 @@
  * @Author: Hsuna
  * @Date: 2018-04-01 13:40:54
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-01 13:55:09
+ * @Last Modified time: 2018-04-04 03:01:33
  */
 
 const guestBaseFilter = article => ({
@@ -23,7 +23,8 @@ const guestCommentFilter = comment => ({
   name: comment.name,
   content: comment.content,
   createdAt: comment.createdAt,
-  articleId: comment.articleId
+  articleId: comment.articleId,
+  admin: comment.admin
 });
 
 const guestDetailFilter = article =>
