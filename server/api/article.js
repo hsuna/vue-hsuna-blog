@@ -3,7 +3,7 @@
  * @Author: Hsuna
  * @Date: 2018-03-26 01:48:53
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-01 21:59:47
+ * @Last Modified time: 2018-04-04 01:11:00
  */
 
 import { Article } from "../models";
@@ -31,7 +31,7 @@ const getArticle = (query, page, limit = 10) => {
         .populate("comments")
         .sort(sort)
         .skip(skip)
-        .limit(limit),
+        .limit(limit * 1),
       Article.find(query).count()
     ];
   } else {

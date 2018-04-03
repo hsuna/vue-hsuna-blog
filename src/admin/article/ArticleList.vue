@@ -24,6 +24,15 @@
             </template>
           </el-table-column>
         </el-table>
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="articlePage"
+          :page-sizes="[10, 20, 50, 100]"
+          :page-size="articleLimit"
+          layout="sizes, prev, pager, next"
+          :total="articleTotal">
+        </el-pagination>
       </div>
     </div>
   </div>
@@ -38,31 +47,38 @@ export default {
     return {
       listLoading: false,
       breadcrumbs: [{ text: "首页", path: "/admin" }, { text: "文章管理" }],
+
+      articlePage: 1,
+      articleLimit: 10,
+      articleTotal: 1,
       articleList: []
     };
   },
   created() {
-    this.getArticleList(1);
+    this.$route.query.page = this.articlePage =
+      this.$route.query.page || this.articlePage;
+    this.$route.query.limit = this.articleLimit =
+      this.$route.query.limit || this.articleLimit;
+    this.getArticleList();
   },
   methods: {
     toEditArticle(articleId) {
       this.$router.push({ path: `/admin/articleEdit/${articleId}` });
     },
-    getArticleList(page) {
+    getArticleList() {
       this.listLoading = true;
       this.$http
-        .get($api.getArticle)
+        .get($api.getArticle, { params: this.$route.query })
         .then(res => {
-          if(200 == res.code){
-            let{list, total} = res.data;
+          if (200 == res.code) {
+            let { list, total } = res.data;
             this.articleList = list;
+            this.articleTotal = total;
           }
           this.listLoading = false;
         });
     },
-    handleTabClick(){
-
-    },
+    //handleTabClick() {},
     handleRemoveArticle(id) {
       this.$confirm("确认删除该文章？")
         .then(res => {
@@ -80,9 +96,36 @@ export default {
         })
         .catch(err => {});
     },
+    handleSizeChange(val) {
+      this.$router.push({
+        path: "/admin/articleList",
+        query: {
+          page: 1,
+          limit: val
+        }
+      });
+      this.getArticleList();
+    },
+    handleCurrentChange(val) {
+      this.$router.push({
+        path: "/admin/articleList",
+        query: {
+          page: val,
+          limit: this.$route.query.limit
+        }
+      });
+      this.getArticleList();
+    }
   },
   components: {
     "admin-header": adminHeader
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.el-pagination {
+  padding: 10px;
+  text-align: right;
+}
+</style>

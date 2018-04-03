@@ -3,7 +3,7 @@
  * @Author: Hsuna
  * @Date: 2018-03-26 01:48:53
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-01 13:46:00
+ * @Last Modified time: 2018-04-04 01:10:41
  */
 
 import { Comment } from "../models";
@@ -27,7 +27,7 @@ const getComment = (query, page, limit = 10) => {
     return Comment.find(query)
       .sort(sort)
       .skip(skip)
-      .limit(limit);
+      .limit(limit * 1);
   } else {
     return Comment.find(query).sort(sort);
   }

@@ -8,8 +8,8 @@ import { Classify } from "../models";
  */
 const getClassify = (query, page, limit = 10) => {
   //设置为不可枚举
-  ['id', 'page', 'limit'].forEach(key => {
-    Object.defineProperty(query, key, {enumerable:false});
+  ["id", "page", "limit"].forEach(key => {
+    Object.defineProperty(query, key, { enumerable: false });
   });
 
   let promiseList;
@@ -17,13 +17,13 @@ const getClassify = (query, page, limit = 10) => {
     let skip = (page - 1) * limit;
     promiseList = [
       Classify.find(query)
-      .skip(skip)
-      .limit(limit)
-      .sort({_id: -1}),
+        .skip(skip)
+        .limit(limit * 1)
+        .sort({ _id: -1 }),
       Classify.find(query).count()
     ];
   } else {
-    promiseList = [Classify.find(query).sort({_id: -1})];
+    promiseList = [Classify.find(query).sort({ _id: -1 })];
   }
   return Promise.all(promiseList);
 };
