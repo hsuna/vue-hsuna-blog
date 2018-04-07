@@ -43,6 +43,9 @@ export default {
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
+  destroyed(){
+    window.removeEventListener("scroll", this.handleScroll);
+  },
   methods: {
     handleScroll() {
       let scrollTop =
@@ -54,6 +57,7 @@ export default {
       } else {
         this.isFixed = true;
       }
+      this.$emit('scroll-fixed', this.isFixed);
     },
     handleSelect(index, indexPath) {
       switch (indexPath[0]) {
