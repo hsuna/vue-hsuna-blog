@@ -23,15 +23,26 @@ const UserSchema = new Schema({
 });
 
 /** 使用pre中间件在用户信息存储前进行密码加密 */
-UserSchema.pre("save", function(next, data) {
-  encryptHash(this.password)
-    .then(hash => {
-      this.password = hash;
-      next();
-    })
-    .catch(err => {
-      next(err);
-    });
+const encryptHashByUser = function(next, user){
+  if(user.password){
+    encryptHash(user.password)
+      .then(hash => {
+        user.password = hash;
+        next();
+      })
+      .catch(err => {
+        next(err);
+      });
+  }else{
+    next();
+  }
+}
+
+UserSchema.pre("save", function(next, data){
+  encryptHashByUser(next, this);
+});
+UserSchema.pre("update", function(next, data){
+  encryptHashByUser(next, this._update['$set']);
 });
 
 export default mongoose.model(Refs.User, UserSchema);

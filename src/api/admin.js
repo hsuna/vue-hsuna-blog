@@ -9,6 +9,7 @@
 export default {
   //////// 登录模块 ////////
   postLogin: process.env.API_HOST + "admin/login",
+  postModifyPassword: process.env.API_HOST + "admin/modifyPassword",
 
   //////// 分类模块 ////////
   getClassify: process.env.API_HOST + "admin/classify", //查询分类

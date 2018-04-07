@@ -13,13 +13,15 @@ const encryptHash = password => {
     bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
       if (err) {
         reject(err);
+      } else {
+        bcrypt.hash(password, salt, (err, hash) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(hash);
+          }
+        });
       }
-      bcrypt.hash(password, salt, (err, hash) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(hash);
-      });
     });
   });
 };
@@ -36,13 +38,14 @@ const verifyHash = (password, hash) => {
     bcrypt.compare(password, hash, (err, res) => {
       if (err) {
         reject(err);
-      } else if (res) {
-        resolve(res);
       } else {
-        reject(res);
+        resolve(res);
       }
     });
   });
 };
 
-export { encryptHash, verifyHash };
+export {
+  encryptHash,
+  verifyHash
+};

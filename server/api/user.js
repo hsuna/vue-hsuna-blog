@@ -1,4 +1,5 @@
 import { User } from "../models";
+import { encryptHash } from "../utils/hash";
 
 /**
  * 通过用户名获取用户信息
@@ -6,6 +7,15 @@ import { User } from "../models";
  */
 const getUserByName = name => {
   return User.findOne({ name });
+};
+
+/**
+ * 更新用户
+ * @param {number} id
+ * @param {object} user
+ */
+const updateUser = (id, user) => {
+  return User.update({ _id: id }, { $set: user });
 };
 
 /**
@@ -18,5 +28,6 @@ const createUser = user => {
 
 export default {
   getUserByName,
+  updateUser,
   createUser
 };

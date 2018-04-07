@@ -26,6 +26,7 @@ const MutationName = {
 const ActionName = {
   USER_LOGIN: "userLogin", //用户登录
   USER_LOGOUT: "userLogout", //用户登出
+  MODIFY_PWD: "modifyPassword", //修改密码
   ADD_ARTICLE_TAGS: "addArticleTags", //添加文章标签
   ADD_VIEW_TIME: "addViewTime" //添加浏览次数
 };

@@ -2,7 +2,7 @@
   <div class="blog-footer">
     <div class="footer-inner">
       <div class="footer-content">
-        2018 © <a title="电子邮件" href="mailto:me@husna.com">我的邮件</a>
+        {{Date.now(), 'yyyy' | timeStampFormat}} © <a title="电子邮件" href="mailto:me@husna.com">我的邮件</a>
         | <a title="简历" target="_blank" href="http://resume.hsuna.com">简历</a>
         | <a title="GitHub" target="_blank" href="https://github.com/hsuna">GitHub</a>
       </div>

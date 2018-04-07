@@ -46,6 +46,23 @@ export default {
         .catch(err => {});
     }
   },
+  [ActionName.MODIFY_PWD]({ commit }, { data, vm }) {
+    if (vm) {
+      return new Promise((resolve, reject) => {
+        vm.$http.post($admin.postModifyPassword, data).then(res => {
+          if (200 == res.code) {
+            commit(MutationName.CLEAR_USER);
+            vm.$message({
+              message: res.message,
+              type: "success"
+            });
+            vm.$router.replace({ path: "/login" });
+          }
+          resolve(res);
+        });
+      });
+    }
+  },
   [ActionName.ADD_ARTICLE_TAGS]({ state, commit }, addTags) {
     let { tags } = state;
     tags = Array.from(new Set([...tags, ...addTags]));

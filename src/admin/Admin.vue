@@ -9,6 +9,7 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="blog">返回博客</el-dropdown-item>
             <el-dropdown-item command="admin">返回首页</el-dropdown-item>
+            <el-dropdown-item command="mofpwd">修改密码</el-dropdown-item>
             <el-dropdown-item command="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -29,6 +30,23 @@
         <router-view />
       </el-main>
     </el-container>
+    <el-dialog title="修改密码" :visible.sync="modifyDialogVisible">
+      <el-form :model="modifyForm" :rules="modifyRules" ref="modifyPwd" label-width="100px">
+        <el-form-item label="旧密码：" prop="oldPass">
+          <el-input type="password" v-model="modifyForm.oldPass" placeholder="请输入旧密码"></el-input>
+        </el-form-item>
+        <el-form-item label="新密码：" prop="newPass">
+          <el-input type="password" v-model="modifyForm.newPass" placeholder="请输入新密码"></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码：" prop="checkPass">
+          <el-input type="password" v-model="modifyForm.checkPass" placeholder="请再次输入新密码"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="modifyDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitModifyForm('modifyPwd')">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -37,8 +55,39 @@ import { ActionName } from "store/types";
 
 export default {
   data() {
+    let validateNewPass = (rule, value, callback) => {
+      if (value === this.modifyForm.oldPass) {
+        callback(new Error('新密码和旧密码不能相同!'));
+      }else if('' !== value && '' !== this.modifyForm.checkPass){
+          this.$refs.modifyPwd.validateField('checkPass');
+      }else {
+        callback();
+      }
+    };
+    let validateCheckPass = (rule, value, callback) => {
+      if (value !== this.modif.yForm.newPass) {
+        callback(new Error('两次输入密码不一致!'));
+      } else {
+        callback();
+      }
+    };
+
     return {
-      userName: this.$store.getters.userName
+      userName: this.$store.getters.userName,
+      
+      modifyDialogVisible:false,
+      modifyForm:{},
+      modifyRules: {
+        oldPass: [{ required: true, message: "请输入旧密码", trigger: "blur" }],
+        newPass: [
+          { required: true, message: "请输入新密码", trigger: "blur" },
+          { validator: validateNewPass, trigger: 'blur' }
+        ],
+        checkPass: [
+          { required: true, message: "请再次输入密码", trigger: "blur" },
+          { validator: validateCheckPass, trigger: 'blur' }
+        ]
+      }
     };
   },
   methods: {
@@ -53,10 +102,35 @@ export default {
         case "admin":
           this.$router.push({ path: "/admin" });
           break;
+        case "mofpwd"://修改密码
+          this.modifyDialogVisible = true;
+          if(this.$refs.modifyPwd){
+            this.$refs.modifyPwd.resetFields();
+          }
+          break;
         case "logout":
           this.$store.dispatch(ActionName.USER_LOGOUT, { vm: this });
           break;
       }
+    },
+    submitModifyForm(formName){
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$store.dispatch(ActionName.MODIFY_PWD, { 
+            data:{
+              userName: this.userName,
+              oldPass: this.modifyForm.oldPass,
+              newPass: this.modifyForm.newPass
+            },
+            vm: this 
+          })
+          .then(res => {
+            if(200 == res.code) {
+              this.modifyDialogVisible = false;
+            }
+          });
+        }
+      });
     }
   }
 };

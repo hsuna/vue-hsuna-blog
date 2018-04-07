@@ -45,6 +45,7 @@ router.get("/setup", (req, res) => {
  */
 router.post("/login", (req, res) => {
   let { name, password } = req.body;
+  let id;
   api
     .getUserByName(name)
     .then(model => {
@@ -53,21 +54,24 @@ router.post("/login", (req, res) => {
           code: -200,
           message: "登录失败，该用户不存在"
         });
+      }else{
+        id = model.id;
+        return verifyHash(password, model.password);
       }
-      verifyHash(password, model.password)
-        .then(() => {
-          res.send({
-            code: 200,
-            message: "恭喜，登录成功",
-            token: signToken(model.id)
-          });
-        })
-        .catch(err => {
-          res.send({
-            code: -200,
-            message: "登录失败，密码错误"
-          });
+    })
+    .then(bol => {
+      if(bol){
+        res.send({
+          code: 200,
+          message: "恭喜，登录成功",
+          token: signToken(id)
         });
+      }else{
+        res.send({
+          code: -200,
+          message: "登录失败，密码错误"
+        });
+      }
     })
     .catch(err => {
       res.send({
@@ -76,5 +80,43 @@ router.post("/login", (req, res) => {
       });
     });
 });
+
+/**
+ * 修改密码
+ */
+router.post("/modifyPassword", (req, res) => {
+  let { userName, oldPass, newPass } = req.body;
+  let id;
+  api
+    .getUserByName(userName)
+    .then(model => {
+      if (!model) {
+        return Promise.reject({ message: "修改密码失败，该用户不存在" });
+      }else{
+        id = model.id;
+        return verifyHash(oldPass, model.password);
+      }
+    })
+    .then(bol => {
+      if(bol){
+        return api.updateUser(id, { password: newPass });
+      }else{
+        return Promise.reject({ message: "修改密码失败，旧密码不一致" });
+      }
+    })
+    .then(() => {
+      res.send({
+        code: 200,
+        message: "修改密码成功，请重新登录！",
+      });
+    })
+    .catch(err => {
+      res.send({
+        code: -200,
+        message: err.message || "修改密码失败"
+      });
+    });
+});
+
 
 export default router;

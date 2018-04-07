@@ -8,10 +8,12 @@
           <el-menu-item index="home"><i class="fa fa-home"></i>首页</el-menu-item>
           <el-menu-item index="archive"><i class="fa fa-archive"></i>档案</el-menu-item>
           <el-menu-item index="about"><i class="fa fa-user"></i>关于</el-menu-item>
-          <el-menu-item index="admin"><i class="fa fa-cog"></i>管理</el-menu-item>
+          <el-menu-item index="admin" v-if="$store.getters.token"><i class="fa fa-cog"></i>管理</el-menu-item>
       </el-menu>
       <div class="header-search">
-          <el-input placeholder="搜索" prefix-icon="el-icon-search" v-model="inputSearch"></el-input>
+        <el-input placeholder="搜索" v-model="inputSearch"><!-- prefix-icon="el-icon-search" -->
+          <el-button slot="append" icon="el-icon-search" @click="handleSearch"></el-button>
+        </el-input>
       </div>
     </div>
   </div>
@@ -74,6 +76,10 @@ export default {
           this.$router.push({ path: "/" + index });
           break;
       }
+    },
+    handleSearch(){
+      console.log(this.inputSearch);
+      this.$message('该功能正在建设中～');
     }
   }
 };

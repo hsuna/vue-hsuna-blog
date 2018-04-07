@@ -1,19 +1,20 @@
 <template>
   <div class="login-container">
     <el-form :model="user" :rules="rules" ref="user" label-position="left" label-width="0px" v-loading="loadingflag" element-loading-text="页面跳转中">
-     <h3 class="title">欢迎登录后台管理系统</h3>
-     <el-form-item prop="name">
-       <el-input type="text" v-model="user.name" auto-complete="off" placeholder="账号"></el-input>
-     </el-form-item>
-     <el-form-item prop="password">
-       <el-input type="password" v-model="user.password" auto-complete="off" placeholder="密码"></el-input>
-     </el-form-item>
+      <h3 class="title">欢迎登录后台管理系统</h3>
+      <el-form-item prop="name">
+        <el-input type="text" v-model="user.name" auto-complete="off" placeholder="账号"></el-input>
+      </el-form-item>
+      <el-form-item prop="password">
+        <el-input type="password" v-model="user.password" auto-complete="off" placeholder="密码"></el-input>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="handleSubmit">登录</el-button>
-         <el-button type="primary" @click="$router.push({path: '/backend/reg'})">注册</el-button>
+        <el-button type="primary" @click="$router.push({path: '/'})">返回博客</el-button>
+        <!-- <el-button type="primary" @click="$router.push({path: '/backend/reg'})">注册</el-button> -->
       </el-form-item>
-  </el-form>
-</div>
+    </el-form>
+  </div>
 </template>
 
 <script>
@@ -45,7 +46,7 @@ export default {
         if (valid) {
           this.$store
             .dispatch(ActionName.USER_LOGIN, { user: this.user, vm: this })
-            .then(data => {
+            .then(res => {
               this.loadingflag = false;
             });
         } else {
