@@ -11,7 +11,7 @@
             <!-- 简介 -->
             <h4 id="aboutIntroduce">简介</h4>
             <p>陈阳志 男 91年天秤座一枚 毕业于2013.6</p>
-            <p>重度强迫症码农，旅游的苦行增</p>
+            <p>重度强迫症码农，浅度流浪型驴友</p>
 
             <!-- 技能清单 -->
             <h4 id="aboutHistory">技能清单</h4>
@@ -40,6 +40,21 @@
             <p><strong>个人邮箱：</strong><a href="mailto:me@hsuna.com">me@hsuna.com</a></p>
             <p><strong>个人简历：</strong><a href="http://resume.hsuna.com">http://resume.hsuna.com</a></p>
             <p><strong>Github：</strong><a href="https://github.com/hsuna">https://github.com/hsuna</a></p>
+
+            <!-- 博客技术栈 -->
+            <h4 id="aboutSkill">博客技术栈</h4>
+            <ul>
+              <li>
+                <h5>前端</h5>
+                <p>vue, vue-router, axios, vuex</p>
+                <p>element-ui, markdown, highlight, webpack</p>
+              </li>
+              <li>
+                <h5>后端</h5>
+                <p>express, mongoose, mongodb</p>
+                <p>bcryptjs, jsonwebtoken</p>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

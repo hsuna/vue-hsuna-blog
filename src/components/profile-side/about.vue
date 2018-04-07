@@ -11,6 +11,8 @@
         <li>1、<a href="#aboutIntroduce">简介</a></li>
         <li>2、<a href="#aboutHistory ">技能清单</a></li>
         <li>3、<a href="#aboutContact">联系我</a></li>
+        <li>4、<a href="#aboutSkill">博客技术栈</a></li>
+        
       </ul>
     </div>
   </div>
