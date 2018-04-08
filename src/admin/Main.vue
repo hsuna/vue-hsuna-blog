@@ -7,9 +7,13 @@
           <label class="el-form-item__label" style="width: 100px;">头像：</label>
           <el-upload
             class="portrait-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            :multiple="false"
+            :action="portrait.action"
+            :data="portrait.data"
+            :headers="fileHeaders"
+            :on-success="handleSuccessPortrait"
             :show-file-list="false">
-            <img v-if="user.portrait" :src="user.portrait" class="img">
+            <img v-if="portrait.url" :src="portrait.url" class="img">
             <i v-else class="el-icon-plus uploader-icon"></i>
           </el-upload>
         </el-col>
@@ -35,9 +39,13 @@
           <label class="el-form-item__label" style="width: 100px;">背景图：</label>
           <el-upload
             class="banner-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            :multiple="false"
+            :action="banner.action"
+            :data="banner.data"
+            :headers="fileHeaders"
+            :on-success="handleSuccessBanner"
             :show-file-list="false">
-            <img v-if="user.banner" :src="user.banner" class="img">
+            <div v-if="banner.url" :style="`background-image: url(${banner.url})`" class="img"></div>
             <i v-else class="el-icon-plus uploader-icon"></i>
           </el-upload>
         </el-col>
@@ -64,40 +72,79 @@ import $api from "api/admin";
 
 export default {
   data() {
+    let { userName } = this.$store.getters;
     return {
       isEdit: false,
       submitload: false,
       user: {
-        name: this.$store.getters.userName,
-        nickname: "",
-        job: "",
-        introduction: "",
-        portrait: "",
-        banner: ""
-      },
-      userForm: {
-        name: this.$store.getters.userName,
+        name: userName,
         nickname: "",
         job: "",
         introduction: ""
       },
+      userForm: {
+        name: userName,
+        nickname: "",
+        job: "",
+        introduction: ""
+      },
+
+      portrait: {
+        action: $api.postUserPortrait,
+        data: {
+          userName
+        },
+        url: ""
+      },
+      banner: {
+        action: $api.postUserBanner,
+        data: {
+          userName
+        },
+        url: ""
+      },
+      fileHeaders: {
+        Authorization: this.$store.getters.token
+      },
+
       breadcrumbs: [{ text: "首页" }]
     };
   },
   created() {
-    this.$http
-      .get($api.getUserInfo, {
-        params: {
-          userName: this.userForm.name
-        }
-      })
-      .then(res => {
-        if (200 == res.code) {
-          Object.assign(this.user, res.data);
-        }
-      });
+    this.getUserInfo();
   },
   methods: {
+    getUserInfo() {
+      this.$http
+        .get($api.getUserInfo, {
+          params: {
+            userName: this.userForm.name
+          }
+        })
+        .then(res => {
+          if (200 == res.code) {
+            Object.assign(this.user, res.data);
+            if (res.data.portrait && "" != res.data.portrait) {
+              this.portrait.url = $api.getFileUpload + "/" + res.data.portrait;
+            }
+            if (res.data.banner && "" != res.data.banner) {
+              this.banner.url = $api.getFileUpload + "/" + res.data.banner;
+            }
+          }
+        });
+    },
+    handleSuccessPortrait(res, file, fileList) {
+      if (200 == res.code) {
+        this.$message({ message: res.message, type: "success" });
+        this.portrait.url = $api.getFileUpload + "/" + res.fileId;
+      }
+    },
+    handleSuccessBanner(res, file, fileList) {
+      if (200 == res.code) {
+        this.$message({ message: res.message, type: "success" });
+        this.banner.url = $api.getFileUpload + "/" + res.fileId;
+      }
+    },
     handleEdit() {
       this.userForm.nickname = this.user.nickname;
       this.userForm.job = this.user.job;
@@ -146,10 +193,6 @@ export default {
       font-size: 28px;
       color: #8c939d;
     }
-
-    .img {
-      display: block;
-    }
   }
 
   .portrait-uploader {
@@ -157,6 +200,7 @@ export default {
 
     .uploader-icon,
     .img {
+      display: block;
       width: 100px;
       height: 100px;
       line-height: 100px;
@@ -168,6 +212,8 @@ export default {
       width: 614px;
       height: 144px;
       line-height: 144px;
+      background-size: cover;
+      background-position: center;
     }
   }
 }

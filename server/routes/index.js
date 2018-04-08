@@ -11,6 +11,7 @@ import article from "./article";
 import comment from "./comment";
 import classify from "./classify";
 import file from "./file";
+import user from "./user";
 
 let routes = {};
 
@@ -36,7 +37,8 @@ analysisRoutes({
   article,
   classify,
   comment,
-  file
+  file,
+  user
 });
 
 export default routes;

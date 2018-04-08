@@ -1,8 +1,9 @@
 import express from "express";
+import path from "path";
 
+import { IncomingForm } from "formidable";
 import { verifyHash } from "../../utils/hash";
 import { verifyRouteToken } from "../../utils/token";
-import { userInfoFilter } from "../../utils/filters";
 
 import config from "../../config";
 import api from "../../api/user";
@@ -62,7 +63,7 @@ router.get("/userInfo", verifyRouteToken, (req, res) => {
       res.send({
         code: 200,
         message: "获取用户信息成功",
-        data: userInfoFilter(user)
+        data: user
       });
     }
   })
@@ -101,9 +102,7 @@ router.put("/userInfo", verifyRouteToken, (req, res) => {
  * 更新头像
  * @param {string} title
  */
-router.put("/portrait", verifyRouteToken, (req, res) => {
-  let { userName } = req.body;
-  
+router.post("/portrait", verifyRouteToken, (req, res) => {
   //创建上传表单
   let form = new IncomingForm();
   form.encoding = "utf-8"; //设置编辑
@@ -112,7 +111,7 @@ router.put("/portrait", verifyRouteToken, (req, res) => {
   form.multiples = false; // 上传多个
   form.maxFieldsSize = 2 * 1024 * 1024; //文件大小 2M
   // 上传文件的入口文件
-  form.parse(req, (err, fields, { file }) => {
+  form.parse(req, (err, { userName }, { file }) => {
     if (err) {
       console.log(err);
       res.send({
@@ -145,9 +144,7 @@ router.put("/portrait", verifyRouteToken, (req, res) => {
  * 更新banner图
  * @param {string} title
  */
-router.put("/banner", verifyRouteToken, (req, res) => {
-  let { userName } = req.body;
-
+router.post("/banner", verifyRouteToken, (req, res) => {
   //创建上传表单
   let form = new IncomingForm();
   form.encoding = "utf-8"; //设置编辑
@@ -156,7 +153,7 @@ router.put("/banner", verifyRouteToken, (req, res) => {
   form.multiples = false; // 上传多个
   form.maxFieldsSize = 2 * 1024 * 1024; //文件大小 2M
   // 上传文件的入口文件
-  form.parse(req, (err, fields, { file }) => {
+  form.parse(req, (err, { userName }, { file }) => {
     if (err) {
       console.log(err);
       res.send({
