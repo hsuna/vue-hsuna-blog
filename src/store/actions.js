@@ -49,7 +49,7 @@ export default {
   [ActionName.MODIFY_PWD]({ commit }, { data, vm }) {
     if (vm) {
       return new Promise((resolve, reject) => {
-        vm.$http.post($admin.postModifyPassword, data).then(res => {
+        vm.$http.put($admin.putUserPassword, data).then(res => {
           if (200 == res.code) {
             commit(MutationName.CLEAR_USER);
             vm.$message({

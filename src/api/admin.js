@@ -8,9 +8,16 @@
 
 export default {
   //////// 登录模块 ////////
-  postLogin: process.env.API_HOST + "admin/login",
-  postModifyPassword: process.env.API_HOST + "admin/modifyPassword",
+  postLogin: process.env.API_HOST + "admin/login",//登录
 
+  //////// 用户模块 ////////
+  putUserPassword: process.env.API_HOST + "admin/user/password", //更新用户密码
+  getUserInfo: process.env.API_HOST + "admin/user/userInfo", //获取用户信息
+  putUserInfo: process.env.API_HOST + "admin/user/userInfo", //更新用户信息
+  putUserPortrait: process.env.API_HOST + "admin/user/portrait", //更新用户头像
+  putUserBanner: process.env.API_HOST + "admin/user/banner",   //更新用户背景图
+
+  
   //////// 分类模块 ////////
   getClassify: process.env.API_HOST + "admin/classify", //查询分类
   postClassify: process.env.API_HOST + "admin/classify", //添加分类

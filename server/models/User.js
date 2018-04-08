@@ -16,9 +16,11 @@ const UserSchema = new Schema({
   password: { type: String }, //密码
   email:{type: String},    //邮箱
   admin: { type: Boolean, default: false }, //是否管理员
+  nickname: { type: String }, //昵称
+  job: { type: String }, //职位
   introduction: { type: String }, //简介
-  header: { type: String }, //头像
-  background: { type: String }, //背景图
+  portrait: { type: String }, //头像
+  banner: { type: String }, //背景图
   about: { type: String } //关于我
 });
 
