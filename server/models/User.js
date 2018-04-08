@@ -43,6 +43,9 @@ const encryptHashByUser = function(next, user){
 UserSchema.pre("save", function(next, data){
   encryptHashByUser(next, this);
 });
+UserSchema.pre("findOneAndUpdate", function(next, data){
+  encryptHashByUser(next, this._update['$set']);
+});
 UserSchema.pre("update", function(next, data){
   encryptHashByUser(next, this._update['$set']);
 });
