@@ -57,16 +57,17 @@ export default {
   data() {
     let validateNewPass = (rule, value, callback) => {
       if (value === this.modifyForm.oldPass) {
-        callback(new Error('新密码和旧密码不能相同!'));
-      }else if('' !== value && '' !== this.modifyForm.checkPass){
-          this.$refs.modifyPwd.validateField('checkPass');
-      }else {
+        callback(new Error("新密码和旧密码不能相同!"));
+      } else {
+        if ("" !== value && "" !== this.modifyForm.checkPass) {
+          this.$refs.modifyPwd.validateField("checkPass");
+        }
         callback();
       }
     };
     let validateCheckPass = (rule, value, callback) => {
-      if (value !== this.modif.yForm.newPass) {
-        callback(new Error('两次输入密码不一致!'));
+      if (value !== this.modifyForm.newPass) {
+        callback(new Error("两次输入密码不一致!"));
       } else {
         callback();
       }
@@ -74,18 +75,18 @@ export default {
 
     return {
       userName: this.$store.getters.userName,
-      
-      modifyDialogVisible:false,
-      modifyForm:{},
+
+      modifyDialogVisible: false,
+      modifyForm: {},
       modifyRules: {
         oldPass: [{ required: true, message: "请输入旧密码", trigger: "blur" }],
         newPass: [
           { required: true, message: "请输入新密码", trigger: "blur" },
-          { validator: validateNewPass, trigger: 'blur' }
+          { validator: validateNewPass, trigger: "blur" }
         ],
         checkPass: [
           { required: true, message: "请再次输入密码", trigger: "blur" },
-          { validator: validateCheckPass, trigger: 'blur' }
+          { validator: validateCheckPass, trigger: "blur" }
         ]
       }
     };
@@ -102,9 +103,9 @@ export default {
         case "admin":
           this.$router.push({ path: "/admin" });
           break;
-        case "mofpwd"://修改密码
+        case "mofpwd": //修改密码
           this.modifyDialogVisible = true;
-          if(this.$refs.modifyPwd){
+          if (this.$refs.modifyPwd) {
             this.$refs.modifyPwd.resetFields();
           }
           break;
@@ -113,22 +114,23 @@ export default {
           break;
       }
     },
-    submitModifyForm(formName){
-      this.$refs[formName].validate((valid) => {
+    submitModifyForm(formName) {
+      this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$store.dispatch(ActionName.MODIFY_PWD, { 
-            data:{
-              userName: this.userName,
-              oldPass: this.modifyForm.oldPass,
-              newPass: this.modifyForm.newPass
-            },
-            vm: this 
-          })
-          .then(res => {
-            if(200 == res.code) {
-              this.modifyDialogVisible = false;
-            }
-          });
+          this.$store
+            .dispatch(ActionName.MODIFY_PWD, {
+              data: {
+                userName: this.userName,
+                oldPass: this.modifyForm.oldPass,
+                newPass: this.modifyForm.newPass
+              },
+              vm: this
+            })
+            .then(res => {
+              if (200 == res.code) {
+                this.modifyDialogVisible = false;
+              }
+            });
         }
       });
     }
