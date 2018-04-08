@@ -1,13 +1,13 @@
 <template>
   <div class="blog-body">
     <div class="blog-personal">
-      <div class="personal-top" :style="`background-image:url(${background})`"></div>
+      <div class="personal-top" :style="`background-image:url(${banner})`"></div>
       <div class="personal-bottom">
         <div class="user-portrait">
-          <img src="/static/images/20180326140219.jpg" alt="portrait" width="100%" height="100%" />
+          <img :src="portrait" alt="portrait" width="100%" height="100%" />
         </div>
         <div class="user-info clearfix">
-          <span class="name">Hsuna</span>WEB前端工程师
+          <span class="name">{{nickname}}</span>{{job}}
           <div class="social">
             <el-tooltip content="微博"><a class="icon" href="http://weibo.com/" target="_blank" ><i class="fa fa-weibo" style="background-color: rgb(221, 75, 57);"></i></a></el-tooltip>
             <el-tooltip content="github"><a class="icon" href="https://github.com/hsuna" target="_blank" ><i class="fa fa-github" style="background-color: rgb(85, 172, 238);"></i></a></el-tooltip>
@@ -50,13 +50,17 @@ export default {
   data() {
     return {
       loading: true,
+      nickname: "Hsuna",
+      job: "WEB前端工程师",
       introduction: "敢而慎之，勇敢不错失任何机会，谨慎不忽略一丝细节",
-      background: "/static/images/20180327230952.jpg",
+      portrait: "",
+      banner: "",
       profileTotal: 0,
       profileList: []
     };
   },
   created() {
+    this.getUserInfo();
     this.getProfileList(this.$route.query);
   },
   watch: {
@@ -65,6 +69,28 @@ export default {
     }
   },
   methods: {
+    getUserInfo() {
+      this.$http
+        .get($api.getUserInfo, {
+          params: {
+            userName: this.$store.getters.userName
+          }
+        })
+        .then(res => {
+          if (200 == res.code) {
+            let user = res.data;
+            this.nickname = user.nickname || "";
+            this.job = user.job || "";
+            this.introduction = user.introduction || "";
+            this.portrait = user.portrait
+              ? $api.getFileUpload + "/" + user.portrait
+              : "";
+            this.banner = user.banner
+              ? $api.getFileUpload + "/" + user.banner
+              : "";
+          }
+        });
+    },
     getProfileList(query) {
       this.$http.get($api.getArticle, { params: query }).then(res => {
         if (200 == res.code) {

@@ -7,6 +7,9 @@
  */
 
 export default {
+  //////// 用户模块 ////////
+  getUserInfo: process.env.API_HOST + "user/userInfo", //获取用户信息
+
   //////// 分类模块 ////////
   getClassify: process.env.API_HOST + "classify", //查询分类
   getClassifyCount: process.env.API_HOST + "article/classifyCount", //查询分类数量
