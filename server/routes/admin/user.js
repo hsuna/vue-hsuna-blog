@@ -1,105 +1,34 @@
 import express from "express";
 
 import { verifyHash } from "../../utils/hash";
-import { signToken } from "../../utils/token";
+import { verifyRouteToken } from "../../utils/token";
+import { userInfoFilter } from "../../utils/filters";
 
+import config from "../../config";
 import api from "../../api/user";
 
 const app = express();
 const router = express.Router();
 
-/**初始化，建立管理员 */
-router.get("/setup", (req, res) => {
-  let admin = {
-    name: "hsuna",
-    password: "123456",
-    email: "me@hsuna.com",
-    admin: true
-  }; //创建管理员
-
-  api
-    .getUserByName(admin.name)
-    .then(model => {
-      if (model) {
-        return Promise.reject({ message: "该账号已存在" });
-      } else {
-        return api.createUser(admin);
-      }
-    })
-    .then(model => {
-      res.send({
-        code: 200,
-        message: "管理员创建成功"
-      });
-    })
-    .catch(err => {
-      res.send({
-        code: -200,
-        message: err.message || "管理员创建失败"
-      });
-    });
-});
-
-/**
- * 登录用户
- */
-router.post("/login", (req, res) => {
-  let { name, password } = req.body;
-  let id;
-  api
-    .getUserByName(name)
-    .then(model => {
-      if (!model) {
-        res.send({
-          code: -200,
-          message: "登录失败，该用户不存在"
-        });
-      }else{
-        id = model.id;
-        return verifyHash(password, model.password);
-      }
-    })
-    .then(bol => {
-      if(bol){
-        res.send({
-          code: 200,
-          message: "恭喜，登录成功",
-          token: signToken(id)
-        });
-      }else{
-        res.send({
-          code: -200,
-          message: "登录失败，密码错误"
-        });
-      }
-    })
-    .catch(err => {
-      res.send({
-        code: -200,
-        message: "登录失败"
-      });
-    });
-});
-
 /**
  * 修改密码
  */
-router.post("/modifyPassword", (req, res) => {
+router.put("/password", verifyRouteToken, (req, res) => {
   let { userName, oldPass, newPass } = req.body;
   let id;
   api
     .getUserByName(userName)
-    .then(model => {
-      if (!model) {
+    .then(user => {
+      if (!user) {
         return Promise.reject({ message: "修改密码失败，该用户不存在" });
       }else{
-        id = model.id;
-        return verifyHash(oldPass, model.password);
+        id = user.id;
+        return verifyHash(oldPass, user.password);
       }
     })
     .then(bol => {
       if(bol){
-        return api.updateUser(id, { password: newPass });
+        return api.updateUserById(id, { password: newPass });
       }else{
         return Promise.reject({ message: "修改密码失败，旧密码不一致" });
       }
@@ -118,5 +47,141 @@ router.post("/modifyPassword", (req, res) => {
     });
 });
 
+/**
+ * 获取用户信息
+ * @param {Object} 
+ */
+router.get("/userInfo", verifyRouteToken, (req, res) => {
+  let { userName } = req.query;
+  api
+  .getUserByName(userName)
+  .then(user => {
+    if (!user) {
+      return Promise.reject({ message: "获取用户信息失败，该用户不存在" });
+    }else{
+      res.send({
+        code: 200,
+        message: "获取用户信息成功",
+        data: userInfoFilter(user)
+      });
+    }
+  })
+  .catch(err => {
+    res.send({
+      code: -200,
+      message: err.message || "获取用户信息失败"
+    });
+  });
+});
+
+/**
+ * 更新用户信息
+ * @param {Object} 
+ */
+router.put("/userInfo", verifyRouteToken, (req, res) => {
+  let { name, nickname, job, introduction } = req.body;
+  api
+  .updateUserByName(name, { nickname, job, introduction })
+  .then(() => {
+    res.send({
+      code: 200,
+      message: "修改用户信息成功"
+    });
+  })
+  .catch(err => {
+    console.log(err);
+    res.send({
+      code: -200,
+      message: "修改用户信息失败"
+    });
+  });
+});
+
+/**
+ * 更新头像
+ * @param {string} title
+ */
+router.put("/portrait", verifyRouteToken, (req, res) => {
+  let { userName } = req.body;
+  
+  //创建上传表单
+  let form = new IncomingForm();
+  form.encoding = "utf-8"; //设置编辑
+  form.uploadDir = config.UPLOAD_PATH;
+  form.keepExtensions = false; //保留后缀
+  form.multiples = false; // 上传多个
+  form.maxFieldsSize = 2 * 1024 * 1024; //文件大小 2M
+  // 上传文件的入口文件
+  form.parse(req, (err, fields, { file }) => {
+    if (err) {
+      console.log(err);
+      res.send({
+        code: -200,
+        message: "头像上传失败"
+      });
+    } else {
+      let fileId = path.parse(file.path).name.replace("upload_", "");
+      api
+      .updateUserByName(userName, { portrait: fileId })
+      .then(() => {
+        res.send({
+          code: 200,
+          message: "修改头像成功",
+          fileId
+        });
+      })
+      .catch(err => {
+        res.send({
+          code: -200,
+          message: "修改头像失败"
+        });
+      });
+    }
+  });
+});
+
+
+/**
+ * 更新banner图
+ * @param {string} title
+ */
+router.put("/banner", verifyRouteToken, (req, res) => {
+  let { userName } = req.body;
+
+  //创建上传表单
+  let form = new IncomingForm();
+  form.encoding = "utf-8"; //设置编辑
+  form.uploadDir = config.UPLOAD_PATH;
+  form.keepExtensions = false; //保留后缀
+  form.multiples = false; // 上传多个
+  form.maxFieldsSize = 2 * 1024 * 1024; //文件大小 2M
+  // 上传文件的入口文件
+  form.parse(req, (err, fields, { file }) => {
+    if (err) {
+      console.log(err);
+      res.send({
+        code: -200,
+        message: "图片上传失败"
+      });
+    } else {
+      let fileId = path.parse(file.path).name.replace("upload_", "");
+      api
+      .updateUserByName(userName, { banner: fileId })
+      .then(() => {
+        res.send({
+          code: 200,
+          message: "图片修改成功",
+          fileId
+        });
+      })
+      .catch(err => {
+        res.send({
+          code: -200,
+          message: "图片更新失败"
+        });
+      });
+    }
+  });
+});
 
 export default router;

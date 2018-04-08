@@ -6,6 +6,15 @@
  * @Last Modified time: 2018-04-04 03:01:33
  */
 
+const userInfoFilter = user => ({
+  name: user.name,
+  nickname: user.nickname,
+  job: user.job,
+  introduction: user.introduction,
+  portrait: user.portrait,
+  banner: user.banner
+});
+ 
 const guestBaseFilter = article => ({
   id: article._id,
   title: article.title,
@@ -33,4 +42,9 @@ const guestDetailFilter = article =>
     content: article.content //详情
   });
 
-export { guestBaseFilter, guestCommentFilter, guestDetailFilter };
+export { 
+  userInfoFilter,
+  guestBaseFilter, 
+  guestCommentFilter, 
+  guestDetailFilter 
+};

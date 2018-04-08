@@ -14,8 +14,17 @@ const getUserByName = name => {
  * @param {number} id
  * @param {object} user
  */
-const updateUser = (id, user) => {
-  return User.update({ _id: id }, { $set: user });
+const updateUserById = (id, user) => {
+  return User.findByIdAndUpdate(id, { $set: user });
+};
+
+/**
+ * 更新用户
+ * @param {name} name
+ * @param {object} user
+ */
+const updateUserByName = (name, user) => {
+  return User.update({ name }, { $set: user });
 };
 
 /**
@@ -28,6 +37,7 @@ const createUser = user => {
 
 export default {
   getUserByName,
-  updateUser,
+  updateUserById,
+  updateUserByName,
   createUser
 };

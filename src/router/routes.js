@@ -73,7 +73,7 @@ export default [
     children: [
       {
         path: "/",
-        component: resolve => require(["admin/Workspace.vue"], resolve),
+        component: resolve => require(["admin/Main.vue"], resolve),
         meta: {
           title: "后台管理 | HSUAN",
           auth: true
