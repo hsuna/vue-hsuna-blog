@@ -73,7 +73,7 @@ export default {
       this.$http
         .get($api.getUserInfo, {
           params: {
-            userName: this.$store.getters.userName
+            userName: this.$store.getters.userName || 'hsuna'
           }
         })
         .then(res => {
