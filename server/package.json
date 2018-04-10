@@ -4,9 +4,9 @@
   "description": "Hsuna'Blog Server",
   "main": "start.js",
   "scripts": {
-    "dev": "node start.js",
-    "start": "NODE_ENV=production node start.js",
-    "pm2": "pm2 start ecosystem.config.js --env production",
+    "start": "node start.js",
+    "dev": "pm2 start ecosystem.config.js --env development",
+    "prod": "pm2 start ecosystem.config.js --env production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Hsuna",
