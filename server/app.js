@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 import bodyParser from "body-parser";
 import mongo from "./lib/mongo";
 
@@ -21,8 +22,9 @@ app.get(API_HOST, (req, res) => {
 });
 
 Object.keys(Routes).forEach(url => {
-  console.log(API_HOST + url);
-  app.use(API_HOST + url, Routes[url]);
+  let fullpath = path.join(API_HOST, url);
+  console.log(fullpath);
+  app.use(fullpath, Routes[url]);
 });
 
 
