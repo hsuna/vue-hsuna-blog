@@ -37,9 +37,9 @@
 
             <!-- 联系我 -->
             <h4 id="aboutContact">联系我</h4>
-            <p><strong>个人邮箱：</strong><a href="mailto:me@hsuna.com">me@hsuna.com</a></p>
-            <p><strong>个人简历：</strong><a href="http://resume.hsuna.com">http://resume.hsuna.com</a></p>
-            <p><strong>Github：</strong><a href="https://github.com/hsuna">https://github.com/hsuna</a></p>
+            <p><strong>个人邮箱：</strong><a href="mailto:me@hsuna.com" alt="个人邮箱">me@hsuna.com</a></p>
+            <p><strong>个人简历：</strong><a href="http://resume.hsuna.com" alt="个人简历">http://resume.hsuna.com</a></p>
+            <p><strong>Github：</strong><a href="https://github.com/hsuna" alt="github">https://github.com/hsuna</a></p>
 
             <!-- 博客技术栈 -->
             <h4 id="aboutSkill">博客技术栈</h4>
@@ -53,6 +53,10 @@
                 <h5>后端</h5>
                 <p>express, mongoose, mongodb</p>
                 <p>bcryptjs, jsonwebtoken</p>
+              </li>
+              <li>
+                <h5>Github：</h5>
+                <p><a href="https://github.com/hsuna/vue-hsuna-blog" alt="github">https://github.com/hsuna/vue-hsuna-blog</a></p>
               </li>
             </ul>
           </div>
