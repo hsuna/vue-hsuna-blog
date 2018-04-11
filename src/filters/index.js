@@ -72,7 +72,7 @@ const agoStamp = [
 ];
 const timeAgoFormat = (timeStamp, fmt=agoStamp) => {
   if (!timeStamp) return "";
-  let difftime = Date.now() - timeStamp;
+  let difftime = Date.now() - new Date(timeStamp).valueOf();
   let divisor = 1;
   for (let i = 0; i < agoStamp.length; i++) {
     let { text, time } = agoStamp[i];
