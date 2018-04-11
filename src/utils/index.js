@@ -17,6 +17,6 @@ const setDocumentTitle = title => {
   }
 };
 
-export default {
+export {
   setDocumentTitle
 };
