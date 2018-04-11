@@ -152,7 +152,7 @@ export default {
       }
 
       &.is-active {
-        color: #0084ff;
+        color: #0084ff !important;
         // font-weight: bold;
         // border-bottom: 3px solid #0084ff;
       }

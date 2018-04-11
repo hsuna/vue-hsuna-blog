@@ -51,7 +51,7 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col style="margin-top: 10px; margin-left: 100px;">
+        <el-col :span="18" style="margin-top: 10px; margin-left: 100px;">
           <template v-if="isEdit">
             <el-button type="primary" @click="handleSubmit"  :loading="submitload">提交</el-button>
             <el-button type="primary" @click="isEdit=false" plain>取消</el-button>
