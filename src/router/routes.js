@@ -11,8 +11,7 @@ export default [
   {
     path: "/",
     component: resolve => require(["views/Main.vue"], resolve),
-    children: [
-      {
+    children: [{
         name: "home",
         path: "/",
         meta: {
@@ -70,8 +69,7 @@ export default [
     },
     component: resolve => require(["admin/Admin.vue"], resolve),
     name: "管理面板",
-    children: [
-      {
+    children: [{
         path: "/",
         component: resolve => require(["admin/Main.vue"], resolve),
         meta: {
@@ -134,5 +132,14 @@ export default [
         name: "分类管理"
       }
     ]
+  },
+
+  ///////////错误页面之类的//////////////
+  {
+    path: "*",
+    meta: {
+      title: "404 | HSUAN"
+    },
+    component: resolve => require(["views/common/404.vue"], resolve)
   }
 ];
