@@ -26,10 +26,11 @@ Object.keys(Filters).forEach(key => {
   Vue.filter(key, Filters[key]);
 });
 
-/* 引用-element-ui */
-import Element from "element-ui";
-import "assets/styles/element-variables.scss";
-Vue.use(Element, { size: "small" });
+/* 引用-plugins */
+import plugins from "./plugins";
+// Object.keys(Plugins).forEach(key => {
+//   Vue.use(Plugins[key]);
+// });
 
 /* 引用-fa字体库 */
 import "font-awesome/scss/font-awesome.scss";

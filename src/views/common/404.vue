@@ -9,7 +9,7 @@ export default {};
 </script>
 
 <style lang="scss">
-img-404 {
+.img-404 {
   position: absolute;
   top: 50%;
   left: 50%;
