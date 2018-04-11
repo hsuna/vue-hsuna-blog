@@ -1,4 +1,5 @@
 import { ActionName, MutationName } from "store/types";
+import { setDocumentTitle } from "utils";
 
 import markMixin from "../../mixin/mark";
 
@@ -53,6 +54,7 @@ export default {
             this.getArticleRelate();
             this.$nextTick(this.goCommentHash);
             this.loading = false;
+            setDocumentTitle(`${this.article.title} | 文章详情 | HSUAN`);
           } else {
             this.$router.replace({ path: "/" });
           }

@@ -11,6 +11,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "store";
 import routes from "./routes";
+import { setDocumentTitle } from "utils";
 
 Vue.use(VueRouter);
 const router = new VueRouter({
@@ -18,24 +19,7 @@ const router = new VueRouter({
   routes
 });
 
-/**
- * 兼容微信设置页面的title
- */
-const setDocumentTitle = title => {
-  document.title = title;
-  let ua = navigator.userAgent;
-  if (/\bMicroMessenger\/([\d\.]+)/.test(ua) && /ip(hone|od|ad)/i.test(ua)) {
-    let i = document.createElement("iframe");
-    i.src = "/favicon.ico";
-    i.style.display = "none";
-    i.onload = function() {
-      setTimeout(function() {
-        i.remove();
-      }, 9);
-    };
-    document.body.appendChild(i);
-  }
-};
+
 
 // 路由钩子
 router.beforeEach(({ meta, path }, from, next) => {
