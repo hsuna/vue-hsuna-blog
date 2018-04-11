@@ -9,7 +9,7 @@
             <div class="time">
               <span>发布于{{article.publishAt, 'yyyy-MM-dd' | timeStampFormat}}</span>
               <span>{{article.viewCount}}次浏览</span>
-              <span>最后一次编辑是{{article.updatedAt | timeAgoFormat}}</span>
+              <span>最后一次编辑 {{article.updatedAt | timeAgoFormat}}</span>
             </div>
           </div>
         </div>
