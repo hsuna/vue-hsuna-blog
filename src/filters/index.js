@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:17:16
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-03 00:01:58
+ * @Last Modified time: 2018-04-15 18:10:34
  */
 
 const WEEKDAY = {
@@ -63,22 +63,22 @@ const agoStamp = [
   { text: "{time}秒前", time: 60 * 1000 },
   { text: "{time}分钟前", time: 60 * 60 * 1000 },
   { text: "{time}小时前", time: 24 * 60 * 60 * 1000 },
-  { text: "昨天", time: 2 * 24 * 60 * 60 * 1000 },
-  { text: "前天", time: 3 * 24 * 60 * 60 * 1000 },
+  { text: "昨天", time: 2 * 24 * 60 * 60 * 1000, nonuse: true },
+  { text: "前天", time: 3 * 24 * 60 * 60 * 1000, nonuse: true },
   { text: "{time}天前", time: 7 * 24 * 60 * 60 * 1000 },
   { text: "{time}周前", time: 30 * 24 * 60 * 60 * 1000 },
   { text: "{time}月前", time: 365 * 24 * 60 * 60 * 1000 },
   { text: "{time}年前" }
 ];
-const timeAgoFormat = (timeStamp, fmt=agoStamp) => {
+const timeAgoFormat = (timeStamp, fmt = agoStamp) => {
   if (!timeStamp) return "";
   let difftime = Date.now() - new Date(timeStamp).valueOf();
   let divisor = 1;
   for (let i = 0; i < agoStamp.length; i++) {
-    let { text, time } = agoStamp[i];
+    let { text, time, nonuse } = agoStamp[i];
     if (difftime < time) {
       return text.replace("{time}", Math.floor(difftime / divisor));
-    } else {
+    } else if (!nonuse) {
       divisor = time;
     }
   }
