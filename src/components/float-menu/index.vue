@@ -28,7 +28,7 @@ export default {
 .float-menu {
   position: fixed;
   left: 50%;
-  bottom: -180px;
+  bottom: -240px;
   margin-left: 525px;
   transition: bottom 1s;
 
