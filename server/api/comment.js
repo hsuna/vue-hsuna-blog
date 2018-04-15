@@ -1,9 +1,9 @@
 /*
- * @Description: Hsuna
+ * @Description: 文章评论-数据接口
  * @Author: Hsuna
  * @Date: 2018-03-26 01:48:53
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-04 02:54:41
+ * @Last Modified time: 2018-04-13 18:14:13
  */
 
 import { Comment } from "../models";
