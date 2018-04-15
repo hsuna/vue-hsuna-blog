@@ -1,3 +1,11 @@
+/*
+ * @Description: 用户信息-数据接口
+ * @Author: Hsuna
+ * @Date: 2018-04-13 18:12:58
+ * @Last Modified by: Hsuna
+ * @Last Modified time: 2018-04-13 18:14:09
+ */
+
 import { User } from "../models";
 import { encryptHash } from "../utils/hash";
 
