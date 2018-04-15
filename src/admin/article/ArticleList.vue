@@ -11,7 +11,7 @@
         <el-table style='width:100%' align="center" :data="articleList"  v-loading="listLoading" element-loading-text="拼命加载中">
           <el-table-column type='index' width="60" ></el-table-column>
           <el-table-column prop="title" min-width="180" label="文章标题" ></el-table-column>
-          <el-table-column prop="about" min-width="200" label="文章简介" ></el-table-column>
+          <el-table-column prop="about" min-width="200" label="文章简介" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="classify" min-width="100" label="所属分类" ></el-table-column>
           <el-table-column min-width="100" label="文章类型" :formatter="row => ['草稿', '公开', '私人'][row.status]"></el-table-column>
           <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => $filter.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
