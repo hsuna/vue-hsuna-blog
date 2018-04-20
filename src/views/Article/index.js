@@ -8,9 +8,11 @@ import $api from "api/guest";
 export default {
   data() {
     return {
+      href: window.location.href,
       loading: true,
       article: {
         id: this.$route.params.articleId,
+        content: '',
         comments: []
       },
       replys: [], //回复楼层

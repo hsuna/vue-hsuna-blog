@@ -18,7 +18,7 @@
 
         <div class="article-body">
           <div class="article-about">{{article.about}}</div>
-          <div class="markdown-body" v-html="markdownToHtml"></div>
+          <div class="markdown-body" v-html="markdownToHtml(article.content)"></div>
               <ul class="article-comments">
               <li v-for="(comment, index) in article.comments" :key="index">
                 <div class="comment-floor">
@@ -71,6 +71,7 @@ export default {
       loading: true,
       article: {
         id: this.$route.params.articleId,
+        content: '',
         comments: []
       },
       replys: [], //回复楼层
