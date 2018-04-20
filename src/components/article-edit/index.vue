@@ -38,7 +38,7 @@
             <el-row>
               <el-col :span="23" :push="1">
                 <el-form-item label="文章内容：" label-width="100px" class="show" prop="content" >
-                  <markdown-editor v-model="article.content" preview-class="markdown-body" :highlight="true" :sanitize="true" :configs="configs"></markdown-editor>
+                  <markdown-editor v-model="article.content" preview-class="markdown-body" :configs="configs"></markdown-editor>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -61,7 +61,7 @@
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="10" :push="1">
+              <el-col :span="18" :push="1">
                 <el-form-item label-width="100px">
                   <el-button type="primary" @click="handleSubmit" :loading="submiting">{{submiting?'提交中':'提 交'}}</el-button>
                   <el-button @click="handleBack">返 回</el-button>
@@ -81,13 +81,13 @@
 </template>
 
 <script type="text/ecmascript-6">
-import hljs from "highlight.js";
 import markdownEditor from "vue-simplemde/src/markdown-editor";
 import adminHeader from "components/admin-header";
 
+import markMixin from "../../mixin/mark";
+
 import $api from "api/admin";
 
-window.hljs = hljs;
 export default {
   props: {
     isEdit: {
@@ -138,6 +138,8 @@ export default {
       },
 
       configs: {
+        previewRender: this.markdownToHtml, //预览渲染
+        autoDownloadFontAwesome: false, //禁止自动下载fa字体
         status: false // 禁用底部状态栏
       }
     };
@@ -160,6 +162,7 @@ export default {
       }
     }
   }, */
+  mixins: [markMixin],
   methods: {
     handleBeforeUpload(file) {
       //return false; //返回false不会自动上传

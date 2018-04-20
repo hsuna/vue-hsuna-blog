@@ -15,11 +15,12 @@
         </div>
         <div class="article-body">
           <div class="article-about">{{article.about}}</div>
-          <div class="markdown-body" v-html="markdownToHtml">
-          </div>
+          <div class="markdown-body" v-html="markdownToHtml(article.content)"></div>
         </div>
-        <!-- <div class="article-footer">
-        </div> -->
+        <div class="article-footer">
+          <p>版权声明：本文为博主思考总结而得，欢迎大家转载指导</p>
+          <a :href="href" alt="转载路径">{{href}}</a>
+        </div>
       </div>
       <div class="article-main" v-show="relateArticle.length">
         <div class="article-title">相关文章</div>

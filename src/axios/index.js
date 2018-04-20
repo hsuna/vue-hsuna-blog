@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:09:18
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-02 20:39:24
+ * @Last Modified time: 2018-04-20 10:27:42
  */
 
 import Axios from "axios";
@@ -12,6 +12,7 @@ import router from "@/router";
 
 import qs from "qs";
 
+import { MutationName } from "store/types";
 import { Message } from "element-ui";
 
 Axios.defaults.timeout = 600000000;
@@ -51,6 +52,7 @@ Axios.interceptors.response.use(
         break;
       case 401:
         // 这里写清除token的代码
+        store.commit(MutationName.CLEAR_USER);
         router.replace({
           path: "/login",
           query: { redirect: router.currentRoute.fullPath } //登录成功后跳入浏览的当前页面

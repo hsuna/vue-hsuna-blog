@@ -22,7 +22,7 @@ app.get(API_HOST, (req, res) => {
 });
 
 Object.keys(Routes).forEach(url => {
-  let fullpath = path.join(API_HOST, url);
+  let fullpath = path.join(API_HOST, url).replace(/\\/g, '/');
   console.log(fullpath);
   app.use(fullpath, Routes[url]);
 });
