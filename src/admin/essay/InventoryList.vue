@@ -89,14 +89,16 @@ export default {
   methods: {
     getInventoryList() {
       this.listLoading = true;
-      this.$http.get($api.getInventory).then(res => {
-        if (200 == res.code) {
-          let { list, total } = res.data;
-          this.inventoryList = list;
-          this.inventoryTotal = total;
-        }
-        this.listLoading = false;
-      });
+      this.$http
+        .get($api.getInventory, { params: this.$route.query })
+        .then(res => {
+          if (200 == res.code) {
+            let { list, total } = res.data;
+            this.inventoryList = list;
+            this.inventoryTotal = total;
+          }
+          this.listLoading = false;
+        });
     },
     handleUpdateInventory() {
       this.$refs.dialog.validate(valid => {
@@ -139,7 +141,6 @@ export default {
           limit: val
         }
       });
-      this.getInventoryList();
     },
     handleCurrentChange(val) {
       this.$router.push({
@@ -149,7 +150,6 @@ export default {
           limit: this.$route.query.limit
         }
       });
-      this.getInventoryList();
     }
   }
 };

@@ -77,6 +77,9 @@
         </el-col>
       </el-row>
     </div>
+    <el-dialog :visible.sync="dialogImageVisible">
+      <img width="100%" :src="dialogImageUrl" alt="">
+    </el-dialog>
   </div>
 </template>
 
@@ -96,7 +99,7 @@ export default {
     },
     article: {
       type: Object,
-      default: () => ({
+      default: _ => ({
         title: "", //文章标题
         about: "", //文章简介
         classify: "", //文章所属分类
@@ -108,7 +111,7 @@ export default {
     },
     breadcrumbs: {
       type: Array,
-      default: () => []
+      default: _ => []
     }
   },
   data() {
@@ -136,6 +139,9 @@ export default {
       fileHeaders: {
         Authorization: this.$store.getters.token
       },
+
+      dialogImageVisible: false,
+      dialogImageUrl: "",
 
       configs: {
         previewRender: this.markdownToHtml, //预览渲染
@@ -179,7 +185,8 @@ export default {
       }
     },
     handlePreviewFile(file) {
-      window.open($api.getFileUpload + "/" + file.id);
+      this.dialogImageUrl = file.url;
+      this.dialogImageVisible = true;
     },
     handleRemoveFile(file, fileList) {
       return new Promise((resolve, reject) => {
@@ -207,7 +214,7 @@ export default {
       this.$refs.articleRef.validate(valid => {
         if (valid) {
           this.submiting = true;
-          this.$emit("submit", () => {
+          this.$emit("submit", _ => {
             this.submiting = false;
           });
         }

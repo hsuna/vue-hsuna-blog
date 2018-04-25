@@ -33,7 +33,7 @@ export default {
     },
     profileList: {
       type: Array,
-      default: () => []
+      default: _ => []
     }
   },
   methods: {

@@ -3,7 +3,7 @@
  * @Author: Hsuna
  * @Date: 2018-04-25 02:43:59
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-25 20:15:04
+ * @Last Modified time: 2018-04-26 01:35:57
  */
 
 import express from "express";
@@ -13,12 +13,12 @@ const router = express.Router();
 
 const guestFilter = ({ content, files, createdAt, praiseCount }) => ({
   content,
-  files: files.map(file => files.url),
+  files: files.map(file => file.url),
   createdAt
 });
 
 /**
- * 查找随说
+ * 查找随记
  */
 router.get("/", (req, res) => {
   let { page, limit } = req.query;
@@ -37,7 +37,7 @@ router.get("/", (req, res) => {
     .catch(err => {
       res.send({
         code: -200,
-        message: "获取随说失败"
+        message: "获取随记失败"
       });
     });
 });

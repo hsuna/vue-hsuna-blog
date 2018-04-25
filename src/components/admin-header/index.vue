@@ -18,7 +18,7 @@ export default {
   props: {
     routerList: {
       type: Array,
-      default: () => []
+      default: _ => []
     }
   },
   data() {
@@ -28,7 +28,7 @@ export default {
     };
   },
   mounted() {
-    this.timerId = setInterval(() => {
+    this.timerId = setInterval(_ => {
       this.date = new Date();
     }, 1000 * 10);
   },
@@ -40,12 +40,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-icon-location{
+.el-icon-location {
   float: left;
   font-size: 20px;
   color: #0084ff;
 
-  &+.el-breadcrumb{
+  & + .el-breadcrumb {
     padding-left: 25px;
     line-height: 20px;
   }
