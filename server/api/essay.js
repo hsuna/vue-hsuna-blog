@@ -1,15 +1,15 @@
 /*
- * @Description: 接口-随说
+ * @Description: 接口-随记
  * @Author: Hsuna
  * @Date: 2018-04-25 18:58:36
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-25 19:56:06
+ * @Last Modified time: 2018-04-26 00:27:40
  */
 
 import { Essay } from "../models";
 
 /**
- * 查找随说
+ * 查找随记
  * @param {object} query
  * @param {number} page  默认返回全部
  * @param {number} limit 默认10
@@ -37,7 +37,7 @@ const getEssay = (query, page, limit = 10) => {
 };
 
 /**
- * 创建随说
+ * 创建随记
  * @param {object} essay
  */
 const createEssay = essay => {
@@ -45,7 +45,7 @@ const createEssay = essay => {
 };
 
 /**
- * 删除随说
+ * 删除随记
  * @param {number} id
  */
 const removeEssay = id => {

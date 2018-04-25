@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-26 14:42:22
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-25 20:34:06
+ * @Last Modified time: 2018-04-26 00:27:37
  */
 
 export default {
@@ -29,9 +29,9 @@ export default {
   getCommentNew: process.env.API_HOST + "comment/new", //查询最新留言
 
   /////// 手札模块 ////////
-  getEssay: process.env.API_HOST + "essay", //查询随说
-  getInventory: process.env.API_HOST + "inventory", //查询随说
-  getLink: process.env.API_HOST + "link", //查询随说
+  getEssay: process.env.API_HOST + "essay", //查询随记
+  getInventory: process.env.API_HOST + "inventory", //查询随记
+  getLink: process.env.API_HOST + "link", //查询随记
 
   ////////// 文件模块 ////////
   getFileUpload: process.env.API_HOST + "file/upload" //获取文件

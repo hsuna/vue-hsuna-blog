@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:14:48
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-25 20:33:20
+ * @Last Modified time: 2018-04-26 00:27:50
  */
 
 export default {
@@ -40,17 +40,17 @@ export default {
   deleteFileUpload: process.env.API_HOST + "admin/file/upload", //删除文件
 
   /////// 手札模块 ////////
-  getEssay: process.env.API_HOST + "admin/essay", //查询随说
-  postEssay: process.env.API_HOST + "admin/essay", //添加随说
-  deleteEssay: process.env.API_HOST + "admin/essay", //删除随说
+  getEssay: process.env.API_HOST + "admin/essay", //查询随记
+  postEssay: process.env.API_HOST + "admin/essay", //添加随记
+  deleteEssay: process.env.API_HOST + "admin/essay", //删除随记
 
-  getInventory: process.env.API_HOST + "admin/inventory", //查询随说
-  postInventory: process.env.API_HOST + "admin/inventory", //添加随说
-  deleteInventory: process.env.API_HOST + "admin/inventory", //删除随说
+  getInventory: process.env.API_HOST + "admin/inventory", //查询随记
+  postInventory: process.env.API_HOST + "admin/inventory", //添加随记
+  deleteInventory: process.env.API_HOST + "admin/inventory", //删除随记
 
-  getLink: process.env.API_HOST + "admin/link", //查询随说
-  postLink: process.env.API_HOST + "admin/link", //添加随说
-  deleteLink: process.env.API_HOST + "admin/link" //删除随说
+  getLink: process.env.API_HOST + "admin/link", //查询随记
+  postLink: process.env.API_HOST + "admin/link", //添加随记
+  deleteLink: process.env.API_HOST + "admin/link" //删除随记
 
   //////// model ////////
 };

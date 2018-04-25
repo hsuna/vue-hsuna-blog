@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:14:33
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-25 18:34:13
+ * @Last Modified time: 2018-04-26 00:27:34
  */
 
 export default [
@@ -158,10 +158,10 @@ export default [
         path: "list",
         component: resolve => require(["admin/essay/EssayList.vue"], resolve),
         meta: {
-          title: "随说管理 | HSUAN",
+          title: "随记管理 | HSUAN",
           auth: true
         },
-        name: "随说管理"
+        name: "随记管理"
       },
       {
         path: "linkList",
