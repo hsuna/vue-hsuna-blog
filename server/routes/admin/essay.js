@@ -14,7 +14,7 @@ import { verifyRouteToken } from "../../utils/token";
 const router = express.Router();
 
 /**
- * 查找随说
+ * 查找随记
  */
 router.get("/", verifyRouteToken, (req, res) => {
   let { page, limit } = req.query;
@@ -33,13 +33,13 @@ router.get("/", verifyRouteToken, (req, res) => {
     .catch(err => {
       res.send({
         code: -200,
-        message: "获取随说失败"
+        message: "获取随记失败"
       });
     });
 });
 
 /**
- * 添加随说
+ * 添加随记
  * @param {string} name
  */
 router.post("/", verifyRouteToken, (req, res) => {
@@ -48,19 +48,19 @@ router.post("/", verifyRouteToken, (req, res) => {
     .then(result => {
       res.send({
         code: 200,
-        message: "添加随说成功"
+        message: "添加随记成功"
       });
     })
     .catch(err => {
       res.send({
         code: -200,
-        message: "添加随说失败"
+        message: "添加随记失败"
       });
     });
 });
 
 /**
- * 删除随说
+ * 删除随记
  * @param {number} id
  */
 router.delete("/", verifyRouteToken, (req, res) => {
@@ -70,13 +70,13 @@ router.delete("/", verifyRouteToken, (req, res) => {
     .then(result => {
       res.send({
         code: 200,
-        message: "删除随说成功"
+        message: "删除随记成功"
       });
     })
     .catch(err => {
       res.send({
         code: -200,
-        message: "删除随说失败"
+        message: "删除随记失败"
       });
     });
 });
