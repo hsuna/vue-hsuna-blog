@@ -20,7 +20,7 @@
               </el-col>
             </el-row>
             <el-row>
-               <el-col :span='10' :push="1">
+               <el-col :span='16' :push="1">
                 <el-form-item label="文章标签：" label-width="100px" prop="tags">
                   <el-select v-model="article.tags" placeholder="请添加标签" style="width:100%;" multiple filterable allow-create>
                     <el-option v-for="(item,index) in tagList" :label="item.tag" :value="item.tag" v-bind:key="index"></el-option>
