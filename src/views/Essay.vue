@@ -7,8 +7,10 @@
         </div>
         <div class="profile-main" v-loading="loading">
           <profile-essay
+            :profileList="essayList"
             :curPage="Number($route.params.page || 1)"
-            :total="archiveTotal">
+            :total="essayTotal"
+            @change="handlePaginChange">
           </profile-essay>
         </div>
       </div>
@@ -24,18 +26,41 @@ import $api from "api/guest";
 export default {
   data() {
     return {
-      loading: false,
-      archiveTotal: 0,
-      archiveList: []
+      loading: true,
+      essayTotal: 0,
+      essayList: []
     };
   },
   created() {
-
+    this.getEssayList(this.$route.query);
   },
   watch: {
-
+    $route(to, from) {
+      this.getEssayList(this.$route.query);
+    }
   },
   methods: {
+    getEssayList(query) {
+      this.$http.get($api.getEssay, { params: query }).then(res => {
+        if (200 == res.code) {
+          let { list, total } = res.data;
+          this.essayList = list;
+          this.essayTotal = total;
+        }
+        this.loading = false;
+      });
+    },
+    handlePaginChange(type, val) {
+      if ("page" == type) {
+        this.$router.push({
+          path: "/essay",
+          query: {
+            ...this.$route.query,
+            page: val
+          }
+        });
+      }
+    }
   },
   components: {
     "profile-essay": profileEssay,

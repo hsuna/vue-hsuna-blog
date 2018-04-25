@@ -1,28 +1,37 @@
 <template>
   <div>
-    <div class="profile-header">学习清单</div>
-    <div class="profile-essay" v-for="profile in profileList" :key="profile.id">
-      <div class="essay-title"><a :href="`/article/${profile.id}`">{{profile.title}}</a></div>
+    <div class="profile-header">杂俎大全</div>
+    <div class="profile-essay" v-for="(profile, index) in profileList" :key="index">
       <div class="essay-date" :data-date="$filter.timeStampFormat(profile.publishAt)">{{profile.publishAt | timeAgoFormat}}</div>
-      <div class="essay-tags">
-        <span class="essay-count">分类：{{profile.classify}}</span>
-        <span class="essay-count">评论({{profile.commentCount}}) | 浏览({{profile.viewCount}})</span>
-        <el-tag size="mini" v-for="tag in profile.tags" :key="tag">{{tag}}</el-tag>
-      </div>
-      <div class="essay-content">&nbsp;&nbsp;&nbsp;&nbsp;{{profile.about}}
-        <el-button type="text" @click="$router.push(`/article/${profile.id}`)">阅读全文<i class="el-icon-arrow-right"></i></el-button>
+      <div class="essay-content">{{profile.content}}</div>
+      <div class="essay-files">
+        <ul>
+          <li v-for="url in profile.files" :key="url" @click="handlePreviewFile(url)">
+            <img width="100%" height="100%" :src="url" alt="">
+          </li>
+        </ul>
       </div>
     </div>
-    <el-pagination background　layout="prev, pager, next" v-if="-1 != total"
+    <el-pagination background layout="prev, pager, next" v-if="-1 != total"
       :total="total"
       :current-page="curPage"
       @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"></el-pagination>
+      @current-change="handleCurrentChange">
+    </el-pagination>
+    <el-dialog :visible.sync="dialogImageVisible">
+      <img width="100%" :src="dialogImageUrl" alt="">
+    </el-dialog>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      dialogImageVisible: false,
+      dialogImageUrl: ""
+    };
+  },
   props: {
     curPage: {
       type: Number,
@@ -34,10 +43,14 @@ export default {
     },
     profileList: {
       type: Array,
-      default: () => []
+      default: _ => []
     }
   },
   methods: {
+    handlePreviewFile(url) {
+      this.dialogImageUrl = url;
+      this.dialogImageVisible = true;
+    },
     handleSizeChange(val) {
       this.$emit("change", "size", val);
     },

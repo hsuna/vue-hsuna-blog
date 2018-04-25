@@ -135,7 +135,6 @@ export default {
           limit: val
         }
       });
-      this.getLinkList();
     },
     handleCurrentChange(val) {
       this.$router.push({
@@ -145,7 +144,6 @@ export default {
           limit: this.$route.query.limit
         }
       });
-      this.getLinkList();
     }
   }
 };

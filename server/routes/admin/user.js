@@ -22,22 +22,20 @@ router.put("/password", verifyRouteToken, (req, res) => {
     .then(user => {
       if (!user) {
         return Promise.reject({ message: "修改密码失败，该用户不存在" });
-      }else{
+      } else {
         id = user.id;
         return verifyHash(oldPass, user.password);
       }
     })
     .then(bol => {
-      if(bol){
-        return api.updateUserById(id, { password: newPass });
-      }else{
-        return Promise.reject({ message: "修改密码失败，旧密码不一致" });
-      }
+      return bol
+        ? api.updateUserById(id, { password: newPass })
+        : Promise.reject({ message: "修改密码失败，旧密码不一致" });
     })
-    .then(() => {
+    .then(_ => {
       res.send({
         code: 200,
-        message: "修改密码成功，请重新登录！",
+        message: "修改密码成功，请重新登录！"
       });
     })
     .catch(err => {
@@ -50,52 +48,52 @@ router.put("/password", verifyRouteToken, (req, res) => {
 
 /**
  * 获取用户信息
- * @param {Object} 
+ * @param {Object}
  */
 router.get("/userInfo", verifyRouteToken, (req, res) => {
   let { userName } = req.query;
   api
-  .getUserByName(userName)
-  .then(user => {
-    if (!user) {
-      return Promise.reject({ message: "获取用户信息失败，该用户不存在" });
-    }else{
+    .getUserByName(userName)
+    .then(user => {
+      if (!user) {
+        return Promise.reject({ message: "获取用户信息失败，该用户不存在" });
+      } else {
+        res.send({
+          code: 200,
+          message: "获取用户信息成功",
+          data: user
+        });
+      }
+    })
+    .catch(err => {
       res.send({
-        code: 200,
-        message: "获取用户信息成功",
-        data: user
+        code: -200,
+        message: err.message || "获取用户信息失败"
       });
-    }
-  })
-  .catch(err => {
-    res.send({
-      code: -200,
-      message: err.message || "获取用户信息失败"
     });
-  });
 });
 
 /**
  * 更新用户信息
- * @param {Object} 
+ * @param {Object}
  */
 router.put("/userInfo", verifyRouteToken, (req, res) => {
   let { name, nickname, job, introduction } = req.body;
   api
-  .updateUserByName(name, { nickname, job, introduction })
-  .then(() => {
-    res.send({
-      code: 200,
-      message: "修改用户信息成功"
+    .updateUserByName(name, { nickname, job, introduction })
+    .then(_ => {
+      res.send({
+        code: 200,
+        message: "修改用户信息成功"
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.send({
+        code: -200,
+        message: "修改用户信息失败"
+      });
     });
-  })
-  .catch(err => {
-    console.log(err);
-    res.send({
-      code: -200,
-      message: "修改用户信息失败"
-    });
-  });
 });
 
 /**
@@ -121,24 +119,23 @@ router.post("/portrait", verifyRouteToken, (req, res) => {
     } else {
       let fileId = path.parse(file.path).name.replace("upload_", "");
       api
-      .updateUserByName(userName, { portrait: fileId })
-      .then(() => {
-        res.send({
-          code: 200,
-          message: "修改头像成功",
-          fileId
+        .updateUserByName(userName, { portrait: fileId })
+        .then(_ => {
+          res.send({
+            code: 200,
+            message: "修改头像成功",
+            fileId
+          });
+        })
+        .catch(err => {
+          res.send({
+            code: -200,
+            message: "修改头像失败"
+          });
         });
-      })
-      .catch(err => {
-        res.send({
-          code: -200,
-          message: "修改头像失败"
-        });
-      });
     }
   });
 });
-
 
 /**
  * 更新banner图
@@ -163,20 +160,20 @@ router.post("/banner", verifyRouteToken, (req, res) => {
     } else {
       let fileId = path.parse(file.path).name.replace("upload_", "");
       api
-      .updateUserByName(userName, { banner: fileId })
-      .then(() => {
-        res.send({
-          code: 200,
-          message: "图片修改成功",
-          fileId
+        .updateUserByName(userName, { banner: fileId })
+        .then(_ => {
+          res.send({
+            code: 200,
+            message: "图片修改成功",
+            fileId
+          });
+        })
+        .catch(err => {
+          res.send({
+            code: -200,
+            message: "图片更新失败"
+          });
         });
-      })
-      .catch(err => {
-        res.send({
-          code: -200,
-          message: "图片更新失败"
-        });
-      });
     }
   });
 });
