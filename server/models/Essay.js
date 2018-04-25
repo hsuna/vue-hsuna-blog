@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-04-25 12:04:21
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-25 19:43:18
+ * @Last Modified time: 2018-04-26 00:19:06
  */
 import mongoose from "mongoose";
 import Refs from "./refs";
@@ -11,7 +11,7 @@ import Refs from "./refs";
 const { Schema } = mongoose;
 
 const EssaySchema = new Schema({
-  content: { type: String }, //内容
+  content: { type: String, required: "{PATH} is required!" }, //内容
   files: [
     {
       id: { type: String }, //文件ID
