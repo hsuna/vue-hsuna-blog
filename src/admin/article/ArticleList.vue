@@ -125,10 +125,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.el-pagination {
-  padding: 10px;
-  text-align: right;
-}
-</style>

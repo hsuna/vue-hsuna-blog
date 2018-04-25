@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:14:33
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-04 01:33:04
+ * @Last Modified time: 2018-04-25 18:34:13
  */
 
 export default [
@@ -11,7 +11,8 @@ export default [
   {
     path: "/",
     component: resolve => require(["views/Main.vue"], resolve),
-    children: [{
+    children: [
+      {
         name: "home",
         path: "/",
         meta: {
@@ -35,6 +36,15 @@ export default [
         },
         component: resolve => require(["views/About.vue"], resolve)
       },
+      {
+        name: "essay",
+        path: "/essay",
+        meta: {
+          title: "手札 | HSUAN"
+        },
+        component: resolve => require(["views/Essay.vue"], resolve)
+      },
+
       {
         path: "/article/:articleId",
         meta: {
@@ -69,7 +79,8 @@ export default [
     },
     component: resolve => require(["admin/Admin.vue"], resolve),
     name: "管理面板",
-    children: [{
+    children: [
+      {
         path: "/",
         component: resolve => require(["admin/Main.vue"], resolve),
         meta: {
@@ -131,6 +142,46 @@ export default [
         },
         name: "分类管理"
       }
+    ]
+  },
+  {
+    type: "backend",
+    path: "/essay",
+    meta: {
+      title: "后台管理 | HSUAN",
+      auth: true
+    },
+    name: "手札管理",
+    component: resolve => require(["admin/Admin.vue"], resolve),
+    children: [
+      {
+        path: "list",
+        component: resolve => require(["admin/essay/EssayList.vue"], resolve),
+        meta: {
+          title: "随说管理 | HSUAN",
+          auth: true
+        },
+        name: "随说管理"
+      },
+      {
+        path: "linkList",
+        component: resolve => require(["admin/essay/LinkList.vue"], resolve),
+        meta: {
+          title: "链接管理 | HSUAN",
+          auth: true
+        },
+        name: "链接管理"
+      },
+      {
+        path: "inventoryList",
+        component: resolve => require(["admin/essay/InventoryList.vue"], resolve),
+        meta: {
+          title: "清单管理 | HSUAN",
+          auth: true
+        },
+        name: "清单管理"
+      },
+
     ]
   },
 

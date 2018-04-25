@@ -3,21 +3,21 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:14:48
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-04 02:36:50
+ * @Last Modified time: 2018-04-25 20:33:20
  */
 
 export default {
+
   //////// 登录模块 ////////
-  postLogin: process.env.API_HOST + "admin/login",//登录
+  postLogin: process.env.API_HOST + "admin/login", //登录
 
   //////// 用户模块 ////////
   putUserPassword: process.env.API_HOST + "admin/user/password", //更新用户密码
   getUserInfo: process.env.API_HOST + "admin/user/userInfo", //获取用户信息
   putUserInfo: process.env.API_HOST + "admin/user/userInfo", //更新用户信息
   postUserPortrait: process.env.API_HOST + "admin/user/portrait", //更新用户头像
-  postUserBanner: process.env.API_HOST + "admin/user/banner",   //更新用户背景图
+  postUserBanner: process.env.API_HOST + "admin/user/banner", //更新用户背景图
 
-  
   //////// 分类模块 ////////
   getClassify: process.env.API_HOST + "admin/classify", //查询分类
   postClassify: process.env.API_HOST + "admin/classify", //添加分类
@@ -37,7 +37,20 @@ export default {
   /////// 文件模块 ////////
   getFileUpload: process.env.API_HOST + "file/upload", //获取文件
   postFileUpload: process.env.API_HOST + "admin/file/upload", //上传文件
-  deleteFileUpload: process.env.API_HOST + "admin/file/upload" //删除文件
+  deleteFileUpload: process.env.API_HOST + "admin/file/upload", //删除文件
+
+  /////// 手札模块 ////////
+  getEssay: process.env.API_HOST + "admin/essay", //查询随说
+  postEssay: process.env.API_HOST + "admin/essay", //添加随说
+  deleteEssay: process.env.API_HOST + "admin/essay", //删除随说
+
+  getInventory: process.env.API_HOST + "admin/inventory", //查询随说
+  postInventory: process.env.API_HOST + "admin/inventory", //添加随说
+  deleteInventory: process.env.API_HOST + "admin/inventory", //删除随说
+
+  getLink: process.env.API_HOST + "admin/link", //查询随说
+  postLink: process.env.API_HOST + "admin/link", //添加随说
+  deleteLink: process.env.API_HOST + "admin/link" //删除随说
 
   //////// model ////////
 };

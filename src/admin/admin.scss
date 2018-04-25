@@ -124,5 +124,10 @@ body,
 
   .admin-table {
     padding: 5px;
+
+    .el-pagination {
+      padding: 10px;
+      text-align: right;
+    }
   }
 }
