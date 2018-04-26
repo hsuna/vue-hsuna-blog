@@ -3,8 +3,53 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:17:16
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-15 18:10:34
+ * @Last Modified time: 2018-04-26 17:30:44
  */
+
+const MONTH = {
+  zh: [
+    "一月",
+    "二月",
+    "三月",
+    "四月",
+    "五月",
+    "六月",
+    "七月",
+    "八月",
+    "九月",
+    "十月",
+    "十一月",
+    "十二月"
+  ],
+  en: [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ],
+  abbr: [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ]
+};
 
 const WEEKDAY = {
   zh: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
@@ -58,6 +103,24 @@ const timeStampFormat = (timeStamp, fmt) => {
   return dateFormat(date, fmt);
 };
 
+/**
+ * 时间戳格式化
+ * @param {number} timeStamp 时间戳
+ * @param {string} fmt 格式 默认: en"
+ * @return {string}
+ */
+const monthFormat = (timeStamp, fmt = "en") => {
+  if (!timeStamp) return "";
+  let date = new Date(timeStamp);
+  let str = MONTH[fmt.toLowerCase()][date.getMonth()];
+  if (fmt == fmt.toLowerCase()) {
+    str = str.toLowerCase();
+  } else if (fmt == fmt.toUpperCase()) {
+    str = str.toUpperCase();
+  }
+  return str;
+};
+
 const agoStamp = [
   { text: "刚刚", time: 10 * 1000 },
   { text: "{time}秒前", time: 60 * 1000 },
@@ -84,4 +147,4 @@ const timeAgoFormat = (timeStamp, fmt = agoStamp) => {
   }
 };
 
-export { dateFormat, timeStampFormat, timeAgoFormat };
+export { dateFormat, timeStampFormat, timeAgoFormat, monthFormat };
