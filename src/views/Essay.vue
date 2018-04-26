@@ -8,7 +8,7 @@
         <div class="profile-main" v-loading="loading">
           <profile-essay
             :profileList="essayList"
-            :curPage="Number($route.params.page || 1)"
+            :curPage="Number($route.query.page || 1)"
             :total="essayTotal"
             @change="handlePaginChange">
           </profile-essay>
