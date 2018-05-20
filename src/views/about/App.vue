@@ -1,4 +1,5 @@
 <template>
+  <blog-panel id="app" style="height: 100%;">
     <div class="blog-body">
       <div class="blog-profile">
         <div class="profile-side">
@@ -63,9 +64,11 @@
         </div>
       </div>
     </div>
+  </blog-panel>
 </template>
 
 <script>
+import blogPanel from "components/blog-panel";
 import { profileSideAbout, profileSideHot } from "components/profile-side";
 
 export default {
@@ -75,6 +78,7 @@ export default {
   created() {},
   methods: {},
   components: {
+    "blog-panel": blogPanel,
     "profile-side-about": profileSideAbout,
     "profile-side-hot": profileSideHot
   }

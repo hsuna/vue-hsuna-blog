@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:15:47
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-03-28 00:36:21
+ * @Last Modified time: 2018-05-20 14:28:26
  */
 
 // The Vue build version to load with the `import` command
@@ -26,29 +26,15 @@ Object.keys(Filters).forEach(key => {
   Vue.filter(key, Filters[key]);
 });
 
-/* 引用-plugins */
-import plugins from "./plugins";
-// Object.keys(Plugins).forEach(key => {
-//   Vue.use(Plugins[key]);
-// });
+/* 添加公共资源 */
+import "./index.scss";
 
-/* 引用-fa字体库 */
-import "font-awesome/scss/font-awesome.scss";
-
-/**添加-vue路由器 */
-import router from "./router";
 /**添加-store */
 import store from "./store";
 
 Vue.config.productionTip = false;
 
-/* eslint-disable no-new */
-new Vue({
-  el: "#app",
-  router,
-  store,
-  components: {
-    App
-  },
-  template: "<App/>"
-});
+export default {
+  Vue,
+  stroe
+};

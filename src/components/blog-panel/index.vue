@@ -1,7 +1,7 @@
 <template>
   <div class="blog">
       <blog-header :activeIndex="activeIndex" @scroll-fixed="handleScrollFixed"></blog-header>
-      <router-view />
+      <slot></slot>
       <blog-footer></blog-footer>
       <float-menu :class="showFloatMenu?'is-show':''"></float-menu>
   </div>

@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div id="app">
         <img class="img-404" src="/static/404.png" alt="404" />
     </div>
 </template>

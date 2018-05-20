@@ -1,4 +1,5 @@
 <template>
+  <blog-panel id="app" style="height: 100%;">
     <div class="blog-body">
       <div class="blog-profile">
         <div class="profile-side">
@@ -15,9 +16,11 @@
         </div>
       </div>
     </div>
+  </blog-panel>
 </template>
 
 <script>
+import blogPanel from "components/blog-panel";
 import profileEssay from "components/profile-essay";
 import { profileSideInventory, profileSideLink } from "components/profile-side";
 
@@ -63,6 +66,7 @@ export default {
     }
   },
   components: {
+    "blog-panel": blogPanel,
     "profile-essay": profileEssay,
     "profile-side-inventory": profileSideInventory,
     "profile-side-link": profileSideLink

@@ -38,10 +38,10 @@ module.exports = {
       vue$: "vue/dist/vue.esm.js",
       "@": resolve("src"),
       "~": resolve("src/"),
-      admin: resolve("src/admin"),
       api: resolve("src/api"),
       assets: resolve("src/assets"),
       components: resolve("src/components"),
+      modules: resolve("src/modules"),
       store: resolve("src/store"),
       views: resolve("src/views"),
       utils: resolve("src/utils")

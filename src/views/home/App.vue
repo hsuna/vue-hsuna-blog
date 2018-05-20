@@ -1,42 +1,45 @@
 <template>
-  <div class="blog-body">
-    <div class="blog-personal">
-      <div class="personal-top" :style="`background-image:url(${banner})`"></div>
-      <div class="personal-bottom">
-        <div class="user-portrait">
-          <img :src="portrait" alt="portrait" width="100%" height="100%" />
-        </div>
-        <div class="user-info clearfix">
-          <span class="name">{{nickname}}</span>{{job}}
-          <div class="social">
-            <el-tooltip content="微博"><a class="icon" href="http://weibo.com/" target="_blank" ><i class="fa fa-weibo" style="background-color: rgb(221, 75, 57);"></i></a></el-tooltip>
-            <el-tooltip content="github"><a class="icon" href="https://github.com/hsuna" target="_blank" ><i class="fa fa-github" style="background-color: rgb(85, 172, 238);"></i></a></el-tooltip>
-            <el-tooltip content="邮箱"><a class="icon" href="mailto:me@hsuna.com" target="_blank" ><i class="fa fa-envelope" style="background-color: rgb(59, 89, 152);"></i></a></el-tooltip>
-            <el-tooltip content="简历"><a class="icon" href="http://resume.hsuna.com" target="_blank" ><i class="fa fa-address-card-o" style="background-color: rgb(128, 185, 83);"></i></a></el-tooltip>
+  <blog-panel id="app">
+    <div class="blog-body">
+      <div class="blog-personal">
+        <div class="personal-top" :style="`background-image:url(${banner})`"></div>
+        <div class="personal-bottom">
+          <div class="user-portrait">
+            <img :src="portrait" alt="portrait" width="100%" height="100%" />
           </div>
-          <div class="introduction">简介：{{introduction}}</div>
+          <div class="user-info clearfix">
+            <span class="name">{{nickname}}</span>{{job}}
+            <div class="social">
+              <el-tooltip content="微博"><a class="icon" href="http://weibo.com/" target="_blank" ><i class="fa fa-weibo" style="background-color: rgb(221, 75, 57);"></i></a></el-tooltip>
+              <el-tooltip content="github"><a class="icon" href="https://github.com/hsuna" target="_blank" ><i class="fa fa-github" style="background-color: rgb(85, 172, 238);"></i></a></el-tooltip>
+              <el-tooltip content="邮箱"><a class="icon" href="mailto:me@hsuna.com" target="_blank" ><i class="fa fa-envelope" style="background-color: rgb(59, 89, 152);"></i></a></el-tooltip>
+              <el-tooltip content="简历"><a class="icon" href="http://resume.hsuna.com" target="_blank" ><i class="fa fa-address-card-o" style="background-color: rgb(128, 185, 83);"></i></a></el-tooltip>
+            </div>
+            <div class="introduction">简介：{{introduction}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="blog-profile">
+        <div class="profile-side">
+          <profile-side-hot></profile-side-hot>
+          <profile-side-classify></profile-side-classify>
+          <profile-side-comment></profile-side-comment>
+        </div>
+        <div class="profile-main" v-loading="loading">
+          <profile-card
+            :profileList="profileList"
+            :curPage="Number($route.params.page || 1)"
+            :total="profileTotal"
+            @change="handlePaginChange">
+          </profile-card>
         </div>
       </div>
     </div>
-    <div class="blog-profile">
-      <div class="profile-side">
-        <profile-side-hot></profile-side-hot>
-        <profile-side-classify></profile-side-classify>
-        <profile-side-comment></profile-side-comment>
-      </div>
-      <div class="profile-main" v-loading="loading">
-        <profile-card
-          :profileList="profileList"
-          :curPage="Number($route.params.page || 1)"
-          :total="profileTotal"
-          @change="handlePaginChange">
-        </profile-card>
-      </div>
-    </div>
-  </div>
+  </blog-panel>
 </template>
 
 <script>
+import blogPanel from "components/blog-panel";
 import profileCard from "components/profile-card";
 import {
   profileSideHot,
@@ -73,7 +76,7 @@ export default {
       this.$http
         .get($api.getUserInfo, {
           params: {
-            userName: this.$store.getters.userName || 'hsuna'
+            userName: this.$store.getters.userName || "hsuna"
           }
         })
         .then(res => {
@@ -112,6 +115,7 @@ export default {
     }
   },
   components: {
+    "blog-panel": blogPanel,
     "profile-card": profileCard,
     "profile-side-hot": profileSideHot,
     "profile-side-classify": profileSideClassify,

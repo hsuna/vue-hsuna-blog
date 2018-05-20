@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:15:47
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-05-20 14:23:06
+ * @Last Modified time: 2018-05-20 14:20:27
  */
 
 // The Vue build version to load with the `import` command
@@ -14,9 +14,19 @@ import {
 } from "modules/general";
 import App from "./App";
 
+/* 引用-plugins */
+import plugins from "./plugins/element-ui";
+// Object.keys(Plugins).forEach(key => {
+//   Vue.use(Plugins[key]);
+// });
+
+/**添加-vue路由器 */
+import router from "./router";
+
 /* eslint-disable no-new */
 new Vue({
   el: "#app",
+  router,
   store,
   components: {
     App
