@@ -1,7 +1,7 @@
 module.exports = {
   files: {
     vendor: ['vue', 'axios', 'store', '@/plugins/el-base'],
-    vendor1: ['highlight.js']
+    vendor1: ['@/plugins/hljs']
   },
   pages: {
     404: {
