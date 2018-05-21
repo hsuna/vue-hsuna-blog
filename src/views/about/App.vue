@@ -1,5 +1,5 @@
 <template>
-  <blog-panel id="app" style="height: 100%;">
+  <blog-panel id="app" activeIndex="about" style="height: 100%;">
     <div class="blog-body">
       <div class="blog-profile">
         <div class="profile-side">

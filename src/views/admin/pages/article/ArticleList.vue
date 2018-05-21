@@ -4,7 +4,7 @@
     <div class="admin-body">
       <div class="admin-toolbar">
         <div class="btn-group">
-          <el-button type="primary" @click="$router.push({path: '/admin/articleCreate'})">创建文章</el-button>
+          <el-button type="primary" @click="$filter.goUrl({path: '/admin/articleCreate'})">创建文章</el-button>
         </div>
       </div>
       <div class="admin-table">

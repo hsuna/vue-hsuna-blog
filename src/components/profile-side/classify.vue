@@ -5,7 +5,7 @@
       <template v-if="classifyList.length>0">
         <ul class="article-classify clearfix">
           <li v-for="item in classifyList" :key="item._id">
-            <a href="javascript:;"  @click="$router.push({ path: `/?classify=${item._id}` })"><span class="count">{{item.count}}篇</span>{{item._id}}</a>
+            <a href="javascript:;"  @click="$filter.goUrl({ path: `/?classify=${item._id}` })"><span class="count">{{item.count}}篇</span>{{item._id}}</a>
           </li>
         </ul>
       </template>

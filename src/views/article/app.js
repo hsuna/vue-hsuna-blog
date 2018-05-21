@@ -1,3 +1,4 @@
+import blogPanel from "components/blog-panel";
 import { ActionName, MutationName } from "store/types";
 import { setDocumentTitle } from "utils";
 
@@ -157,5 +158,8 @@ export default {
           elem.offsetTop - 15;
       }
     }
+  },
+  components: {
+    "blog-panel": blogPanel
   }
 };

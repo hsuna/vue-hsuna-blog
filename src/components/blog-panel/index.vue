@@ -13,9 +13,14 @@ import blogFooter from "components/blog-footer";
 import floatMenu from "components/float-menu";
 
 export default {
+  props: {
+    activeIndex: {
+      type: String,
+      default: ""
+    }
+  },
   data() {
     return {
-      activeIndex: this.$route.name,
       showFloatMenu: false
     };
   },

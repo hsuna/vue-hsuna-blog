@@ -93,15 +93,15 @@ export default {
   },
   methods: {
     handleMenu(path) {
-      this.$router.push({ path });
+      this.$filter.goUrl({ path });
     },
     handleDropdown(command) {
       switch (command) {
         case "blog":
-          this.$router.push({ path: "/" });
+          this.$filter.goUrl({ path: "/" });
           break;
         case "admin":
-          this.$router.push({ path: "/admin" });
+          this.$filter.goUrl({ path: "/admin" });
           break;
         case "mofpwd": //修改密码
           this.modifyDialogVisible = true;

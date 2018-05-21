@@ -63,7 +63,7 @@
 import adminHeader from "components/admin-header";
 import $api from "api/admin";
 
-import markMixin from "../../mixin/mark";
+import markMixin from "@/mixin/mark";
 
 export default {
   data() {

@@ -3,7 +3,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:15:47
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-05-20 14:22:40
+ * @Last Modified time: 2018-05-20 17:59:10
  */
 
 // The Vue build version to load with the `import` command
@@ -13,6 +13,9 @@ import {
   store
 } from "modules/general";
 import App from "./App";
+
+/* 引用-plugins */
+import plugins from "@/plugins/el-base";
 
 /* eslint-disable no-new */
 new Vue({

@@ -1,5 +1,5 @@
 <template>
-  <blog-panel id="app" style="height: 100%;">
+  <blog-panel id="app" activeIndex="essay" style="height: 100%;">
     <div class="blog-body">
       <div class="blog-profile">
         <div class="profile-side">
@@ -9,7 +9,7 @@
         <div class="profile-main" v-loading="loading">
           <profile-essay
             :profileList="essayList"
-            :curPage="Number($route.query.page || 1)"
+            :curPage="Number($filter.getUrlQuery('page') || 1)"
             :total="essayTotal"
             @change="handlePaginChange">
           </profile-essay>
@@ -35,11 +35,11 @@ export default {
     };
   },
   created() {
-    this.getEssayList(this.$route.query);
+    this.getEssayList(this.$filter.getUrlQuery());
   },
   watch: {
     $route(to, from) {
-      this.getEssayList(this.$route.query);
+      this.getEssayList(this.$filter.getUrlQuery());
     }
   },
   methods: {
@@ -55,10 +55,10 @@ export default {
     },
     handlePaginChange(type, val) {
       if ("page" == type) {
-        this.$router.push({
+        this.$filter.goUrl({
           path: "/essay",
           query: {
-            ...this.$route.query,
+            ...this.$filter.getUrlQuery(),
             page: val
           }
         });

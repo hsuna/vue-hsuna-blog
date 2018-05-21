@@ -1,0 +1,36 @@
+module.exports = {
+  files: {
+    vendor: ['vue', 'axios', 'store', '@/plugins/el-base'],
+    vendor1: ['vue-router', '@/plugins/el-admin.js']
+  },
+  pages: {
+    404: {
+      title: '首页 | HSUAN',
+      vendor: []
+    },
+    about: {
+      title: '关于我 | HSUAN',
+      vendor: []
+    },
+    admin: {
+      title: '后台管理 | HSUAN',
+      vendor: ['vendor1']
+    },
+    archive: {
+      title: '归档 | HSUAN',
+      vendor: []
+    },
+    article: {
+      title: '文章详情 | HSUAN',
+      vendor: []
+    },
+    essay: {
+      title: '手札 | HSUAN',
+      vendor: []
+    },
+    index: {
+      title: '404 | HSUAN',
+      vendor: []
+    }
+  }
+}

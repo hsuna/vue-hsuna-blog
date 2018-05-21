@@ -4,7 +4,7 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:13:19
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-05-20 13:20:55
+ * @Last Modified time: 2018-05-20 17:10:11
  */
 
 import Vue from "vue";
@@ -15,7 +15,7 @@ import { setDocumentTitle } from "utils";
 
 Vue.use(VueRouter);
 const router = new VueRouter({
-  mode: "history",
+  //mode: "history",
   routes
 });
 

@@ -1,5 +1,5 @@
 <template>
-  <blog-panel id="app" style="height: 100%;">
+  <blog-panel id="app" activeIndex="archive" style="height: 100%;">
     <div class="blog-body">
       <div class="blog-profile">
         <div class="profile-side">
@@ -9,15 +9,14 @@
         <div class="profile-main" v-loading="loading">
           <profile-card
             :profileList="archiveList"
-            :curPage="Number($route.params.page || 1)"
+            :curPage="Number($filter.getUrlQuery('page') || 1)"
             :total="archiveTotal"
             @change="handlePaginChange">
           </profile-card>
         </div>
       </div>
     </div>
-  </div>
- </blog-panel>
+  </blog-panel>
 </template>
 
 <script>
@@ -36,11 +35,11 @@ export default {
     };
   },
   created() {
-    this.getArchiveList(this.$route.query);
+    this.getArchiveList(this.$filter.getUrlQuery());
   },
   watch: {
     $route(to, from) {
-      this.getArchiveList(this.$route.query);
+      this.getArchiveList(this.$filter.getUrlQuery());
     }
   },
   methods: {
@@ -58,7 +57,7 @@ export default {
       }
     },
     handleArchive(archive) {
-      this.$router.push({
+      this.$filter.goUrl({
         path: "/archive",
         query: {
           year: archive.year,
@@ -68,10 +67,10 @@ export default {
     },
     handlePaginChange(type, val) {
       if ("page" == type) {
-        this.$router.push({
+        this.$filter.goUrl({
           path: "/archive",
           query: {
-            ...this.$route.query,
+            ...this.$filter.getUrlQuery(),
             page: val
           }
         });

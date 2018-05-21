@@ -1,5 +1,5 @@
 <template>
-  <blog-panel id="app" style="height: 100%;">
+  <blog-panel id="app" activeIndex="article" style="height: 100%;">
     <div class="blog-body" v-loading="loading">
       <div class="article-main">
         <div class="article-header">
@@ -107,5 +107,5 @@ export default app;
 
 <style lang="scss">
 @import "highlight.js/styles/googlecode.css";
-@import "./index";
+@import "./app";
 </style>

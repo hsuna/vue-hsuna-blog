@@ -10,7 +10,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="handleSubmit">登录</el-button>
-        <el-button type="primary" @click="$router.push({path: '/'})">返回博客</el-button>
+        <el-button type="primary" @click="$filter.goUrl({path: '/'})">返回博客</el-button>
         <!-- <el-button type="primary" @click="$router.push({path: '/backend/reg'})">注册</el-button> -->
       </el-form-item>
     </el-form>

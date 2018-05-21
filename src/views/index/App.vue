@@ -1,5 +1,5 @@
 <template>
-  <blog-panel id="app">
+  <blog-panel id="app" activeIndex="home" style="height: 100%;">
     <div class="blog-body">
       <div class="blog-personal">
         <div class="personal-top" :style="`background-image:url(${banner})`"></div>
@@ -28,7 +28,7 @@
         <div class="profile-main" v-loading="loading">
           <profile-card
             :profileList="profileList"
-            :curPage="Number($route.params.page || 1)"
+            :curPage="Number($filter.getUrlQuery('page') || 1)"
             :total="profileTotal"
             @change="handlePaginChange">
           </profile-card>
@@ -64,13 +64,13 @@ export default {
   },
   created() {
     this.getUserInfo();
-    this.getProfileList(this.$route.query);
+    this.getProfileList(this.$filter.getUrlQuery());
   },
-  watch: {
+  /* watch: {
     $route(to, from) {
-      this.getProfileList(this.$route.query);
+      this.getProfileList(this.$filter.getUrlQuery());
     }
-  },
+  }, */
   methods: {
     getUserInfo() {
       this.$http
@@ -105,11 +105,11 @@ export default {
     },
     handlePaginChange(type, val) {
       if ("page" == type) {
-        let { page, classify } = this.$route.query;
+        let { page, classify } = this.$filter.getUrlQuery();
         if (classify) {
-          this.$router.push({ path: `/?page=${val}&classify=${classify}` });
+          this.$filter.goUrl({ path: `/?page=${val}&classify=${classify}` });
         } else {
-          this.$router.push({ path: `/?page=${val}` });
+          this.$filter.goUrl({ path: `/?page=${val}` });
         }
       }
     }

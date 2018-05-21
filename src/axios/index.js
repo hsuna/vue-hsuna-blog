@@ -3,12 +3,11 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:09:18
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-20 10:27:42
+ * @Last Modified time: 2018-05-20 15:07:25
  */
 
 import Axios from "axios";
 import store from "store";
-import router from "@/router";
 
 import qs from "qs";
 
@@ -39,31 +38,6 @@ Axios.interceptors.request.use(
   err => {
     Message.error(err);
     //请求错误时做些事
-    return Promise.reject(err);
-  }
-);
-
-//添加响应拦截器
-Axios.interceptors.response.use(
-  res => {
-    switch (res.data.code) { //对响应数据做些事
-      case -200:
-        Message.error(res.data.message);
-        break;
-      case 401:
-        // 这里写清除token的代码
-        store.commit(MutationName.CLEAR_USER);
-        router.replace({
-          path: "/login",
-          query: { redirect: router.currentRoute.fullPath } //登录成功后跳入浏览的当前页面
-        });
-        break;
-    }
-    return res.data;
-  },
-  err => {
-    //请求错误时做些事
-    Message.error(err);
     return Promise.reject(err);
   }
 );

@@ -44,7 +44,7 @@ export default {
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
-  destroyed(){
+  destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
@@ -58,17 +58,17 @@ export default {
       } else {
         this.isFixed = true;
       }
-      this.$emit('scroll-fixed', this.isFixed);
+      this.$emit("scroll-fixed", this.isFixed);
     },
     handleSelect(index, indexPath) {
       switch (indexPath[0]) {
         //一级
         case "home":
-          this.$router.push({ path: "/" });
+          this.$filter.goUrl({ path: "/" });
           break;
         case "classify":
           //二级
-          this.$router.push({
+          this.$filter.goUrl({
             path: "/",
             query: {
               classify: indexPath[1]
@@ -79,13 +79,13 @@ export default {
         case "about":
         case "essay":
         case "admin":
-          this.$router.push({ path: "/" + index });
+          this.$filter.goUrl({ path: `/${index}.html` });
           break;
       }
     },
-    handleSearch(){
+    handleSearch() {
       console.log(this.inputSearch);
-      this.$message('该功能正在建设中～');
+      this.$message("该功能正在建设中～");
     }
   }
 };
