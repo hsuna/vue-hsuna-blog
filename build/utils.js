@@ -133,7 +133,7 @@ exports.exits = (conf) => {
         'manifest',
         'vendor',
         ...(vendor.pages[filename].vendor || []),
-        filename
+        filename,
       ]
     }, conf);
   });

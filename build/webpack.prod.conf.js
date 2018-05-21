@@ -96,7 +96,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         minifyCSS: true,
         minifyURLs: true,
       },
-      chunksSortMode: 'dependency'
+      chunksSortMode: 'manual'//dependency, chunks顺序
     }).map(conf => new HtmlWebpackPlugin(conf)),
 
     // keep module.id stable when vendor modules does not change
@@ -106,7 +106,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // split vendor js into its own file
     //...utils.vendors().map(conf => new webpack.optimize.CommonsChunkPlugin(conf)),
     new webpack.optimize.CommonsChunkPlugin({
-      names: Object.keys(vendor.files).reverse(),
+      names: Object.keys(vendor.files),
       minChunks: Infinity
     }),
     /* new webpack.optimize.CommonsChunkPlugin({
