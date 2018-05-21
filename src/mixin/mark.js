@@ -7,7 +7,7 @@
  */
 
 import marked from "marked";
-import hljs from "highlight.js";
+import hljs from "@/plugins/hljs";
 import "../assets/styles/markdown-body.scss";
 
 export default {
