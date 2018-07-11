@@ -27,9 +27,9 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page.sync="articlePage"
+          :current-page="Number($route.query.page || 1)"
           :page-sizes="[10, 20, 50, 100]"
-          :page-size="articleLimit"
+          :page-size="Number($route.query.limit || 10)"
           layout="sizes, prev, pager, next"
           :total="articleTotal">
         </el-pagination>
@@ -48,17 +48,11 @@ export default {
       listLoading: false,
       breadcrumbs: [{ text: "首页", path: "/admin" }, { text: "文章管理" }],
 
-      articlePage: 1,
-      articleLimit: 10,
       articleTotal: 1,
       articleList: []
     };
   },
   created() {
-    this.$route.query.page = this.articlePage =
-      this.$route.query.page || this.articlePage;
-    this.$route.query.limit = this.articleLimit =
-      this.$route.query.limit || this.articleLimit;
     this.getArticleList();
   },
   methods: {
@@ -107,6 +101,7 @@ export default {
           limit: val
         }
       });
+      this.getArticleList();
     },
     handleCurrentChange(val) {
       this.$router.push({
@@ -116,6 +111,7 @@ export default {
           limit: this.$route.query.limit
         }
       });
+      this.getArticleList();
     }
   },
   components: {

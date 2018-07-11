@@ -25,9 +25,9 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page.sync="linkPage"
+          :current-page="Number($route.query.page || 1)"
           :page-sizes="[10, 20, 50, 100]"
-          :page-size="linkLimit"
+          :page-size="Number($route.query.limit || 10)"
           layout="sizes, prev, pager, next"
           :total="linkTotal">
         </el-pagination>
@@ -62,8 +62,6 @@ export default {
       listLoading: false,
       breadcrumbs: [{ text: "首页", path: "/admin" }, { text: "链接管理" }],
 
-      linkPage: 1,
-      linkLimit: 10,
       linkTotal: 1,
       linkList: [],
 
@@ -78,10 +76,6 @@ export default {
     "admin-header": adminHeader
   },
   created() {
-    this.$route.query.page = this.linkPage =
-      this.$route.query.page || this.linkPage;
-    this.$route.query.limit = this.linkLimit =
-      this.$route.query.limit || this.linkLimit;
     this.getLinkList();
   },
   methods: {
@@ -129,21 +123,23 @@ export default {
     },
     handleSizeChange(val) {
       this.$router.push({
-        path: "/admin/linkList",
+        path: "/essay/linkList",
         query: {
           page: 1,
           limit: val
         }
       });
+      this.getLinkList();
     },
     handleCurrentChange(val) {
       this.$router.push({
-        path: "/admin/linkList",
+        path: "/essay/linkList",
         query: {
           page: val,
           limit: this.$route.query.limit
         }
       });
+      this.getLinkList();
     }
   }
 };
