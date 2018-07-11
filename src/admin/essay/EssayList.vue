@@ -33,9 +33,9 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page.sync="essayPage"
+          :current-page="Number($route.query.page || 1)"
           :page-sizes="[10, 20, 50, 100]"
-          :page-size="essayLimit"
+          :page-size="Number($route.query.limit || 10)"
           layout="sizes, prev, pager, next"
           :total="essayTotal">
         </el-pagination>
@@ -89,8 +89,6 @@ export default {
       listLoading: false,
       breadcrumbs: [{ text: "首页", path: "/admin" }, { text: "随记管理" }],
 
-      essayPage: 1,
-      essayLimit: 10,
       essayTotal: 1,
       essayList: [],
 
@@ -115,10 +113,6 @@ export default {
     "admin-header": adminHeader
   },
   created() {
-    this.$route.query.page = this.essayPage =
-      this.$route.query.page || this.essayPage;
-    this.$route.query.limit = this.essayLimit =
-      this.$route.query.limit || this.essayLimit;
     this.getEssayList();
   },
   methods: {
@@ -205,21 +199,23 @@ export default {
     },
     handleSizeChange(val) {
       this.$router.push({
-        path: "/admin/inventoryList",
+        path: "/essay/list",
         query: {
           page: 1,
           limit: val
         }
       });
+      this.getEssayList();
     },
     handleCurrentChange(val) {
       this.$router.push({
-        path: "/admin/inventoryList",
+        path: "/essay/list",
         query: {
           page: val,
           limit: this.$route.query.limit
         }
       });
+      this.getEssayList();
     }
   }
 };

@@ -22,9 +22,9 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page.sync="inventoryPage"
+          :current-page="Number($route.query.page || 1)"
           :page-sizes="[10, 20, 50, 100]"
-          :page-size="inventoryLimit"
+          :page-size="Number($route.query.limit || 10)"
           layout="sizes, prev, pager, next"
           :total="inventoryTotal">
         </el-pagination>
@@ -63,8 +63,6 @@ export default {
       listLoading: false,
       breadcrumbs: [{ text: "首页", path: "/admin" }, { text: "清单管理" }],
 
-      inventoryPage: 1,
-      inventoryLimit: 10,
       inventoryTotal: 1,
       inventoryList: [],
 
@@ -80,10 +78,6 @@ export default {
     "admin-header": adminHeader
   },
   created() {
-    this.$route.query.page = this.inventoryPage =
-      this.$route.query.page || this.inventoryPage;
-    this.$route.query.limit = this.inventoryLimit =
-      this.$route.query.limit || this.inventoryLimit;
     this.getInventoryList();
   },
   methods: {
@@ -135,21 +129,23 @@ export default {
     },
     handleSizeChange(val) {
       this.$router.push({
-        path: "/admin/inventoryList",
+        path: "/essay/inventoryList",
         query: {
           page: 1,
           limit: val
         }
       });
+      this.getInventoryList();
     },
     handleCurrentChange(val) {
       this.$router.push({
-        path: "/admin/inventoryList",
+        path: "/essay/inventoryList",
         query: {
           page: val,
           limit: this.$route.query.limit
         }
       });
+      this.getInventoryList();
     }
   }
 };
