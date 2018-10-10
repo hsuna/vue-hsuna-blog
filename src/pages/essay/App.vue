@@ -1,5 +1,6 @@
 <template>
-    <div class="blog-body">
+  <div id="app">
+    <blog-main>
       <div class="blog-profile">
         <div class="profile-side">
           <profile-side-link></profile-side-link>
@@ -14,17 +15,20 @@
           </profile-essay>
         </div>
       </div>
-    </div>
+    </blog-main>
+  </div>
 </template>
 
 <script>
+import blogMain from "components/blog-main";
 import profileEssay from "components/profile-essay";
 import { profileSideInventory, profileSideLink } from "components/profile-side";
 
 import $api from "api/guest";
 
 export default {
-  data() {
+  name: "App",
+   data() {
     return {
       loading: true,
       essayTotal: 0,
@@ -63,6 +67,7 @@ export default {
     }
   },
   components: {
+    "blog-main": blogMain,
     "profile-essay": profileEssay,
     "profile-side-inventory": profileSideInventory,
     "profile-side-link": profileSideLink
@@ -71,5 +76,5 @@ export default {
 </script>
 
 <style lang="scss">
-
 </style>
+
