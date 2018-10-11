@@ -103,7 +103,7 @@
 <script>
 import blogMain from "components/blog-main";
 import { ActionName, MutationName } from "store/types";
-import { setDocumentTitle } from "utils";
+import { setDocumentTitle } from "utils/title";
 
 import markMixin from "../../mixin/mark";
 
