@@ -101,12 +101,13 @@
 </template>
 
 <script>
+import blogMain from "components/blog-main";
 import { ActionName, MutationName } from "store/types";
 import { setDocumentTitle } from "utils";
 
 import markMixin from "../../mixin/mark";
 
-import $api from "api/guest";
+import $api from "api/blog";
 
 export default {
   data() {
@@ -260,6 +261,9 @@ export default {
           elem.offsetTop - 15;
       }
     }
+  },
+  components: {
+    "blog-main": blogMain
   }
 };
 </script>

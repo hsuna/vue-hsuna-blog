@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import blogMain from "components/blog-main";
 import profileCard from "components/profile-card";
 import {
   profileSideHot,
@@ -46,7 +47,7 @@ import {
   profileSideComment
 } from "components/profile-side";
 
-import $api from "api/guest";
+import $api from "api/blog";
 
 export default {
   name: "App",
@@ -105,7 +106,7 @@ export default {
     },
     handlePaginChange(type, val) {
       if ("page" == type) {
-        let { page, classify } = this.$route.query;
+        let { classify } = this.$route.query;
         if (classify) {
           this.$router.push({ path: `/?page=${val}&classify=${classify}` });
         } else {
@@ -115,6 +116,7 @@ export default {
     }
   },
   components: {
+    "blog-main": blogMain,
     "profile-card": profileCard,
     "profile-side-hot": profileSideHot,
     "profile-side-classify": profileSideClassify,

@@ -24,7 +24,7 @@ import blogMain from "components/blog-main";
 import profileEssay from "components/profile-essay";
 import { profileSideInventory, profileSideLink } from "components/profile-side";
 
-import $api from "api/guest";
+import $api from "api/blog";
 
 export default {
   name: "App",

@@ -1,6 +1,6 @@
 <template>
   <div id="app" style="height: 100%;">
-      <div class="blog-body">
+    <blog-main>
       <div class="blog-profile">
         <div class="profile-side">
           <profile-side-archive @search="handleArchive"></profile-side-archive>
@@ -15,15 +15,16 @@
           </profile-card>
         </div>
       </div>
-    </div>
+    </blog-main>
   </div>
 </template>
 
 <script>
+import blogMain from "components/blog-main";
 import profileCard from "components/profile-card";
 import { profileSideHot, profileSideArchive } from "components/profile-side";
 
-import $api from "api/guest";
+import $api from "api/blog";
 
 export default {
   name: "App",
@@ -35,18 +36,18 @@ export default {
     };
   },
   created() {
-    this.getArchiveList(this.$route.query);
+    this.getArchiveList(this.$params);
   },
   watch: {
     $route(to, from) {
-      this.getArchiveList(this.$route.query);
+      this.getArchiveList(this.$params);
     }
   },
   methods: {
-    getArchiveList(query) {
-      if (query.year && query.month) {
+    getArchiveList(params) {
+      if (params.year && params.month) {
         this.loading = true;
-        this.$http.get($api.getArticleAchive, { params: query }).then(res => {
+        this.$http.get($api.getArticleAchive, { params }).then(res => {
           if (200 == res.code) {
             let { list, total } = res.data;
             this.archiveList = list;
@@ -57,27 +58,16 @@ export default {
       }
     },
     handleArchive(archive) {
-      this.$router.push({
-        path: "/archive",
-        query: {
-          year: archive.year,
-          month: archive.month
-        }
-      });
+      window.location.href = `/archive.html?year=${archive.year}&month=${archive.month}`
     },
     handlePaginChange(type, val) {
       if ("page" == type) {
-        this.$router.push({
-          path: "/archive",
-          query: {
-            ...this.$route.query,
-            page: val
-          }
-        });
+        window.location.href = `/archive.html?year=${archive.year}&month=${archive.month}&page=${val}`
       }
     }
   },
   components: {
+    "blog-main": blogMain,
     "profile-card": profileCard,
     "profile-side-hot": profileSideHot,
     "profile-side-archive": profileSideArchive

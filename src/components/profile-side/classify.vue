@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import $api from "api/guest";
+import $api from "api/blog";
 
 export default {
   data() {
