@@ -27,11 +27,7 @@ Object.keys(Filters).forEach(key => {
 });
 
 /* 引用-plugins */
-import plugins from "~/plugins/element-ui";
-// Object.keys(Plugins).forEach(key => {
-//   Vue.use(Plugins[key]);
-// });
-
+import plugins from "~/plugins/el-blog";
 
 /* 引用-utils */
 import utils from "~/utils";
