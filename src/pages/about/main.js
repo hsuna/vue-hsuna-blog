@@ -12,22 +12,22 @@ import Vue from "vue";
 import App from "./App";
 
 /* 添加-axios拦截器 */
-import Axios from "./axios";
+import Axios from "~/axios";
 Vue.prototype.$http = Axios;
 
 /**注册-全局mixin */
-import mixin from "./mixin";
+import mixin from "~/mixin";
 Vue.mixin(mixin);
 
 /**注册-全局过滤器 */
-import * as Filters from "./filters"; // global filters
+import * as Filters from "~/filters"; // global filters
 Vue.prototype.$filter = Filters;
 Object.keys(Filters).forEach(key => {
   Vue.filter(key, Filters[key]);
 });
 
 /* 引用-plugins */
-import plugins from "./plugins/element-ui";
+import plugins from "~/plugins/element-ui";
 // Object.keys(Plugins).forEach(key => {
 //   Vue.use(Plugins[key]);
 // });
@@ -35,10 +35,8 @@ import plugins from "./plugins/element-ui";
 /* 引用-fa字体库 */
 import "font-awesome/scss/font-awesome.scss";
 
-/**添加-vue路由器 */
-import router from "./router";
 /**添加-store */
-import store from "./store";
+import store from "~/store";
 
 Vue.config.productionTip = false;
 

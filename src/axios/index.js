@@ -8,7 +8,7 @@
 
 import Axios from "axios";
 import store from "store";
-import router from "@/router";
+//import router from "@/router";
 
 import qs from "qs";
 
@@ -53,10 +53,10 @@ Axios.interceptors.response.use(
       case 401:
         // 这里写清除token的代码
         store.commit(MutationName.CLEAR_USER);
-        router.replace({
+        /* router.replace({
           path: "/login",
           query: { redirect: router.currentRoute.fullPath } //登录成功后跳入浏览的当前页面
-        });
+        }); */
         break;
     }
     return res.data;

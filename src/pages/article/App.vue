@@ -266,6 +266,6 @@ export default {
 
 <style>
 @import "highlight.js/styles/googlecode.css";
-@import "./style";
+@import "./style.scss";
 </style>
 

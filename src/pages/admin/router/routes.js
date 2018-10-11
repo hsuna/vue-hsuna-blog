@@ -10,7 +10,7 @@ export default [
   /////////////////后台路由////////////////
   {
     path: "/",
-    component: resolve => require(["admin/Main.vue"], resolve),
+    component: resolve => require(["../views/Main.vue"], resolve),
     meta: {
       title: "后台管理 | HSUAN",
       auth: true
@@ -19,22 +19,21 @@ export default [
   },
   {
     path: "/login",
+    component: resolve => require(["../views/Login.vue"], resolve),
     meta: {
       title: "登录 | HSUAN"
     },
-    component: resolve => require(["admin/Login.vue"], resolve)
   },
   {
     path: "/reg",
+    component: resolve => require(["../views/Reg.vue"], resolve),
     meta: {
       title: "注册 | HSUAN"
     },
-    component: resolve => require(["admin/Reg.vue"], resolve)
   },
   {
     path: "article/articleList",
-    component: resolve =>
-      require(["admin/article/ArticleList.vue"], resolve),
+    component: resolve => require(["../views/article/ArticleList.vue"], resolve),
     meta: {
       title: "文章管理 | HSUAN",
       auth: true
@@ -43,8 +42,7 @@ export default [
   },
   {
     path: "article/articleCreate",
-    component: resolve =>
-      require(["admin/article/ArticleCreate.vue"], resolve),
+    component: resolve => require(["../views/article/ArticleCreate.vue"], resolve),
     meta: {
       title: "创建文章 | HSUAN",
       auth: true
@@ -54,8 +52,7 @@ export default [
   },
   {
     path: "article/articleEdit/:articleId",
-    component: resolve =>
-      require(["admin/article/ArticleEdit.vue"], resolve),
+    component: resolve => require(["../views/article/ArticleEdit.vue"], resolve),
     meta: {
       title: "编辑文章 | HSUAN",
       auth: true
@@ -65,8 +62,7 @@ export default [
   },
   {
     path: "article/articleRead/:articleId",
-    component: resolve =>
-      require(["admin/article/ArticleRead.vue"], resolve),
+    component: resolve => require(["../views/article/ArticleRead.vue"], resolve),
     meta: {
       title: "查看文章 | HSUAN",
       auth: true
@@ -76,8 +72,7 @@ export default [
   },
   {
     path: "article/classifyList",
-    component: resolve =>
-      require(["admin/article/ClassifyList.vue"], resolve),
+    component: resolve => require(["../views/article/ClassifyList.vue"], resolve),
     meta: {
       title: "分类管理 | HSUAN",
       auth: true
@@ -86,7 +81,7 @@ export default [
   },
   {
     path: "essay/list",
-    component: resolve => require(["admin/essay/EssayList.vue"], resolve),
+    component: resolve => require(["../views/essay/EssayList.vue"], resolve),
     meta: {
       title: "随记管理 | HSUAN",
       auth: true
@@ -95,7 +90,7 @@ export default [
   },
   {
     path: "essay/linkList",
-    component: resolve => require(["admin/essay/LinkList.vue"], resolve),
+    component: resolve => require(["../views/essay/LinkList.vue"], resolve),
     meta: {
       title: "链接管理 | HSUAN",
       auth: true
@@ -104,7 +99,7 @@ export default [
   },
   {
     path: "essay/inventoryList",
-    component: resolve => require(["admin/essay/InventoryList.vue"], resolve),
+    component: resolve => require(["../views/essay/InventoryList.vue"], resolve),
     meta: {
       title: "清单管理 | HSUAN",
       auth: true
