@@ -1,6 +1,6 @@
 <template>
   <div id="app" style="height: 100%;">
-    <blog-main v-loading="loading">
+    <blog-main v-loading="loading" :activeIndex="'article'">
       <div class="article-main">
         <div class="article-header">
           <h1 class="title">{{article.title}}</h1>
@@ -115,7 +115,7 @@ export default {
       href: window.location.href,
       loading: true,
       article: {
-        id: this.$route.params.articleId,
+        id: $utils.params('id'),
         content: '',
         comments: []
       },
@@ -162,7 +162,7 @@ export default {
             this.loading = false;
             setDocumentTitle(`${this.article.title} | 文章详情 | HSUAN`);
           } else {
-            this.$router.replace({ path: "/" });
+            window.location.href = '/index.html';
           }
         });
     },

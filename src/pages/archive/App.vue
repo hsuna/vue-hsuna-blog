@@ -1,6 +1,6 @@
 <template>
   <div id="app" style="height: 100%;">
-    <blog-main>
+    <blog-main :activeIndex="'archive'">
       <div class="blog-profile">
         <div class="profile-side">
           <profile-side-archive @search="handleArchive"></profile-side-archive>
@@ -9,7 +9,7 @@
         <div class="profile-main" v-loading="loading">
           <profile-card
             :profileList="archiveList"
-            :curPage="Number($route.params.page || 1)"
+            :curPage="Number($utils.params('page') || 1)"
             :total="archiveTotal"
             @change="handlePaginChange">
           </profile-card>
@@ -36,12 +36,7 @@ export default {
     };
   },
   created() {
-    this.getArchiveList(this.$params);
-  },
-  watch: {
-    $route(to, from) {
-      this.getArchiveList(this.$params);
-    }
+    this.getArchiveList(this.$utils.params()||{});
   },
   methods: {
     getArchiveList(params) {
@@ -58,11 +53,14 @@ export default {
       }
     },
     handleArchive(archive) {
-      window.location.href = `/archive.html?year=${archive.year}&month=${archive.month}`
+      window.location.href = '/archive.html?' + this.$utils.query(archive);
     },
     handlePaginChange(type, val) {
       if ("page" == type) {
-        window.location.href = `/archive.html?year=${archive.year}&month=${archive.month}&page=${val}`
+         window.location.href = '/archive.html?' + this.$utils.query({
+           ...archive,
+           page: val
+         });
       }
     }
   },

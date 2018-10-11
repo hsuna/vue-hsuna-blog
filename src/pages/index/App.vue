@@ -1,6 +1,6 @@
 <template>
   <div id="app" style="height: 100%;">
-    <blog-main>
+    <blog-main :activeIndex="'home'">
       <div class="blog-personal">
         <div class="personal-top" :style="`background-image:url(${banner})`"></div>
         <div class="personal-bottom">
@@ -28,7 +28,7 @@
         <div class="profile-main" v-loading="loading">
           <profile-card
             :profileList="profileList"
-            :curPage="Number($route.params.page || 1)"
+            :curPage="Number($utils.params('page') || 1)"
             :total="profileTotal"
             @change="handlePaginChange">
           </profile-card>
@@ -65,38 +65,32 @@ export default {
   },
   created() {
     this.getUserInfo();
-    this.getProfileList(this.$route.query);
-  },
-  watch: {
-    $route(to, from) {
-      this.getProfileList(this.$route.query);
-    }
+    this.getProfileList(this.$utils.query());
   },
   methods: {
     getUserInfo() {
-      this.$http
-        .get($api.getUserInfo, {
-          params: {
-            userName: this.$store.getters.userName || 'hsuna'
-          }
-        })
-        .then(res => {
-          if (200 == res.code) {
-            let user = res.data;
-            this.nickname = user.nickname || "";
-            this.job = user.job || "";
-            this.introduction = user.introduction || "";
-            this.portrait = user.portrait
-              ? $api.getFileUpload + "/" + user.portrait
-              : "";
-            this.banner = user.banner
-              ? $api.getFileUpload + "/" + user.banner
-              : "";
-          }
-        });
+      this.$http.get($api.getUserInfo, {
+        params: {
+          userName: this.$store.getters.userName || 'hsuna'
+        }
+      })
+      .then(res => {
+        if (200 == res.code) {
+          let user = res.data;
+          this.nickname = user.nickname || "";
+          this.job = user.job || "";
+          this.introduction = user.introduction || "";
+          this.portrait = user.portrait
+            ? $api.getFileUpload + "/" + user.portrait
+            : "";
+          this.banner = user.banner
+            ? $api.getFileUpload + "/" + user.banner
+            : "";
+        }
+      });
     },
-    getProfileList(query) {
-      this.$http.get($api.getArticle, { params: query }).then(res => {
+    getProfileList(params) {
+      this.$http.get($api.getArticle, { params }).then(res => {
         if (200 == res.code) {
           this.profileList = res.data.list;
           this.profileTotal = res.data.total;
@@ -106,12 +100,10 @@ export default {
     },
     handlePaginChange(type, val) {
       if ("page" == type) {
-        let { classify } = this.$route.query;
-        if (classify) {
-          this.$router.push({ path: `/?page=${val}&classify=${classify}` });
-        } else {
-          this.$router.push({ path: `/?page=${val}` });
-        }
+        window.location.href = '/index.html?' + this.$utils.query({
+          ...this.$utils.params(),
+          page: val
+        })
       }
     }
   },

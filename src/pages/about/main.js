@@ -15,10 +15,6 @@ import App from "./App";
 import Axios from "~/axios";
 Vue.prototype.$http = Axios;
 
-/**注册-全局mixin */
-import mixin from "~/mixin";
-Vue.mixin(mixin);
-
 /**注册-全局过滤器 */
 import * as Filters from "~/filters"; // global filters
 Vue.prototype.$filter = Filters;
@@ -32,8 +28,10 @@ import plugins from "~/plugins/element-ui";
 //   Vue.use(Plugins[key]);
 // });
 
-/* 引用-fa字体库 */
-import "font-awesome/scss/font-awesome.scss";
+
+/* 引用-utils */
+import utils from "~/utils";
+Vue.prototype.$utils = utils;
 
 /**添加-store */
 import store from "~/store";

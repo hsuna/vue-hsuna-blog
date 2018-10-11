@@ -3,13 +3,12 @@ const _url2Obj = (_ =>{
     return url => {
         let obj = {};
         url = decodeURIComponent(url);
+        if (/\?/.test(url)) url = url.split("?")[1]
         if(!_cache[url]){
-            if (/\?/.test(url)) {
-                url.split("?")[1].split("&").forEach((param, index) => {
-                    let [key, value] = param.split("="); //进行分割成数组
-                    obj[key] = value; //为对象赋值
-                })
-            }
+            url.split("&").forEach((param, index) => {
+                let [key, value] = param.split("="); //进行分割成数组
+                obj[key] = value; //为对象赋值
+            })
             _cache[url] = obj;
         }else{
             obj = _cache[url];
@@ -18,17 +17,16 @@ const _url2Obj = (_ =>{
     }
 })();
 
-const _obj2Url = obj => Object.keys(obj).map(k => `${k}=${obj[k]}`).join('&');
+const _obj2Url = obj => Object.keys(obj).map(k => obj[k]?`${k}=${obj[k]}`:'').join('&');
 
-const to = search => {
+const query = search => {
     if('object' == typeof search) return _obj2Url(search);
     else return _url2Obj(search || window.location.search);
 }
 
-
-const get = (name, search) => to(search)[name];
+const params = (name, search) => name?query(search)[name]:query(search);
 
 export {
-    get,
-    to
+    params,
+    query
 }

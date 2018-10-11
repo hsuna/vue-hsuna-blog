@@ -32,8 +32,9 @@ import plugins from "~/plugins/element-ui";
 //   Vue.use(Plugins[key]);
 // });
 
-/* 引用-fa字体库 */
-import "font-awesome/scss/font-awesome.scss";
+/* 引用-utils */
+import utils from "~/utils";
+Vue.prototype.$utils = utils;
 
 /**添加-vue路由器 */
 import router from "./router";

@@ -1,6 +1,6 @@
 <template>
   <div id="app" style="height: 100%;">
-    <blog-main>
+    <blog-main :activeIndex="'about'">
       <div class="blog-profile">
         <div class="profile-side">
           <profile-side-hot></profile-side-hot>

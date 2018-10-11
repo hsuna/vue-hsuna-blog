@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <blog-main>
+    <blog-main :activeIndex="'essay'">
       <div class="blog-profile">
         <div class="profile-side">
           <profile-side-link></profile-side-link>
@@ -9,7 +9,7 @@
         <div class="profile-main" v-loading="loading">
           <profile-essay
             :profileList="essayList"
-            :curPage="Number($route.query.page || 1)"
+            :curPage="Number($utils.params('page') || 1)"
             :total="essayTotal"
             @change="handlePaginChange">
           </profile-essay>
@@ -36,16 +36,11 @@ export default {
     };
   },
   created() {
-    this.getEssayList(this.$route.query);
-  },
-  watch: {
-    $route(to, from) {
-      this.getEssayList(this.$route.query);
-    }
+    this.getEssayList(this.$utils.params());
   },
   methods: {
-    getEssayList(query) {
-      this.$http.get($api.getEssay, { params: query }).then(res => {
+    getEssayList(params) {
+      this.$http.get($api.getEssay, { params }).then(res => {
         if (200 == res.code) {
           let { list, total } = res.data;
           this.essayList = list;
@@ -56,13 +51,10 @@ export default {
     },
     handlePaginChange(type, val) {
       if ("page" == type) {
-        this.$router.push({
-          path: "/essay",
-          query: {
-            ...this.$route.query,
-            page: val
-          }
-        });
+        window.location.href = '/essay.html?'+this.$utils.query({
+          ...this.$utils.params,
+          page: val
+        })
       }
     }
   },

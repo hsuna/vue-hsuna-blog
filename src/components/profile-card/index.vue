@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="profile-card" v-for="profile in profileList" :key="profile.id">
-      <div class="card-title"><a :href="`/article/${profile.id}`">{{profile.title}}</a></div>
+      <div class="card-title"><a :href="`/article.html?id=${profile.id}`">{{profile.title}}</a></div>
       <div class="card-date" :data-date="$filter.timeStampFormat(profile.publishAt)">{{profile.publishAt | timeAgoFormat}}</div>
       <div class="card-tags">
         <span class="card-count">分类：{{profile.classify}}</span>
@@ -9,7 +9,7 @@
         <el-tag size="mini" v-for="tag in profile.tags" :key="tag">{{tag}}</el-tag>
       </div>
       <div class="card-content">&nbsp;&nbsp;&nbsp;&nbsp;{{profile.about}}
-        <el-button type="text" @click="$router.push(`/article/${profile.id}`)">阅读全文<i class="el-icon-arrow-right"></i></el-button>
+        <el-button type="text" @click="window.location.href=`/article.html?id=${profile.id}`">阅读全文<i class="el-icon-arrow-right"></i></el-button>
       </div>
     </div>
     <el-pagination background　layout="prev, pager, next" v-if="-1 != total"

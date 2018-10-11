@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     isShowMenuByName(name) {
-      return name !== this.$route.name;
+      return name !== this.$utils.params('name')
     },
     handleBackTop() {
       document.documentElement.scrollTop = document.body.scrollTop = 0;
