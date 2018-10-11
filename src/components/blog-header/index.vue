@@ -22,7 +22,7 @@
 
 
 <script>
-import $api from "api/guest";
+import $api from "api/blog";
 
 export default {
   name: "blogHeader",
@@ -64,22 +64,17 @@ export default {
       switch (indexPath[0]) {
         //一级
         case "home":
-          this.$router.push({ path: "/" });
+          window.location.href = `/index.html`;
           break;
         case "classify":
           //二级
-          this.$router.push({
-            path: "/",
-            query: {
-              classify: indexPath[1]
-            }
-          });
+          window.location.href = `/index.html?classify=${indexPath[1]}`;
           break;
         case "archive":
         case "about":
         case "essay":
         case "admin":
-          this.$router.push({ path: "/" + index });
+          window.location.href = `/${index}.html`;
           break;
       }
     },

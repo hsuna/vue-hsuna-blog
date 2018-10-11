@@ -1,0 +1,113 @@
+@charset "UTF-8";
+/*
+ * author: Hsuna
+ * version: v1.0
+*/
+
+/*====================================================
+01. CSS Reset
+02. CSS Common
+====================================================*/
+
+/*====================================================
+01. CSS Reset
+====================================================*/
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  overflow-y: scroll;
+  background: #fff;
+  color: #2b3f52;
+}
+
+input,
+select,
+textarea,
+code,
+button,
+body {
+  font-size: 14px;
+  font-family: "Microsoft YaHei", "Helvetica Neue", sans-serif;
+}
+td,
+th,
+caption {
+  font-size: 14px;
+}
+a {
+  color: #555;
+  text-decoration: none;
+}
+a:hover {
+  color: #0084ff;
+  text-decoration: underline;
+}
+img {
+  border: none;
+}
+ol,
+ul,
+li {
+  list-style: none;
+}
+table {
+  border-collapse: collapse;
+}
+
+/*====================================================
+02. CSS Common
+====================================================*/
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.pull-none {
+  float: none;
+}
+
+.hidden,
+[hidden] {
+  display: none;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.clearfix {
+  zoom: 1;
+  display: block;
+}
+
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}

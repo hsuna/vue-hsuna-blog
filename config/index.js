@@ -5,6 +5,12 @@
 const path = require('path')
 
 module.exports = {
+  common: {
+    // 页面路径
+    pagePath: path.resolve(__dirname, '../src/pages'),
+    // 雪碧图路径
+    iconPath: path.resolve(__dirname, '../src/assets/icons')
+  },
   dev: {
 
     // Paths
