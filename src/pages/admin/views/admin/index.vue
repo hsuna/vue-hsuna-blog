@@ -99,7 +99,7 @@ export default {
     handleDropdown(command) {
       switch (command) {
         case "blog":
-          this.$router.push({ path: "/" });
+          window.location.href = "/index.html"
           break;
         case "admin":
           this.$router.push({ path: "/admin" });

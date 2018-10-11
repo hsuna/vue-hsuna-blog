@@ -23,6 +23,10 @@ export default [
     component: resolve => require(["../views/Reg.vue"], resolve)
   },
   {
+    path: "/",
+    redirect: "/admin",
+  },
+  {
     type: "backend",
     path: "/admin",
     meta: {
