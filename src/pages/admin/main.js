@@ -27,14 +27,7 @@ Object.keys(Filters).forEach(key => {
 });
 
 /* 引用-plugins */
-<<<<<<< HEAD:src/pages/admin/main.js
 import plugins from "~/plugins/el-admin";
-=======
-import plugins from "~/plugins/element-ui";
-// Object.keys(Plugins).forEach(key => {
-//   Vue.use(Plugins[key]);
-// });
->>>>>>> 27af5386bef857fb5469752507613d45842d3d0f:src/pages/admin/main.js
 
 /* 引用-utils */
 import utils from "~/utils";
