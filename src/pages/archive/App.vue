@@ -76,7 +76,8 @@ export default {
       }
     },
     handleArchiveSearch(archive) {
-      window.location.href = '/archive.html?' + this.$utils.query(archive);
+      let { year, month } = archive
+      window.location.href = '/archive.html?' + this.$utils.query({ year, month })
     },
     handlePaginChange(type, val) {
       if ("page" == type) {

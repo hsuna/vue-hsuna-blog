@@ -4,8 +4,8 @@
     <div class="side-body">
       <ul class="article-achive">
         <li v-for="(archive, index) in archiveList" :key="index">
-          <a href="javascrip:;" :class="archiveIndex==index?'is-active':''" @click="handleArchive(archive, index)">{{archive.year}}年{{archive.month}}月</a>
-          <span class="count">({{archive.count}})</span>
+          <span :class="archiveIndex==index?'is-active':''" @click="handleArchive(archive, index)">{{archive.year}}年{{archive.month}}月</span>
+          <em class="count">({{archive.count}})</em>
         </li>
       </ul>
       <!-- <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick" accordion></el-tree> -->
@@ -45,7 +45,6 @@ export default {
     },
     handleArchive(archive, index) {
       this.$emit("search", archive);
-      this.archiveIndex = index;
     }
   }
 };
@@ -56,29 +55,35 @@ export default {
   li {
     padding: 4px;
 
-    a:hover {
-      color: #0084ff;
-    }
+    span{
+      cursor: pointer;
 
-    a.is-active {
-      position: relative;
-      font-weight: bold;
-      text-decoration: none;
-      color: #0084ff;
-
-      &:after {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 5px;
-        left: -8px;
-        border: 4px solid #0084ff;
-        border-color: transparent transparent transparent #0084ff;
+      &:hover {
+        color: #0084ff;
+      }
+  
+      &.is-active {
+        position: relative;
+        font-weight: bold;
+        text-decoration: none;
+        color: #0084ff;
+  
+        &:after {
+          content: "";
+          display: block;
+          position: absolute;
+          top: 5px;
+          left: -8px;
+          border: 4px solid #0084ff;
+          border-color: transparent transparent transparent #0084ff;
+        }
       }
     }
 
+
     .count {
       float: right;
+      font-style: normal;
       color: #b3b3b3;
     }
   }
