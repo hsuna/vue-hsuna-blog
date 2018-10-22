@@ -19,15 +19,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="Number($route.query.page || 1)"
-          :page-sizes="[10, 20, 50, 100]"
-          :page-size="Number($route.query.limit || 10)"
-          layout="sizes, prev, pager, next"
-          :total="inventoryTotal">
-        </el-pagination>
+        <blog-paging :paging="inventoryPaging" @update="getInventoryList"></blog-paging>
       </div>
     </div>
 
@@ -55,6 +47,7 @@
 
 <script>
 import adminHeader from "components/admin-header";
+import blogPaging from "components/blog-paging";
 import $api from "api/admin";
 
 export default {
@@ -63,8 +56,12 @@ export default {
       listLoading: false,
       breadcrumbs: [{ text: "首页", path: "/admin" }, { text: "清单管理" }],
 
-      inventoryTotal: 1,
       inventoryList: [],
+      inventoryPaging: {
+        page: 1,
+        limit: 10,
+        total: 1
+      },
 
       dialogVisible: false,
       dialogData: {},
@@ -75,21 +72,30 @@ export default {
     };
   },
   components: {
-    "admin-header": adminHeader
+    "admin-header": adminHeader,
+    "blog-paging": blogPaging
   },
   created() {
-    this.getInventoryList();
   },
   methods: {
     getInventoryList() {
+      let params = {
+        page: 1,
+        limit: 10,
+        ...this.$route.query
+      }
       this.listLoading = true;
       this.$http
-        .get($api.getInventory, { params: this.$route.query })
+        .get($api.getInventory, { params })
         .then(res => {
           if (200 == res.code) {
             let { list, total } = res.data;
             this.inventoryList = list;
-            this.inventoryTotal = total;
+            Object.assign(this.inventoryPaging, {
+              page: Number(params.page),
+              limit: Number(params.limit),
+              total
+            })
           }
           this.listLoading = false;
         });
@@ -126,26 +132,6 @@ export default {
             }
           });
       });
-    },
-    handleSizeChange(val) {
-      this.$router.push({
-        path: "/essay/inventoryList",
-        query: {
-          page: 1,
-          limit: val
-        }
-      });
-      this.getInventoryList();
-    },
-    handleCurrentChange(val) {
-      this.$router.push({
-        path: "/essay/inventoryList",
-        query: {
-          page: val,
-          limit: this.$route.query.limit
-        }
-      });
-      this.getInventoryList();
     }
   }
 };

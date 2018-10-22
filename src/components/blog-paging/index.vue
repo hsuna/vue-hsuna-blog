@@ -2,44 +2,55 @@
     <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="pagin.page"
-        :page-size="pagin.limit"
+        :current-page="paging.page"
+        :page-size="paging.limit"
         :page-sizes="[10, 20, 50, 100]"
-        layout="sizes, prev, pager, next"
-        :total="articleTotal">
+        :layout="layout"
+        :total="paging.total">
+        <slot/>
     </el-pagination>
 </template>
 
 <script>
-
 export default {
   props: {
-    pagin: {
-        type: Object,
-        default: {
-            page: 1,
-            limit: 10,
-            total
-        }
+    layout: {
+      type: String,
+      default: "sizes, prev, pager, next"
+    },
+    paging: {
+      type: Object,
+      default: () => {}
     }
   },
   data() {
-    return {
-        
-    };
+    return {};
   },
   created() {
-    let { page=1, limit=10 } = this.$route.query
+    this.$emit('update')
   },
   methods: {
-    handleSizeChange() {
+    handleSizeChange(val) {
+      this.$router.push({
+        query: {
+          ...this.$route.query,
+          page: 1,
+          limit: val
+        }
+      })
+      this.$emit('update')
     },
-    handleCurrentChange() {
+    handleCurrentChange(val) {
+      this.$router.push({
+        query: {
+          ...this.$route.query,
+          page: val
+        }
+      })
+      this.$emit('update')
     }
   },
-  components: {
-  
-  }
+  components: {}
 };
 </script>
 
