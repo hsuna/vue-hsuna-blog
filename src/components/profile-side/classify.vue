@@ -5,7 +5,7 @@
       <template v-if="classifyList.length>0">
         <ul class="article-classify clearfix">
           <li v-for="item in classifyList" :key="item._id">
-            <a href="javascript:;"  @click="$router.push({ path: `/?classify=${item._id}` })"><span class="count">{{item.count}}篇</span>{{item._id}}</a>
+            <a href="javascript:;"  @click="handlerClick(item)"><span class="count">{{item.count}}篇</span>{{item._id}}</a>
           </li>
         </ul>
       </template>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import $api from "api/guest";
+import $api from "api/blog";
 
 export default {
   data() {
@@ -29,6 +29,9 @@ export default {
     this.getClassifyCount();
   },
   methods: {
+    handlerClick(item){
+      window.location.href = `/index.html?classify=${item._id}`;
+    },
     getClassifyCount() {
       this.$http.get($api.getClassifyCount).then(res => {
         if (200 == res.code) {

@@ -5,7 +5,7 @@
       <template v-if="hotArticleList.length>0">
         <ul class="hot-article">
           <li v-for="article in hotArticleList" :key="article.id">
-            <a :href="`/article/${article.id}`">{{article.title}}</a>
+            <a :href="`/article.html?id=${article.id}`">{{article.title}}</a>
             <div class="time">评论({{article.commentCount}}) | 浏览({{article.viewCount}})</div>
           </li>
         </ul>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import $api from "api/guest";
+import $api from "api/blog";
 
 export default {
   data() {

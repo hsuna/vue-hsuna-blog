@@ -8,7 +8,7 @@
 import { ActionName, MutationName } from "./types";
 
 import $admin from "api/admin";
-import $guest from "api/guest";
+import $guest from "api/blog";
 
 export default {
   [ActionName.USER_LOGIN]({ commit }, { user, vm }) {
@@ -24,7 +24,7 @@ export default {
               message: res.message,
               type: "success"
             });
-            vm.$router.replace({ path: "/admin" });
+            window.location.href = "/admin.html";
           }
           resolve(res);
         });
@@ -41,7 +41,7 @@ export default {
             message: "退出登录成功!",
             type: "success"
           });
-          vm.$router.replace({ path: "/login" });
+          window.location.href = "/admin/login.html";
         })
         .catch(err => {});
     }
@@ -56,7 +56,7 @@ export default {
               message: res.message,
               type: "success"
             });
-            vm.$router.replace({ path: "/login" });
+            window.location.href = "/admin/login.html";
           }
           resolve(res);
         });

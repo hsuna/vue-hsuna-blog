@@ -224,11 +224,11 @@ export default {
       if (this.isModify) {
         this.$confirm("文章内容有改动，是否不保存直接返回？")
           .then(res => {
-            this.$router.replace({ path: "/admin/articleList" });
+            window.location.href = '/admin/articleList.html';
           })
           .catch(err => {});
       } else {
-        this.$router.replace({ path: "/admin/articleList" });
+        window.location.href = '/admin/articleList.html';
       }
     }
   },

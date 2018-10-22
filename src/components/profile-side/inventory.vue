@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import $api from "api/guest";
+import $api from "api/blog";
 
 export default {
   data() {
@@ -75,6 +75,10 @@ export default {
   .inventory-achive {
     border-top-width: 0;
     border-bottom-width: 0;
+  }
+
+  .el-collapse-item__content{
+    word-break: break-word;
   }
 }
 .side-footer {

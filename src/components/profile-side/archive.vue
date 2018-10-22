@@ -14,12 +14,17 @@
 </template>
 
 <script>
-import $api from "api/guest";
+import $api from "api/blog";
 
 export default {
+  props: {
+    archiveIndex: {
+      type: Number,
+      default: -1
+    }
+  },
   data() {
     return {
-      archiveIndex: -1,
       archiveList: []
     };
   },
@@ -34,9 +39,7 @@ export default {
             let { _id: { year, month }, count } = group;
             return { year, month, count };
           });
-          if (this.archiveList.length > 0) {
-            this.handleArchive(this.archiveList[0], 0);
-          }
+          this.$emit("init", this.archiveList);
         }
       });
     },

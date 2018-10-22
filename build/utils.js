@@ -3,6 +3,7 @@ const path = require('path')
 const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const packageConfig = require('../package.json')
+const glob = require('glob')
 
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
@@ -98,4 +99,31 @@ exports.createNotifierCallback = () => {
       icon: path.join(__dirname, 'logo.png')
     })
   }
+}
+
+
+// 多入口配置
+exports.entries = function () {
+  let entryFiles = glob.sync(config.common.pagePath + '/*/main.js');
+  let map = {};
+  entryFiles.forEach(filePath => {
+    map[path.basename(path.dirname(filePath))] = filePath;
+  })
+  return map
+}
+
+//多页面输出配置
+exports.exits = function (conf) {
+  let entryHtml = glob.sync(config.common.pagePath + '/*/main.js');
+  return entryHtml.map(filePath => {
+    let filename = path.basename(path.dirname(filePath));
+    return Object.assign({
+      // 模板来源
+      template: path.dirname(filePath) + '/index.html',
+      // 文件名称
+      filename: filename + '.html',
+      // 页面模板需要加对应的js脚本，如果不加这行则每个页面都会引入所有的js脚本
+      chunks: ['common', filename]
+    }, conf);
+  });
 }
