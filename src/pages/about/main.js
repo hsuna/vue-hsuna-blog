@@ -23,7 +23,7 @@ Object.keys(Filters).forEach(key => {
 });
 
 /* 引用-plugins */
-import plugins from "~/plugins/el-admin";
+import plugins from "~/plugins/el-blog";
 
 /* 引用-utils */
 import utils from "~/utils";
