@@ -24,15 +24,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="pagin.page"
-          :page-size="pagin.limit"
-          :page-sizes="[10, 20, 50, 100]"
-          layout="sizes, prev, pager, next"
-          :total="articleTotal">
-        </el-pagination>
+        <blog-paging :paging="articlePaging" @update="getArticleList"></blog-paging>
       </div>
     </div>
   </div>
@@ -40,6 +32,8 @@
 
 <script>
 import adminHeader from "components/admin-header";
+import blogPaging from "components/blog-paging";
+
 import $api from "api/admin";
 
 export default {
@@ -48,18 +42,15 @@ export default {
       listLoading: false,
       breadcrumbs: [{ text: "首页", path: "/admin" }, { text: "文章管理" }],
       
-      pagin: {
+      articleList: [],
+      articlePaging: {
         page: 1,
-        limit: 1,
-      },
-
-      articleTotal: 1,
-      articleList: []
-    };
+        limit: 10,
+        total: 1
+      }
+    }
   },
   created() {
-    let { page=1, limit=10 } = this.$route.query
-    this.getArticleList({ page, limit });
   },
   methods: {
     toEditArticle(articleId) {
@@ -68,17 +59,24 @@ export default {
     toReadArticle(articleId) {
       this.$router.push({ path: `/admin/articleRead/${articleId}` });
     },
-    getArticleList({ page, limit }) {
+    getArticleList() {
+      let params = {
+        page: 1,
+        limit: 10,
+        ...this.$route.query
+      }
       this.listLoading = true;
       this.$http
-        .get($api.getArticle, { params: { page, limit } })
+        .get($api.getArticle, { params })
         .then(res => {
           if (200 == res.code) {
             let { list, total } = res.data;
             this.articleList = list;
-            this.articleTotal = total;
-            this.pagin.page = page;
-            this.pagin.limit = limit;
+            Object.assign(this.articlePaging, {
+              page: Number(params.page),
+              limit: Number(params.limit),
+              total
+            })
           }
           this.listLoading = false;
         });
@@ -101,31 +99,10 @@ export default {
         })
         .catch(err => {});
     },
-    handleSizeChange(val) {
-      let query = {
-        page: 1,
-        limit: val
-      }
-      this.$router.push({
-        path: "/admin/articleList",
-        query
-      });
-      this.getArticleList(query);
-    },
-    handleCurrentChange(val) {
-      let query = {
-        ...this.pagin,
-        page: val,
-      }
-      this.$router.push({
-        path: "/admin/articleList",
-        query
-      });
-      this.getArticleList(query);
-    }
   },
   components: {
-    "admin-header": adminHeader
+    "admin-header": adminHeader,
+    "blog-paging": blogPaging
   }
 };
 </script>
