@@ -9,7 +9,7 @@
         <el-tag size="mini" v-for="tag in profile.tags" :key="tag">{{tag}}</el-tag>
       </div>
       <div class="card-content">&nbsp;&nbsp;&nbsp;&nbsp;{{profile.about}}
-        <el-button type="text" @click="window.location.href=`/article.html?id=${profile.id}`">阅读全文<i class="el-icon-arrow-right"></i></el-button>
+        <a :href="`/article.html?id=${profile.id}`">阅读全文<i class="el-icon-arrow-right"></i></a>
       </div>
     </div>
     <el-pagination background　layout="prev, pager, next" v-if="-1 != total"
@@ -89,9 +89,10 @@ export default {
     font-size: 16px;
     word-break: break-all;
 
-    .el-button {
+    a {
       padding: 0;
       font-size: inherit;
+      color: #0084ff;
     }
   }
 
