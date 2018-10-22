@@ -1,10 +1,10 @@
 <template>
   <div class="item-side">
     <div class="side-header">
-      <a href="http://weibo.com/" target="_blank" class="icon"><i class="fa fa-weibo" style="background-color: rgb(221, 75, 57);"></i></a>
-      <a href="https://github.com/hsuna" target="_blank" class="icon"><i class="fa fa-github" style="background-color: rgb(85, 172, 238);"></i></a>
-      <a href="mailto:me@hsuna.com" target="_blank" class="icon"><i class="fa fa-envelope" style="background-color: rgb(59, 89, 152);"></i></a>
-      <a href="http://resume.hsuna.com" target="_blank" class="icon"><i class="fa fa-address-card-o" style="background-color: rgb(128, 185, 83);"></i></a>
+      <a href="http://weibo.com/" target="_blank" class="icon"><i class="al al-weibo" style="background-color: rgb(221, 75, 57);"></i></a>
+      <a href="https://github.com/hsuna" target="_blank" class="icon"><i class="al al-github" style="background-color: rgb(85, 172, 238);"></i></a>
+      <a href="mailto:me@hsuna.com" target="_blank" class="icon"><i class="al al-envelope" style="background-color: rgb(59, 89, 152);"></i></a>
+      <a href="http://resume.hsuna.com" target="_blank" class="icon"><i class="al al-address-card-o" style="background-color: rgb(128, 185, 83);"></i></a>
     </div>
     <div class="side-body">
       <ul>
@@ -37,14 +37,16 @@ export default {
     margin-left: 5px;
     text-decoration: none;
   }
-  .fa {
-    font-size: 20px;
+  .al {
+    display: block;
     width: 32px;
     line-height: 32px;
     border-radius: 4px;
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.1);
+    font-size: 20px;
+    font-weight: normal;
     text-align: center;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #fff;
   }
 }
 .side-body {
