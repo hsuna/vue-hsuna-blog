@@ -5,11 +5,11 @@
           <a>HSUNA</a>
       </div> -->
       <el-menu :default-active="activeIndex" class="header-nav" mode="horizontal" @select="handleSelect">
-          <el-menu-item index="home"><i class="fa fa-home"></i>首页</el-menu-item>
-          <el-menu-item index="archive"><i class="fa fa-archive"></i>档案</el-menu-item>
-          <el-menu-item index="about"><i class="fa fa-user"></i>关于</el-menu-item>
-          <el-menu-item index="essay"><i class="fa fa-pencil"></i>手札</el-menu-item>
-          <el-menu-item index="admin" v-if="$store.getters.token"><i class="fa fa-cog"></i>管理</el-menu-item>
+          <el-menu-item index="home"><i class="al al-home"></i>首页</el-menu-item>
+          <el-menu-item index="archive"><i class="al al-archive"></i>档案</el-menu-item>
+          <el-menu-item index="about"><i class="al al-user"></i>关于</el-menu-item>
+          <el-menu-item index="essay"><i class="al al-pencil"></i>手札</el-menu-item>
+          <el-menu-item index="admin" v-if="$store.getters.token"><i class="al al-cog"></i>管理</el-menu-item>
       </el-menu>
       <div class="header-search">
         <el-input placeholder="搜索" v-model="inputSearch"><!-- prefix-icon="el-icon-search" -->
