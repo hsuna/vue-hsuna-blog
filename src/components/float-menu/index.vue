@@ -1,11 +1,11 @@
 <template>
     <div class="float-menu">
-        <a href="/" title="首页" v-if="isShowMenuByName('home')"><i class="al al-home"></i></a>
-        <a href="/archive" title="档案" v-if="isShowMenuByName('archive')"><i class="al al-archive"></i></a>
-        <a href="/about" title="关于" v-if="isShowMenuByName('about')"><i class="al al-user"></i></a>
-        <a href="/essay" title="手札" v-if="isShowMenuByName('essay')"><i class="al al-pencil"></i></a>
-        <a href="/admin" title="管理" v-if="$store.getters.token"><i class="al al-cog"></i></a>
-        <a href="javascript:;" title="返回顶部" @click="handleBackTop"><i class="al al-arrow-up"></i></a>
+        <a href="/" title="首页" v-if="isShowMenuByName('home')"><i class="fa fa-home"></i></a>
+        <a href="/archive" title="档案" v-if="isShowMenuByName('archive')"><i class="fa fa-archive"></i></a>
+        <a href="/about" title="关于" v-if="isShowMenuByName('about')"><i class="fa fa-user"></i></a>
+        <a href="/essay" title="手札" v-if="isShowMenuByName('essay')"><i class="fa fa-pencil"></i></a>
+        <a href="/admin" title="管理" v-if="$store.getters.token"><i class="fa fa-cog"></i></a>
+        <a href="javascript:;" title="返回顶部" @click="handleBackTop"><i class="fa fa-arrow-up"></i></a>
     </div>
 </template>
 
@@ -47,7 +47,7 @@ export default {
     background-color: #fff;
     color: #0084ff;
 
-    .al{
+    .fa{
       font-size: 24px;
     }
 

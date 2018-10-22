@@ -46,7 +46,7 @@
             <template v-if="article.commentCount>0">
               <li v-for="(comment, index) in article.comments" :key="index" :id="`c-${comment.id}`">
                 <div class="comment-floor">
-                  <div class="comment-name"><i class="al al-vimeo" v-show="comment.admin"></i>{{comment.name}}&nbsp;说：</div>
+                  <div class="comment-name"><i class="fa fa-vimeo" v-show="comment.admin"></i>{{comment.name}}&nbsp;说：</div>
                   <div class="comment-layer">第<span class="num-layer">{{index+1}}</span>楼</div>
                 </div>
                 <div class="comment-content" v-html="comment.content"><template ></template></div>

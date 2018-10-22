@@ -2,7 +2,7 @@
   <div class="item-side">
     <div class="side-header">
       最新留言
-      <!-- <a href="/comment" class="more">更多<i class="al al-angle-double-right"></i></a> -->
+      <!-- <a href="/comment" class="more">更多<i class="fa fa-angle-double-right"></i></a> -->
     </div>
     <div class="side-body">
       <template v-if="commentList.length>0">
