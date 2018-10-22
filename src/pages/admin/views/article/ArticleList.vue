@@ -27,9 +27,9 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="Number($route.query.page || 1)"
+          :current-page="pagin.page"
+          :page-size="pagin.limit"
           :page-sizes="[10, 20, 50, 100]"
-          :page-size="Number($route.query.limit || 10)"
           layout="sizes, prev, pager, next"
           :total="articleTotal">
         </el-pagination>
@@ -47,13 +47,19 @@ export default {
     return {
       listLoading: false,
       breadcrumbs: [{ text: "首页", path: "/admin" }, { text: "文章管理" }],
+      
+      pagin: {
+        page: 1,
+        limit: 1,
+      },
 
       articleTotal: 1,
       articleList: []
     };
   },
   created() {
-    this.getArticleList();
+    let { page=1, limit=10 } = this.$route.query
+    this.getArticleList({ page, limit });
   },
   methods: {
     toEditArticle(articleId) {
@@ -62,15 +68,17 @@ export default {
     toReadArticle(articleId) {
       this.$router.push({ path: `/admin/articleRead/${articleId}` });
     },
-    getArticleList() {
+    getArticleList({ page, limit }) {
       this.listLoading = true;
       this.$http
-        .get($api.getArticle, { params: this.$route.query })
+        .get($api.getArticle, { params: { page, limit } })
         .then(res => {
           if (200 == res.code) {
             let { list, total } = res.data;
             this.articleList = list;
             this.articleTotal = total;
+            this.pagin.page = page;
+            this.pagin.limit = limit;
           }
           this.listLoading = false;
         });
@@ -94,24 +102,26 @@ export default {
         .catch(err => {});
     },
     handleSizeChange(val) {
+      let query = {
+        page: 1,
+        limit: val
+      }
       this.$router.push({
         path: "/admin/articleList",
-        query: {
-          page: 1,
-          limit: val
-        }
+        query
       });
-      this.getArticleList();
+      this.getArticleList(query);
     },
     handleCurrentChange(val) {
+      let query = {
+        ...this.pagin,
+        page: val,
+      }
       this.$router.push({
         path: "/admin/articleList",
-        query: {
-          page: val,
-          limit: this.$route.query.limit
-        }
+        query
       });
-      this.getArticleList();
+      this.getArticleList(query);
     }
   },
   components: {
