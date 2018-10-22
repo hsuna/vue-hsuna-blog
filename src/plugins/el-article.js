@@ -17,7 +17,7 @@ import {
   //Radio,
   //RadioGroup,
   //RadioButton,
-  //Checkbox,
+  Checkbox,
   //CheckboxButton,
   //CheckboxGroup,
   //Switch,
@@ -35,8 +35,8 @@ import {
   Tooltip,
   //Breadcrumb,
   //BreadcrumbItem,
-  //Form,
-  //FormItem,
+  Form,
+  FormItem,
   //Tabs,
   //TabPane,
   Tag,
@@ -44,8 +44,8 @@ import {
   //Alert,
   //Slider,
   //Icon,
-  //Row,
-  //Col,
+  Row,
+  Col,
   //Upload,
   //Progress,
   //Badge,
@@ -67,7 +67,7 @@ import {
   //Footer,
   Loading,
   MessageBox,
-  //Message,
+  Message,
   //Notification
 } from 'element-ui';
 
@@ -86,7 +86,7 @@ Vue.use(Input);
 //Vue.use(Radio);
 //Vue.use(RadioGroup);
 //Vue.use(RadioButton);
-//Vue.use(Checkbox);
+Vue.use(Checkbox);
 //Vue.use(CheckboxButton);
 //Vue.use(CheckboxGroup);
 //Vue.use(Switch);
@@ -104,8 +104,8 @@ Vue.use(Button);
 Vue.use(Tooltip);
 //Vue.use(Breadcrumb);
 //Vue.use(BreadcrumbItem);
-//Vue.use(Form);
-//Vue.use(FormItem);
+Vue.use(Form);
+Vue.use(FormItem);
 //Vue.use(Tabs);
 //Vue.use(TabPane);
 Vue.use(Tag);
@@ -113,8 +113,8 @@ Vue.use(Tag);
 //Vue.use(Alert);
 //Vue.use(Slider);
 //Vue.use(Icon);
-//Vue.use(Row);
-//Vue.use(Col);
+Vue.use(Row);
+Vue.use(Col);
 //Vue.use(Upload);
 //Vue.use(Progress);
 //Vue.use(Badge);
@@ -142,7 +142,7 @@ Vue.prototype.$alert = MessageBox.alert;
 Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$prompt = MessageBox.prompt;
 //Vue.prototype.$notify = Notification;
-//Vue.prototype.$message = Message;
+Vue.prototype.$message = Message;
 Vue.prototype.$ELEMENT = { size: 'small' };
 
 import "assets/styles/element-variables.scss";

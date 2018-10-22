@@ -49,7 +49,8 @@ export default {
       breadcrumbs: [{ text: "首页", path: "/admin" }, { text: "分类管理" }],
       classList: [],
       dialogData: {
-        id: -1
+        id: -1,
+        title: ''
       },
       dialogRules: {
         title: [{ required: true, message: "请输入名称", trigger: "blur" }]

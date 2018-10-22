@@ -9,7 +9,7 @@
         <ul class="new-comment">
           <li v-for="comment in commentList" :key="comment.id">
             <p>
-              <a class="name" :href="`/article/${comment.articleId}#comment-${comment.id}`">{{comment.name}}</a>
+              <a class="name" :href="`/article.html?id=${comment.articleId}#c-${comment.id}`">{{comment.name}}</a>
               <span class="time">{{comment.createdAt | timeAgoFormat}}</span>
             </p>
             <p class="content">{{comment.content}}</p>

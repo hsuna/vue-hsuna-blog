@@ -27,7 +27,7 @@ Object.keys(Filters).forEach(key => {
 });
 
 /* 引用-plugins */
-import plugins from "~/plugins/el-blog";
+import plugins from "~/plugins/el-article";
 
 /* 引用-utils */
 import utils from "~/utils";

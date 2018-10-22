@@ -3,7 +3,7 @@
     <blog-main :activeIndex="'archive'">
       <div class="blog-profile">
         <div class="profile-side">
-          <profile-side-archive @search="handleArchive"></profile-side-archive>
+          <profile-side-archive :archiveIndex="archiveIndex" @init="handleArchiveInit" @search="handleArchiveSearch"></profile-side-archive>
           <profile-side-hot></profile-side-hot>
         </div>
         <div class="profile-main" v-loading="loading">
@@ -31,12 +31,12 @@ export default {
    data() {
     return {
       loading: false,
+      archiveIndex: -1,
       archiveTotal: 0,
       archiveList: []
     };
   },
   created() {
-    this.getArchiveList(this.$utils.params()||{});
   },
   methods: {
     getArchiveList(params) {
@@ -52,7 +52,30 @@ export default {
         });
       }
     },
-    handleArchive(archive) {
+    handleArchiveInit(list){
+      let params = this.$utils.params()
+
+      let index = 0;
+      if (params.year && params.month) {
+        for(let i=0, len=list.length; i<len; i++){
+          let { year, month } = list[i]
+          if(params.year == year && params.month == month){
+            index = i;
+            break;
+          }
+        }
+        this.getArchiveList(params);
+         this.archiveIndex = index;
+      }else if(list.length > 0){
+        let { year, month } = list[0]
+        this.getArchiveList({
+          year,
+          month,
+        });
+         this.archiveIndex = 0;
+      }
+    },
+    handleArchiveSearch(archive) {
       window.location.href = '/archive.html?' + this.$utils.query(archive);
     },
     handlePaginChange(type, val) {

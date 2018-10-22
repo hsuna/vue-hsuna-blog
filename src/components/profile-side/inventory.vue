@@ -76,6 +76,10 @@ export default {
     border-top-width: 0;
     border-bottom-width: 0;
   }
+
+  .el-collapse-item__content{
+    word-break: break-word;
+  }
 }
 .side-footer {
   margin-top: 0 !important;

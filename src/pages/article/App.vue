@@ -28,7 +28,7 @@
         <div class="article-body">
           <ul class="article-relate">
             <li v-for="relate in relateArticle" :key="relate.id">
-              <span class="title">《<a :href="`/article/${relate.id}`">{{relate.title}}</a>》</span>
+              <span class="title">《<a :href="`/article.html?id=${relate.id}`">{{relate.title}}</a>》</span>
               <div class="tags"><span class="tag" v-for="tag in relate.tags" :key="tag">{{tag}}</span></div>
               <div class="time">
                 <span>{{relate.publishAt, 'yyyy-MM-dd' | timeStampFormat}}</span>
@@ -44,14 +44,14 @@
         <div class="article-body">
           <ul class="article-comments">
             <template v-if="article.commentCount>0">
-              <li v-for="(comment, index) in article.comments" :key="index" :id="'comment-'+comment.id">
+              <li v-for="(comment, index) in article.comments" :key="index" :id="`c-${comment.id}`">
                 <div class="comment-floor">
                   <div class="comment-name"><i class="fa fa-vimeo" v-show="comment.admin"></i>{{comment.name}}&nbsp;说：</div>
                   <div class="comment-layer">第<span class="num-layer">{{index+1}}</span>楼</div>
                 </div>
                 <div class="comment-content" v-html="comment.content"><template ></template></div>
                 <div class="comment-reply">
-                  <span class="mark-view-time">{{comment.createdAt | timeStampFormat}}</span>|<a href="javascript:;" @click="goCommentHash('comment-'+comment.id)">#</a>|<a href="javascript:;" @click="handleAddReply(comment, index)">回复</a>
+                  <span class="mark-view-time">{{comment.createdAt | timeStampFormat}}</span>|<a :href="`#c-${comment.id}`">#</a>|<a href="javascript:;" @click="handleAddReply(comment, index)">回复</a>
                 </div>
               </li>
             </template>
@@ -115,7 +115,7 @@ export default {
       href: window.location.href,
       loading: true,
       article: {
-        id: $utils.params('id'),
+        id: this.$utils.params('id'),
         content: '',
         comments: []
       },
@@ -158,7 +158,7 @@ export default {
             this.article = Object.assign({}, this.article, res.data);
             this.updateArticleViewCount(); //更新文章的浏览次数
             this.getArticleRelate();
-            this.$nextTick(this.goCommentHash);
+            this.$nextTick(this.goCommentHash)
             this.loading = false;
             setDocumentTitle(`${this.article.title} | 文章详情 | HSUAN`);
           } else {
@@ -268,8 +268,7 @@ export default {
 };
 </script>
 
-<style>
-@import "highlight.js/styles/googlecode.css";
+<style lang="scss">
 @import "./style.scss";
 </style>
 
