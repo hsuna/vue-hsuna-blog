@@ -9,7 +9,7 @@
         </div>
         <div class="essay-border">
           <span class="arrows"></span>
-          <div class="content">{{profile.content}}</div>
+          <div class="content" v-html="profile.content"></div>
           <div class="files">
             <ul>
               <li v-for="url in profile.files" :key="url" @click="handlePreviewFile(url)">
