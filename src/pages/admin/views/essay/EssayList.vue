@@ -30,15 +30,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="Number($route.query.page || 1)"
-          :page-sizes="[10, 20, 50, 100]"
-          :page-size="Number($route.query.limit || 10)"
-          layout="sizes, prev, pager, next"
-          :total="essayTotal">
-        </el-pagination>
+        <blog-paging :paging="essayPaging" @update="getEssayList"></blog-paging>
       </div>
     </div>
 
@@ -81,6 +73,8 @@
 
 <script>
 import adminHeader from "components/admin-header";
+import blogPaging from "components/blog-paging";
+
 import $api from "api/admin";
 
 export default {
@@ -89,8 +83,12 @@ export default {
       listLoading: false,
       breadcrumbs: [{ text: "首页", path: "/admin" }, { text: "随记管理" }],
 
-      essayTotal: 1,
       essayList: [],
+      essayPaging: {
+        page: 1,
+        limit: 10,
+        total: 1
+      },
 
       fileAction: $api.postFileUpload,
       fileHeaders: {
@@ -110,19 +108,28 @@ export default {
     };
   },
   components: {
-    "admin-header": adminHeader
+    "admin-header": adminHeader,
+    "blog-paging": blogPaging
   },
   created() {
-    this.getEssayList();
   },
   methods: {
     getEssayList() {
+      let params = {
+        page: 1,
+        limit: 10,
+        ...this.$route.query
+      }
       this.listLoading = true;
-      this.$http.get($api.getEssay, { params: this.$route.query }).then(res => {
+      this.$http.get($api.getEssay, { params }).then(res => {
         if (200 == res.code) {
           let { list, total } = res.data;
           this.essayList = list;
-          this.essayTotal = total;
+          Object.assign(this.essayPaging, {
+            page: Number(params.page),
+            limit: Number(params.limit),
+            total
+          })
         }
         this.listLoading = false;
       });
@@ -196,26 +203,6 @@ export default {
             reject();
           });
       });
-    },
-    handleSizeChange(val) {
-      this.$router.push({
-        path: "/essay/list",
-        query: {
-          page: 1,
-          limit: val
-        }
-      });
-      this.getEssayList();
-    },
-    handleCurrentChange(val) {
-      this.$router.push({
-        path: "/essay/list",
-        query: {
-          page: val,
-          limit: this.$route.query.limit
-        }
-      });
-      this.getEssayList();
     }
   }
 };

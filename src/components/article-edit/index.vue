@@ -30,7 +30,7 @@
             </el-row>
             <el-row>
                <el-col :span='23' :push="1">
-                <el-form-item label="文章简介：" label-width="100px" prop="title">
+                <el-form-item label="文章简介：" label-width="100px" prop="about">
                   <el-input v-model="article.about" placeholder="请输入简介"></el-input>
                 </el-form-item>
               </el-col>

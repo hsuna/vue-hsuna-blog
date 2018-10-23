@@ -24,15 +24,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="Number($route.query.page || 1)"
-          :page-sizes="[10, 20, 50, 100]"
-          :page-size="Number($route.query.limit || 10)"
-          layout="sizes, prev, pager, next"
-          :total="articleTotal">
-        </el-pagination>
+        <blog-paging :paging="articlePaging" @update="getArticleList"></blog-paging>
       </div>
     </div>
   </div>
@@ -40,6 +32,8 @@
 
 <script>
 import adminHeader from "components/admin-header";
+import blogPaging from "components/blog-paging";
+
 import $api from "api/admin";
 
 export default {
@@ -47,13 +41,16 @@ export default {
     return {
       listLoading: false,
       breadcrumbs: [{ text: "首页", path: "/admin" }, { text: "文章管理" }],
-
-      articleTotal: 1,
-      articleList: []
-    };
+      
+      articleList: [],
+      articlePaging: {
+        page: 1,
+        limit: 10,
+        total: 1
+      }
+    }
   },
   created() {
-    this.getArticleList();
   },
   methods: {
     toEditArticle(articleId) {
@@ -63,14 +60,23 @@ export default {
       this.$router.push({ path: `/admin/articleRead/${articleId}` });
     },
     getArticleList() {
+      let params = {
+        page: 1,
+        limit: 10,
+        ...this.$route.query
+      }
       this.listLoading = true;
       this.$http
-        .get($api.getArticle, { params: this.$route.query })
+        .get($api.getArticle, { params })
         .then(res => {
           if (200 == res.code) {
             let { list, total } = res.data;
             this.articleList = list;
-            this.articleTotal = total;
+            Object.assign(this.articlePaging, {
+              page: Number(params.page),
+              limit: Number(params.limit),
+              total
+            })
           }
           this.listLoading = false;
         });
@@ -93,29 +99,10 @@ export default {
         })
         .catch(err => {});
     },
-    handleSizeChange(val) {
-      this.$router.push({
-        path: "/admin/articleList",
-        query: {
-          page: 1,
-          limit: val
-        }
-      });
-      this.getArticleList();
-    },
-    handleCurrentChange(val) {
-      this.$router.push({
-        path: "/admin/articleList",
-        query: {
-          page: val,
-          limit: this.$route.query.limit
-        }
-      });
-      this.getArticleList();
-    }
   },
   components: {
-    "admin-header": adminHeader
+    "admin-header": adminHeader,
+    "blog-paging": blogPaging
   }
 };
 </script>

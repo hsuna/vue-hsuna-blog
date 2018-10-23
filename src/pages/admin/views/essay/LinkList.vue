@@ -22,15 +22,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="Number($route.query.page || 1)"
-          :page-sizes="[10, 20, 50, 100]"
-          :page-size="Number($route.query.limit || 10)"
-          layout="sizes, prev, pager, next"
-          :total="linkTotal">
-        </el-pagination>
+        <blog-paging :paging="linkPaging" @update="getLinkList"></blog-paging>
       </div>
     </div>
 
@@ -53,6 +45,8 @@
 
 <script>
 import adminHeader from "components/admin-header";
+import blogPaging from "components/blog-paging";
+
 import $api from "api/admin";
 
 export default {
@@ -62,8 +56,12 @@ export default {
       listLoading: false,
       breadcrumbs: [{ text: "首页", path: "/admin" }, { text: "链接管理" }],
 
-      linkTotal: 1,
       linkList: [],
+      linkPaging: {
+        page: 1,
+        limit: 10,
+        total: 1
+      },
 
       dialogData: {},
       dialogRules: {
@@ -73,19 +71,28 @@ export default {
     };
   },
   components: {
-    "admin-header": adminHeader
+    "admin-header": adminHeader,
+    "blog-paging": blogPaging
   },
   created() {
-    this.getLinkList();
   },
   methods: {
     getLinkList() {
+      let params = {
+        page: 1,
+        limit: 10,
+        ...this.$route.query
+      }      
       this.listLoading = true;
-      this.$http.get($api.getLink, { params: this.$route.query }).then(res => {
+      this.$http.get($api.getLink, { params }).then(res => {
         if (200 == res.code) {
           let { list, total } = res.data;
           this.linkList = list;
-          this.linkTotal = total;
+          Object.assign(this.linkPaging, {
+            page: Number(params.page),
+            limit: Number(params.limit),
+            total
+          })
         }
         this.listLoading = false;
       });
@@ -120,26 +127,6 @@ export default {
           }
         });
       });
-    },
-    handleSizeChange(val) {
-      this.$router.push({
-        path: "/essay/linkList",
-        query: {
-          page: 1,
-          limit: val
-        }
-      });
-      this.getLinkList();
-    },
-    handleCurrentChange(val) {
-      this.$router.push({
-        path: "/essay/linkList",
-        query: {
-          page: val,
-          limit: this.$route.query.limit
-        }
-      });
-      this.getLinkList();
     }
   }
 };
