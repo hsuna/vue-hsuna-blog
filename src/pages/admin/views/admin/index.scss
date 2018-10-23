@@ -48,39 +48,43 @@ body,
 .container {
   padding-top: $headerHeight;
 
+  .el-main {
+    padding: 0;
+  }
+
   .el-aside {
     border-right-width: 0;
     background-color: #2d3b46;
 
-    .el-menu {
+  }
+  .el-menu {
+    background-color: #283440;
+
+    .el-submenu__title,
+    .el-menu-item {
+      border-bottom: 1px solid #212f3a;
+      color: #fff;
+    }
+
+    .el-submenu__title:hover,
+    .el-submenu.is-active .el-submenu__title {
       background-color: #283440;
+      border-left: 3px solid $primaryColor;
+    }
 
-      .el-submenu__title,
-      .el-menu-item {
-        border-bottom: 1px solid #212f3a;
-        color: #fff;
-      }
-
-      .el-submenu__title:hover,
-      .el-submenu.is-active .el-submenu__title {
+    .el-menu-item {
+      &.is-active {
         background-color: #283440;
-        border-left: 3px solid $primaryColor;
-      }
-
-      .el-menu-item {
-        &.is-active {
-          background-color: #283440;
-          color: $primaryColor;
-
-          &:hover {
-            background-color: #425161;
-          }
-        }
+        color: $primaryColor;
 
         &:hover {
           background-color: #425161;
-          color: $primaryColor;
         }
+      }
+
+      &:hover {
+        background-color: #425161;
+        color: $primaryColor;
       }
     }
   }
