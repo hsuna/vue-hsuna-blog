@@ -177,9 +177,10 @@ export default {
       if (200 == res.code) {
         this.$message({ message: res.message, type: "success" });
         Object.assign(file, res.data);
+
         this.article.files = fileList.map(file => ({
+          ...file,
           id: file.id,
-          name: file.name,
           url: $api.getFileUpload + "/" + file.id
         }));
       }
