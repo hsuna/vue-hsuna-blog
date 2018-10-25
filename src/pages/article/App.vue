@@ -15,7 +15,7 @@
           </div>
         </div>
         <div class="article-body">
-          <div class="article-about">{{article.about}}</div>
+          <div class="article-about" v-html="markdownToHtml(article.about)"></div>
           <div class="markdown-body" v-html="markdownToHtml(article.content)"></div>
         </div>
         <div class="article-footer">
