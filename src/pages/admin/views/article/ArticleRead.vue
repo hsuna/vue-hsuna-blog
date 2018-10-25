@@ -15,7 +15,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="article-body">
           <div class="article-about" v-html="markdownToHtml(article.about)"></div>
           <div class="markdown-body" v-html="markdownToHtml(article.content)"></div>
@@ -253,6 +253,22 @@ export default {
     word-wrap: break-word;
     border-left: 3px solid #0084ff;
     background-color: #fafafa;
+
+    code {
+      padding: 0 5px;
+      white-space: nowrap;
+      border-radius: 3px;
+      font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+      background-color: #fff5f5;
+      color: #ff502c;
+    }
+    a {
+      color: #0084ff;
+
+      &:hover{
+        text-decoration: underline;
+      }
+    }
   }
 
   .article-comments {
