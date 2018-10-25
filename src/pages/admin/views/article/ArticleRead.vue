@@ -254,11 +254,7 @@ export default {
     border-left: 3px solid #0084ff;
     background-color: #fafafa;
 
-<<<<<<< HEAD
     code {
-=======
-    code{
->>>>>>> a32976985256482bd9e5f1aaeb975f1d6df60e85
       padding: 0 5px;
       white-space: nowrap;
       border-radius: 3px;
@@ -266,7 +262,6 @@ export default {
       background-color: #fff5f5;
       color: #ff502c;
     }
-<<<<<<< HEAD
     a {
       color: #0084ff;
 
@@ -274,8 +269,6 @@ export default {
         text-decoration: underline;
       }
     }
-=======
->>>>>>> a32976985256482bd9e5f1aaeb975f1d6df60e85
   }
 
   .article-comments {
