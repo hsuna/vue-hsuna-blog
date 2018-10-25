@@ -28,7 +28,7 @@
         <div class="profile-main" v-loading="loading">
           <profile-card
             :profileList="profileList"
-            :curPage="Number($utils.params('page') || 1)"
+            :curPage="profilePage"
             :total="profileTotal"
             @change="handlePaginChange">
           </profile-card>
@@ -59,13 +59,19 @@ export default {
       introduction: "敢而慎之，勇敢不错失任何机会，谨慎不忽略一丝细节",
       portrait: "",
       banner: "",
+
+      profilePage: 1,
       profileTotal: 0,
       profileList: []
     };
   },
   created() {
     this.getUserInfo();
-    this.getProfileList(this.$utils.query());
+
+    this.getProfileList({
+      page:1,
+      ...this.$utils.params(),
+    });
   },
   methods: {
     getUserInfo() {
@@ -94,6 +100,7 @@ export default {
         if (200 == res.code) {
           this.profileList = res.data.list;
           this.profileTotal = res.data.total;
+          this.profilePage = Number(params.page)
         }
         this.loading = false;
       });

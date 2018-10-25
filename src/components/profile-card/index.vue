@@ -59,6 +59,7 @@ export default {
   }
 
   .card-title {
+    padding-right: 80px;
     font-size: 24px;
     font-weight: bold;
     color: #1a1a1a;

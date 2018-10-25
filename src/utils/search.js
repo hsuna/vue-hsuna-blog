@@ -7,7 +7,7 @@ const _url2Obj = (_ =>{
         if(!_cache[url]){
             url.split("&").forEach((param, index) => {
                 let [key, value] = param.split("="); //进行分割成数组
-                obj[key] = value; //为对象赋值
+                if(key && value) obj[key] = value; //为对象赋值
             })
             _cache[url] = obj;
         }else{

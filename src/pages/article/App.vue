@@ -145,39 +145,29 @@ export default {
       }
     };
   },
-  created() {
-    this.getArticleDetail();
+  async created() {
+    await this.getArticleDetail();
   },
   mixins: [markMixin],
   methods: {
-    getArticleDetail() {
-      this.$http
-        .get($api.getArticleDetail, { params: this.article })
-        .then(res => {
-          if (200 == res.code) {
-            this.article = Object.assign({}, this.article, res.data);
-            this.updateArticleViewCount(); //更新文章的浏览次数
-            this.getArticleRelate();
-            this.$nextTick(this.goCommentHash)
-            this.loading = false;
-            setDocumentTitle(`${this.article.title} | 文章详情 | HSUAN`);
-          } else {
-            window.location.href = '/index.html';
-          }
-        });
+    async getArticleDetail() {
+      let res = await this.$http.get($api.getArticleDetail, { params: this.article })
+      if (200 == res.code) {
+        this.article = Object.assign({}, this.article, res.data);
+        this.updateArticleViewCount(); //更新文章的浏览次数
+        await this.getArticleRelate();
+        this.$nextTick(this.goCommentHash)
+        this.loading = false;
+        setDocumentTitle(`${this.article.title} | 文章详情 | HSUAN`);
+      } else {
+        window.location.href = '/index.html';
+      }
     },
-    getArticleRelate() {
-      this.$http
-        .get($api.getArticleRelate, {
-          params: {
-            classify: this.article.classify
-          }
-        })
-        .then(res => {
-          if (200 == res.code) {
-            this.relateArticle = res.data.list;
-          }
-        });
+    async getArticleRelate() {
+      let res = await this.$http.get($api.getArticleRelate, { params: { classify: this.article.classify } })  
+      if (200 == res.code) {
+        this.relateArticle = res.data.list;
+      }
     },
     getAssemComment() {
       let replys = this.replys.map(reply => {
