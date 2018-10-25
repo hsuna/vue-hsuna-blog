@@ -17,7 +17,7 @@
         </div>
 
         <div class="article-body">
-          <div class="article-about" v-html="markdownToHtml(article.about)"></div>
+          <div class="article-about" v-html="article.about"></div>
           <div class="markdown-body" v-html="markdownToHtml(article.content)"></div>
               <ul class="article-comments">
               <li v-for="(comment, index) in article.comments" :key="index">
