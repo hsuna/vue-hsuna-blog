@@ -1,19 +1,21 @@
 'use strict'
 const path = require('path')
 const utils = require('./utils')
-const webpack = require('webpack')
 const config = require('../config')
+const webpack = require('webpack')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
+
+const { VueLoaderPlugin } = require('vue-loader')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const env = require('../config/prod.env')
 
 const webpackConfig = merge(baseWebpackConfig, {
+  mode: 'production',
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
@@ -24,65 +26,25 @@ const webpackConfig = merge(baseWebpackConfig, {
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {
     path: config.build.assetsRoot,
-    filename: utils.assetsPath('js/[name].[chunkhash].js'),
-    chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
+    filename: utils.assetsPath('js/[name].[chunkhash].js')
+  },
+  performance: {
+    hints: false
   },
   plugins: [
+    new VueLoaderPlugin(),
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env
     }),
-    new UglifyJsPlugin({
-      uglifyOptions: {
-        compress: {
-          warnings: false,
-          drop_console: true,
-          pure_funcs: ['console.log']
-        }
-      },
-      sourceMap: config.build.productionSourceMap,
-      parallel: true
-    }),
     // extract css into its own file
-    new ExtractTextPlugin({
-      filename: utils.assetsPath('css/[name].[contenthash].css'),
-      // Setting the following option to `false` will not extract CSS from codesplit chunks.
-      // Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.
-      // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`
-      // increasing file size: https://github.com/vuejs-templates/webpack/issues/1110
-      allChunks: true
+    new MiniCssExtractPlugin({
+      filename: utils.assetsPath("css/[name].[chunkhash].css"),
     }),
-    // Compress extracted CSS. We are using this plugin so that possible
-    // duplicated CSS from different components can be deduped.
-    new OptimizeCSSPlugin({
-      cssProcessorOptions: config.build.productionSourceMap ?
-        {
-          safe: true,
-          map: {
-            inline: false
-          }
-        } :
-        {
-          safe: true
-        }
+    new OptimizeCSSPlugin({cssProcessorOptions: config.build.productionSourceMap ?
+        { safe: true, map: { inline: false } } :
+        { safe: true }
     }),
-    // generate dist index.html with correct asset hash for caching.
-    // you can customize output by editing /index.html
-    // see https://github.com/ampedandwired/html-webpack-plugin
-    /* new HtmlWebpackPlugin({
-      filename: config.build.index,
-      template: 'index.html',
-      inject: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-        // more options:
-        // https://github.com/kangax/html-minifier#options-quick-reference
-      },
-      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-      chunksSortMode: 'dependency'
-    }), */
     ...utils.exits({
       inject: true,
       minify: {
@@ -103,11 +65,6 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.HashedModuleIdsPlugin(),
     // enable scope hoisting
     new webpack.optimize.ModuleConcatenationPlugin(),
-    // split vendor js into its own file
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'common',
-      minChunks: 3
-    }),
 
     // copy custom static assets
     new CopyWebpackPlugin([{
@@ -115,7 +72,20 @@ const webpackConfig = merge(baseWebpackConfig, {
       to: config.build.assetsSubDirectory,
       ignore: ['.*']
     }])
-  ]
+  ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        common: {
+          name: "common",
+          chunks: "initial",
+          minChunks: 3,
+          maxInitialRequests: 5,
+          minSize: 0
+        }
+      }
+    }
+  }
 })
 
 if (config.build.productionGzip) {
