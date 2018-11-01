@@ -8,7 +8,7 @@
         <span class="card-count">评论({{profile.commentCount}}) | 浏览({{profile.viewCount}})</span>
         <el-tag size="mini" v-for="tag in profile.tags" :key="tag">{{tag}}</el-tag>
       </div>
-      <div class="card-content">&nbsp;&nbsp;&nbsp;&nbsp;{{profile.about}}
+      <div class="card-content" v-html="`&nbsp;&nbsp;&nbsp;&nbsp;${profile.about}`">
         <a :href="`/article.html?id=${profile.id}`">阅读全文<i class="el-icon-arrow-right"></i></a>
       </div>
     </div>

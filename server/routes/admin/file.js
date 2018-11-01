@@ -31,10 +31,10 @@ const mkdirs = dirname => {
 
 const unlink = id => {
   return new Promise((resolve, reject) => {
-    fs.unlink(config.UPLOAD_PATH + "/upload_" + id, err => {
-      if (err) reject(err);
-      else resolve();
-    });
+    const path = config.UPLOAD_PATH + "/upload_" + id
+    fs.exists(path, exists => {
+      exists ? fs.unlink(path, err => err ? reject(err) : resolve()) : resolve();
+    })
   });
 };
 
