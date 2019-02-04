@@ -8,22 +8,9 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "build": "node build/build.js",
-    "server_start": "node server/start.js",
-    "server_dev": "pm2 start ecosystem.config.js --env development",
-    "server_prod": "pm2 start ecosystem.config.js --env production"
+    "build": "node build/build.js"
   },
   "dependencies": {
-    "babel-preset-env": "^1.6.1",
-    "babel-register": "^6.26.0",
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.2",
-    "express": "^4.16.3",
-    "formidable": "^1.2.1",
-    "jsonwebtoken": "^8.2.0",
-    "mongoose": "^5.0.10",
-    "morgan": "^1.9.0",
-    "pm2": "^2.10.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -77,8 +64,6 @@
     "npm": ">= 3.0.0"
   },
   "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
+    "last 20 versions"
   ]
 }
