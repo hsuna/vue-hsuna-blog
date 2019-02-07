@@ -31,4 +31,4 @@ hljs.registerLanguage('vbscript', require('highlight.js/lib/languages/vbscript')
 hljs.registerLanguage('vbscript-html', require('highlight.js/lib/languages/vbscript-html'));
 hljs.registerLanguage('vim', require('highlight.js/lib/languages/vim'));
 
-module.exports = hljs;
+export default hljs 
