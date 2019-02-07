@@ -11,10 +11,6 @@
 import Vue from "vue";
 import App from "./App";
 
-/* 添加-axios拦截器 */
-import Axios from "~/axios";
-Vue.prototype.$http = Axios;
-
 /**注册-全局过滤器 */
 import * as Filters from "~/filters"; // global filters
 Vue.prototype.$filter = Filters;
@@ -23,7 +19,8 @@ Object.keys(Filters).forEach(key => {
 });
 
 /* 引用-plugins */
-import plugins from "~/plugins/el-blog";
+import "~/plugins/axios"
+import "~/plugins/el-blog"
 
 /* 引用-utils */
 import utils from "~/utils";

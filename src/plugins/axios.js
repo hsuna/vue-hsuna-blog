@@ -5,12 +5,9 @@
  * @Last Modified by: Hsuna
  * @Last Modified time: 2018-04-20 10:27:42
  */
-
-import Axios from "axios";
-import store from "store";
-//import router from "@/router";
-
-import qs from "qs";
+import Vue from "vue"
+import Axios from "axios"
+import store from "store"
 
 import { MutationName } from "store/types";
 import { Message } from "element-ui";
@@ -41,7 +38,7 @@ Axios.interceptors.request.use(
     //请求错误时做些事
     return Promise.reject(err);
   }
-);
+)
 
 //添加响应拦截器
 Axios.interceptors.response.use(
@@ -66,6 +63,8 @@ Axios.interceptors.response.use(
     Message.error(err);
     return Promise.reject(err);
   }
-);
+)
 
-export default Axios;
+Vue.prototype.$http = Axios
+
+export default Axios
