@@ -17,8 +17,7 @@ export default {
   putUserPassword: API_HOST + "admin/user/password", //更新用户密码
   getUserInfo: API_HOST + "admin/user/userInfo", //获取用户信息
   putUserInfo: API_HOST + "admin/user/userInfo", //更新用户信息
-  postUserPortrait: API_HOST + "admin/user/portrait", //更新用户头像
-  postUserBanner: API_HOST + "admin/user/banner", //更新用户背景图
+  postUserUpload: API_HOST + "admin/user/upload", //更新用户图片
 
   //////// 分类模块 ////////
   getClassify: API_HOST + "admin/classify", //查询分类
@@ -37,7 +36,6 @@ export default {
   deleteComment: API_HOST + "admin/comment", //删除文章评论
 
   /////// 文件模块 ////////
-  getFileUpload: API_HOST + "file/upload", //获取文件
   postFileUpload: API_HOST + "admin/file/upload", //上传文件
   deleteFileUpload: API_HOST + "admin/file/upload", //删除文件
 
