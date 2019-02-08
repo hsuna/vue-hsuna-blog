@@ -34,7 +34,4 @@ export default {
   getEssay: API_HOST + "essay", //查询随记
   getInventory: API_HOST + "inventory", //查询随记
   getLink: API_HOST + "link", //查询随记
-
-  ////////// 文件模块 ////////
-  getFileUpload: API_HOST + "file/upload" //获取文件
 };

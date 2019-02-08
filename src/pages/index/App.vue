@@ -86,12 +86,8 @@ export default {
           this.nickname = user.nickname || "";
           this.job = user.job || "";
           this.introduction = user.introduction || "";
-          this.portrait = user.portrait
-            ? $api.getFileUpload + "/" + user.portrait
-            : "";
-          this.banner = user.banner
-            ? $api.getFileUpload + "/" + user.banner
-            : "";
+          this.portrait = user.portrait || "";
+          this.banner = user.banner  || "";
         }
       });
     },

@@ -174,11 +174,7 @@ export default {
       if (200 == res.code) {
         this.$message({ message: res.message, type: "success" });
         Object.assign(file, res.data);
-        this.dialogData.files = fileList.map(file => ({
-          id: file.id,
-          name: file.name,
-          url: $api.getFileUpload + "/" + file.id
-        }));
+        this.dialogData.files = fileList;
       }
     },
     handlePreviewFile(file) {

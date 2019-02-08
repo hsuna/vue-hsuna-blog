@@ -90,16 +90,18 @@ export default {
       },
 
       portrait: {
-        action: $api.postUserPortrait,
+        action: $api.postUserUpload,
         data: {
-          userName
+          userName,
+          type: 'portrait'
         },
         url: ""
       },
       banner: {
-        action: $api.postUserBanner,
+        action: $api.postUserUpload,
         data: {
-          userName
+          userName,
+          type: 'banner'
         },
         url: ""
       },
@@ -124,25 +126,21 @@ export default {
         .then(res => {
           if (200 == res.code) {
             Object.assign(this.user, res.data);
-            if (res.data.portrait && "" != res.data.portrait) {
-              this.portrait.url = $api.getFileUpload + "/" + res.data.portrait;
-            }
-            if (res.data.banner && "" != res.data.banner) {
-              this.banner.url = $api.getFileUpload + "/" + res.data.banner;
-            }
+            this.portrait.url = res.data.portrait || ""
+            this.banner.url = res.data.banner || ""
           }
         });
     },
     handleSuccessPortrait(res, file, fileList) {
       if (200 == res.code) {
         this.$message({ message: res.message, type: "success" });
-        this.portrait.url = $api.getFileUpload + "/" + res.fileId;
+        this.portrait.url = res.data || ""
       }
     },
     handleSuccessBanner(res, file, fileList) {
       if (200 == res.code) {
         this.$message({ message: res.message, type: "success" });
-        this.banner.url = $api.getFileUpload + "/" + res.fileId;
+        this.banner.url = res.data || ""
       }
     },
     handleEdit() {
