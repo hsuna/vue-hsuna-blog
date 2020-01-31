@@ -13,13 +13,24 @@
 </template>
 
 <script>
+import { Breadcrumb, BreadcrumbItem } from 'element-ui'
+
+import { dateFormat } from 'src/utils/date'
+
 export default {
-  name: "adminHeader",
+  name: "admin-header",
+  components: {
+    [Breadcrumb.name]: Breadcrumb,
+    [BreadcrumbItem.name]: BreadcrumbItem,
+  },
   props: {
     routerList: {
       type: Array,
       default: _ => []
     }
+  },
+  filters: {
+    dateFormat
   },
   data() {
     return {

@@ -5,11 +5,10 @@
  * @Last Modified by: Hsuna
  * @Last Modified time: 2018-04-20 10:27:42
  */
-import Vue from "vue"
 import Axios from "axios"
-import store from "store"
+import store from "src/store"
 
-import { MutationName } from "store/types";
+import { MutationName } from "src/store/types";
 import { Message } from "element-ui";
 
 Axios.defaults.timeout = 600000000;
@@ -64,7 +63,5 @@ Axios.interceptors.response.use(
     return Promise.reject(err);
   }
 )
-
-Vue.prototype.$http = Axios
 
 export default Axios

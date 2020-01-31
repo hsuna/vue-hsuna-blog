@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import $api from "api/blog";
+import $api from "src/api/blog";
 
 export default {
   props: {

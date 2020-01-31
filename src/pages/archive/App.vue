@@ -9,7 +9,7 @@
         <div class="profile-main" v-loading="loading">
           <profile-card
             :profileList="archiveList"
-            :curPage="Number($utils.params('page') || 1)"
+            :curPage="curPage"
             :total="archiveTotal"
             @change="handlePaginChange">
           </profile-card>
@@ -20,11 +20,13 @@
 </template>
 
 <script>
-import blogMain from "components/blog-main";
-import profileCard from "components/profile-card";
-import { profileSideHot, profileSideArchive } from "components/profile-side";
+import * as utils from 'src/utils/search'
 
-import $api from "api/blog";
+import BlogMain from "src/components/blog-main";
+import ProfileCard from "src/components/profile-card";
+import { ProfileSideHot, ProfileSideArchive } from "src/components/profile-side";
+
+import $api from "src/api/blog";
 
 export default {
   name: "App",
@@ -35,6 +37,11 @@ export default {
       archiveTotal: 0,
       archiveList: []
     };
+  },
+  computed:{
+    curPage(){
+      return Number(utils.params('page') || 1)
+    }
   },
   created() {
   },
@@ -53,7 +60,7 @@ export default {
       }
     },
     handleArchiveInit(list){
-      let params = this.$utils.params()
+      let params = utils.params()
 
       let index = 0;
       if (params.year && params.month) {
@@ -77,11 +84,11 @@ export default {
     },
     handleArchiveSearch(archive) {
       let { year, month } = archive
-      window.location.href = '/archive.html?' + this.$utils.query({ year, month })
+      window.location.href = '/archive.html?' + utils.query({ year, month })
     },
     handlePaginChange(type, val) {
       if ("page" == type) {
-         window.location.href = '/archive.html?' + this.$utils.query({
+         window.location.href = '/archive.html?' + utils.query({
            ...archive,
            page: val
          });
@@ -89,10 +96,10 @@ export default {
     }
   },
   components: {
-    "blog-main": blogMain,
-    "profile-card": profileCard,
-    "profile-side-hot": profileSideHot,
-    "profile-side-archive": profileSideArchive
+    BlogMain,
+    ProfileCard,
+    ProfileSideHot,
+    ProfileSideArchive
   }
 };
 </script>

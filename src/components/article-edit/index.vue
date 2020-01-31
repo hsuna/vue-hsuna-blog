@@ -83,15 +83,31 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
-import markdownEditor from "vue-simplemde/src/markdown-editor";
-import adminHeader from "components/admin-header";
+<script>
+import VueSimplemde from "vue-simplemde";
+import AdminHeader from "src/components/admin-header";
+import { Input, Select, Option, Radio, Form, FormItem, Row, Col, Dialog, Upload }  from 'element-ui'
 
-import markMixin from "../../mixin/mark";
+import markMixin from "src/mixin/mark";
 
-import $api from "api/admin";
+import $api from "src/api/admin";
 
 export default {
+  components: {
+    [Input.name]: Input,
+    [Select.name]: Select,
+    [Option.name]: Option,
+    [Radio.name]: Radio,
+    [Dialog.name]: Dialog,
+    [Form.name]: Form,
+    [FormItem.name]: FormItem,
+    [Upload.name]: Upload,
+    [Row.name]: Row,
+    [Col.name]: Col,
+
+    AdminHeader,
+    VueSimplemde,
+  },
   props: {
     isEdit: {
       type: Boolean,
@@ -228,19 +244,12 @@ export default {
       }
     }
   },
-  components: {
-    "admin-header": adminHeader,
-    "markdown-editor": markdownEditor
-  }
 };
 </script>
 
-<style>
-@import "simplemde/dist/simplemde.min.css";
-@import "highlight.js/styles/googlecode.css";
-</style>
 <style lang="scss">
-@import "~assets/styles/markdown-body";
+@import "~highlight.js/styles/googlecode.css";
+@import "~src/assets/styles/markdown-body";
 .el-upload__tip {
   display: inline-block;
   margin-left: 10px;

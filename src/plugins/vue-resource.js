@@ -3,7 +3,7 @@ import VueResource from "vue-resource"
 
 import store from "store";
 
-import { MutationName } from "store/types";
+import { MutationName } from "src/store/types";
 import { Message } from "element-ui";
 
 Vue.use(VueResource)

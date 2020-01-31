@@ -44,12 +44,25 @@
 </template>
 
 <script>
-import adminHeader from "components/admin-header";
-import blogPaging from "components/blog-paging";
+import AdminHeader from "src/components/admin-header";
+import BlogPaging from "src/components/blog-paging";
 
-import $api from "api/admin";
+import $api from "src/api/admin";
+import { TableColumn, Table, Button, Dialog, Form, FormItem, Input } from 'element-ui';
 
 export default {
+  components: {
+    [Table.name]: Table,
+    [TableColumn.name]: TableColumn,
+    [Dialog.name]: Dialog,
+    [Form.name]: Form,
+    [FormItem.name]: FormItem,
+    [Input.name]: Input,
+    [Button.name]: Button,
+
+    AdminHeader,
+    BlogPaging,
+  },
   data() {
     return {
       dialogVisible: false,
@@ -69,10 +82,6 @@ export default {
         url: [{ required: true, message: "请输入路径", trigger: "blur" }]
       }
     };
-  },
-  components: {
-    "admin-header": adminHeader,
-    "blog-paging": blogPaging
   },
   created() {
   },

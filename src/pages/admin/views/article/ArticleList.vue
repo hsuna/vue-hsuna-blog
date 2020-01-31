@@ -31,10 +31,10 @@
 </template>
 
 <script>
-import adminHeader from "components/admin-header";
-import blogPaging from "components/blog-paging";
+import adminHeader from "src/components/admin-header";
+import blogPaging from "src/components/blog-paging";
 
-import $api from "api/admin";
+import $api from "src/api/admin";
 
 export default {
   data() {

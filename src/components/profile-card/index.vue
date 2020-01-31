@@ -16,12 +16,19 @@
       :total="total"
       :current-page="curPage"
       @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"></el-pagination>
+      @current-change="handleCurrentChange" 
+    />
   </div>
 </template>
 
 <script>
+import { Pagination, Tag } from 'element-ui';
+
 export default {
+  components: {
+    [Tag.name]: Tag,
+    [Pagination.name]: Pagination,
+  },
   props: {
     curPage: {
       type: Number,

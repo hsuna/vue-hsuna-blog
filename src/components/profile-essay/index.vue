@@ -36,7 +36,15 @@
 </template>
 
 <script>
+import { Pagination, Dialog } from 'element-ui';
+
+import { timeStampFormat, monthFormat } from 'src/utils/date'
+
 export default {
+  components: {
+    [Pagination.name]: Pagination,
+    [Dialog.name]: Dialog,
+  },
   data() {
     return {
       dialogImageVisible: false,
@@ -56,6 +64,10 @@ export default {
       type: Array,
       default: _ => []
     }
+  },
+  filters: {
+    timeStampFormat,
+    monthFormat,
   },
   methods: {
     handlePreviewFile(url) {

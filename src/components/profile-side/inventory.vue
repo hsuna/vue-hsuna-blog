@@ -29,9 +29,14 @@
 </template>
 
 <script>
-import $api from "api/blog";
+import { Pagination } from 'element-ui';
+
+import $api from "src/api/blog";
 
 export default {
+  components: {
+    [Pagination.name]: Pagination,
+  },
   data() {
     return {
       loading: true,

@@ -3,9 +3,9 @@
 </template>
 
 <script>
-import { ActionName, MutationName } from "store/types";
-import articleEdit from "components/article-edit";
-import $api from "api/admin";
+import { ActionName, MutationName } from "src/store/types";
+import articleEdit from "src/components/article-edit";
+import $api from "src/api/admin";
 
 export default {
   data() {

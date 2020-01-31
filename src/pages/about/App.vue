@@ -68,21 +68,21 @@
 </template>
 
 <script>
-import blogMain from "components/blog-main";
-import { profileSideAbout, profileSideHot } from "components/profile-side";
+import BlogMain from "src/components/blog-main";
+import { ProfileSideAbout, ProfileSideHot } from "src/components/profile-side";
 
 export default {
   name: "App",
+  components: {
+    BlogMain,
+    ProfileSideAbout,
+    ProfileSideHot
+  },
   data() {
     return {};
   },
   created() {},
   methods: {},
-  components: {
-    "blog-main": blogMain,
-    "profile-side-about": profileSideAbout,
-    "profile-side-hot": profileSideHot
-  }
 };
 </script>
 

@@ -66,11 +66,23 @@
 </template>
 
 <script>
-import adminHeader from "components/admin-header";
+import { Row, Col, Upload, Form, FormItem, Button } from 'element-ui';
 
-import $api from "api/admin";
+import AdminHeader from "src/components/admin-header";
+
+import $api from "src/api/admin";
 
 export default {
+  components: {
+    [Row.name]: Row,
+    [Col.name]: Col,
+    [Upload.name]: Upload,
+    [Form.name]: Form,
+    [FormItem.name]: FormItem,
+    [Button.name]: Button,
+
+    AdminHeader,
+  },
   data() {
     let { userName } = this.$store.getters;
     return {
@@ -161,9 +173,6 @@ export default {
       });
     }
   },
-  components: {
-    "admin-header": adminHeader
-  }
 };
 </script>
 

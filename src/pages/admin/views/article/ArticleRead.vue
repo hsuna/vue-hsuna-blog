@@ -60,10 +60,10 @@
 </template>
 
 <script>
-import adminHeader from "components/admin-header";
-import $api from "api/admin";
+import adminHeader from "src/components/admin-header";
+import $api from "src/api/admin";
 
-import markMixin from "~/mixin/mark";
+import markMixin from "src/mixin/mark";
 
 export default {
   data() {

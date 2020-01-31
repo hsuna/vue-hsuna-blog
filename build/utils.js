@@ -1,17 +1,9 @@
 'use strict'
 const path = require('path')
 const config = require('../config')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const packageConfig = require('../package.json')
+
+// glob是webpack安装时依赖的一个第三方模块，还模块允许你使用 *等符号, 例如lib/*.js就是获取lib文件夹下的所有js后缀名的文件
 const glob = require('glob')
-
-exports.assetsPath = function (_path) {
-  const assetsSubDirectory = process.env.NODE_ENV === 'production'
-    ? config.build.assetsSubDirectory
-    : config.dev.assetsSubDirectory
-
-  return path.posix.join(assetsSubDirectory, _path)
-}
 
 exports.cssLoaders = function (options) {
   options = options || {}
@@ -19,37 +11,42 @@ exports.cssLoaders = function (options) {
   const cssLoader = {
     loader: 'css-loader',
     options: {
-      sourceMap: options.sourceMap
+      sourceMap: options.sourceMap,
     }
   }
 
   const postcssLoader = {
     loader: 'postcss-loader',
     options: {
-      sourceMap: options.sourceMap
+      sourceMap: options.sourceMap,
+      plugins: [
+        require("autoprefixer")()
+      ]
     }
   }
 
   // generate loader string to be used with extract text plugin
-  function generateLoaders (loader, loaderOptions) {
+  function generateLoaders(loader, loaderOptions) {
     const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
 
     if (loader) {
       loaders.push({
+        //test: new RegExp(`\\.${loader}$`),
         loader: loader + '-loader',
         options: Object.assign({}, loaderOptions, {
-          sourceMap: options.sourceMap
+          sourceMap: options.sourceMap,
         })
       })
     }
 
     // Extract CSS when that option is specified
     // (which is the case during production build)
-    if (options.extract) {
-      return [MiniCssExtractPlugin.loader].concat(loaders)
-    } else {
-      return ['vue-style-loader'].concat(loaders)
-    }
+    return [options.extract ? {
+      loader: MiniCssExtractPlugin.loader,
+      options: {
+        publicPath: options.extractPublicPath,
+      },
+    } : 'style-loader'].concat(loaders)
   }
 
   // https://vue-loader.vuejs.org/en/configurations/extract-css.html
@@ -57,7 +54,9 @@ exports.cssLoaders = function (options) {
     css: generateLoaders(),
     postcss: generateLoaders(),
     less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
+    sass: generateLoaders('sass', {
+      indentedSyntax: true
+    }),
     scss: generateLoaders('sass'),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')
@@ -80,28 +79,9 @@ exports.styleLoaders = function (options) {
   return output
 }
 
-exports.createNotifierCallback = () => {
-  const notifier = require('node-notifier')
-
-  return (severity, errors) => {
-    if (severity !== 'error') return
-
-    const error = errors[0]
-    const filename = error.file && error.file.split('!').pop()
-
-    notifier.notify({
-      title: packageConfig.name,
-      message: severity + ': ' + error.name,
-      subtitle: filename || '',
-      icon: path.join(__dirname, 'logo.png')
-    })
-  }
-}
-
-
 // 多入口配置
 exports.entries = function () {
-  let entryFiles = glob.sync(config.common.pagePath + '/*/main.js');
+  let entryFiles = glob.sync(config.pagesPath + '/*/main.js');
   let map = {};
   entryFiles.forEach(filePath => {
     map[path.basename(path.dirname(filePath))] = filePath;
@@ -111,12 +91,12 @@ exports.entries = function () {
 
 //多页面输出配置
 exports.exits = function (conf) {
-  let entryHtml = glob.sync(config.common.pagePath + '/*/main.js');
+  let entryHtml = glob.sync(config.pagesPath + '/*/index.html');
   return entryHtml.map(filePath => {
     let filename = path.basename(path.dirname(filePath));
     return Object.assign({
       // 模板来源
-      template: path.dirname(filePath) + '/index.html',
+      template: filePath,
       // 文件名称
       filename: filename + '.html',
       // 页面模板需要加对应的js脚本，如果不加这行则每个页面都会引入所有的js脚本

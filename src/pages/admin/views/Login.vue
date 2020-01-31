@@ -18,11 +18,16 @@
 </template>
 
 <script>
-import { ActionName } from "store/types";
-
-import $api from "api/admin";
+import { ActionName } from "src/store/types";
+import { Form, FormItem, Input, Button } from 'element-ui';
 
 export default {
+  components: {
+    [Form.name]: Form,
+    [FormItem.name]: FormItem,
+    [Input.name]: Input,
+    [Button.name]: Button,
+  },
   data() {
     //自定义验证函数
     // 返回的数据

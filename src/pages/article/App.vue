@@ -101,13 +101,15 @@
 </template>
 
 <script>
-import blogMain from "components/blog-main";
-import { ActionName, MutationName } from "store/types";
-import { setDocumentTitle } from "utils/title";
+import { params } from 'src/utils/search'
 
-import markMixin from "../../mixin/mark";
+import BlogMain from "src/components/blog-main";
+import { ActionName, MutationName } from "src/store/types";
+import { setDocumentTitle } from "src/utils/title";
 
-import $api from "api/blog";
+import markMixin from "src/mixin/mark";
+
+import $api from "src/api/blog";
 
 export default {
   data() {
@@ -115,7 +117,7 @@ export default {
       href: window.location.href,
       loading: true,
       article: {
-        id: this.$utils.params('id'),
+        id: params('id'),
         content: '',
         comments: []
       },
@@ -253,7 +255,7 @@ export default {
     }
   },
   components: {
-    "blog-main": blogMain
+    BlogMain
   }
 };
 </script>

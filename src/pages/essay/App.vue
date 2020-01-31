@@ -9,7 +9,7 @@
         <div class="profile-main" v-loading="loading">
           <profile-essay
             :profileList="essayList"
-            :curPage="Number($utils.params('page') || 1)"
+            :curPage="curPage"
             :total="essayTotal"
             @change="handlePaginChange">
           </profile-essay>
@@ -20,11 +20,12 @@
 </template>
 
 <script>
-import blogMain from "components/blog-main";
-import profileEssay from "components/profile-essay";
-import { profileSideInventory, profileSideLink } from "components/profile-side";
+import BlogMain from "src/components/blog-main";
+import ProfileEssay from "src/components/profile-essay";
+import { ProfileSideInventory, ProfileSideLink } from "src/components/profile-side";
 
-import $api from "api/blog";
+import * as utils from 'src/utils/search'
+import $api from "src/api/blog";
 
 export default {
   name: "App",
@@ -35,8 +36,13 @@ export default {
       essayList: []
     };
   },
+  computed: {
+    curPage(){
+      return Number(utils.params('page') || 1)
+    }
+  },
   created() {
-    this.getEssayList(this.$utils.params());
+    this.getEssayList(utils.params());
   },
   methods: {
     getEssayList(params) {
@@ -51,18 +57,18 @@ export default {
     },
     handlePaginChange(type, val) {
       if ("page" == type) {
-        window.location.href = '/essay.html?'+this.$utils.query({
-          ...this.$utils.params,
+        window.location.href = '/essay.html?'+utils.query({
+          ...utils.params(),
           page: val
         })
       }
     }
   },
   components: {
-    "blog-main": blogMain,
-    "profile-essay": profileEssay,
-    "profile-side-inventory": profileSideInventory,
-    "profile-side-link": profileSideLink
+    BlogMain,
+    ProfileEssay,
+    ProfileSideInventory,
+    ProfileSideLink
   }
 };
 </script>

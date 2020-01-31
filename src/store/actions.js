@@ -7,8 +7,8 @@
  */
 import { ActionName, MutationName } from "./types";
 
-import $admin from "api/admin";
-import $guest from "api/blog";
+import $admin from "src/api/admin";
+import $guest from "src/api/blog";
 
 export default {
   [ActionName.USER_LOGIN]({ commit }, { user, vm }) {

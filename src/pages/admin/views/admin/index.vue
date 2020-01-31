@@ -51,10 +51,27 @@
 </template>
 
 <script>
-import { ActionName } from "store/types";
+import { ActionName } from "src/store/types";
+import { Dropdown, DropdownItem, DropdownMenu, Container, Aside, Menu, Submenu, MenuItem, Dialog, Form, Input, Main, FormItem, Button } from 'element-ui';
 
 export default {
   name: "App",
+  components: {
+    [Dropdown.name]: Dropdown,
+    [DropdownMenu.name]: DropdownMenu,
+    [DropdownItem.name]: DropdownItem,
+    [Container.name]: Container,
+    [Aside.name]: Aside,
+    [Main.name]: Main,
+    [Menu.name]: Menu,
+    [MenuItem.name]: MenuItem,
+    [Submenu.name]: Submenu,
+    [Dialog.name]: Dialog,
+    [Form.name]: Form,
+    [FormItem.name]: FormItem,
+    [Input.name]: Input,
+    [Button.name]: Button,
+  },
   data() {
     let validateNewPass = (rule, value, callback) => {
       if (value === this.modifyForm.oldPass) {

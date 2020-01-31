@@ -11,23 +11,11 @@
 import Vue from "vue";
 import App from "./App";
 
-/**注册-全局过滤器 */
-import * as Filters from "~/filters"; // global filters
-Vue.prototype.$filter = Filters;
-Object.keys(Filters).forEach(key => {
-  Vue.filter(key, Filters[key]);
-});
-
 /* 引用-plugins */
-import "~/plugins/axios"
-import "~/plugins/el-blog"
-
-/* 引用-utils */
-import utils from "~/utils";
-Vue.prototype.$utils = utils;
+import "src/plugins/axios"
 
 /**添加-store */
-import store from "~/store";
+import store from "src/store";
 
 Vue.config.productionTip = false;
 

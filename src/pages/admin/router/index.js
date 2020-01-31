@@ -9,9 +9,9 @@
 
 import Vue from "vue";
 import VueRouter from "vue-router";
-import store from "store";
 import routes from "./routes";
-import { setDocumentTitle } from "utils/title";
+import store from "src/store";
+import { setDocumentTitle } from "src/utils/title";
 
 Vue.use(VueRouter);
 const router = new VueRouter({

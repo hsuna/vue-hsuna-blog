@@ -38,8 +38,8 @@
 </template>
 
 <script>
-import adminHeader from "components/admin-header";
-import $api from "api/admin";
+import adminHeader from "src/components/admin-header";
+import $api from "src/api/admin";
 
 export default {
   data() {
