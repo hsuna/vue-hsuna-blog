@@ -50,6 +50,7 @@ import {
 } from "src/components/profile-side";
 
 import * as utils from 'src/utils/search'
+import storage, { StorageKey } from 'src/utils/storage'
 import Api from "src/api/blog";
 
 export default {
@@ -87,9 +88,10 @@ export default {
   },
   methods: {
     getUserInfo() {
+      const user = storage.get(StorageKey.USER);
       Api.getUserInfo({
         params: {
-          userName: this.$store.getters.userName || 'hsuna'
+          userName: user.name || 'hsuna'
         }
       }).then(res => {
         if (200 == res.code) {
