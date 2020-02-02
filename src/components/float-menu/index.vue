@@ -10,13 +10,15 @@
 </template>
 
 <script>
+import { params } from 'src/utils/search'
 export default {
+  name: 'float-menu',
   data() {
     return {};
   },
   methods: {
     isShowMenuByName(name) {
-      return name !== this.$utils.params('name')
+      return name !== params('name')
     },
     handleBackTop() {
       document.documentElement.scrollTop = document.body.scrollTop = 0;

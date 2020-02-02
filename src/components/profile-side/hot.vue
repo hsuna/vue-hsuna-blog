@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import $api from "api/blog";
+import Api from "src/api/blog"
 
 export default {
   data() {
@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     getHotArticle() {
-      this.$http.get($api.getArticleHot).then(res => {
+      Api.getArticleHot().then(res => {
         if (200 == res.code) {
           this.hotArticleList = res.data;
         }

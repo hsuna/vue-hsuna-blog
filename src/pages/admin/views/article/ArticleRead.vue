@@ -9,7 +9,7 @@
             <div class="tags"><a class="tag" href="javascript:;" v-for="tag in article.tags" :key="tag">{{tag}}</a></div>
             <div class="classify">{{article.classify}}</div>
             <div class="time">
-              <span>发布于{{article.publishAt, 'yyyy-MM-dd' | timeStampFormat}}</span>
+              <span>发布于{{article.publishAt | timeStampFormat('yyyy-MM-dd')}}</span>
               <span>{{article.viewCount}}次浏览</span>
               <span>最后一次编辑是{{article.updatedAt | timeAgoFormat}}</span>
             </div>
@@ -40,7 +40,7 @@
                 <el-col :span="24">
                   <el-form-item label="评论：" label-width="80px" prop="content">
                     <el-tag v-for="(reply, index) in replys" :key="reply.index" closable @close="handleRemoveReply(index)">{{1+reply.index}}楼</el-tag>
-                    <el-input type="textarea" :rows="6" :autosize="false" v-model="comment.content" placeholder="请输入评论" v-focus="commentFocus"></el-input>
+                    <el-input ref="textarea" type="textarea" :rows="6" :autosize="false" v-model="comment.content" placeholder="请输入评论"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -60,12 +60,29 @@
 </template>
 
 <script>
-import adminHeader from "components/admin-header";
-import $api from "api/admin";
+import { Form, FormItem, Row, Col, Tag, Input, Button, Message } from 'element-ui';
 
-import markMixin from "~/mixin/mark";
+import AdminHeader from "src/components/admin-header";
+
+import { timeStampFormat, timeAgoFormat } from 'src/utils/date'
+import Api from "src/api/admin";
+import markMixin from "src/mixin/mark";
 
 export default {
+  components: {
+    [Form.name]: Form,
+    [FormItem.name]: FormItem,
+    [Row.name]: Row,
+    [Col.name]: Col,
+    [Tag.name]: Tag,
+    [Input.name]: Input,
+    [Button.name]: Button,
+
+    AdminHeader
+  },
+  mixins: [
+    markMixin
+  ],
   data() {
     return {
       loading: true,
@@ -83,11 +100,6 @@ export default {
         content: [{ required: true, message: "请输入评论", trigger: "blur" }]
       },
       commentLoading: false,
-      commentFocus: {
-        cls: "el-textarea",
-        tag: "textarea",
-        focus: false
-      },
       breadcrumbs: [
         { text: "首页", path: "/admin" },
         { text: "文章管理", path: "/admin/articleList" },
@@ -98,10 +110,13 @@ export default {
   created() {
     this.getArticle();
   },
+  filters: {
+    timeStampFormat,
+    timeAgoFormat,
+  },
   methods: {
     getArticle() {
-      this.$http
-        .get($api.getArticle, {
+      Api.getArticle({
           params: {
             id: this.article.id
           }
@@ -127,26 +142,24 @@ export default {
       return replys.join("\n") + this.comment.content;
     },
     handleAddReply(data, index) {
-      for (let i = this.replys.length - 1; i >= 0; i--) {
-        if (index == this.replys[i].index) return;
+      if(!this.replys.some(reply => index == reply.index)){
+        this.replys.push({
+          index,
+          name: data.name,
+          content: data.content
+        });
       }
-      this.replys.push({
-        index,
-        name: data.name,
-        content: data.content
-      });
-      this.commentFocus.focus = true;
+      this.refs['textarea'].focus();
     },
     handleRemoveReply(index) {
       this.replys.splice(index, 1);
-      this.commentFocus.focus = true;
+      this.refs['textarea'].focus();
     },
     handleComment() {
       this.$refs.commentRef.validate(valid => {
         if (valid) {
           this.commentLoading = true;
-          this.$http
-            .post($api.postComment, {
+          Api.postComment({
               id: this.article.id,
               comment: Object.assign({}, this.comment, {
                 articleId: this.article.id,
@@ -155,7 +168,7 @@ export default {
             })
             .then(res => {
               if (200 == res.code) {
-                this.$message({ message: res.message, type: "success" });
+                Message({ message: res.message, type: "success" });
                 this.article.comments.push(res.data);
                 this.article.commentCount += 1;
                 this.replys = []; //清除回复楼层
@@ -167,10 +180,9 @@ export default {
       });
     },
     handleRemoveComment(comment, index) {
-      this.$confirm("确认删除该评论？")
+      MessageBox.confirm("确认删除该评论？")
         .then(res => {
-          this.$http
-            .delete($api.deleteComment, {
+          Api.deleteComment({
               params: {
                 articleId: this.article.id,
                 id: comment._id
@@ -178,7 +190,7 @@ export default {
             })
             .then(res => {
               if (200 == res.code) {
-                this.$message({
+                Message({
                   message: res.message,
                   type: "success"
                 });
@@ -189,10 +201,6 @@ export default {
         .catch(err => {});
     }
   },
-  components: {
-    "admin-header": adminHeader
-  },
-  mixins: [markMixin]
 };
 </script>
 

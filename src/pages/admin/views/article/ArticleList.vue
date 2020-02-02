@@ -14,8 +14,8 @@
           <el-table-column prop="about" min-width="200" label="文章简介" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="classify" min-width="100" label="所属分类" ></el-table-column>
           <el-table-column min-width="100" label="文章类型" :formatter="row => ['草稿', '公开', '私人'][row.status]"></el-table-column>
-          <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => $filter.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
-          <el-table-column prop="updatedAt" min-width="140" label="更新时间" :formatter="row => $filter.timeStampFormat(row.updatedAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
+          <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => $options.filters.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
+          <el-table-column prop="updatedAt" min-width="140" label="更新时间" :formatter="row => $options.filters.timeStampFormat(row.updatedAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
           <el-table-column min-width="220" label="操作" fixed="right" align="center">
             <template slot-scope="scope">
               <el-button type='primary' @click="toReadArticle(scope.row._id)">查看</el-button>
@@ -31,12 +31,23 @@
 </template>
 
 <script>
-import adminHeader from "components/admin-header";
-import blogPaging from "components/blog-paging";
+import { Table, TableColumn, Button, Message } from 'element-ui';
 
-import $api from "api/admin";
+import AdminHeader from "src/components/admin-header";
+import BlogPaging from "src/components/blog-paging";
+
+import { timeStampFormat } from 'src/utils/date'
+import Api from "src/api/admin";
 
 export default {
+  components: {
+    [Table.name]: Table,
+    [TableColumn.name]: TableColumn,
+    [Button.name]: Button,
+
+    AdminHeader,
+    BlogPaging,
+  },
   data() {
     return {
       listLoading: false,
@@ -50,7 +61,8 @@ export default {
       }
     }
   },
-  created() {
+  filters: {
+    timeStampFormat
   },
   methods: {
     toEditArticle(articleId) {
@@ -66,9 +78,7 @@ export default {
         ...this.$route.query
       }
       this.listLoading = true;
-      this.$http
-        .get($api.getArticle, { params })
-        .then(res => {
+      Api.getArticle({ params }).then(res => {
           if (200 == res.code) {
             let { list, total } = res.data;
             this.articleList = list;
@@ -83,13 +93,11 @@ export default {
     },
     //handleTabClick() {},
     handleRemoveArticle(id) {
-      this.$confirm("确认删除该文章？")
+      MessageBox.confirm("确认删除该文章？")
         .then(res => {
-          this.$http
-            .delete($api.deleteArticle, { params: { id } })
-            .then(res => {
+          Api.deleteArticle({ params: { id } }).then(res => {
               if (200 == res.code) {
-                this.$message({
+                Message({
                   message: res.message,
                   type: "success"
                 });
@@ -100,9 +108,5 @@ export default {
         .catch(err => {});
     },
   },
-  components: {
-    "admin-header": adminHeader,
-    "blog-paging": blogPaging
-  }
 };
 </script>

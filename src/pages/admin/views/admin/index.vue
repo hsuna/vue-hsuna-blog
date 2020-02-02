@@ -18,12 +18,21 @@
     <el-container class="container">
       <el-aside width="200px">
         <el-menu>
-            <el-submenu v-for="(item,index) in $router.options.routes" v-bind:key="item.path" :index="index+''" v-if="'backend' == item.type">
+          <template v-for="(item,index) in $router.options.routes">
+            <el-submenu :key="item.path" :index="index+''" v-if="'backend' == item.type">
                 <template slot="title"><i :class="item.iconCls" ></i>{{item.name}}</template>
-                <el-menu-item v-for="child in item.children" v-bind:key="child.path" v-if="!child.hidden" :index="item.path+'/'+child.path" @click="handleMenu(item.path+'/'+child.path)">
-                  {{child.name}}
-                </el-menu-item>
+                <template v-for="child in item.children">
+                  <el-menu-item 
+                    v-if="!child.hidden" 
+                    :key="child.path"
+                    :index="item.path+'/'+child.path" 
+                    @click="handleMenu(item.path+'/'+child.path)"
+                  >
+                    {{child.name}}
+                  </el-menu-item>
+                </template>
             </el-submenu>
+          </template>
         </el-menu>
       </el-aside>
       <el-main>
@@ -51,10 +60,28 @@
 </template>
 
 <script>
-import { ActionName } from "store/types";
+import { Dropdown, DropdownItem, DropdownMenu, Container, Aside, Menu, Submenu, MenuItem, Dialog, Form, Input, Main, FormItem, Button } from 'element-ui';
+
+import { ActionName } from '../../store/types'
 
 export default {
   name: "App",
+  components: {
+    [Dropdown.name]: Dropdown,
+    [DropdownMenu.name]: DropdownMenu,
+    [DropdownItem.name]: DropdownItem,
+    [Container.name]: Container,
+    [Aside.name]: Aside,
+    [Main.name]: Main,
+    [Menu.name]: Menu,
+    [MenuItem.name]: MenuItem,
+    [Submenu.name]: Submenu,
+    [Dialog.name]: Dialog,
+    [Form.name]: Form,
+    [FormItem.name]: FormItem,
+    [Input.name]: Input,
+    [Button.name]: Button,
+  },
   data() {
     let validateNewPass = (rule, value, callback) => {
       if (value === this.modifyForm.oldPass) {
@@ -111,27 +138,23 @@ export default {
           }
           break;
         case "logout":
-          this.$store.dispatch(ActionName.USER_LOGOUT, { vm: this });
+          this.$store.dispatch(ActionName.USER_LOGOUT);
           break;
       }
     },
     submitModifyForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$store
-            .dispatch(ActionName.MODIFY_PWD, {
-              data: {
-                userName: this.userName,
-                oldPass: this.modifyForm.oldPass,
-                newPass: this.modifyForm.newPass
-              },
-              vm: this
-            })
-            .then(res => {
-              if (200 == res.code) {
-                this.modifyDialogVisible = false;
-              }
-            });
+          this.$store.dispatch(ActionName.MODIFY_PWD, {
+            userName: this.userName,
+            oldPass: this.modifyForm.oldPass,
+            newPass: this.modifyForm.newPass
+          })
+          .then(res => {
+            if (200 == res.code) {
+              this.modifyDialogVisible = false;
+            }
+          });
         }
       });
     }

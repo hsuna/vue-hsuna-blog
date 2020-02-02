@@ -12,7 +12,12 @@
 </template>
 
 <script>
+import { Pagination } from 'element-ui'
+
 export default {
+  components: {
+    [Pagination.name]: Pagination,
+  },
   props: {
     layout: {
       type: String,
@@ -50,7 +55,6 @@ export default {
       this.$emit('update')
     }
   },
-  components: {}
 };
 </script>
 

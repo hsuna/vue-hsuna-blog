@@ -18,11 +18,16 @@
 </template>
 
 <script>
-import { ActionName } from "store/types";
-
-import $api from "api/admin";
+import { ActionName } from "../store/types";
+import { Form, FormItem, Input, Button } from 'element-ui';
 
 export default {
+  components: {
+    [Form.name]: Form,
+    [FormItem.name]: FormItem,
+    [Input.name]: Input,
+    [Button.name]: Button,
+  },
   data() {
     //自定义验证函数
     // 返回的数据
@@ -45,7 +50,7 @@ export default {
       this.$refs.user.validate(valid => {
         if (valid) {
           this.$store
-            .dispatch(ActionName.USER_LOGIN, { user: this.user, vm: this })
+            .dispatch(ActionName.USER_LOGIN, this.user)
             .then(res => {
               this.loadingflag = false;
             });

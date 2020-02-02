@@ -6,7 +6,7 @@
  * @Last Modified time: 2018-04-02 20:45:39
  */
 
-import { storage, StorageKey } from "./storage";
+import storage, { StorageKey } from "../../../utils/storage";
 import { MutationName } from "./types";
 
 export default {
@@ -27,20 +27,6 @@ export default {
   [MutationName.CLEAR_ARTICLE](state) {
     state.article = {};
     storage.remove(StorageKey.ARTICLE);
-  },
-  [MutationName.SET_VISITOR](state, visitor) {
-    if (!visitor) throw "Param visitor is undefined.";
-    state.visitor = visitor;
-    storage.set(StorageKey.VISITOR, visitor);
-  },
-  [MutationName.SET_COMMENT_USER](state, comment) {
-    if (!comment) throw "Param comment is undefined.";
-    state.visitor.comment = comment;
-    storage.set(StorageKey.VISITOR, state.visitor);
-  },
-  [MutationName.CLEAR_COMMENT_USER](state) {
-    state.visitor.comment = {};
-    storage.set(StorageKey.VISITOR, state.visitor);
   },
   [MutationName.SET_TAGS](state, tags) {
     if (!tags) throw "Param tags is undefined.";

@@ -12,7 +12,7 @@
           <el-table-column type='index' width="60" ></el-table-column>
           <el-table-column prop="title" min-width="280" label="清单名称" ></el-table-column>
           <el-table-column prop="content" min-width="480" label="清单内容" ></el-table-column>
-          <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => $filter.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
+          <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => $options.filters.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
           <el-table-column min-width="150" label="操作" fixed="right" align="center">
             <template slot-scope='scope'>
               <el-button type='danger' @click="handleRemoveInventory(scope.row._id)">删除</el-button>
@@ -46,11 +46,27 @@
 </template>
 
 <script>
-import adminHeader from "components/admin-header";
-import blogPaging from "components/blog-paging";
-import $api from "api/admin";
+import { Table, TableColumn, Dialog, Form, FormItem, Button, Input, Message } from 'element-ui';
+
+import AdminHeader from "src/components/admin-header";
+import BlogPaging from "src/components/blog-paging";
+
+import { timeStampFormat } from 'src/utils/date'
+import Api from "src/api/admin";
 
 export default {
+  components: {
+    [Table.name]: Table,
+    [TableColumn.name]: TableColumn,
+    [Dialog.name]: Dialog,
+    [Form.name]: Form,
+    [FormItem.name]: FormItem,
+    [Button.name]: Button,
+    [Input.name]: Input,
+
+    AdminHeader,
+    BlogPaging,
+  },
   data() {
     return {
       listLoading: false,
@@ -71,11 +87,10 @@ export default {
       }
     };
   },
-  components: {
-    "admin-header": adminHeader,
-    "blog-paging": blogPaging
-  },
   created() {
+  },
+  filters: {
+    timeStampFormat
   },
   methods: {
     getInventoryList() {
@@ -85,9 +100,7 @@ export default {
         ...this.$route.query
       }
       this.listLoading = true;
-      this.$http
-        .get($api.getInventory, { params })
-        .then(res => {
+      Api.getInventory({ params }).then(res => {
           if (200 == res.code) {
             let { list, total } = res.data;
             this.inventoryList = list;
@@ -104,10 +117,10 @@ export default {
       this.$refs.dialog.validate(valid => {
         if (valid) {
           //创建清单
-          this.$http.post($api.postInventory, this.dialogData).then(res => {
+          Api.postInventory(this.dialogData).then(res => {
             if (200 == res.code) {
               this.dialogVisible = false;
-              this.$message({
+              Message({
                 message: res.message,
                 type: "success"
               });
@@ -119,12 +132,11 @@ export default {
       });
     },
     handleRemoveInventory(id) {
-      this.$confirm("确认删除该清单？").then(res => {
-        this.$http
-          .delete($api.deleteInventory, { params: { id } })
-          .then(res => {
+      MessageBox.confirm("确认删除该清单？")
+      .then(res => {
+        Api.deleteInventory({ params: { id } }).then(res => {
             if (200 == res.code) {
-              this.$message({
+              Message({
                 message: res.message,
                 type: "success"
               });

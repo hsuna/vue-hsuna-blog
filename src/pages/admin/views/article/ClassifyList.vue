@@ -11,8 +11,8 @@
         <el-table style='width:100%' align="center" :data="classList"  v-loading="listLoading" element-loading-text="拼命加载中">
           <el-table-column type='index' width="60" ></el-table-column>
           <el-table-column prop="title" min-width="280" label="分类名称" ></el-table-column>
-          <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => $filter.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
-          <el-table-column prop="updatedAt" min-width="140" label="更新时间" :formatter="row => $filter.timeStampFormat(row.updatedAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
+          <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => $options.filters.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
+          <el-table-column prop="updatedAt" min-width="140" label="更新时间" :formatter="row => $options.filters.timeStampFormat(row.updatedAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
           <el-table-column min-width="150" label="操作" fixed="right" align="center">
             <template slot-scope='scope'>
               <el-button type='primary' @click="showClassifyDialg({id:scope.row._id, title:scope.row.title})">编辑</el-button>
@@ -38,10 +38,26 @@
 </template>
 
 <script>
-import adminHeader from "components/admin-header";
-import $api from "api/admin";
+import { Table, TableColumn, Button, Form, FormItem, Input, Dialog, Message } from 'element-ui';
+
+import AdminHeader from "src/components/admin-header";
+
+import { timeStampFormat } from 'src/utils/date'
+
+import Api from "src/api/admin";
 
 export default {
+  components: {
+    [Table.name]: Table,
+    [TableColumn.name]: TableColumn,
+    [Form.name]: Form,
+    [FormItem.name]: FormItem,
+    [Dialog.name]: Dialog,
+    [Input.name]: Input,
+    [Button.name]: Button,
+
+    AdminHeader
+  },
   data() {
     return {
       dialogVisible: false,
@@ -57,18 +73,16 @@ export default {
       }
     };
   },
-  components: {
-    "admin-header": adminHeader
-  },
   created() {
     this.getClassifyList();
+  },
+  filters: {
+    timeStampFormat,
   },
   methods: {
     getClassifyList() {
       this.listLoading = true;
-      this.$http
-        .get($api.getClassify)
-        .then(res => {
+      Api.getClassify().then(res => {
           if (200 == res.code) {
             let {list, total} = res.data;
             this.classList = list;
@@ -82,10 +96,10 @@ export default {
           let { id, title } = this.dialogData;
           if (-1 == this.dialogData.id) {
             //创建分类
-            this.$http.post($api.postClassify, { title }).then(res => {
+            Api.postClassify({ title }).then(res => {
               if (200 == res.code) {
                 this.dialogVisible = false;
-                this.$message({
+                Message({
                   message: res.message,
                   type: "success"
                 });
@@ -94,10 +108,10 @@ export default {
             });
           } else {
             //修改分类
-            this.$http.put($api.putClassify, { id, title }).then(res => {
+            Api.putClassify({ id, title }).then(res => {
               if (200 == res.code) {
                 this.dialogVisible = false;
-                this.$message({
+                Message({
                   message: res.message,
                   type: "success"
                 });
@@ -109,19 +123,17 @@ export default {
       });
     },
     handleRemoveClassify(id) {
-      this.$confirm("确认删除该分类？")
+      MessageBox.confirm("确认删除该分类？")
         .then(res => {
-          this.$http
-            .delete($api.deleteClassify, { params: { id } })
-            .then(res => {
-              if (200 == res.code) {
-                this.$message({
-                  message: res.message,
-                  type: "success"
-                });
-                this.getClassifyList();
-              }
-            });
+          Api.deleteClassify({ params: { id } }).then(res => {
+            if (200 == res.code) {
+              Message({
+                message: res.message,
+                type: "success"
+              });
+              this.getClassifyList();
+            }
+          });
         })
         .catch(err => {});
     },

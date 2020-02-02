@@ -15,7 +15,7 @@
               <a :href="scope.row.url" target="_blank">{{ scope.row.name }}</a>
             </template>
           </el-table-column>
-          <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => $filter.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
+          <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => $options.filters.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
           <el-table-column min-width="150" label="操作" fixed="right" align="center">
             <template slot-scope='scope'>
               <el-button type='danger' @click="handleRemoveLink(scope.row._id)">删除</el-button>
@@ -44,12 +44,27 @@
 </template>
 
 <script>
-import adminHeader from "components/admin-header";
-import blogPaging from "components/blog-paging";
+import { TableColumn, Table, Button, Dialog, Form, FormItem, Input } from 'element-ui';
 
-import $api from "api/admin";
+import AdminHeader from "src/components/admin-header";
+import BlogPaging from "src/components/blog-paging";
+
+import { timeStampFormat } from 'src/utils/date'
+import Api from "src/api/admin";
 
 export default {
+  components: {
+    [Table.name]: Table,
+    [TableColumn.name]: TableColumn,
+    [Dialog.name]: Dialog,
+    [Form.name]: Form,
+    [FormItem.name]: FormItem,
+    [Input.name]: Input,
+    [Button.name]: Button,
+
+    AdminHeader,
+    BlogPaging,
+  },
   data() {
     return {
       dialogVisible: false,
@@ -70,11 +85,10 @@ export default {
       }
     };
   },
-  components: {
-    "admin-header": adminHeader,
-    "blog-paging": blogPaging
-  },
   created() {
+  },
+  filters: {
+    timeStampFormat
   },
   methods: {
     getLinkList() {
@@ -84,7 +98,7 @@ export default {
         ...this.$route.query
       }      
       this.listLoading = true;
-      this.$http.get($api.getLink, { params }).then(res => {
+      Api.getLink({ params }).then(res => {
         if (200 == res.code) {
           let { list, total } = res.data;
           this.linkList = list;
@@ -101,10 +115,10 @@ export default {
       this.$refs.dialog.validate(valid => {
         if (valid) {
           //创建链接
-          this.$http.post($api.postLink, this.dialogData).then(res => {
+          Api.postLink(this.dialogData).then(res => {
             if (200 == res.code) {
               this.dialogVisible = false;
-              this.$message({
+              Message({
                 message: res.message,
                 type: "success"
               });
@@ -116,10 +130,10 @@ export default {
       });
     },
     handleRemoveLink(id) {
-      this.$confirm("确认删除该链接？").then(res => {
-        this.$http.delete($api.deleteLink, { params: { id } }).then(res => {
+      MessageBox.confirm("确认删除该链接？").then(res => {
+        Api.deleteLink({ params: { id } }).then(res => {
           if (200 == res.code) {
-            this.$message({
+            Message({
               message: res.message,
               type: "success"
             });

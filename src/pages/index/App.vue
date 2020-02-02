@@ -39,18 +39,30 @@
 </template>
 
 <script>
-import blogMain from "components/blog-main";
-import profileCard from "components/profile-card";
-import {
-  profileSideHot,
-  profileSideClassify,
-  profileSideComment
-} from "components/profile-side";
+import { Tooltip } from 'element-ui';
 
-import $api from "api/blog";
+import BlogMain from "src/components/blog-main";
+import ProfileCard from "src/components/profile-card";
+import {
+  ProfileSideHot,
+  ProfileSideClassify,
+  ProfileSideComment
+} from "src/components/profile-side";
+
+import * as utils from 'src/utils/search'
+import Api from "src/api/blog";
 
 export default {
   name: "App",
+  components: {
+    [Tooltip.name]: Tooltip,
+
+    BlogMain,
+    ProfileCard,
+    ProfileSideHot,
+    ProfileSideClassify,
+    ProfileSideComment,
+  },
   data() {
     return {
       loading: true,
@@ -70,17 +82,16 @@ export default {
 
     this.getProfileList({
       page:1,
-      ...this.$utils.params(),
+      ...utils.params(),
     });
   },
   methods: {
     getUserInfo() {
-      this.$http.get($api.getUserInfo, {
+      Api.getUserInfo({
         params: {
           userName: this.$store.getters.userName || 'hsuna'
         }
-      })
-      .then(res => {
+      }).then(res => {
         if (200 == res.code) {
           let user = res.data;
           this.nickname = user.nickname || "";
@@ -92,7 +103,7 @@ export default {
       });
     },
     getProfileList(params) {
-      this.$http.get($api.getArticle, { params }).then(res => {
+      Api.getArticle({ params }).then(res => {
         if (200 == res.code) {
           this.profileList = res.data.list;
           this.profileTotal = res.data.total;
@@ -103,20 +114,13 @@ export default {
     },
     handlePaginChange(type, val) {
       if ("page" == type) {
-        window.location.href = '/index.html?' + this.$utils.query({
-          ...this.$utils.params(),
+        window.location.href = '/index.html?' + utils.query({
+          ...utils.params(),
           page: val
         })
       }
     }
   },
-  components: {
-    "blog-main": blogMain,
-    "profile-card": profileCard,
-    "profile-side-hot": profileSideHot,
-    "profile-side-classify": profileSideClassify,
-    "profile-side-comment": profileSideComment
-  }
 };
 </script>
 

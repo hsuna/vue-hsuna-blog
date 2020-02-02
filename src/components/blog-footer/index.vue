@@ -2,7 +2,7 @@
   <div class="blog-footer">
     <div class="footer-inner">
       <div class="footer-content">
-        {{Date.now(), 'yyyy' | timeStampFormat}} © <a title="电子邮件" href="mailto:me@husna.com">我的邮件</a>
+        {{curYear}} © <a title="电子邮件" href="mailto:me@husna.com">我的邮件</a>
         | <a title="简历" target="_blank" href="http://resume.hsuna.com">简历</a>
         | <a title="GitHub" target="_blank" href="https://github.com/hsuna">GitHub</a>
       </div>
@@ -12,11 +12,17 @@
 
 
 <script>
-import $api from "api/blog";
-
+import { timeStampFormat } from 'src/utils/date'
+ 
 export default {
+  name: 'blog-footer',
   data() {
     return {};
+  },
+  computed: {
+    curYear() {
+      return timeStampFormat(Date.now(), 'yyyy')
+    }
   },
   created() {},
   mounted() {
@@ -26,7 +32,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .blog-footer {
   margin-top: 10px;
   background-color: #fff;

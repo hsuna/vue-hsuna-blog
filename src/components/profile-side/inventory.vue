@@ -29,9 +29,16 @@
 </template>
 
 <script>
-import $api from "api/blog";
+import { Pagination, Collapse, CollapseItem } from 'element-ui';
+
+import Api from "src/api/blog";
 
 export default {
+  components: {
+    [Collapse.name]: Collapse,
+    [CollapseItem.name]: CollapseItem,
+    [Pagination.name]: Pagination,
+  },
   data() {
     return {
       loading: true,
@@ -49,8 +56,7 @@ export default {
   },
   methods: {
     getInventoryList() {
-      this.$http
-        .get($api.getInventory, { params: this.inventoryQuery })
+      Api.getInventory({ params: this.inventoryQuery })
         .then(res => {
           if (200 == res.code) {
             let { list, total } = res.data;

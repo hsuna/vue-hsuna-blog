@@ -3,12 +3,16 @@
 </template>
 
 <script>
-import { ActionName, MutationName } from "store/types";
+import { Message } from 'element-ui';
+import ArticleEdit from "src/components/article-edit";
 
-import articleEdit from "components/article-edit";
-import $api from "api/admin";
+import { ActionName, MutationName } from "../../store/types";
+import Api from "src/api/admin";
 
 export default {
+  components: {
+    ArticleEdit
+  },
   data() {
     return {
       article: {
@@ -26,8 +30,7 @@ export default {
   },
   created() {
     //获取编辑信息
-    this.$http
-      .get($api.getArticle, {
+    Api.getArticle({
         params: {
           id: this.article.id
         }
@@ -39,25 +42,22 @@ export default {
             Object.assign(this.article, list[0]);
           } else {
             this.$router.replace({ path: "/admin/articleList" });
-            this.$message.error("不存在该文章");
+            Message.error("不存在该文章");
           }
         }
       });
   },
   methods: {
     handlePublish(callback) {
-      this.$http.put($api.putArticle, this.article).then(res => {
+      Api.putArticle(this.article).then(res => {
         if (200 == res.code) {
           this.$store.dispatch(ActionName.ADD_ARTICLE_TAGS, this.article.tags);
-          this.$message({ message: res.message, type: "success" });
+          Message({ message: res.message, type: "success" });
           this.$router.replace({ path: "/admin/articleList" });
         }
         callback && callback();
       });
     }
   },
-  components: {
-    "article-edit": articleEdit
-  }
 };
 </script>
