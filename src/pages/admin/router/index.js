@@ -10,7 +10,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import routes from "./routes";
-import store from "src/store";
+import store from "../store";
 import { setDocumentTitle } from "src/utils/title";
 
 Vue.use(VueRouter);

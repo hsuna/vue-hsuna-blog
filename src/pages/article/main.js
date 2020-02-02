@@ -11,9 +11,6 @@
 import Vue from "vue";
 import App from "./App";
 
-/**添加-store */
-import store from "src/store";
-
 /** element-ui */
 import 'src/plugins/element-init'
 
@@ -21,6 +18,5 @@ Vue.config.productionTip = false;
 
 new Vue({
   el: "#app",
-  store,
   render: h => h(App)
 });

@@ -9,13 +9,12 @@ import { Message, MessageBox } from "element-ui";
 
 import { ActionName, MutationName } from "./types";
 
-import AdminApi from "src/api/admin";
-import GuestApi from "src/api/blog";
+import Api from "src/api/admin";
 
 export default {
   [ActionName.USER_LOGIN]({ commit }, user) {
     return new Promise((resolve, reject) => {
-      AdminApi.postLogin(user).then(res => {
+      Api.postLogin(user).then(res => {
         if (200 == res.code) {
           commit(MutationName.SET_USER, {
             token: res.token,
@@ -45,7 +44,7 @@ export default {
   },
   [ActionName.MODIFY_PWD]({ commit }, data) {
     return new Promise((resolve, reject) => {
-      AdminApi.putUserPassword(data).then(res => {
+      Api.putUserPassword(data).then(res => {
         if (200 == res.code) {
           commit(MutationName.CLEAR_USER);
           Message({
@@ -63,26 +62,4 @@ export default {
     tags = Array.from(new Set([...tags, ...addTags]));
     commit(MutationName.SET_TAGS, tags);
   },
-  [ActionName.ADD_VIEW_TIME]({ state, commit }, article) {
-    let { visitor } = state;
-    if (!visitor.ids) {
-      visitor.ids = [];
-    }
-    return new Promise((resolve, reject) => {
-      if (!visitor.ids.includes(article.id)) {
-        GuestApi.putArticleViewCount({
-          id: article.id,
-          viewCount: article.viewCount + 1
-        })
-        .then(res => {
-          visitor.ids.push(article.id);
-          commit(MutationName.SET_VISITOR, visitor);
-          resolve({
-            ...res,
-            count: article.viewCount + 1
-          });
-        });
-      }
-    });
-  }
 };

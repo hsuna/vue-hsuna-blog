@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { ActionName } from "src/store/types";
+import { ActionName } from "../store/types";
 import { Form, FormItem, Input, Button } from 'element-ui';
 
 export default {

@@ -14,7 +14,7 @@ import App from "./App";
 /**添加-vue路由器 */
 import router from "./router";
 /**添加-store */
-import store from "src/store";
+import store from "./store";
 
 /** element-ui */
 import 'src/plugins/element-init'

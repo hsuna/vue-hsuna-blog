@@ -20,4 +20,8 @@ const storage = {
   }
 };
 
-export { storage, StorageKey };
+export { 
+  StorageKey 
+}
+
+export default storage;

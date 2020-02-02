@@ -5,7 +5,7 @@
  * @Last Modified by: Hsuna
  * @Last Modified time: 2018-04-02 19:23:10
  */
-import { storage, StorageKey } from "./storage";
+import storage, { StorageKey } from "src/utils/storage";
 
 const defaultValue = {
   tags: '["HTML", "CSS", "JavaScript"]'
@@ -15,5 +15,4 @@ export default {
   user: storage.get(StorageKey.USER),
   tags: storage.get(StorageKey.TAGS, defaultValue.tags),
   article: storage.get(StorageKey.ARTICLE),
-  visitor: storage.get(StorageKey.VISITOR)
 };

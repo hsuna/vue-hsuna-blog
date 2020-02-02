@@ -108,14 +108,16 @@
 import { FormItem, Form, Row, Col, Input, Button, Checkbox, Tag, Message } from 'element-ui';
 import BlogMain from "src/components/blog-main";
 
-import { ActionName, MutationName } from "src/store/types";
 import { setDocumentTitle } from "src/utils/title";
 
+import storage, { StorageKey } from 'src/utils/storage'
 import { timeAgoFormat, timeStampFormat } from 'src/utils/date'
 import { params } from 'src/utils/search'
 import markMixin from "src/mixin/mark";
 
 import Api from "src/api/blog";
+
+let visitor = storage.get(StorageKey.VISITOR)
 
 export default {
   components: {
@@ -201,13 +203,21 @@ export default {
       return replys.join("\n") + this.comment.content;
     },
     updateArticleViewCount() {
-      this.$store
-        .dispatch(ActionName.ADD_VIEW_TIME, this.article)
+      if (!visitor.ids) visitor.ids = []
+      
+      if (!visitor.ids.includes(this.article.id)) {
+        Api.putArticleViewCount({
+          id: this.article.id,
+          viewCount: this.article.viewCount + 1
+        })
         .then(res => {
-          if (200 == res.code) {
-            this.article.viewCount = res.count;
+          if(200 == res.code){
+            this.article.viewCount += 1;
+            visitor.ids.push(this.article.id);
+            storage.set(StorageKey.VISITOR, visitor);
           }
         });
+      }
     },
     handleAddReply(data, index) {
       if(!this.replys.some(reply => reply.index === index)){
@@ -243,13 +253,13 @@ export default {
                 this.$refs.commentRef.resetFields(); //清除表单状态
                 if (this.comment.checked) {
                   this.comment = { name, email, checked };
-                  this.$store.commit(
-                    MutationName.SET_COMMENT_USER,
-                    this.comment
-                  );
+                  // 缓存用户信息
+                  visitor.comment = { ...this.comment };
                 } else {
-                  this.$store.commit(MutationName.CLEAR_COMMENT_USER);
+                  // 清空用户信息
+                  visitor.comment = {};
                 }
+                storage.set(StorageKey.VISITOR, visitor);
               }
               this.commentLoading = false;
             });

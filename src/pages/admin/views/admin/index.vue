@@ -60,8 +60,9 @@
 </template>
 
 <script>
-import { ActionName } from "src/store/types";
 import { Dropdown, DropdownItem, DropdownMenu, Container, Aside, Menu, Submenu, MenuItem, Dialog, Form, Input, Main, FormItem, Button } from 'element-ui';
+
+import { ActionName } from '../../store/types'
 
 export default {
   name: "App",

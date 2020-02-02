@@ -6,10 +6,10 @@
  * @Last Modified time: 2018-04-20 10:27:42
  */
 import Axios from "axios"
-import store from "src/store"
 
-import { MutationName } from "src/store/types";
 import { Message } from "element-ui";
+
+import storage, { StorageKey } from 'src/utils/storage'
 
 Axios.defaults.baseURL = process.env.API_HOST
 Axios.defaults.timeout = 600000000;
@@ -49,7 +49,7 @@ Axios.interceptors.response.use(
         break;
       case 401:
         // 这里写清除token的代码
-        store.commit(MutationName.CLEAR_USER);
+        storage.remove(StorageKey.USER);
         /* router.replace({
           path: "/login",
           query: { redirect: router.currentRoute.fullPath } //登录成功后跳入浏览的当前页面

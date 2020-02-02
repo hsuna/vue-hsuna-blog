@@ -6,7 +6,8 @@
 import { Message } from 'element-ui';
 import ArticleEdit from "src/components/article-edit";
 
-import { ActionName, MutationName } from "src/store/types";
+import { ActionName, MutationName } from "../../store/types";
+
 import Api from "src/api/admin";
 
 export default {
