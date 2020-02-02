@@ -21,7 +21,7 @@ Axios.header = {
 //添加请求拦截器
 Axios.interceptors.request.use(
   config => {
-    let { token } = store.getters;
+    let { token } = storage.get(StorageKey.USER);
     if (token) {
       // 判断是否存在token，如果存在的话，则每个http header都加上token
       config.headers.Authorization = token;

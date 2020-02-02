@@ -4,17 +4,25 @@
         <a href="/archive.html" title="档案" v-if="isShowMenuByName('archive')"><i class="fa fa-archive"></i></a>
         <a href="/about.html" title="关于" v-if="isShowMenuByName('about')"><i class="fa fa-user"></i></a>
         <a href="/essay.html" title="手札" v-if="isShowMenuByName('essay')"><i class="fa fa-pencil"></i></a>
-        <a href="/admin.html" title="管理" v-if="$store.getters.token"><i class="fa fa-cog"></i></a>
+        <a href="/admin.html" title="管理" v-if="isLogin"><i class="fa fa-cog"></i></a>
         <a href="javascript:;" title="返回顶部" @click="handleBackTop"><i class="fa fa-arrow-up"></i></a>
     </div>
 </template>
 
 <script>
 import { params } from 'src/utils/search'
+import storage, { StorageKey } from 'src/utils/storage'
+
 export default {
   name: 'float-menu',
   data() {
     return {};
+  },
+  computed: {
+    isLogin(){
+      let { token } = storage.get(StorageKey.USER);
+      return Boolean(token)
+    }
   },
   methods: {
     isShowMenuByName(name) {
