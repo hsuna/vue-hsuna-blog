@@ -8,11 +8,12 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "webpack-dev-server --inline --progress --config build/webpackDevServer.config.js",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "analyz": "npm run build --report"
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "element-ui": "^2.13.0",
+    "element-ui": "2.13.0",
     "highlight.js": "^9.18.0",
     "marked": "^0.8.0",
     "vue": "^2.5.2",
@@ -37,7 +38,7 @@
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
-    "mini-css-extract-plugin": "0.5.0",
+    "mini-css-extract-plugin": "^0.5.0",
     "node-notifier": "^5.4.3",
     "node-sass": "^4.13.1",
     "optimize-css-assets-webpack-plugin": "^3.2.1",

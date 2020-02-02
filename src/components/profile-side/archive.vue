@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import $api from "src/api/blog";
+import Api from "src/api/blog";
 
 export default {
   props: {
@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     getAchiveCount() {
-      this.$http.get($api.getAchiveCount).then(res => {
+      Api.getAchiveCount().then(res => {
         if (200 == res.code) {
           this.archiveList = res.data.map(group => {
             let { _id: { year, month }, count } = group;

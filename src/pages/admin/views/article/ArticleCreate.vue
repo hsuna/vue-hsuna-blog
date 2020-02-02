@@ -3,11 +3,16 @@
 </template>
 
 <script>
+import { Message } from 'element-ui';
+import ArticleEdit from "src/components/article-edit";
+
 import { ActionName, MutationName } from "src/store/types";
-import articleEdit from "src/components/article-edit";
-import $api from "src/api/admin";
+import Api from "src/api/admin";
 
 export default {
+  components: {
+    ArticleEdit
+  },
   data() {
     return {
       article: {
@@ -41,20 +46,17 @@ export default {
       }
     },
     handlePublish(callback) {
-      this.$http.post($api.postArticle, this.article).then(res => {
+      Api.postArticle(this.article).then(res => {
         if (200 == res.code) {
           this.isRecord = false;
           this.$store.dispatch(ActionName.ADD_ARTICLE_TAGS, this.article.tags);
           this.$store.commit(MutationName.CLEAR_ARTICLE); //清除缓存的文章
-          this.$message({ message: res.message, type: "success" });
+          Message({ message: res.message, type: "success" });
           this.$router.replace({ path: "/admin/articleList" });
         }
         callback && callback();
       });
     }
   },
-  components: {
-    "article-edit": articleEdit
-  }
 };
 </script>

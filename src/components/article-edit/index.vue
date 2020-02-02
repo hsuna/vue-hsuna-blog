@@ -38,7 +38,11 @@
             <el-row>
               <el-col :span="23" :push="1">
                 <el-form-item label="文章内容：" label-width="100px" class="show" prop="content" >
-                  <markdown-editor v-model="article.content" preview-class="markdown-body" :configs="configs"></markdown-editor>
+                  <vue-simplemde 
+                    preview-class="markdown-body" 
+                    v-model="article.content" 
+                    :configs="configs"
+                  />
                 </el-form-item>
               </el-col>
             </el-row>
@@ -84,15 +88,16 @@
 </template>
 
 <script>
+import { Input, Select, Option, Radio, Form, FormItem, Row, Col, Dialog, Upload, Button, Message, MessageBox }  from 'element-ui'
 import VueSimplemde from "vue-simplemde";
 import AdminHeader from "src/components/admin-header";
-import { Input, Select, Option, Radio, Form, FormItem, Row, Col, Dialog, Upload }  from 'element-ui'
 
 import markMixin from "src/mixin/mark";
 
-import $api from "src/api/admin";
+import Api from "src/api/admin";
 
 export default {
+  name: 'article-edit',
   components: {
     [Input.name]: Input,
     [Select.name]: Select,
@@ -102,6 +107,7 @@ export default {
     [Form.name]: Form,
     [FormItem.name]: FormItem,
     [Upload.name]: Upload,
+    [Button.name]: Button,
     [Row.name]: Row,
     [Col.name]: Col,
 
@@ -151,7 +157,7 @@ export default {
         content: [{ required: true, message: "请输入内容", trigger: "change" }]
       },
 
-      fileAction: $api.postFileUpload,
+      fileAction: Api.postFileUpload(),
       fileHeaders: {
         Authorization: this.$store.getters.token
       },
@@ -168,7 +174,7 @@ export default {
   },
   created() {
     //获取分类列表
-    this.$http.get($api.getClassify).then(res => {
+    Api.getClassify().then(res => {
       if (200 == res.code) {
         let { list, total } = res.data;
         this.classifyList = list;
@@ -191,7 +197,7 @@ export default {
     },
     handleSuccessFile(res, file, fileList) {
       if (200 == res.code) {
-        this.$message({ message: res.message, type: "success" });
+        Message({ message: res.message, type: "success" });
         Object.assign(file, res.data);
         this.article.files = [ ...fileList ];
       }
@@ -202,8 +208,7 @@ export default {
     },
     handleRemoveFile(file, fileList) {
       return new Promise((resolve, reject) => {
-        this.$http
-          .delete($api.deleteFileUpload, {
+        Api.deleteFileUpload({
             params: {
               articleId: this.article.id,
               id: file.id
@@ -212,7 +217,7 @@ export default {
           .then(res => {
             if (200 == res.code) {
               resolve();
-              this.$message({ message: res.message, type: "success" });
+              Message({ message: res.message, type: "success" });
             } else {
               reject();
             }
@@ -234,7 +239,7 @@ export default {
     },
     handleBack() {
       if (this.isModify) {
-        this.$confirm("文章内容有改动，是否不保存直接返回？")
+        MessageBox.confirm("文章内容有改动，是否不保存直接返回？")
           .then(res => {
             window.location.href = '/admin/articleList.html';
           })
@@ -248,6 +253,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~simplemde/dist/simplemde.min.css';
 @import "~highlight.js/styles/googlecode.css";
 @import "~src/assets/styles/markdown-body";
 .el-upload__tip {

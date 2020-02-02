@@ -18,12 +18,21 @@
     <el-container class="container">
       <el-aside width="200px">
         <el-menu>
-            <el-submenu v-for="(item,index) in $router.options.routes" v-bind:key="item.path" :index="index+''" v-if="'backend' == item.type">
+          <template v-for="(item,index) in $router.options.routes">
+            <el-submenu :key="item.path" :index="index+''" v-if="'backend' == item.type">
                 <template slot="title"><i :class="item.iconCls" ></i>{{item.name}}</template>
-                <el-menu-item v-for="child in item.children" v-bind:key="child.path" v-if="!child.hidden" :index="item.path+'/'+child.path" @click="handleMenu(item.path+'/'+child.path)">
-                  {{child.name}}
-                </el-menu-item>
+                <template v-for="child in item.children">
+                  <el-menu-item 
+                    v-if="!child.hidden" 
+                    :key="child.path"
+                    :index="item.path+'/'+child.path" 
+                    @click="handleMenu(item.path+'/'+child.path)"
+                  >
+                    {{child.name}}
+                  </el-menu-item>
+                </template>
             </el-submenu>
+          </template>
         </el-menu>
       </el-aside>
       <el-main>
@@ -128,27 +137,23 @@ export default {
           }
           break;
         case "logout":
-          this.$store.dispatch(ActionName.USER_LOGOUT, { vm: this });
+          this.$store.dispatch(ActionName.USER_LOGOUT);
           break;
       }
     },
     submitModifyForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$store
-            .dispatch(ActionName.MODIFY_PWD, {
-              data: {
-                userName: this.userName,
-                oldPass: this.modifyForm.oldPass,
-                newPass: this.modifyForm.newPass
-              },
-              vm: this
-            })
-            .then(res => {
-              if (200 == res.code) {
-                this.modifyDialogVisible = false;
-              }
-            });
+          this.$store.dispatch(ActionName.MODIFY_PWD, {
+            userName: this.userName,
+            oldPass: this.modifyForm.oldPass,
+            newPass: this.modifyForm.newPass
+          })
+          .then(res => {
+            if (200 == res.code) {
+              this.modifyDialogVisible = false;
+            }
+          });
         }
       });
     }

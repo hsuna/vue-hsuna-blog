@@ -25,7 +25,7 @@ import ProfileEssay from "src/components/profile-essay";
 import { ProfileSideInventory, ProfileSideLink } from "src/components/profile-side";
 
 import * as utils from 'src/utils/search'
-import $api from "src/api/blog";
+import Api from "src/api/blog";
 
 export default {
   name: "App",
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     getEssayList(params) {
-      this.$http.get($api.getEssay, { params }).then(res => {
+      Api.getEssay({ params }).then(res => {
         if (200 == res.code) {
           let { list, total } = res.data;
           this.essayList = list;

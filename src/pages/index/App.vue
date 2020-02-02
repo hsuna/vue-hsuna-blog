@@ -50,7 +50,7 @@ import {
 } from "src/components/profile-side";
 
 import * as utils from 'src/utils/search'
-import $api from "src/api/blog";
+import Api from "src/api/blog";
 
 export default {
   name: "App",
@@ -87,12 +87,11 @@ export default {
   },
   methods: {
     getUserInfo() {
-      this.$http.get($api.getUserInfo, {
+      Api.getUserInfo({
         params: {
           userName: this.$store.getters.userName || 'hsuna'
         }
-      })
-      .then(res => {
+      }).then(res => {
         if (200 == res.code) {
           let user = res.data;
           this.nickname = user.nickname || "";
@@ -104,7 +103,7 @@ export default {
       });
     },
     getProfileList(params) {
-      this.$http.get($api.getArticle, { params }).then(res => {
+      Api.getArticle({ params }).then(res => {
         if (200 == res.code) {
           this.profileList = res.data.list;
           this.profileTotal = res.data.total;

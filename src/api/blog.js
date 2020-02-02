@@ -5,33 +5,32 @@
  * @Last Modified by: Hsuna
  * @Last Modified time: 2018-04-26 00:27:37
  */
-
-const API_HOST = process.env.API_HOST
+import Axios from './axios'
 
 export default {
   //////// 用户模块 ////////
-  getUserInfo: API_HOST + "user/userInfo", //获取用户信息
+  getUserInfo: d => Axios.get("user/userInfo", d), //获取用户信息
 
   //////// 分类模块 ////////
-  getClassify: API_HOST + "classify", //查询分类
-  getClassifyCount: API_HOST + "article/classifyCount", //查询分类数量
+  getClassify: d => Axios.get("classify", d), //查询分类
+  getClassifyCount: d => Axios.get("article/classifyCount", d), //查询分类数量
 
   //////// 文章模块 ////////
-  getArticle: API_HOST + "article", //查询文章
-  getArticleDetail: API_HOST + "article/detail", //查询文章详情
-  getArticleRelate: API_HOST + "article/relate", //查询文章相关
-  getArticleHot: API_HOST + "article/hot", //查询热门文章
-  getArticleAchive: API_HOST + "article/achive", //查询文章归档
+  getArticle: d => Axios.get("article", d), //查询文章
+  getArticleDetail: d => Axios.get("article/detail", d), //查询文章详情
+  getArticleRelate: d => Axios.get("article/relate", d), //查询文章相关
+  getArticleHot: d => Axios.get("article/hot", d), //查询热门文章
+  getArticleAchive: d => Axios.get("article/achive", d), //查询文章归档
 
-  getAchiveCount: API_HOST + "article/achiveCount", //查询文章归档
-  putArticleViewCount: API_HOST + "article/viewCount", //更新浏览次数
+  getAchiveCount: d => Axios.get("article/achiveCount", d), //查询文章归档
+  putArticleViewCount: d => Axios.put("article/viewCount", d), //更新浏览次数
 
   ////////// 评论模块 ////////
-  postComment: API_HOST + "comment", //添加文章评论
-  getCommentNew: API_HOST + "comment/new", //查询最新留言
+  postComment: d => Axios.post("comment", d), //添加文章评论
+  getCommentNew: d => Axios.get("comment/new", d), //查询最新留言
 
   /////// 手札模块 ////////
-  getEssay: API_HOST + "essay", //查询随记
-  getInventory: API_HOST + "inventory", //查询随记
-  getLink: API_HOST + "link", //查询随记
+  getEssay: d => Axios.get("essay", d), //查询随记
+  getInventory: d => Axios.get("inventory", d), //查询随记
+  getLink: d => Axios.get("link", d), //查询随记
 };

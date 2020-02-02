@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import $api from "src/api/blog";
+import Api from "src/api/blog";
 
 export default {
   data() {
@@ -33,7 +33,7 @@ export default {
       window.location.href = `/index.html?classify=${item._id}`;
     },
     getClassifyCount() {
-      this.$http.get($api.getClassifyCount).then(res => {
+      Api.getClassifyCount().then(res => {
         if (200 == res.code) {
           this.classifyList = res.data;
         }

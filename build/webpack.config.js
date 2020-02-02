@@ -35,7 +35,7 @@ module.exports = function(webpackEnv) {
     output: {
       path: config.assetsRoot,
       filename: isEnvProduction ? assetsPath('js/[name].[chunkhash].js') : '[name].js',
-      chunkFilename: isEnvProduction ? assetsPath('js/[id].[chunkhash].js') : undefined,
+      chunkFilename: isEnvProduction ? assetsPath('js/[name].[chunkhash].js') : '[name].js',
     },
     devServer: isEnvDevelopment 
     ? {
@@ -142,8 +142,16 @@ module.exports = function(webpackEnv) {
     },
     optimization: {
       splitChunks: {
-        chunks: 'all',
-        name: 'common',
+        chunks: "all",
+        cacheGroups: {
+          commons: {
+            chunks: "initial",
+            minChunks: 2,
+            name: "commons",
+            maxInitialRequests: 5,
+            minSize: 0, // 默认是30kb，minSize设置为0之后
+          },
+        }
       },
       minimize: isEnvProduction,
 			minimizer: [

@@ -24,7 +24,9 @@
 </template>
 
 <script>
-import $api from "src/api/blog";
+import { timeAgoFormat } from 'src/utils/date'
+
+import Api from "src/api/blog";
 
 export default {
   data() {
@@ -35,9 +37,12 @@ export default {
   created() {
     this.getNewComment();
   },
+  filters: {
+    timeAgoFormat
+  },
   methods: {
     getNewComment() {
-      this.$http.get($api.getCommentNew).then(res => {
+      Api.getCommentNew().then(res => {
         if (200 == res.code) {
           this.commentList = res.data;
         }

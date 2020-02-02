@@ -8,7 +8,7 @@
             <div class="tags"><a class="tag" href="javascript:;" v-for="tag in article.tags" :key="tag">{{tag}}</a></div>
             <div class="classify">{{article.classify}}</div>
             <div class="time">
-              <span>发布于{{article.publishAt, 'yyyy-MM-dd' | timeStampFormat}}</span>
+              <span>发布于{{article.publishAt | timeStampFormat('yyyy-MM-dd')}}</span>
               <span>{{article.viewCount}}次浏览</span>
               <span>最后一次编辑 {{article.updatedAt | timeAgoFormat}}</span>
             </div>
@@ -31,7 +31,7 @@
               <span class="title">《<a :href="`/article.html?id=${relate.id}`">{{relate.title}}</a>》</span>
               <div class="tags"><span class="tag" v-for="tag in relate.tags" :key="tag">{{tag}}</span></div>
               <div class="time">
-                <span>{{relate.publishAt, 'yyyy-MM-dd' | timeStampFormat}}</span>
+                <span>{{relate.publishAt | timeStampFormat('yyyy-MM-dd')}}</span>
                  <span>{{article.viewCount}}次浏览</span>
               </div>
               <p class="about">简介：{{relate.about}}</p>
@@ -51,7 +51,11 @@
                 </div>
                 <div class="comment-content" v-html="comment.content"><template ></template></div>
                 <div class="comment-reply">
-                  <span class="mark-view-time">{{comment.createdAt | timeStampFormat}}</span>|<a :href="`#c-${comment.id}`">#</a>|<a href="javascript:;" @click="handleAddReply(comment, index)">回复</a>
+                  <span class="mark-view-time">{{comment.createdAt | timeStampFormat}}</span>
+                  |
+                  <a :href="`#c-${comment.id}`">#</a>
+                  |
+                  <a href="javascript:;" @click="handleAddReply(comment, index)">回复</a>
                 </div>
               </li>
             </template>
@@ -80,7 +84,7 @@
                 <el-col :span="24">
                   <el-form-item label="评论：" label-width="80px" prop="content">
                     <el-tag v-for="(reply, index) in replys" :key="reply.index" closable @close="handleRemoveReply(index)">{{1+reply.index}}楼</el-tag>
-                    <el-input type="textarea" :rows="6" :autosize="false" v-model="comment.content" placeholder="请输入评论" v-focus="commentFocus"></el-input>
+                    <el-input ref="textarea" type="textarea" :rows="6" :autosize="false" v-model="comment.content" placeholder="请输入评论"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -101,17 +105,31 @@
 </template>
 
 <script>
-import { params } from 'src/utils/search'
-
+import { FormItem, Form, Row, Col, Input, Button, Checkbox, Tag, Message } from 'element-ui';
 import BlogMain from "src/components/blog-main";
+
 import { ActionName, MutationName } from "src/store/types";
 import { setDocumentTitle } from "src/utils/title";
 
+import { timeAgoFormat, timeStampFormat } from 'src/utils/date'
+import { params } from 'src/utils/search'
 import markMixin from "src/mixin/mark";
 
-import $api from "src/api/blog";
+import Api from "src/api/blog";
 
 export default {
+  components: {
+    [Form.name]: Form,
+    [FormItem.name]: FormItem,
+    [Row.name]: Row,
+    [Col.name]: Col,
+    [Input.name]: Input,
+    [Button.name]: Button,
+    [Checkbox.name]: Checkbox,
+    [Tag.name]: Tag,
+
+    BlogMain
+  },
   data() {
     return {
       href: window.location.href,
@@ -140,20 +158,19 @@ export default {
         content: [{ required: true, message: "请输入评论", trigger: "blur" }]
       },
       commentLoading: false,
-      commentFocus: {
-        cls: "el-textarea",
-        tag: "textarea",
-        focus: false
-      }
     };
   },
   async created() {
     await this.getArticleDetail();
   },
   mixins: [markMixin],
+  filters: {
+    timeAgoFormat,
+    timeStampFormat,
+  },
   methods: {
     async getArticleDetail() {
-      let res = await this.$http.get($api.getArticleDetail, { params: this.article })
+      let res = await Api.getArticleDetail({ params: this.article })
       if (200 == res.code) {
         this.article = Object.assign({}, this.article, res.data);
         this.updateArticleViewCount(); //更新文章的浏览次数
@@ -166,7 +183,7 @@ export default {
       }
     },
     async getArticleRelate() {
-      let res = await this.$http.get($api.getArticleRelate, { params: { classify: this.article.classify } })  
+      let res = await Api.getArticleRelate({ params: { classify: this.article.classify } })  
       if (200 == res.code) {
         this.relateArticle = res.data.list;
       }
@@ -185,10 +202,7 @@ export default {
     },
     updateArticleViewCount() {
       this.$store
-        .dispatch(ActionName.ADD_VIEW_TIME, {
-          article: this.article,
-          vm: this
-        })
+        .dispatch(ActionName.ADD_VIEW_TIME, this.article)
         .then(res => {
           if (200 == res.code) {
             this.article.viewCount = res.count;
@@ -196,35 +210,32 @@ export default {
         });
     },
     handleAddReply(data, index) {
-      for (let i = this.replys.length - 1; i >= 0; i--) {
-        if (index == this.replys[i].index) return;
+      if(!this.replys.some(reply => reply.index === index)){
+        this.replys.push({
+          index,
+          name: data.name,
+          content: data.content
+        });
       }
-      this.replys.push({
-        index,
-        name: data.name,
-        content: data.content
-      });
-      this.commentFocus.focus = true;
+      this.$refs['textarea'].focus();
     },
     handleRemoveReply(index) {
       this.replys.splice(index, 1);
-      this.commentFocus.focus = true;
+      this.$refs['textarea'].focus();
     },
     handleComment() {
       this.$refs.commentRef.validate(valid => {
         if (valid) {
           this.commentLoading = true;
-          this.$http
-            .post($api.postComment, {
-              id: this.article.id,
-              comment: Object.assign({}, this.comment, {
-                articleId: this.article.id,
-                content: this.getAssemComment()
-              })
+          Api.postComment({
+            id: this.article.id,
+            comment: Object.assign({}, this.comment, {
+              articleId: this.article.id,
+              content: this.getAssemComment()
             })
-            .then(res => {
+          }).then(res => {
               if (200 == res.code) {
-                this.$message({ message: res.message, type: "success" });
+                Message({ message: res.message, type: "success" });
                 this.article.comments.push(res.data);
                 this.article.commentCount += 1;
                 let { name, email, checked } = this.comment;
@@ -253,9 +264,6 @@ export default {
           elem.offsetTop - 15;
       }
     }
-  },
-  components: {
-    BlogMain
   }
 };
 </script>

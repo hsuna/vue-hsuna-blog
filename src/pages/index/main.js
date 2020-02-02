@@ -14,12 +14,8 @@ import App from "./App";
 /**添加-store */
 import store from "src/store";
 
-/* 引用-plugins */
-import Api from "src/plugins/axios"
-Vue.prototype.$http = Api
-
-import { Loading } from 'element-ui'
-Vue.use(Loading)
+/** element-ui */
+import 'src/plugins/element-init'
 
 Vue.config.productionTip = false;
 

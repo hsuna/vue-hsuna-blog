@@ -66,11 +66,11 @@
 </template>
 
 <script>
-import { Row, Col, Upload, Form, FormItem, Button } from 'element-ui';
+import { Row, Col, Upload, Form, FormItem, Button, Input, Message } from 'element-ui';
 
 import AdminHeader from "src/components/admin-header";
 
-import $api from "src/api/admin";
+import Api from "src/api/admin";
 
 export default {
   components: {
@@ -79,6 +79,7 @@ export default {
     [Upload.name]: Upload,
     [Form.name]: Form,
     [FormItem.name]: FormItem,
+    [Input.name]: Input,
     [Button.name]: Button,
 
     AdminHeader,
@@ -100,9 +101,8 @@ export default {
         job: "",
         introduction: ""
       },
-
       portrait: {
-        action: $api.postUserUpload,
+        action: Api.postUserUpload(),
         data: {
           userName,
           type: 'portrait'
@@ -110,7 +110,7 @@ export default {
         url: ""
       },
       banner: {
-        action: $api.postUserUpload,
+        action: Api.postUserUpload(),
         data: {
           userName,
           type: 'banner'
@@ -129,8 +129,7 @@ export default {
   },
   methods: {
     getUserInfo() {
-      this.$http
-        .get($api.getUserInfo, {
+      Api.getUserInfo({
           params: {
             userName: this.userForm.name
           }
@@ -145,13 +144,13 @@ export default {
     },
     handleSuccessPortrait(res, file, fileList) {
       if (200 == res.code) {
-        this.$message({ message: res.message, type: "success" });
+        Message({ message: res.message, type: "success" });
         this.portrait.url = res.data || ""
       }
     },
     handleSuccessBanner(res, file, fileList) {
       if (200 == res.code) {
-        this.$message({ message: res.message, type: "success" });
+        Message({ message: res.message, type: "success" });
         this.banner.url = res.data || ""
       }
     },
@@ -163,9 +162,9 @@ export default {
     },
     handleSubmit() {
       this.submitload = true;
-      this.$http.put($api.putUserInfo, this.userForm).then(res => {
+      Api.putUserInfo(this.userForm).then(res => {
         if (200 == res.code) {
-          this.$message({ message: res.message, type: "success" });
+          Message({ message: res.message, type: "success" });
           Object.assign(this.user, this.userForm);
           this.isEdit = false;
         }

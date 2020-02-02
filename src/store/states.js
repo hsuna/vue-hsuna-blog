@@ -6,7 +6,6 @@
  * @Last Modified time: 2018-04-02 19:23:10
  */
 import { storage, StorageKey } from "./storage";
-import store from ".";
 
 const defaultValue = {
   tags: '["HTML", "CSS", "JavaScript"]'

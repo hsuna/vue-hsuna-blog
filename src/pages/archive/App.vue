@@ -3,8 +3,12 @@
     <blog-main :activeIndex="'archive'">
       <div class="blog-profile">
         <div class="profile-side">
-          <profile-side-archive :archiveIndex="archiveIndex" @init="handleArchiveInit" @search="handleArchiveSearch"></profile-side-archive>
-          <profile-side-hot></profile-side-hot>
+          <profile-side-archive 
+            :archiveIndex="archiveIndex" 
+            @init="handleArchiveInit" 
+            @search="handleArchiveSearch"
+          />
+          <profile-side-hot/>
         </div>
         <div class="profile-main" v-loading="loading">
           <profile-card
@@ -20,13 +24,13 @@
 </template>
 
 <script>
-import * as utils from 'src/utils/search'
-
 import BlogMain from "src/components/blog-main";
 import ProfileCard from "src/components/profile-card";
 import { ProfileSideHot, ProfileSideArchive } from "src/components/profile-side";
 
-import $api from "src/api/blog";
+import * as utils from 'src/utils/search'
+
+import Api from "src/api/blog";
 
 export default {
   name: "App",
@@ -38,18 +42,16 @@ export default {
       archiveList: []
     };
   },
-  computed:{
+  computed: {
     curPage(){
       return Number(utils.params('page') || 1)
     }
-  },
-  created() {
   },
   methods: {
     getArchiveList(params) {
       if (params.year && params.month) {
         this.loading = true;
-        this.$http.get($api.getArticleAchive, { params }).then(res => {
+        Api.getArticleAchive({ params }).then(res => {
           if (200 == res.code) {
             let { list, total } = res.data;
             this.archiveList = list;

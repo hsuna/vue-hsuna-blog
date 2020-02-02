@@ -83,29 +83,37 @@ const monthFormat = (timeStamp, fmt = "en") => {
 };
 
 const agoStamp = [
-  { text: "刚刚", time: 10 * 1000 },
-  { text: "{time}秒前", time: 60 * 1000 },
-  { text: "{time}分钟前", time: 60 * 60 * 1000 },
-  { text: "{time}小时前", time: 24 * 60 * 60 * 1000 },
-  { text: "昨天", time: 2 * 24 * 60 * 60 * 1000, nonuse: true },
-  { text: "前天", time: 3 * 24 * 60 * 60 * 1000, nonuse: true },
-  { text: "{time}天前", time: 7 * 24 * 60 * 60 * 1000 },
-  { text: "{time}周前", time: 30 * 24 * 60 * 60 * 1000 },
-  { text: "{time}月前", time: 365 * 24 * 60 * 60 * 1000 },
-  { text: "{time}年前" }
+  { text: "{time}秒前", time: 1 * 1000 },
+  { text: "刚刚", time: 10 * 1000, exact: true },
+  { text: "{time}分钟前", time: 60 * 1000 },
+  { text: "{time}小时前", time: 60 * 60 * 1000 },
+  { text: "{time}天前", time: 24 * 60 * 60 * 1000 },
+  { text: "昨天", time: 2 * 24 * 60 * 60 * 1000, exact: true },
+  { text: "前天", time: 3 * 24 * 60 * 60 * 1000, exact: true },
+  { text: "{time}周前", time: 7 * 24 * 60 * 60 * 1000 },
+  { text: "{time}月前", time: 30 * 24 * 60 * 60 * 1000 },
+  { text: "{time}年前", time: 365 * 24 * 60 * 60 * 1000 }
 ];
 const timeAgoFormat = (timeStamp, fmt = agoStamp) => {
   if (!timeStamp) return "";
   let difftime = Date.now() - new Date(timeStamp).valueOf();
-  let divisor = 1;
-  for (let i = 0; i < agoStamp.length; i++) {
-    let { text, time, nonuse } = agoStamp[i];
-    if (difftime < time) {
-      return text.replace("{time}", Math.floor(difftime / divisor));
-    } else if (!nonuse) {
-      divisor = time;
+  for (let i = agoStamp.length-1; i>=0; i--) {
+    let { text, time, exact=false } = agoStamp[i];
+    if(difftime > time){
+      if(exact){
+        if(1 == Math.ceil((difftime-time) / time)){
+          return text;
+        }
+      }else{
+        return text.replace("{time}", Math.ceil((difftime-time) / time));
+      }
     }
   }
 };
 
-export { dateFormat, timeStampFormat, timeAgoFormat, monthFormat };
+export { 
+  dateFormat, 
+  timeStampFormat, 
+  timeAgoFormat, 
+  monthFormat 
+};

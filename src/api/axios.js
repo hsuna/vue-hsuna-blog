@@ -11,6 +11,7 @@ import store from "src/store"
 import { MutationName } from "src/store/types";
 import { Message } from "element-ui";
 
+Axios.defaults.baseURL = process.env.API_HOST
 Axios.defaults.timeout = 600000000;
 Axios.defaults.withCredentials = true;
 Axios.header = {

@@ -50,7 +50,7 @@ export default {
       this.$refs.user.validate(valid => {
         if (valid) {
           this.$store
-            .dispatch(ActionName.USER_LOGIN, { user: this.user, vm: this })
+            .dispatch(ActionName.USER_LOGIN, this.user)
             .then(res => {
               this.loadingflag = false;
             });

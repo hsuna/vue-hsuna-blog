@@ -31,7 +31,7 @@
 <script>
 import { Pagination } from 'element-ui';
 
-import $api from "src/api/blog";
+import Api from "src/api/blog";
 
 export default {
   components: {
@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     getLinkList() {
-      this.$http.get($api.getLink, { params: this.linkQuery }).then(res => {
+      Api.getLink({ params: this.linkQuery }).then(res => {
         if (200 == res.code) {
           let { list, total } = res.data;
           this.linkList = list;

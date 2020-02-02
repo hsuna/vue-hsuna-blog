@@ -1,8 +1,12 @@
 <template>
   <div>
     <div class="profile-card" v-for="profile in profileList" :key="profile.id">
-      <div class="card-title"><a :href="`/article.html?id=${profile.id}`">{{profile.title}}</a></div>
-      <div class="card-date" :data-date="$filter.timeStampFormat(profile.publishAt)">{{profile.publishAt | timeAgoFormat}}</div>
+      <div class="card-title">
+        <a :href="`/article.html?id=${profile.id}`">{{profile.title}}</a>
+      </div>
+      <div class="card-date" :data-date="profile.publishAt | timeStampFormat">
+        {{profile.publishAt | timeAgoFormat}}
+      </div>
       <div class="card-tags">
         <span class="card-count">分类：{{profile.classify}}</span>
         <span class="card-count">评论({{profile.commentCount}}) | 浏览({{profile.viewCount}})</span>
@@ -24,6 +28,8 @@
 <script>
 import { Pagination, Tag } from 'element-ui';
 
+import { timeStampFormat, timeAgoFormat } from 'src/utils/date'
+
 export default {
   components: {
     [Tag.name]: Tag,
@@ -42,6 +48,10 @@ export default {
       type: Array,
       default: _ => []
     }
+  },
+  filters: {
+    timeStampFormat,
+    timeAgoFormat,
   },
   methods: {
     handleSizeChange(val) {
@@ -79,7 +89,7 @@ export default {
   .card-date {
     position: absolute;
     top: 28px;
-    right: 26px;
+    right: 10px;
   }
 
   .card-tags {

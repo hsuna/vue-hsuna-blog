@@ -1,6 +1,7 @@
 'use strict'
 const path = require('path')
 const config = require('../config')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 // glob是webpack安装时依赖的一个第三方模块，还模块允许你使用 *等符号, 例如lib/*.js就是获取lib文件夹下的所有js后缀名的文件
 const glob = require('glob')
@@ -100,7 +101,7 @@ exports.exits = function (conf) {
       // 文件名称
       filename: filename + '.html',
       // 页面模板需要加对应的js脚本，如果不加这行则每个页面都会引入所有的js脚本
-      chunks: ['common', filename]
+      chunks: ['commons', filename]
     }, conf);
   });
 }

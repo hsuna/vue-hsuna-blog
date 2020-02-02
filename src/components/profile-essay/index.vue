@@ -4,8 +4,8 @@
     <div class="profile-body">
       <div class="profile-essay" v-for="(profile, index) in profileList" :key="index">
         <div class="essay-header">
-          <p class="date">{{profile.createdAt, 'dd' | timeStampFormat}}</p>
-          <p>{{profile.createdAt, 'ABBR' | monthFormat}}</p>
+          <p class="date">{{profile.createdAt | timeStampFormat('dd')}}</p>
+          <p>{{profile.createdAt | monthFormat('ABBR')}}</p>
         </div>
         <div class="essay-border">
           <span class="arrows"></span>
@@ -17,7 +17,7 @@
               </li>
             </ul>
           </div>
-          <div class="date" :data-date="$filter.timeStampFormat(profile.createdAt)">{{profile.createdAt | timeAgoFormat}}</div>
+          <div class="date" :data-date="profile.createdAt | timeStampFormat">{{profile.createdAt | timeAgoFormat}}</div>
         </div>
       </div>
     </div>
@@ -38,7 +38,7 @@
 <script>
 import { Pagination, Dialog } from 'element-ui';
 
-import { timeStampFormat, monthFormat } from 'src/utils/date'
+import { timeStampFormat, timeAgoFormat, monthFormat } from 'src/utils/date'
 
 export default {
   components: {
@@ -67,6 +67,7 @@ export default {
   },
   filters: {
     timeStampFormat,
+    timeAgoFormat,
     monthFormat,
   },
   methods: {

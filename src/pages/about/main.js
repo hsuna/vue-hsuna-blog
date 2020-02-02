@@ -11,19 +11,16 @@
 import Vue from "vue";
 import App from "./App";
 
-/* 引用-plugins */
-import "src/plugins/axios"
-
 /**添加-store */
 import store from "src/store";
+
+/** element-ui */
+import 'src/plugins/element-init'
 
 Vue.config.productionTip = false;
 
 new Vue({
   el: "#app",
   store,
-  components: {
-    App
-  },
-  template: "<App/>"
+  render: h => h(App),
 });

@@ -22,7 +22,7 @@
 
 
 <script>
-import { Button, Input, Menu, MenuItem } from 'element-ui';
+import { Button, Input, Menu, MenuItem, Message } from 'element-ui';
 
 export default {
   name: "blog-header",
@@ -85,7 +85,7 @@ export default {
     },
     handleSearch(){
       console.log(this.inputSearch);
-      this.$message('该功能正在建设中～');
+      Message('该功能正在建设中～');
     }
   }
 };

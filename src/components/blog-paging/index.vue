@@ -16,7 +16,7 @@ import { Pagination } from 'element-ui'
 
 export default {
   components: {
-    Pagination
+    [Pagination.name]: Pagination,
   },
   props: {
     layout: {
