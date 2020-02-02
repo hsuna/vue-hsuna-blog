@@ -9,7 +9,7 @@
           <el-menu-item index="archive"><i class="fa fa-archive"></i>档案</el-menu-item>
           <el-menu-item index="about"><i class="fa fa-user"></i>关于</el-menu-item>
           <el-menu-item index="essay"><i class="fa fa-pencil"></i>手札</el-menu-item>
-          <el-menu-item index="admin" v-if="$store.getters.token"><i class="fa fa-cog"></i>管理</el-menu-item>
+          <el-menu-item index="admin" v-if="isLogin"><i class="fa fa-cog"></i>管理</el-menu-item>
       </el-menu>
       <div class="header-search">
         <el-input placeholder="搜索" v-model="inputSearch"><!-- prefix-icon="el-icon-search" -->
@@ -23,6 +23,7 @@
 
 <script>
 import { Button, Input, Menu, MenuItem, Message } from 'element-ui';
+import storage, { StorageKey } from 'src/utils/storage'
 
 export default {
   name: "blog-header",
@@ -44,7 +45,11 @@ export default {
       inputSearch: ""
     };
   },
-  created() {
+  computed: {
+    isLogin(){
+      let { token } = storage.get(StorageKey.USER);
+      return Boolean(token)
+    }
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
