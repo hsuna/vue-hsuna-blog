@@ -142,16 +142,9 @@ module.exports = function(webpackEnv) {
     },
     optimization: {
       splitChunks: {
-        chunks: "all",
-        cacheGroups: {
-          commons: {
-            chunks: "initial",
-            minChunks: 2,
-            name: "commons",
-            maxInitialRequests: 5,
-            minSize: 0, // 默认是30kb，minSize设置为0之后
-          },
-        }
+        chunks: "initial",
+        minChunks: 2,
+        name: "commons",
       },
       minimize: isEnvProduction,
 			minimizer: [
