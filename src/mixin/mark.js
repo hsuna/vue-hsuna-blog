@@ -7,8 +7,8 @@
  */
 
 import marked from "marked";
-import hljs from "@/plugins/hljs";
-import "../assets/styles/markdown-body.scss";
+import hljs from "src/plugins/hljs";
+import "src/assets/styles/markdown-body.scss";
 
 export default {
   data() {

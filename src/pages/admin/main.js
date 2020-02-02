@@ -11,29 +11,13 @@
 import Vue from "vue";
 import App from "./App";
 
-/**注册-全局mixin */
-import mixin from "~/mixin";
-Vue.mixin(mixin);
-
-/**注册-全局过滤器 */
-import * as Filters from "~/filters"; // global filters
-Vue.prototype.$filter = Filters;
-Object.keys(Filters).forEach(key => {
-  Vue.filter(key, Filters[key]);
-});
-
-/* 引用-plugins */
-import "~/plugins/axios"
-import "~/plugins/el-admin"
-
-/* 引用-utils */
-import utils from "~/utils";
-Vue.prototype.$utils = utils;
-
 /**添加-vue路由器 */
 import router from "./router";
 /**添加-store */
-import store from "~/store";
+import store from "./store";
+
+/** element-ui */
+import 'src/plugins/element-init'
 
 Vue.config.productionTip = false;
 
@@ -41,8 +25,5 @@ new Vue({
   el: "#app",
   router,
   store,
-  components: {
-    App
-  },
-  template: "<App/>"
+  render: h => h(App)
 });

@@ -14,10 +14,7 @@ const MutationName = {
   CLEAR_USER: "clearUser", //清除登录用户
   SET_ARTICLE: "setArticle", //记录缓存文章
   CLEAR_ARTICLE: "clearArticle", //清除缓存文章
-  SET_VISITOR: "setVisitor", //访客者信息
   SET_TAGS: "setTags", //记录标签信息
-  SET_COMMENT_USER: "setCommentUser", //记录评论用户信息
-  CLEAR_COMMENT_USER: "clearCommentUser" //清除评论用户信息
 };
 
 /**
@@ -28,7 +25,6 @@ const ActionName = {
   USER_LOGOUT: "userLogout", //用户登出
   MODIFY_PWD: "modifyPassword", //修改密码
   ADD_ARTICLE_TAGS: "addArticleTags", //添加文章标签
-  ADD_VIEW_TIME: "addViewTime" //添加浏览次数
 };
 
 export { MutationName, ActionName };

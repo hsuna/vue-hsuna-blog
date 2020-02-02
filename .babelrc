@@ -1,13 +1,10 @@
 {
   "presets": [
-    "stage-2", 
     [
-      "env", 
+      "@babel/preset-env",
       {
-        "modules": false,
-        "targets": {
-          "browsers": ["last 20 versions"]
-        }
+        "useBuiltIns": "usage",
+        "corejs": 2
       }
     ]
   ],
@@ -19,6 +16,7 @@
         "styleLibraryName": "theme-chalk"
       }
     ],
-    "transform-runtime"
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-transform-regenerator"
   ]
 }

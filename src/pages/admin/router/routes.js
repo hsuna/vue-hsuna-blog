@@ -34,7 +34,7 @@ export default [
       auth: true
     },
     component: resolve => require(["../views/admin/index.vue"], resolve),
-    name: "管理面板",
+    name: "文章管理",
     children: [
       {
         path: "/",

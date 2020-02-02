@@ -5,8 +5,6 @@
  * @Last Modified by: Hsuna
  * @Last Modified time: 2018-04-04 02:20:10
  */
-import states from "./states";
-
 export default {
   token: state => state.user.token,
   isLogin: state => Boolean(state.user.token),

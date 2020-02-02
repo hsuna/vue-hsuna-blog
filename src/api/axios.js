@@ -5,13 +5,13 @@
  * @Last Modified by: Hsuna
  * @Last Modified time: 2018-04-20 10:27:42
  */
-import Vue from "vue"
 import Axios from "axios"
-import store from "store"
 
-import { MutationName } from "store/types";
 import { Message } from "element-ui";
 
+import storage, { StorageKey } from 'src/utils/storage'
+
+Axios.defaults.baseURL = process.env.API_HOST
 Axios.defaults.timeout = 600000000;
 Axios.defaults.withCredentials = true;
 Axios.header = {
@@ -49,7 +49,7 @@ Axios.interceptors.response.use(
         break;
       case 401:
         // 这里写清除token的代码
-        store.commit(MutationName.CLEAR_USER);
+        storage.remove(StorageKey.USER);
         /* router.replace({
           path: "/login",
           query: { redirect: router.currentRoute.fullPath } //登录成功后跳入浏览的当前页面
@@ -64,7 +64,5 @@ Axios.interceptors.response.use(
     return Promise.reject(err);
   }
 )
-
-Vue.prototype.$http = Axios
 
 export default Axios

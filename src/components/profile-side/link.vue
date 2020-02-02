@@ -29,9 +29,14 @@
 </template>
 
 <script>
-import $api from "api/blog";
+import { Pagination } from 'element-ui';
+
+import Api from "src/api/blog";
 
 export default {
+  components: {
+    [Pagination.name]: Pagination,
+  },
   data() {
     return {
       loading: true,
@@ -49,7 +54,7 @@ export default {
   },
   methods: {
     getLinkList() {
-      this.$http.get($api.getLink, { params: this.linkQuery }).then(res => {
+      Api.getLink({ params: this.linkQuery }).then(res => {
         if (200 == res.code) {
           let { list, total } = res.data;
           this.linkList = list;

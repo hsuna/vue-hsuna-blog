@@ -22,10 +22,16 @@
 
 
 <script>
-import $api from "api/blog";
+import { Button, Input, Menu, MenuItem, Message } from 'element-ui';
 
 export default {
-  name: "blogHeader",
+  name: "blog-header",
+  components: {
+    [Button.name]: Button,
+    [Input.name]: Input,
+    [Menu.name]: Menu,
+    [MenuItem.name]: MenuItem,
+  },
   props: {
     activeIndex: {
       type: String,
@@ -39,7 +45,6 @@ export default {
     };
   },
   created() {
-    //this.getClassifyList();
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
@@ -80,7 +85,7 @@ export default {
     },
     handleSearch(){
       console.log(this.inputSearch);
-      this.$message('该功能正在建设中～');
+      Message('该功能正在建设中～');
     }
   }
 };

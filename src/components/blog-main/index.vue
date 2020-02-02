@@ -8,11 +8,17 @@
 </template>
 
 <script>
-import blogHeader from "components/blog-header";
-import blogFooter from "components/blog-footer";
-import floatMenu from "components/float-menu";
+import BlogHeader from "src/components/blog-header";
+import BlogFooter from "src/components/blog-footer";
+import FloatMenu from "src/components/float-menu";
 
 export default {
+  name: 'blog-main',
+  components: {
+    BlogHeader,
+    BlogFooter,
+    FloatMenu
+  },
   props: {
     activeIndex: {
       type: String,
@@ -29,11 +35,6 @@ export default {
       this.showFloatMenu = !isFixed;
     }
   },
-  components: {
-    "blog-header": blogHeader,
-    "blog-footer": blogFooter,
-    "float-menu": floatMenu
-  }
 };
 </script>
 
