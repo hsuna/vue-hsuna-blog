@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { Table, TableColumn, Button, Message } from 'element-ui';
+import { Table, TableColumn, Button, Message, MessageBox } from 'element-ui';
 
 import AdminHeader from "src/components/admin-header";
 import BlogPaging from "src/components/blog-paging";
@@ -93,19 +93,14 @@ export default {
     },
     //handleTabClick() {},
     handleRemoveArticle(id) {
-      MessageBox.confirm("确认删除该文章？")
-        .then(res => {
-          Api.deleteArticle({ params: { id } }).then(res => {
-              if (200 == res.code) {
-                Message({
-                  message: res.message,
-                  type: "success"
-                });
-                this.getArticleList();
-              }
-            });
-        })
-        .catch(err => {});
+      MessageBox.confirm("确认删除该文章？").then(res => {
+        Api.deleteArticle({ params: { id } }).then(res => {
+          if (200 == res.code) {
+            Message.success('删除文章成功');
+            this.getArticleList();
+          }
+        });
+      }).catch(err => {});
     },
   },
 };

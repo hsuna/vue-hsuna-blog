@@ -44,8 +44,7 @@ Axios.interceptors.request.use(
 Axios.interceptors.response.use(
   res => {
     switch (res.data.code) { //对响应数据做些事
-      case -200:
-        Message.error(res.data.message);
+      case 200:
         break;
       case 401:
         // 这里写清除token的代码
@@ -54,6 +53,9 @@ Axios.interceptors.response.use(
           path: "/login",
           query: { redirect: router.currentRoute.fullPath } //登录成功后跳入浏览的当前页面
         }); */
+        break;
+      default:
+        Message.error(res.data.message);
         break;
     }
     return res.data;

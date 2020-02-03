@@ -10,6 +10,5 @@ export default {
   isLogin: state => Boolean(state.user.token),
   userName: state => state.user.name,
   userEmail: state => state.user.email,
-  commentUser: state => state.visitor.comment || {},
   tagList: state => state.tags.map(value => ({ tag: value }))
 };

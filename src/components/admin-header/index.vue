@@ -8,7 +8,7 @@
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class="admin-date">{{date, 'yyyy年MM月dd日&nbsp;hh:mm&nbsp;&nbsp;W' | dateFormat}}</div>
+    <div class="admin-date">{{date | dateFormat('yyyy年MM月dd日&nbsp;hh:mm&nbsp;&nbsp;W')}}</div>
   </div>
 </template>
 

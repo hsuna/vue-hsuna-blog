@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { Table, TableColumn, Button, Form, FormItem, Input, Dialog, Message } from 'element-ui';
+import { Table, TableColumn, Button, Form, FormItem, Input, Dialog, Message, MessageBox } from 'element-ui';
 
 import AdminHeader from "src/components/admin-header";
 
@@ -91,46 +91,25 @@ export default {
         });
     },
     handleUpdateClassify() {
-      this.$refs.dialog.validate(valid => {
+      this.$refs.dialog.validate(async (valid) => {
         if (valid) {
           let { id, title } = this.dialogData;
-          if (-1 == this.dialogData.id) {
-            //创建分类
-            Api.postClassify({ title }).then(res => {
-              if (200 == res.code) {
-                this.dialogVisible = false;
-                Message({
-                  message: res.message,
-                  type: "success"
-                });
-                this.getClassifyList();
-              }
-            });
-          } else {
-            //修改分类
-            Api.putClassify({ id, title }).then(res => {
-              if (200 == res.code) {
-                this.dialogVisible = false;
-                Message({
-                  message: res.message,
-                  type: "success"
-                });
-                this.getClassifyList();
-              }
-            });
+          let res = -1 == id 
+            ? await Api.postClassify({ title }) //创建分类
+            : await Api.putClassify({ id, title }) //修改分类
+          if (200 == res.code) {
+            this.dialogVisible = false;
+            Message.success(-1 == id ? '添加分类成功' : '修改分类成功');
+            this.getClassifyList();
           }
         }
       });
     },
     handleRemoveClassify(id) {
-      MessageBox.confirm("确认删除该分类？")
-        .then(res => {
+      MessageBox.confirm("确认删除该分类？").then(res => {
           Api.deleteClassify({ params: { id } }).then(res => {
             if (200 == res.code) {
-              Message({
-                message: res.message,
-                type: "success"
-              });
+              Message.success('删除分类成功')
               this.getClassifyList();
             }
           });

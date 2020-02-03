@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { Form, FormItem, Row, Col, Tag, Input, Button, Message } from 'element-ui';
+import { Form, FormItem, Row, Col, Tag, Input, Button, Message, MessageBox } from 'element-ui';
 
 import AdminHeader from "src/components/admin-header";
 
@@ -149,11 +149,11 @@ export default {
           content: data.content
         });
       }
-      this.refs['textarea'].focus();
+      this.$refs['textarea'].focus();
     },
     handleRemoveReply(index) {
       this.replys.splice(index, 1);
-      this.refs['textarea'].focus();
+      this.$refs['textarea'].focus();
     },
     handleComment() {
       this.$refs.commentRef.validate(valid => {
@@ -168,7 +168,7 @@ export default {
             })
             .then(res => {
               if (200 == res.code) {
-                Message({ message: res.message, type: "success" });
+                Message.success('提交评论成功');
                 this.article.comments.push(res.data);
                 this.article.commentCount += 1;
                 this.replys = []; //清除回复楼层
@@ -180,8 +180,7 @@ export default {
       });
     },
     handleRemoveComment(comment, index) {
-      MessageBox.confirm("确认删除该评论？")
-        .then(res => {
+      MessageBox.confirm("确认删除该评论？").then(res => {
           Api.deleteComment({
               params: {
                 articleId: this.article.id,
@@ -190,10 +189,7 @@ export default {
             })
             .then(res => {
               if (200 == res.code) {
-                Message({
-                  message: res.message,
-                  type: "success"
-                });
+                Message.success('删除评论成功');
                 this.article.comments.splice(index, 1);
               }
             });

@@ -49,10 +49,10 @@ export default {
     handlePublish(callback) {
       Api.postArticle(this.article).then(res => {
         if (200 == res.code) {
+          Message.success(1 == res.data.status ? "文章发布成功" : "文章保存成功");
           this.isRecord = false;
           this.$store.dispatch(ActionName.ADD_ARTICLE_TAGS, this.article.tags);
           this.$store.commit(MutationName.CLEAR_ARTICLE); //清除缓存的文章
-          Message({ message: res.message, type: "success" });
           this.$router.replace({ path: "/admin/articleList" });
         }
         callback && callback();
