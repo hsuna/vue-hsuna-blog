@@ -143,10 +143,10 @@ export default {
       },
       replys: [], //回复楼层
       relateArticle: [],
-      comment: Object.assign(
-        { checked: true },
-        this.$store.getters.commentUser
-      ),
+      comment: { 
+        checked: true,
+        ...(visitor.comment || {})
+      },
       commentRules: {
         name: [{ required: true, message: "请输入昵称", trigger: "blur" }],
         email: [
@@ -245,7 +245,7 @@ export default {
             })
           }).then(res => {
               if (200 == res.code) {
-                Message({ message: res.message, type: "success" });
+                Message.success('提交评论成功');
                 this.article.comments.push(res.data);
                 this.article.commentCount += 1;
                 let { name, email, checked } = this.comment;

@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { TableColumn, Table, Button, Dialog, Form, FormItem, Input } from 'element-ui';
+import { TableColumn, Table, Button, Dialog, Form, FormItem, Input, MessageBox } from 'element-ui';
 
 import AdminHeader from "src/components/admin-header";
 import BlogPaging from "src/components/blog-paging";
@@ -117,11 +117,8 @@ export default {
           //创建链接
           Api.postLink(this.dialogData).then(res => {
             if (200 == res.code) {
+              Message.success('添加链接成功')
               this.dialogVisible = false;
-              Message({
-                message: res.message,
-                type: "success"
-              });
               this.$refs.dialog.resetFields(); //清除表单状态
               this.getLinkList();
             }
@@ -133,10 +130,7 @@ export default {
       MessageBox.confirm("确认删除该链接？").then(res => {
         Api.deleteLink({ params: { id } }).then(res => {
           if (200 == res.code) {
-            Message({
-              message: res.message,
-              type: "success"
-            });
+            Message.success('删除链接成功')
             this.getLinkList();
           }
         });

@@ -144,13 +144,13 @@ export default {
     },
     handleSuccessPortrait(res, file, fileList) {
       if (200 == res.code) {
-        Message({ message: res.message, type: "success" });
+        Message.success('头像修改成功')
         this.portrait.url = res.data || ""
       }
     },
     handleSuccessBanner(res, file, fileList) {
       if (200 == res.code) {
-        Message({ message: res.message, type: "success" });
+        Message.success('背景图修改成功')
         this.banner.url = res.data || ""
       }
     },
@@ -164,7 +164,7 @@ export default {
       this.submitload = true;
       Api.putUserInfo(this.userForm).then(res => {
         if (200 == res.code) {
-          Message({ message: res.message, type: "success" });
+          Message.success('修改用户信息成功')
           Object.assign(this.user, this.userForm);
           this.isEdit = false;
         }

@@ -197,7 +197,7 @@ export default {
     },
     handleSuccessFile(res, file, fileList) {
       if (200 == res.code) {
-        Message({ message: res.message, type: "success" });
+        Message.success('文件上传成功');
         Object.assign(file, res.data);
         this.article.files = [ ...fileList ];
       }
@@ -216,8 +216,8 @@ export default {
           })
           .then(res => {
             if (200 == res.code) {
+              Message.success('文件删除成功');
               resolve();
-              Message({ message: res.message, type: "success" });
             } else {
               reject();
             }
@@ -239,13 +239,11 @@ export default {
     },
     handleBack() {
       if (this.isModify) {
-        MessageBox.confirm("文章内容有改动，是否不保存直接返回？")
-          .then(res => {
-            window.location.href = '/admin/articleList.html';
-          })
-          .catch(err => {});
+        MessageBox.confirm("文章内容有改动，是否不保存直接返回？").then(res => {
+          window.location.href = '/admin.html#/admin/articleList';
+        }).catch(err => {});
       } else {
-        window.location.href = '/admin/articleList.html';
+        window.location.href = '/admin.html#/admin/articleList';
       }
     }
   },

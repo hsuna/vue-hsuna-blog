@@ -77,7 +77,7 @@ import BlogPaging from "src/components/blog-paging";
 
 import { timeStampFormat } from 'src/utils/date'
 import Api from "src/api/admin";
-import { Table, TableColumn, Dialog, Form, FormItem, Button, Input, Message, Upload } from 'element-ui';
+import { Table, TableColumn, Dialog, Form, FormItem, Button, Input, Message, Upload, MessageBox } from 'element-ui';
 
 export default {
   components: {
@@ -154,11 +154,8 @@ export default {
           //创建分类
           Api.postEssay(this.dialogData).then(res => {
             if (200 == res.code) {
+              Message.success('添加随记成功')
               this.dialogVisible = false;
-              Message({
-                message: res.message,
-                type: "success"
-              });
               this.$refs.dialog.resetFields(); //清除表单状态
               this.dialogData = {
                 files: []
@@ -170,14 +167,10 @@ export default {
       });
     },
     handleRemoveEssay(id) {
-      MessageBox.confirm("确认删除该随记？")
-        .then(res => {
+      MessageBox.confirm("确认删除该随记？").then(res => {
           Api.deleteEssay({ params: { id } }).then(res => {
             if (200 == res.code) {
-              Message({
-                message: res.message,
-                type: "success"
-              });
+              Message.success('删除随记成功')
               this.getEssayList();
             }
           });
@@ -186,7 +179,7 @@ export default {
     },
     handleSuccessFile(res, file, fileList) {
       if (200 == res.code) {
-        Message({ message: res.message, type: "success" });
+        Message.success('文件上传成功')
         Object.assign(file, res.data);
         this.dialogData.files = fileList;
       }
@@ -201,8 +194,8 @@ export default {
           params: { id: file.id }
         }).then(res => {
             if (200 == res.code) {
+              Message.success('文件删除成功')
               resolve();
-              Message({ message: res.message, type: "success" });
             } else {
               reject();
             }

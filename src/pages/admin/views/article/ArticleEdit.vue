@@ -51,8 +51,8 @@ export default {
     handlePublish(callback) {
       Api.putArticle(this.article).then(res => {
         if (200 == res.code) {
+          Message.success('更新文章成功');
           this.$store.dispatch(ActionName.ADD_ARTICLE_TAGS, this.article.tags);
-          Message({ message: res.message, type: "success" });
           this.$router.replace({ path: "/admin/articleList" });
         }
         callback && callback();

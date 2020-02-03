@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { Table, TableColumn, Dialog, Form, FormItem, Button, Input, Message } from 'element-ui';
+import { Table, TableColumn, Dialog, Form, FormItem, Button, Input, Message, MessageBox } from 'element-ui';
 
 import AdminHeader from "src/components/admin-header";
 import BlogPaging from "src/components/blog-paging";
@@ -120,10 +120,7 @@ export default {
           Api.postInventory(this.dialogData).then(res => {
             if (200 == res.code) {
               this.dialogVisible = false;
-              Message({
-                message: res.message,
-                type: "success"
-              });
+              Message.success('添加清单成功')
               this.$refs.dialog.resetFields(); //清除表单状态
               this.getInventoryList();
             }
@@ -132,14 +129,10 @@ export default {
       });
     },
     handleRemoveInventory(id) {
-      MessageBox.confirm("确认删除该清单？")
-      .then(res => {
+      MessageBox.confirm("确认删除该清单？").then(res => {
         Api.deleteInventory({ params: { id } }).then(res => {
             if (200 == res.code) {
-              Message({
-                message: res.message,
-                type: "success"
-              });
+              Message.success('删除清单成功')
               this.getInventoryList();
             }
           });

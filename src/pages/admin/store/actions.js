@@ -16,13 +16,10 @@ export default {
     return new Promise((resolve, reject) => {
       Api.postLogin(user).then(res => {
         if (200 == res.code) {
+          Message.success('恭喜，登录成功');
           commit(MutationName.SET_USER, {
-            token: res.token,
+            token: res.data.token,
             name: user.name
-          });
-          Message({
-            message: res.message,
-            type: "success"
           });
           window.location.href = "/admin.html";
         }
@@ -31,14 +28,10 @@ export default {
     });
   },
   [ActionName.USER_LOGOUT]({ commit }) {
-    MessageBox.confirm("是否退出登录？")
-      .then(res => {
+    MessageBox.confirm("是否退出登录？").then(res => {
+        Message.success('退出登录成功');
         commit(MutationName.CLEAR_USER);
-        Message({
-          message: "退出登录成功!",
-          type: "success"
-        });
-        window.location.href = "/admin/login.html";
+        window.location.reload()
       })
       .catch(err => {});
   },
@@ -46,12 +39,9 @@ export default {
     return new Promise((resolve, reject) => {
       Api.putUserPassword(data).then(res => {
         if (200 == res.code) {
+          Message.success('修改密码成功，请重新登录！');
           commit(MutationName.CLEAR_USER);
-          Message({
-            message: res.message,
-            type: "success"
-          });
-          window.location.href = "/admin/login.html";
+          window.location.reload()
         }
         resolve(res);
       });
