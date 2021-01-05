@@ -12,7 +12,7 @@
     "analyz": "npm run build --report"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "element-ui": "2.13.0",
     "highlight.js": "^9.18.0",
     "marked": "^0.8.0",
