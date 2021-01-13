@@ -8,8 +8,9 @@
 
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from "vue";
-import App from "./App";
+
+import { createApp } from 'vue'
+import App from './App.vue'
 
 /**添加-vue路由器 */
 import router from "./router";
@@ -17,13 +18,10 @@ import router from "./router";
 import store from "./store";
 
 /** element-ui */
-import 'src/plugins/element-init'
+import elementInit from 'src/plugins/element-init'
 
-Vue.config.productionTip = false;
-
-new Vue({
-  el: "#app",
-  router,
-  store,
-  render: h => h(App)
-});
+createApp(App)
+  .use(elementInit)
+  .use(router)
+  .use(store)
+  .mount('#app')

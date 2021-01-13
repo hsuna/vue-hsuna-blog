@@ -29,15 +29,15 @@
 </template>
 
 <script>
-import { Pagination, Collapse, CollapseItem } from 'element-ui';
+import { ElPagination, ElCollapse, ElCollapseItem } from 'element-plus';
 
 import Api from "src/api/blog";
 
 export default {
   components: {
-    [Collapse.name]: Collapse,
-    [CollapseItem.name]: CollapseItem,
-    [Pagination.name]: Pagination,
+    ElCollapse,
+    ElCollapseItem,
+    ElPagination,
   },
   data() {
     return {

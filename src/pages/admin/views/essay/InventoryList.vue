@@ -12,9 +12,9 @@
           <el-table-column type='index' width="60" ></el-table-column>
           <el-table-column prop="title" min-width="280" label="清单名称" ></el-table-column>
           <el-table-column prop="content" min-width="480" label="清单内容" ></el-table-column>
-          <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => $options.filters.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
+          <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
           <el-table-column min-width="150" label="操作" fixed="right" align="center">
-            <template slot-scope='scope'>
+            <template #default="scope">
               <el-button type='danger' @click="handleRemoveInventory(scope.row._id)">删除</el-button>
             </template>
           </el-table-column>
@@ -23,7 +23,7 @@
       </div>
     </div>
 
-    <el-dialog title="添加清单" :visible.sync="dialogVisible">
+    <el-dialog title="添加清单" v-model="dialogVisible">
       <el-form :model="dialogData" :rules="dialogRules" ref="dialog">
         <el-form-item label="清单名称：" label-width="100px" prop="title">
           <el-input v-model="dialogData.title" auto-complete="off"></el-input>
@@ -37,32 +37,34 @@
           </el-input>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleUpdateInventory">确 定</el-button>
-      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="handleUpdateInventory">确 定</el-button>
+        </div>
+      </template>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { Table, TableColumn, Dialog, Form, FormItem, Button, Input, Message, MessageBox } from 'element-ui';
+import { ElTable, ElTableColumn, ElDialog, ElForm, ElFormItem, ElButton, ElInput, ElMessage, ElMessageBox } from 'element-plus';
 
-import AdminHeader from "src/components/admin-header";
-import BlogPaging from "src/components/blog-paging";
+import AdminHeader from "src/components/admin-header/index.vue";
+import BlogPaging from "src/components/blog-paging/index.vue";
 
 import { timeStampFormat } from 'src/utils/date'
 import Api from "src/api/admin";
 
 export default {
   components: {
-    [Table.name]: Table,
-    [TableColumn.name]: TableColumn,
-    [Dialog.name]: Dialog,
-    [Form.name]: Form,
-    [FormItem.name]: FormItem,
-    [Button.name]: Button,
-    [Input.name]: Input,
+    ElTable,
+    ElTableColumn,
+    ElDialog,
+    ElForm,
+    ElFormItem,
+    ElButton,
+    ElInput,
 
     AdminHeader,
     BlogPaging,
@@ -87,12 +89,10 @@ export default {
       }
     };
   },
-  created() {
-  },
-  filters: {
-    timeStampFormat
-  },
   methods: {
+    // 过滤器：filters
+    timeStampFormat,
+
     getInventoryList() {
       let params = {
         page: 1,
@@ -120,7 +120,7 @@ export default {
           Api.postInventory(this.dialogData).then(res => {
             if (200 == res.code) {
               this.dialogVisible = false;
-              Message.success('添加清单成功')
+              ElMessage.success('添加清单成功')
               this.$refs.dialog.resetFields(); //清除表单状态
               this.getInventoryList();
             }
@@ -129,10 +129,10 @@ export default {
       });
     },
     handleRemoveInventory(id) {
-      MessageBox.confirm("确认删除该清单？").then(res => {
+      ElMessageBox.confirm("确认删除该清单？").then(res => {
         Api.deleteInventory({ params: { id } }).then(res => {
             if (200 == res.code) {
-              Message.success('删除清单成功')
+              ElMessage.success('删除清单成功')
               this.getInventoryList();
             }
           });

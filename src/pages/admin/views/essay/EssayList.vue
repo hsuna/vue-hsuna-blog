@@ -12,20 +12,20 @@
           <el-table-column type='index' width="60" ></el-table-column>
           <el-table-column prop="content" min-width="500" label="随记内容" ></el-table-column>
           <el-table-column prop="files" min-width="400" label="随记图片" >
-            <template slot-scope="scope">
+            <template #default="scope">
               <template v-if="scope.row.files.length>0">
                 <ul class="essay-list-file">
                   <li v-for="file in scope.row.files" :key="file.id" @click="handlePreviewFile(file)">
-                    <img width="100%" height="100%" :src="file.url" alt="">
+                    <img style="width: 100%; height:100%;" :src="file.url" alt="" />
                   </li>
                 </ul>
               </template>
               <template v-else>无</template>
             </template>
           </el-table-column>
-          <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => $options.filters.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
+          <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
           <el-table-column min-width="150" label="操作" fixed="right" align="center">
-            <template slot-scope='scope'>
+            <template #default="scope">
               <el-button type='danger' @click="handleRemoveEssay(scope.row._id)">删除</el-button>
             </template>
           </el-table-column>
@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <el-dialog title="添加随记" :visible.sync="dialogVisible">
+    <el-dialog title="添加随记" v-model="dialogVisible">
       <el-form :model="dialogData" :rules="dialogRules" ref="dialog">
         <el-form-item label="随记内容：" label-width="100px" prop="content">
           <el-input
@@ -60,35 +60,38 @@
             </el-upload>
           </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleUpdateEssay">确 定</el-button>
-      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="handleUpdateEssay">确 定</el-button>
+        </div>
+      </template>
     </el-dialog>
-    <el-dialog :visible.sync="dialogImageVisible">
-      <img width="100%" :src="dialogImageUrl" alt="">
+    <el-dialog v-model="dialogImageVisible">
+      <img style="width: 100%;" :src="dialogImageUrl" alt="">
     </el-dialog>
   </div>
 </template>
 
 <script>
-import AdminHeader from "src/components/admin-header";
-import BlogPaging from "src/components/blog-paging";
+import { ElIcon, ElTable, ElTableColumn, ElDialog, ElForm, ElFormItem, ElButton, ElInput, ElMessage, ElUpload, ElMessageBox } from 'element-plus';
+
+import AdminHeader from "src/components/admin-header/index.vue";
+import BlogPaging from "src/components/blog-paging/index.vue";
 
 import { timeStampFormat } from 'src/utils/date'
 import Api from "src/api/admin";
-import { Table, TableColumn, Dialog, Form, FormItem, Button, Input, Message, Upload, MessageBox } from 'element-ui';
 
 export default {
   components: {
-    [Table.name]: Table,
-    [TableColumn.name]: TableColumn,
-    [Dialog.name]: Dialog,
-    [Form.name]: Form,
-    [FormItem.name]: FormItem,
-    [Button.name]: Button,
-    [Upload.name]: Upload,
-    [Input.name]: Input,
+    ElTable,
+    ElTableColumn,
+    ElDialog,
+    ElForm,
+    ElFormItem,
+    ElButton,
+    ElUpload,
+    ElInput,
 
     AdminHeader,
     BlogPaging,
@@ -124,10 +127,10 @@ export default {
   },
   created() {
   },
-  filters: {
-    timeStampFormat,
-  },
   methods: {
+    // 过滤器：filters
+    timeStampFormat,
+
     getEssayList() {
       let params = {
         page: 1,
@@ -167,10 +170,10 @@ export default {
       });
     },
     handleRemoveEssay(id) {
-      MessageBox.confirm("确认删除该随记？").then(res => {
+      ElMessageBox.confirm("确认删除该随记？").then(res => {
           Api.deleteEssay({ params: { id } }).then(res => {
             if (200 == res.code) {
-              Message.success('删除随记成功')
+              ElMessage.success('删除随记成功')
               this.getEssayList();
             }
           });
@@ -179,7 +182,7 @@ export default {
     },
     handleSuccessFile(res, file, fileList) {
       if (200 == res.code) {
-        Message.success('文件上传成功')
+        ElMessage.success('文件上传成功')
         Object.assign(file, res.data);
         this.dialogData.files = fileList;
       }
@@ -194,7 +197,7 @@ export default {
           params: { id: file.id }
         }).then(res => {
             if (200 == res.code) {
-              Message.success('文件删除成功')
+              ElMessage.success('文件删除成功')
               resolve();
             } else {
               reject();

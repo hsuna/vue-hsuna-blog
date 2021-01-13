@@ -66,21 +66,21 @@
 </template>
 
 <script>
-import { Row, Col, Upload, Form, FormItem, Button, Input, Message } from 'element-ui';
+import { ElIcon, ElRow, ElCol, ElUpload, ElForm, ElFormItem, ElButton, ElInput, ElMessage } from 'element-plus';
 
-import AdminHeader from "src/components/admin-header";
+import AdminHeader from "src/components/admin-header/index.vue";
 
 import Api from "src/api/admin";
 
 export default {
   components: {
-    [Row.name]: Row,
-    [Col.name]: Col,
-    [Upload.name]: Upload,
-    [Form.name]: Form,
-    [FormItem.name]: FormItem,
-    [Input.name]: Input,
-    [Button.name]: Button,
+    ElRow,
+    ElCol,
+    ElUpload,
+    ElForm,
+    ElFormItem,
+    ElInput,
+    ElButton,
 
     AdminHeader,
   },
@@ -144,13 +144,13 @@ export default {
     },
     handleSuccessPortrait(res, file, fileList) {
       if (200 == res.code) {
-        Message.success('头像修改成功')
+        ElMessage.success('头像修改成功')
         this.portrait.url = res.data || ""
       }
     },
     handleSuccessBanner(res, file, fileList) {
       if (200 == res.code) {
-        Message.success('背景图修改成功')
+        ElMessage.success('背景图修改成功')
         this.banner.url = res.data || ""
       }
     },
@@ -164,7 +164,7 @@ export default {
       this.submitload = true;
       Api.putUserInfo(this.userForm).then(res => {
         if (200 == res.code) {
-          Message.success('修改用户信息成功')
+          ElMessage.success('修改用户信息成功')
           Object.assign(this.user, this.userForm);
           this.isEdit = false;
         }

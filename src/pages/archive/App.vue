@@ -24,11 +24,11 @@
 </template>
 
 <script>
-import BlogMain from "src/components/blog-main";
-import ProfileCard from "src/components/profile-card";
-import { ProfileSideHot, ProfileSideArchive } from "src/components/profile-side";
+import BlogMain from "src/components/blog-main/index.vue";
+import ProfileCard from "src/components/profile-card/index.vue";
+import { ProfileSideHot, ProfileSideArchive } from "src/components/profile-side/index.js";
 
-import * as utils from 'src/utils/search'
+import * as utils from 'src/utils/search.js'
 
 import Api from "src/api/blog";
 

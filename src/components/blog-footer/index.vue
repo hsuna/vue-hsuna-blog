@@ -12,7 +12,7 @@
 
 
 <script>
-import { timeStampFormat } from 'src/utils/date'
+import { timeStampFormat } from 'src/utils/date.js'
  
 export default {
   name: 'blog-footer',

@@ -4,8 +4,8 @@
     <div class="profile-body">
       <div class="profile-essay" v-for="(profile, index) in profileList" :key="index">
         <div class="essay-header">
-          <p class="date">{{profile.createdAt | timeStampFormat('dd')}}</p>
-          <p>{{profile.createdAt | monthFormat('ABBR')}}</p>
+          <p class="date">{{timeStampFormat(profile.createdAt, 'dd')}}</p>
+          <p>{{monthFormat(profile.createdAt, 'ABBR')}}</p>
         </div>
         <div class="essay-border">
           <span class="arrows"></span>
@@ -17,33 +17,36 @@
               </li>
             </ul>
           </div>
-          <div class="date" :data-date="profile.createdAt | timeStampFormat">{{profile.createdAt | timeAgoFormat}}</div>
+          <div class="date" :data-date="timeStampFormat(profile.createdAt)">{{timeAgoFormat(profile.createdAt)}}</div>
         </div>
       </div>
     </div>
     <div class="profile-footer">
-      <el-pagination background layout="prev, pager, next" v-if="-1 != total"
+      <el-pagination 
+        v-if="-1 != total"
+        layout="prev, pager, next" 
+        :background="true"
         :total="total"
         :current-page="curPage"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange">
       </el-pagination>
     </div>
-    <el-dialog :visible.sync="dialogImageVisible">
-      <img width="100%" :src="dialogImageUrl" alt="">
+    <el-dialog v-model="dialogImageVisible">
+      <img style="width: 100%;" :src="dialogImageUrl" alt="">
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { Pagination, Dialog } from 'element-ui';
+import { ElPagination, ElDialog } from 'element-plus';
 
 import { timeStampFormat, timeAgoFormat, monthFormat } from 'src/utils/date'
 
 export default {
   components: {
-    [Pagination.name]: Pagination,
-    [Dialog.name]: Dialog,
+    ElPagination,
+    ElDialog,
   },
   data() {
     return {
@@ -65,12 +68,12 @@ export default {
       default: _ => []
     }
   },
-  filters: {
+  methods: {
+    // 过滤器：filters
     timeStampFormat,
     timeAgoFormat,
     monthFormat,
-  },
-  methods: {
+    //////////////////////////////
     handlePreviewFile(url) {
       this.dialogImageUrl = url;
       this.dialogImageVisible = true;

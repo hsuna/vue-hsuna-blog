@@ -47,8 +47,8 @@
             <ul>
               <li>
                 <h5>前端</h5>
-                <p>vue, vue-router, axios, vuex</p>
-                <p>element-ui, markdown, highlight, webpack</p>
+                <p>vue3.0, vue-router, axios, vuex</p>
+                <p>element-plus, markdown, highlight, webpack</p>
               </li>
               <li>
                 <h5>后端</h5>
@@ -68,8 +68,8 @@
 </template>
 
 <script>
-import BlogMain from "src/components/blog-main";
-import { ProfileSideAbout, ProfileSideHot } from "src/components/profile-side";
+import BlogMain from "src/components/blog-main/index.vue";
+import { ProfileSideAbout, ProfileSideHot } from "src/components/profile-side/index.js";
 
 export default {
   name: "App",

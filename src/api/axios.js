@@ -7,11 +7,11 @@
  */
 import Axios from "axios"
 
-import { Message } from "element-ui";
+import { ElMessage } from "element-plus";
 
-import storage, { StorageKey } from 'src/utils/storage'
+import storage, { StorageKey } from 'src/utils/storage.js'
 
-Axios.defaults.baseURL = process.env.API_HOST
+Axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '//api.hsuna.com/blog/' : '//localhost:8080/api/blog/'
 Axios.defaults.timeout = 600000000;
 Axios.defaults.withCredentials = true;
 Axios.header = {
@@ -34,7 +34,7 @@ Axios.interceptors.request.use(
     return config;
   },
   err => {
-    Message.error(err);
+    ElMessage.error(err);
     //请求错误时做些事
     return Promise.reject(err);
   }
@@ -55,14 +55,14 @@ Axios.interceptors.response.use(
         }); */
         break;
       default:
-        Message.error(res.data.message);
+        ElMessage.error(res.data.message);
         break;
     }
     return res.data;
   },
   err => {
     //请求错误时做些事
-    Message.error(err);
+    ElMessage.error(err);
     return Promise.reject(err);
   }
 )

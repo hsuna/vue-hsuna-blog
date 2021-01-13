@@ -13,7 +13,9 @@
       </el-menu>
       <div class="header-search">
         <el-input placeholder="搜索" v-model="inputSearch"><!-- prefix-icon="el-icon-search" -->
-          <el-button slot="append" icon="el-icon-search" @click="handleSearch"></el-button>
+          <template #append>
+            <el-button icon="el-icon-search" @click="handleSearch"></el-button>
+          </template>
         </el-input>
       </div>
     </div>
@@ -22,16 +24,16 @@
 
 
 <script>
-import { Button, Input, Menu, MenuItem, Message } from 'element-ui';
-import storage, { StorageKey } from 'src/utils/storage'
+import { ElIcon, ElButton, ElInput, ElMenu, ElMenuItem, ElMessage } from 'element-plus';
+import storage, { StorageKey } from 'src/utils/storage.js'
 
 export default {
   name: "blog-header",
   components: {
-    [Button.name]: Button,
-    [Input.name]: Input,
-    [Menu.name]: Menu,
-    [MenuItem.name]: MenuItem,
+    ElButton,
+    ElInput,
+    ElMenu,
+    ElMenuItem,
   },
   props: {
     activeIndex: {
@@ -54,7 +56,7 @@ export default {
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
-  destroyed(){
+  beforeUnmount(){
     window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
@@ -90,7 +92,7 @@ export default {
     },
     handleSearch(){
       console.log(this.inputSearch);
-      Message('该功能正在建设中～');
+      ElMessage('该功能正在建设中～');
     }
   }
 };

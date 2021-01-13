@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import { Message } from 'element-ui';
-import ArticleEdit from "src/components/article-edit";
+import { ElMessage } from 'element-plus';
+import ArticleEdit from "src/components/article-edit/index.vue";
 
 import { ActionName, MutationName } from "../../store/types";
 import Api from "src/api/admin";
@@ -42,7 +42,7 @@ export default {
             Object.assign(this.article, list[0]);
           } else {
             this.$router.replace({ path: "/admin/articleList" });
-            Message.error("不存在该文章");
+            ElMessage.error("不存在该文章");
           }
         }
       });
@@ -51,7 +51,7 @@ export default {
     handlePublish(callback) {
       Api.putArticle(this.article).then(res => {
         if (200 == res.code) {
-          Message.success('更新文章成功');
+          ElMessage.success('更新文章成功');
           this.$store.dispatch(ActionName.ADD_ARTICLE_TAGS, this.article.tags);
           this.$router.replace({ path: "/admin/articleList" });
         }

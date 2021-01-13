@@ -8,9 +8,9 @@
             <div class="tags"><a class="tag" href="javascript:;" v-for="tag in article.tags" :key="tag">{{tag}}</a></div>
             <div class="classify">{{article.classify}}</div>
             <div class="time">
-              <span>发布于{{article.publishAt | timeStampFormat('yyyy-MM-dd')}}</span>
+              <span>发布于{{timeStampFormat(article.publishAt, 'yyyy-MM-dd')}}</span>
               <span>{{article.viewCount}}次浏览</span>
-              <span>最后一次编辑 {{article.updatedAt | timeAgoFormat}}</span>
+              <span>最后一次编辑 {{timeAgoFormat(article.updatedAt)}}</span>
             </div>
           </div>
         </div>
@@ -31,7 +31,7 @@
               <span class="title">《<a :href="`/article.html?id=${relate.id}`">{{relate.title}}</a>》</span>
               <div class="tags"><span class="tag" v-for="tag in relate.tags" :key="tag">{{tag}}</span></div>
               <div class="time">
-                <span>{{relate.publishAt | timeStampFormat('yyyy-MM-dd')}}</span>
+                <span>{{timeStampFormat(relate.publishAt, 'yyyy-MM-dd')}}</span>
                  <span>{{article.viewCount}}次浏览</span>
               </div>
               <p class="about">简介：{{relate.about}}</p>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="comment-content" v-html="comment.content"><template ></template></div>
                 <div class="comment-reply">
-                  <span class="mark-view-time">{{comment.createdAt | timeStampFormat}}</span>
+                  <span class="mark-view-time">{{timeStampFormat(comment.createdAt)}}</span>
                   |
                   <a :href="`#c-${comment.id}`">#</a>
                   |
@@ -105,30 +105,30 @@
 </template>
 
 <script>
-import { FormItem, Form, Row, Col, Input, Button, Checkbox, Tag, Message } from 'element-ui';
-import BlogMain from "src/components/blog-main";
+import { ElFormItem, ElForm, ElRow, ElCol, ElInput, ElButton, ElCheckbox, ElTag, ElMessage } from 'element-plus';
+import BlogMain from "src/components/blog-main/index.vue";
 
-import { setDocumentTitle } from "src/utils/title";
+import { setDocumentTitle } from "src/utils/title.js";
 
-import storage, { StorageKey } from 'src/utils/storage'
-import { timeAgoFormat, timeStampFormat } from 'src/utils/date'
-import { params } from 'src/utils/search'
-import markMixin from "src/mixin/mark";
+import storage, { StorageKey } from 'src/utils/storage.js'
+import { timeAgoFormat, timeStampFormat } from 'src/utils/date.js'
+import { params } from 'src/utils/search.js'
+import markMixin from "src/mixin/mark.js";
 
-import Api from "src/api/blog";
+import Api from "src/api/blog.js";
 
 let visitor = storage.get(StorageKey.VISITOR)
 
 export default {
   components: {
-    [Form.name]: Form,
-    [FormItem.name]: FormItem,
-    [Row.name]: Row,
-    [Col.name]: Col,
-    [Input.name]: Input,
-    [Button.name]: Button,
-    [Checkbox.name]: Checkbox,
-    [Tag.name]: Tag,
+    ElForm,
+    ElFormItem,
+    ElRow,
+    ElCol,
+    ElInput,
+    ElButton,
+    ElCheckbox,
+    ElTag,
 
     BlogMain
   },
@@ -166,11 +166,11 @@ export default {
     await this.getArticleDetail();
   },
   mixins: [markMixin],
-  filters: {
+  methods: {
+    // 过滤器：filters
     timeAgoFormat,
     timeStampFormat,
-  },
-  methods: {
+    //////////////////////////////
     async getArticleDetail() {
       let res = await Api.getArticleDetail({ params: this.article })
       if (200 == res.code) {
@@ -245,7 +245,7 @@ export default {
             })
           }).then(res => {
               if (200 == res.code) {
-                Message.success('提交评论成功');
+                ElMessage.success('提交评论成功');
                 this.article.comments.push(res.data);
                 this.article.commentCount += 1;
                 let { name, email, checked } = this.comment;

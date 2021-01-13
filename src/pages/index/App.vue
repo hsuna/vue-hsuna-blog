@@ -5,7 +5,7 @@
         <div class="personal-top" :style="`background-image:url(${banner})`"></div>
         <div class="personal-bottom">
           <div class="user-portrait">
-            <img :src="portrait" alt="portrait" width="100%" height="100%" />
+            <img :src="portrait" alt="portrait" />
           </div>
           <div class="user-info clearfix">
             <span class="name">{{nickname}}</span>{{job}}
@@ -39,24 +39,24 @@
 </template>
 
 <script>
-import { Tooltip } from 'element-ui';
+import { ElTooltip } from 'element-plus';
 
-import BlogMain from "src/components/blog-main";
-import ProfileCard from "src/components/profile-card";
+import BlogMain from "src/components/blog-main/index.vue";
+import ProfileCard from "src/components/profile-card/index.vue";
 import {
   ProfileSideHot,
   ProfileSideClassify,
   ProfileSideComment
-} from "src/components/profile-side";
+} from "src/components/profile-side/index.js";
 
-import * as utils from 'src/utils/search'
-import storage, { StorageKey } from 'src/utils/storage'
-import Api from "src/api/blog";
+import * as utils from 'src/utils/search.js'
+import storage, { StorageKey } from 'src/utils/storage.js'
+import Api from "src/api/blog.js";
 
 export default {
   name: "App",
   components: {
-    [Tooltip.name]: Tooltip,
+    ElTooltip,
 
     BlogMain,
     ProfileCard,
@@ -156,6 +156,11 @@ export default {
     height: 160px;
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(26, 26, 26, 0.1);
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .user-info {

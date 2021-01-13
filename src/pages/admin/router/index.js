@@ -7,19 +7,15 @@
  * @Last Modified time: 2018-04-02 20:39:27
  */
 
-import Vue from "vue";
-import VueRouter from "vue-router";
+import { createRouter, createWebHashHistory } from 'vue-router'
 import routes from "./routes";
 import store from "../store";
 import { setDocumentTitle } from "src/utils/title";
 
-Vue.use(VueRouter);
-const router = new VueRouter({
-  //mode: "history",
+const router = createRouter({
+  history: createWebHashHistory(),
   routes
 });
-
-
 
 // 路由钩子
 router.beforeEach(({ meta, path }, from, next) => {

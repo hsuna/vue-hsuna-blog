@@ -1,22 +1,11 @@
 {
-  "presets": [
-    [
-      "@babel/preset-env",
-      {
-        "useBuiltIns": "usage",
-        "corejs": 2
-      }
-    ]
-  ],
   "plugins": [
     [
       "component",
       {
-        "libraryName": "element-ui",
+        "libraryName": "element-plus",
         "styleLibraryName": "theme-chalk"
       }
-    ],
-    "@babel/plugin-transform-runtime",
-    "@babel/plugin-transform-regenerator"
+    ]
   ]
 }

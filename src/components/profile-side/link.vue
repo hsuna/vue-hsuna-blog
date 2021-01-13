@@ -29,13 +29,13 @@
 </template>
 
 <script>
-import { Pagination } from 'element-ui';
+import { ElPagination } from 'element-plus';
 
 import Api from "src/api/blog";
 
 export default {
   components: {
-    [Pagination.name]: Pagination,
+    ElPagination,
   },
   data() {
     return {

@@ -8,29 +8,26 @@
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class="admin-date">{{date | dateFormat('yyyy年MM月dd日&nbsp;hh:mm&nbsp;&nbsp;W')}}</div>
+    <div class="admin-date">{{dateFormat(date, 'yyyy年MM月dd日&nbsp;hh:mm&nbsp;&nbsp;W')}}</div>
   </div>
 </template>
 
 <script>
-import { Breadcrumb, BreadcrumbItem } from 'element-ui'
+import { ElIcon, ElBreadcrumb, ElBreadcrumbItem } from 'element-plus'
 
 import { dateFormat } from 'src/utils/date'
 
 export default {
   name: "admin-header",
   components: {
-    [Breadcrumb.name]: Breadcrumb,
-    [BreadcrumbItem.name]: BreadcrumbItem,
+    ElBreadcrumb,
+    ElBreadcrumbItem,
   },
   props: {
     routerList: {
       type: Array,
       default: _ => []
     }
-  },
-  filters: {
-    dateFormat
   },
   data() {
     return {
@@ -43,10 +40,13 @@ export default {
       this.date = new Date();
     }, 1000 * 10);
   },
-  destroyed() {
+  beforeUnmount() {
     clearInterval(this.timerId);
   },
-  methods: {}
+  methods: {
+    // 过滤器 filters
+    dateFormat,
+  },
 };
 </script>
 

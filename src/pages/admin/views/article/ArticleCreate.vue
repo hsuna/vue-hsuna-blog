@@ -1,10 +1,10 @@
-<template lang="html">
+<template>
   <article-edit :article="article" :breadcrumbs="breadcrumbs" @submit="handlePublish"></article-edit>
 </template>
 
 <script>
-import { Message } from 'element-ui';
-import ArticleEdit from "src/components/article-edit";
+import { ElMessage } from 'element-plus';
+import ArticleEdit from "src/components/article-edit/index.vue";
 
 import { ActionName, MutationName } from "../../store/types";
 
@@ -35,7 +35,7 @@ export default {
   mounted() {
     window.onbeforeunload = this.recordCacheArticle;
   },
-  destroyed() {
+  beforeUnmount() {
     this.recordCacheArticle();
     window.onbeforeunload = null;
   },
@@ -49,7 +49,7 @@ export default {
     handlePublish(callback) {
       Api.postArticle(this.article).then(res => {
         if (200 == res.code) {
-          Message.success(1 == res.data.status ? "文章发布成功" : "文章保存成功");
+          ElMessage.success(1 == res.data.status ? "文章发布成功" : "文章保存成功");
           this.isRecord = false;
           this.$store.dispatch(ActionName.ADD_ARTICLE_TAGS, this.article.tags);
           this.$store.commit(MutationName.CLEAR_ARTICLE); //清除缓存的文章

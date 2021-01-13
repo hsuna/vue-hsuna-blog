@@ -1,15 +1,10 @@
-import Vue from 'vue'
-
 import 'src/assets/styles/element-variables.scss'
 
-/* 引用-element-ui */
-import { 
-    Loading 
-} from 'element-ui'
+/* 引用-element-plus */
+import { ElLoading } from 'element-plus'
 
-Vue.use(Loading)
-
-
-Vue.prototype.$ELEMENT = { size: 'small' };
-
-export default Vue
+export default {
+    install (app) {
+        app.use(ElLoading, { size: 'small' })
+    }
+}

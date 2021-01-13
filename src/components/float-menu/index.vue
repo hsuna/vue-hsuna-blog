@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import { params } from 'src/utils/search'
-import storage, { StorageKey } from 'src/utils/storage'
+import { params } from 'src/utils/search.js'
+import storage, { StorageKey } from 'src/utils/storage.js'
 
 export default {
   name: 'float-menu',

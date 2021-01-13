@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import BlogHeader from "src/components/blog-header";
-import BlogFooter from "src/components/blog-footer";
-import FloatMenu from "src/components/float-menu";
+import BlogHeader from "src/components/blog-header/index.vue";
+import BlogFooter from "src/components/blog-footer/index.vue";
+import FloatMenu from "src/components/float-menu/index.vue";
 
 export default {
   name: 'blog-main',

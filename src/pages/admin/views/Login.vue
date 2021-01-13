@@ -18,15 +18,15 @@
 </template>
 
 <script>
+import { ElForm, ElFormItem, ElInput, ElButton } from 'element-plus';
 import { ActionName } from "../store/types";
-import { Form, FormItem, Input, Button } from 'element-ui';
 
 export default {
   components: {
-    [Form.name]: Form,
-    [FormItem.name]: FormItem,
-    [Input.name]: Input,
-    [Button.name]: Button,
+    ElForm,
+    ElFormItem,
+    ElInput,
+    ElButton,
   },
   data() {
     //自定义验证函数

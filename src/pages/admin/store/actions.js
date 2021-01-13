@@ -5,7 +5,7 @@
  * @Last Modified by: Hsuna
  * @Last Modified time: 2018-04-02 20:43:50
  */
-import { Message, MessageBox } from "element-ui";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 import { ActionName, MutationName } from "./types";
 
@@ -16,7 +16,7 @@ export default {
     return new Promise((resolve, reject) => {
       Api.postLogin(user).then(res => {
         if (200 == res.code) {
-          Message.success('恭喜，登录成功');
+          ElMessage.success('恭喜，登录成功');
           commit(MutationName.SET_USER, {
             token: res.data.token,
             name: user.name
@@ -28,8 +28,8 @@ export default {
     });
   },
   [ActionName.USER_LOGOUT]({ commit }) {
-    MessageBox.confirm("是否退出登录？").then(res => {
-        Message.success('退出登录成功');
+    ElMessageBox.confirm("是否退出登录？").then(res => {
+      ElMessage.success('退出登录成功');
         commit(MutationName.CLEAR_USER);
         window.location.reload()
       })
@@ -39,7 +39,7 @@ export default {
     return new Promise((resolve, reject) => {
       Api.putUserPassword(data).then(res => {
         if (200 == res.code) {
-          Message.success('修改密码成功，请重新登录！');
+          ElMessage.success('修改密码成功，请重新登录！');
           commit(MutationName.CLEAR_USER);
           window.location.reload()
         }

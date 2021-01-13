@@ -4,19 +4,23 @@
       <div class="card-title">
         <a :href="`/article.html?id=${profile.id}`">{{profile.title}}</a>
       </div>
-      <div class="card-date" :data-date="profile.publishAt | timeStampFormat">
-        {{profile.publishAt | timeAgoFormat}}
+      <div class="card-date" :data-date="timeStampFormat(profile.publishAt)">
+        {{timeAgoFormat(profile.publishAt)}}
       </div>
       <div class="card-tags">
         <span class="card-count">分类：{{profile.classify}}</span>
         <span class="card-count">评论({{profile.commentCount}}) | 浏览({{profile.viewCount}})</span>
         <el-tag size="mini" v-for="tag in profile.tags" :key="tag">{{tag}}</el-tag>
       </div>
-      <div class="card-content" v-html="`&nbsp;&nbsp;&nbsp;&nbsp;${profile.about}`">
+      <div class="card-content">
+        <span v-html="`&nbsp;&nbsp;&nbsp;&nbsp;${profile.about}`"></span>
         <a :href="`/article.html?id=${profile.id}`">阅读全文<i class="el-icon-arrow-right"></i></a>
       </div>
     </div>
-    <el-pagination background　layout="prev, pager, next" v-if="-1 != total"
+    <el-pagination 
+      v-if="-1 != total"
+      layout="prev, pager, next" 
+      :background="true"
       :total="total"
       :current-page="curPage"
       @size-change="handleSizeChange"
@@ -26,14 +30,14 @@
 </template>
 
 <script>
-import { Pagination, Tag } from 'element-ui';
+import { ElIcon, ElPagination, ElTag } from 'element-plus';
 
-import { timeStampFormat, timeAgoFormat } from 'src/utils/date'
+import { timeStampFormat, timeAgoFormat } from 'src/utils/date.js'
 
 export default {
   components: {
-    [Tag.name]: Tag,
-    [Pagination.name]: Pagination,
+    ElPagination,
+    ElTag,
   },
   props: {
     curPage: {
@@ -49,11 +53,11 @@ export default {
       default: _ => []
     }
   },
-  filters: {
+  methods: {
+    // 过滤器：filters
     timeStampFormat,
     timeAgoFormat,
-  },
-  methods: {
+    //////////////////////////////
     handleSizeChange(val) {
       this.$emit("change", "size", val);
     },

@@ -14,10 +14,10 @@
           <el-table-column prop="about" min-width="200" label="文章简介" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="classify" min-width="100" label="所属分类" ></el-table-column>
           <el-table-column min-width="100" label="文章类型" :formatter="row => ['草稿', '公开', '私人'][row.status]"></el-table-column>
-          <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => $options.filters.timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
-          <el-table-column prop="updatedAt" min-width="140" label="更新时间" :formatter="row => $options.filters.timeStampFormat(row.updatedAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
+          <el-table-column prop="createdAt" min-width="140" label="创建时间" :formatter="row => timeStampFormat(row.createdAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
+          <el-table-column prop="updatedAt" min-width="140" label="更新时间" :formatter="row => timeStampFormat(row.updatedAt, 'yyyy-MM-dd hh:mm')"></el-table-column>
           <el-table-column min-width="220" label="操作" fixed="right" align="center">
-            <template slot-scope="scope">
+            <template #default="scope">
               <el-button type='primary' @click="toReadArticle(scope.row._id)">查看</el-button>
               <el-button type='primary' @click="toEditArticle(scope.row._id)">编辑</el-button>
               <el-button type='danger' @click="handleRemoveArticle(scope.row._id)">删除</el-button>
@@ -31,19 +31,19 @@
 </template>
 
 <script>
-import { Table, TableColumn, Button, Message, MessageBox } from 'element-ui';
+import { ElTable, ElTableColumn, ElButton, ElMessage, ElMessageBox } from 'element-plus';
 
-import AdminHeader from "src/components/admin-header";
-import BlogPaging from "src/components/blog-paging";
+import AdminHeader from "src/components/admin-header/index.vue";
+import BlogPaging from "src/components/blog-paging/index.vue";
 
 import { timeStampFormat } from 'src/utils/date'
 import Api from "src/api/admin";
 
 export default {
   components: {
-    [Table.name]: Table,
-    [TableColumn.name]: TableColumn,
-    [Button.name]: Button,
+    ElTable,
+    ElTableColumn,
+    ElButton,
 
     AdminHeader,
     BlogPaging,
@@ -61,10 +61,10 @@ export default {
       }
     }
   },
-  filters: {
-    timeStampFormat
-  },
   methods: {
+     // 过滤器：filters
+    timeStampFormat,
+
     toEditArticle(articleId) {
       this.$router.push({ path: `/admin/articleEdit/${articleId}` });
     },
@@ -93,10 +93,10 @@ export default {
     },
     //handleTabClick() {},
     handleRemoveArticle(id) {
-      MessageBox.confirm("确认删除该文章？").then(res => {
+      ElMessageBox.confirm("确认删除该文章？").then(res => {
         Api.deleteArticle({ params: { id } }).then(res => {
           if (200 == res.code) {
-            Message.success('删除文章成功');
+            ElMessage.success('删除文章成功');
             this.getArticleList();
           }
         });

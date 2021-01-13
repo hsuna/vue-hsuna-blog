@@ -20,11 +20,11 @@
 </template>
 
 <script>
-import BlogMain from "src/components/blog-main";
-import ProfileEssay from "src/components/profile-essay";
+import BlogMain from "src/components/blog-main/index.vue";
+import ProfileEssay from "src/components/profile-essay/index.vue";
 import { ProfileSideInventory, ProfileSideLink } from "src/components/profile-side";
 
-import * as utils from 'src/utils/search'
+import * as utils from 'src/utils/search.js'
 import Api from "src/api/blog";
 
 export default {

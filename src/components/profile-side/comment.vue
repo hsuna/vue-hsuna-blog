@@ -10,7 +10,7 @@
           <li v-for="comment in commentList" :key="comment.id">
             <p>
               <a class="name" :href="`/article.html?id=${comment.articleId}#c-${comment.id}`">{{comment.name}}</a>
-              <span class="time">{{comment.createdAt | timeAgoFormat}}</span>
+              <span class="time">{{timeAgoFormat(comment.createdAt)}}</span>
             </p>
             <p class="content">{{comment.content}}</p>
           </li>
@@ -37,10 +37,10 @@ export default {
   created() {
     this.getNewComment();
   },
-  filters: {
-    timeAgoFormat
-  },
   methods: {
+    // 过滤器：filters
+    timeAgoFormat,
+    //////////////////////////////
     getNewComment() {
       Api.getCommentNew().then(res => {
         if (200 == res.code) {

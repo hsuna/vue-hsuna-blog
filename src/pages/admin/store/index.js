@@ -6,17 +6,14 @@
  * @Last Modified time: 2018-03-30 11:45:36
  */
 
-import Vue from "vue";
-import Vuex from "vuex";
+import { createStore } from 'vuex'
 
 import state from "./states";
 import getters from "./getters";
 import actions from "./actions";
 import mutations from "./mutations";
 
-Vue.use(Vuex);
-
-const store = new Vuex.Store({
+const store = createStore({
   state,
   getters,
   mutations,

@@ -9,9 +9,9 @@
             <div class="tags"><a class="tag" href="javascript:;" v-for="tag in article.tags" :key="tag">{{tag}}</a></div>
             <div class="classify">{{article.classify}}</div>
             <div class="time">
-              <span>发布于{{article.publishAt | timeStampFormat('yyyy-MM-dd')}}</span>
+              <span>发布于{{timeStampFormat(article.publishAt, 'yyyy-MM-dd')}}</span>
               <span>{{article.viewCount}}次浏览</span>
-              <span>最后一次编辑是{{article.updatedAt | timeAgoFormat}}</span>
+              <span>最后一次编辑是{{timeAgoFormat(article.updatedAt)}}</span>
             </div>
           </div>
         </div>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="comment-content" v-html="comment.content"><template ></template></div>
                 <div class="comment-reply">
-                  <span class="mark-view-time">{{comment.createdAt | timeStampFormat}}</span>|<a href="javascript:;" @click="handleAddReply(comment, index)">回复</a>|<a href="javascript:;" @click="handleRemoveComment(comment, index)">删除</a>
+                  <span class="mark-view-time">{{timeStampFormat(comment.createdAt)}}</span>|<a href="javascript:;" @click="handleAddReply(comment, index)">回复</a>|<a href="javascript:;" @click="handleRemoveComment(comment, index)">删除</a>
                 </div>
               </li>
           </ul>
@@ -60,9 +60,9 @@
 </template>
 
 <script>
-import { Form, FormItem, Row, Col, Tag, Input, Button, Message, MessageBox } from 'element-ui';
+import { ElForm, ElFormItem, ElRow, ElCol, ElTag, ElInput, ElButton, ElMessage, ElMessageBox } from 'element-plus';
 
-import AdminHeader from "src/components/admin-header";
+import AdminHeader from "src/components/admin-header/index.vue";
 
 import { timeStampFormat, timeAgoFormat } from 'src/utils/date'
 import Api from "src/api/admin";
@@ -70,13 +70,13 @@ import markMixin from "src/mixin/mark";
 
 export default {
   components: {
-    [Form.name]: Form,
-    [FormItem.name]: FormItem,
-    [Row.name]: Row,
-    [Col.name]: Col,
-    [Tag.name]: Tag,
-    [Input.name]: Input,
-    [Button.name]: Button,
+    ElForm,
+    ElFormItem,
+    ElRow,
+    ElCol,
+    ElTag,
+    ElInput,
+    ElButton,
 
     AdminHeader
   },
@@ -110,11 +110,11 @@ export default {
   created() {
     this.getArticle();
   },
-  filters: {
-    timeStampFormat,
-    timeAgoFormat,
-  },
   methods: {
+    // 过滤器：filters
+    timeAgoFormat,
+    timeStampFormat,
+    //////////////////////////////
     getArticle() {
       Api.getArticle({
           params: {
@@ -168,7 +168,7 @@ export default {
             })
             .then(res => {
               if (200 == res.code) {
-                Message.success('提交评论成功');
+                ElMessage.success('提交评论成功');
                 this.article.comments.push(res.data);
                 this.article.commentCount += 1;
                 this.replys = []; //清除回复楼层
@@ -180,7 +180,7 @@ export default {
       });
     },
     handleRemoveComment(comment, index) {
-      MessageBox.confirm("确认删除该评论？").then(res => {
+      ElMessageBox.confirm("确认删除该评论？").then(res => {
           Api.deleteComment({
               params: {
                 articleId: this.article.id,
@@ -189,7 +189,7 @@ export default {
             })
             .then(res => {
               if (200 == res.code) {
-                Message.success('删除评论成功');
+                ElMessage.success('删除评论成功');
                 this.article.comments.splice(index, 1);
               }
             });

@@ -12,11 +12,11 @@
 </template>
 
 <script>
-import { Pagination } from 'element-ui'
+import { ElPagination } from 'element-plus'
 
 export default {
   components: {
-    [Pagination.name]: Pagination,
+    ElPagination,
   },
   props: {
     layout: {

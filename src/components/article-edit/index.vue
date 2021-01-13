@@ -59,7 +59,9 @@
                     :on-preview="handlePreviewFile"
                     :before-remove="handleRemoveFile" list-type="picture">
                     <el-button type="primary">点击上传</el-button>
-                    <div slot="tip" class="el-upload__tip">只能上传jpg/git/png文件，且不超过500kb</div>
+                    <template #tip>
+                      <div class="el-upload__tip">只能上传jpg/git/png文件，且不超过500kb</div>
+                    </template>
                   </el-upload>
                 </el-form-item>
               </el-col>
@@ -81,16 +83,16 @@
         </el-col>
       </el-row>
     </div>
-    <el-dialog :visible.sync="dialogImageVisible">
-      <img width="100%" :src="dialogImageUrl" alt="">
+    <el-dialog v-model="dialogImageVisible">
+      <img style="width: 100%;" :src="dialogImageUrl" alt="">
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { Input, Select, Option, Radio, Form, FormItem, Row, Col, Dialog, Upload, Button, Message, MessageBox }  from 'element-ui'
+import { ElInput, ElSelect, ElOption, ElRadio, ElForm, ElFormItem, ElRow, ElCol, ElDialog, ElUpload, ElButton, ElMessage, ElMessageBox }  from 'element-plus'
 import VueSimplemde from "vue-simplemde";
-import AdminHeader from "src/components/admin-header";
+import AdminHeader from "src/components/admin-header/index.vue";
 
 import markMixin from "src/mixin/mark";
 
@@ -99,17 +101,17 @@ import Api from "src/api/admin";
 export default {
   name: 'article-edit',
   components: {
-    [Input.name]: Input,
-    [Select.name]: Select,
-    [Option.name]: Option,
-    [Radio.name]: Radio,
-    [Dialog.name]: Dialog,
-    [Form.name]: Form,
-    [FormItem.name]: FormItem,
-    [Upload.name]: Upload,
-    [Button.name]: Button,
-    [Row.name]: Row,
-    [Col.name]: Col,
+    ElInput,
+    ElSelect,
+    ElOption,
+    ElRadio,
+    ElDialog,
+    ElForm,
+    ElFormItem,
+    ElUpload,
+    ElButton,
+    ElRow,
+    ElCol,
 
     AdminHeader,
     VueSimplemde,
@@ -197,7 +199,7 @@ export default {
     },
     handleSuccessFile(res, file, fileList) {
       if (200 == res.code) {
-        Message.success('文件上传成功');
+        ElMessage.success('文件上传成功');
         Object.assign(file, res.data);
         this.article.files = [ ...fileList ];
       }
@@ -216,7 +218,7 @@ export default {
           })
           .then(res => {
             if (200 == res.code) {
-              Message.success('文件删除成功');
+              ElMessage.success('文件删除成功');
               resolve();
             } else {
               reject();
@@ -239,7 +241,7 @@ export default {
     },
     handleBack() {
       if (this.isModify) {
-        MessageBox.confirm("文章内容有改动，是否不保存直接返回？").then(res => {
+        ElMessageBox.confirm("文章内容有改动，是否不保存直接返回？").then(res => {
           window.location.href = '/admin.html#/admin/articleList';
         }).catch(err => {});
       } else {
@@ -251,9 +253,10 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~simplemde/dist/simplemde.min.css';
-@import "~highlight.js/styles/googlecode.css";
-@import "~src/assets/styles/markdown-body";
+@import 'simplemde/dist/simplemde.min.css';
+@import "highlight.js/styles/googlecode.css";
+@import "src/assets/styles/markdown-body.scss";
+
 .el-upload__tip {
   display: inline-block;
   margin-left: 10px;
