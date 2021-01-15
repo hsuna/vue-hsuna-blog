@@ -16,28 +16,21 @@ export default [
     component: () => import("../views/Login.vue")
   },
   {
-    path: "/reg",
-    meta: {
-      title: "注册 | HSUAN"
-    },
-    component: () => import("../views/Reg.vue")
-  },
-  {
     path: "/",
     redirect: "/admin",
   },
   {
     type: "backend",
     path: "/admin",
+    component: () => import("../views/admin/index.vue"),
     meta: {
       title: "后台管理 | HSUAN",
       auth: true
     },
-    component: () => import("../views/admin/index.vue"),
     name: "文章管理",
     children: [
       {
-        path: "/",
+        path: "",
         component: () => import("../views/Main.vue"),
         meta: {
           title: "后台管理 | HSUAN",

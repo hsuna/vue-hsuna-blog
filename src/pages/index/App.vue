@@ -4,8 +4,8 @@
       <div class="blog-personal">
         <div class="personal-top" :style="`background-image:url(${banner})`"></div>
         <div class="personal-bottom">
-          <div class="user-portrait">
-            <img :src="portrait" alt="portrait" />
+          <div class="user-portrait" v-loading="!portrait">
+            <img :src="portrait" />
           </div>
           <div class="user-info clearfix">
             <span class="name">{{nickname}}</span>{{job}}

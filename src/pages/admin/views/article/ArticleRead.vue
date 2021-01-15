@@ -69,6 +69,7 @@ import Api from "src/api/admin";
 import markMixin from "src/mixin/mark";
 
 export default {
+  mixins: [markMixin],
   components: {
     ElForm,
     ElFormItem,
@@ -80,9 +81,6 @@ export default {
 
     AdminHeader
   },
-  mixins: [
-    markMixin
-  ],
   data() {
     return {
       loading: true,

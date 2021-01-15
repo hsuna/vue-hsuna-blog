@@ -11,7 +11,7 @@ import { ElMessage } from "element-plus";
 
 import storage, { StorageKey } from 'src/utils/storage.js'
 
-Axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '//api.hsuna.com/blog/' : '//localhost:8080/api/blog/'
+Axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '//api.hsuna.com/blog/' : `//${location.host}/api/blog/`
 Axios.defaults.timeout = 600000000;
 Axios.defaults.withCredentials = true;
 Axios.header = {

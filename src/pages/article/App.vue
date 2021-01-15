@@ -32,7 +32,7 @@
               <div class="tags"><span class="tag" v-for="tag in relate.tags" :key="tag">{{tag}}</span></div>
               <div class="time">
                 <span>{{timeStampFormat(relate.publishAt, 'yyyy-MM-dd')}}</span>
-                 <span>{{article.viewCount}}次浏览</span>
+                 <span>{{relate.viewCount}}次浏览</span>
               </div>
               <p class="about">简介：{{relate.about}}</p>
             </li>
@@ -49,7 +49,7 @@
                   <div class="comment-name"><i class="fa fa-vimeo" v-show="comment.admin"></i>{{comment.name}}&nbsp;说：</div>
                   <div class="comment-layer">第<span class="num-layer">{{index+1}}</span>楼</div>
                 </div>
-                <div class="comment-content" v-html="comment.content"><template ></template></div>
+                <div class="comment-content" v-html="comment.content"></div>
                 <div class="comment-reply">
                   <span class="mark-view-time">{{timeStampFormat(comment.createdAt)}}</span>
                   |
@@ -120,6 +120,7 @@ import Api from "src/api/blog.js";
 let visitor = storage.get(StorageKey.VISITOR)
 
 export default {
+  mixins: [markMixin],
   components: {
     ElForm,
     ElFormItem,
@@ -165,7 +166,6 @@ export default {
   async created() {
     await this.getArticleDetail();
   },
-  mixins: [markMixin],
   methods: {
     // 过滤器：filters
     timeAgoFormat,

@@ -147,7 +147,8 @@ export default {
     .el-menu-item {
       i {
         margin-right: 4px;
-        font-size: 22px;
+        vertical-align: -1px;
+        font-size: 18px;
       }
 
       &:hover {

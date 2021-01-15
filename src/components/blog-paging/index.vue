@@ -7,7 +7,6 @@
         :page-sizes="[10, 20, 50, 100]"
         :layout="layout"
         :total="paging.total">
-        <slot/>
     </el-pagination>
 </template>
 
@@ -37,6 +36,7 @@ export default {
   methods: {
     handleSizeChange(val) {
       this.$router.push({
+        path: this.$route.path,
         query: {
           ...this.$route.query,
           page: 1,
@@ -47,6 +47,7 @@ export default {
     },
     handleCurrentChange(val) {
       this.$router.push({
+        path: this.$route.path,
         query: {
           ...this.$route.query,
           page: val

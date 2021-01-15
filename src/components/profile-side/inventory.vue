@@ -17,7 +17,7 @@
         <div class="text-right">
           <el-pagination
             @current-change="handleCurrentChange"
-            :current-page.sync="inventoryQuery.page"
+            v-model:current-page="inventoryQuery.page"
             :total="inventoryTotal"
             :page-size="inventoryQuery.limit"
             layout="prev, next, slot">

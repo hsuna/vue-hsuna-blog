@@ -18,6 +18,7 @@ export default defineConfig({
     // host: '0.0.0.0',
     port: 8080,
     open: false,
+    //force: false,
     proxy: {
       '/api': {
         // target: 'http://127.0.0.1:3000',
@@ -41,7 +42,46 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
-    include: [],
+    include: [
+      'dayjs/locale/zh-cn',
+
+      'element-plus/lib/locale',
+      'element-plus/lib/locale/lang/zh-cn',
+      
+      'highlight.js/lib/core',
+      ...[
+        'xml', 
+        'bash', 
+        'basic', 
+        'css', 
+        'markdown', 
+        'delphi', 
+        'ruby', 
+        'go', 
+        'http', 
+        'ini', 
+        'java', 
+        'javascript', 
+        'json', 
+        'less', 
+        'lua', 
+        'perl', 
+        'nginx', 
+        'php', 
+        'python', 
+        'scheme', 
+        'scss', 
+        'shell', 
+        'sql', 
+        'stylus', 
+        'swift', 
+        'yaml', 
+        'typescript', 
+        'vbscript', 
+        'vbscript-html', 
+        'vim',
+      ].map(name => `highlight.js/lib/languages/${name}.js`),
+    ]
   },
   plugins: [
     vue(),

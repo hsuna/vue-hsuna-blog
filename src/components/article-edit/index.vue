@@ -100,6 +100,7 @@ import Api from "src/api/admin";
 
 export default {
   name: 'article-edit',
+  mixins: [markMixin],
   components: {
     ElInput,
     ElSelect,
@@ -192,7 +193,6 @@ export default {
       }
     }
   }, */
-  mixins: [markMixin],
   methods: {
     handleBeforeUpload(file) {
       //return false; //返回false不会自动上传

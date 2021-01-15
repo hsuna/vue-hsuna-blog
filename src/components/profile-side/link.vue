@@ -17,7 +17,7 @@
         <div class="text-right">
           <el-pagination
             @current-change="handleCurrentChange"
-            :current-page.sync="linkQuery.page"
+            v-model:current-page="linkQuery.page"
             :total="linkTotal"
             :page-size="linkQuery.limit"
             layout="prev, next, slot">

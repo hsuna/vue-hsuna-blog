@@ -20,7 +20,7 @@ const router = createRouter({
 // 路由钩子
 router.beforeEach(({ meta, path }, from, next) => {
   let { isLogin } = store.getters;
-  if (path == "/login" || path == "/reg") {
+  if (path == "/login") {
     if (isLogin) {
       return next({ path: "/admin" });
     }

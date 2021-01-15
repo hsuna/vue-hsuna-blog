@@ -112,9 +112,11 @@ export default {
     word-break: break-all;
 
     a {
+      float: right;
       padding: 0;
       font-size: inherit;
       color: #0084ff;
+      background: #fff;
     }
   }
 
