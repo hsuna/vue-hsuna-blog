@@ -40,9 +40,6 @@ export default {
 
 
 <style lang="scss">
-body {
-  background-color: #fafafa;
-}
 .blog-body {
   width: 1024px;
   min-height: 800px;
