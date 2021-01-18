@@ -7,8 +7,8 @@
   "private": true,
   "scripts": {
     "start": "npm run dev",
-    "dev": "vite",
-    "build": "vuedx-typecheck . && vite build"
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build"
   },
   "dependencies": {
     "axios": "0.21.1",
@@ -21,11 +21,12 @@
     "vuex": "^4.0.0-rc.2"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.0.4",
+    "@vue/cli-plugin-babel": "^4.3.0",
+    "@vue/cli-service": "^4.3.0",
     "@vue/compiler-sfc": "^3.0.5",
-    "sass": "^1.32.4",
-    "vite": "^2.0.0-beta.29",
-    "vite-plugin-imp": "^2.0.2"
+    "babel-plugin-component": "^1.1.1",
+    "node-sass": "^5.0.0",
+    "sass-loader": "^10.1.1"
   },
   "engines": {
     "node": ">= 12.0.0",

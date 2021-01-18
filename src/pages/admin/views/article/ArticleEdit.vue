@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <article-edit :article="article" :breadcrumbs="breadcrumbs" :isEdit="true" @submit="handlePublish"></article-edit>
 </template>
 

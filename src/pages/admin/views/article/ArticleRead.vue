@@ -25,7 +25,7 @@
                   <div class="comment-name"><i class="fa fa-vimeo" v-show="comment.admin"></i>{{comment.name}}&nbsp;说：</div>
                   <div class="comment-layer">第<span class="num-layer">{{index+1}}</span>楼</div>
                 </div>
-                <div class="comment-content" v-html="comment.content"><template ></template></div>
+                <div class="comment-content" v-html="comment.content"></div>
                 <div class="comment-reply">
                   <span class="mark-view-time">{{timeStampFormat(comment.createdAt)}}</span>|<a href="javascript:;" @click="handleAddReply(comment, index)">回复</a>|<a href="javascript:;" @click="handleRemoveComment(comment, index)">删除</a>
                 </div>

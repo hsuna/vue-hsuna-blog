@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div class="admin">
     <admin-header :routerList="routerList"></admin-header>
     <div class="admin-body">
@@ -253,9 +253,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'simplemde/dist/simplemde.min.css';
-@import "highlight.js/styles/googlecode.css";
-@import "src/assets/styles/markdown-body.scss";
+@import 'simplemde/dist/simplemde.min';
+@import "highlight.js/styles/googlecode";
+@import "~src/assets/styles/markdown-body.scss";
 
 .el-upload__tip {
   display: inline-block;
