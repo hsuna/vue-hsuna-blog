@@ -8,7 +8,8 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "analyzer": "set use_analyzer=true && npm run build"
   },
   "dependencies": {
     "axios": "0.21.1",
