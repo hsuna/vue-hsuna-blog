@@ -20,8 +20,6 @@ import store from "./store";
 /** element-ui */
 import elementInit from 'src/plugins/element-init'
 
-document.title = '后台管理 | HSUAN';
-
 createApp(App)
   .use(elementInit)
   .use(router)

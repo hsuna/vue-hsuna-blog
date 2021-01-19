@@ -14,8 +14,6 @@ import App from './App.vue'
 /** element-ui */
 import elementInit from 'src/plugins/element-init'
 
-document.title = '文章详情 | HSUAN';
-
 createApp(App)
     .use(elementInit)
     .mount('#app')
