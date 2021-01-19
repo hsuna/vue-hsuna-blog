@@ -7,15 +7,24 @@ function resolve(dir) {
 
 module.exports = {
     pages: [
-        'about',
-        'admin',
-        'archive',
-        'article',
-        'essay',
-        'index',
-    ].reduce((obj, name) => Object.assign(obj, { [name]: resolve(`src/pages/${name}/main.js`) }), {}),
+        { name: 'about', title: '关于我 | HSUAN' },
+        { name: 'admin', title: '后台管理 | HSUAN' },
+        { name: 'archive', title: '归档 | HSUAN' },
+        { name: 'article', title: '文章详情 | HSUAN' },
+        { name: 'essay', title: '手札 | HSUAN' },
+        { name: 'index', title: '首页 | HSUAN' },
+    ].reduce((obj, item) => Object.assign(obj, { 
+        [item.name]: {
+            entry: resolve(`src/pages/${item.name}/main.js`), // page 的入口,每个“page”应该有一个对应的 JavaScript 入口文件
+            template: 'public/index.html',                    // 模板来源
+            filename: `${item.name}.html`,                    // 在 dist/index.html 的输出
+            title: item.title || 'BLOG | HSUAN',              // 当使用 title 选项时,在 template 中使用：<title><%= htmlWebpackPlugin.options.title %></title>
+            chunks: ['common', item.name]          // 在这个页面中包含的块，默认情况下会包含,提取出来的 chunks
+        }
+    }), {}),
     publicPath: './',
-    assetsDir: 'static',
+    assetsDir: 'static',//放置生成的静态资源(s、css、img、fonts)的(相对于 outputDir 的)目录(默认'')
+    outputDir: 'dist',// 运行时生成的生产环境构建文件的目录(默认''dist''，构建之前会被清除)
     devServer: {
         port: 8080,
         proxy: {
@@ -43,21 +52,12 @@ module.exports = {
             config.optimization.splitChunks = {
                 cacheGroups: {
                     //公用模块抽离
-                    commons: {
-                        name: 'commons',
+                    common: {
+                        name: 'common',
                         chunks: 'all',
-                        minChunks: 3, //抽离公共代码时，这个代码块最小被引用的次数
-                    },
-                    //第三方库抽离
-                    elementPlus: {
-                        priority: 10, //权重
-                        name: 'element-plus',
-                        test: /element-plus/,
-                        chunks: 'all',
-                        minChunks: 2, //抽离公共代码时，这个代码块最小被引用的次数
+                        minChunks: 5, //抽离公共代码时，这个代码块最小被引用的次数
                     }
-                  },
-          
+                }
             }
             config.optimization.minimizer[0].options.terserOptions.compress = {
                 drop_console: true,
@@ -75,7 +75,6 @@ module.exports = {
         };
     },
     chainWebpack: config => {
-
         /* 打包体积预览 */
         if (process.env.use_analyzer) {
             config
