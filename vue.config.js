@@ -20,8 +20,7 @@ module.exports = {
         port: 8080,
         proxy: {
             '/api': {
-                // target: 'http://127.0.0.1:3000',
-                target: 'http://api.hsuna.com',
+                target: 'http://127.0.0.1:3000',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api': ''
@@ -44,28 +43,19 @@ module.exports = {
             config.optimization.splitChunks = {
                 cacheGroups: {
                     //公用模块抽离
-                    common: {
-                      chunks: 'initial',
-                      minSize: 0, //大于0个字节
-                      minChunks: 2, //抽离公共代码时，这个代码块最小被引用的次数
-                      name: 'commons',
+                    commons: {
+                        name: 'commons',
+                        chunks: 'all',
+                        minChunks: 3, //抽离公共代码时，这个代码块最小被引用的次数
                     },
                     //第三方库抽离
                     elementPlus: {
-                        priority: 1, //权重
-                        test: /element-plus/,
-                        chunks: 'initial',
-                        minChunks: 1, //抽离公共代码时，这个代码块最小被引用的次数
+                        priority: 10, //权重
                         name: 'element-plus',
-                    },
-                    //第三方库抽离
-                    simplemde: {
-                        priority: 1, //权重
-                        test: /simplemde/,
-                        minChunks: 1, //抽离公共代码时，这个代码块最小被引用的次数
-                        chunks: 'initial',
-                        name: 'simplemde',
-                    },
+                        test: /element-plus/,
+                        chunks: 'all',
+                        minChunks: 2, //抽离公共代码时，这个代码块最小被引用的次数
+                    }
                   },
           
             }
