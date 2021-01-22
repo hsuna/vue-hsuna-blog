@@ -38,7 +38,7 @@
             <el-row>
               <el-col :span="23" :push="1">
                 <el-form-item label="文章内容：" label-width="100px" class="show" prop="content" >
-                  <vue-simplemde preview-class="markdown-body" v-model="article.content" :configs="configs"></vue-simplemde>
+                  <blog-simplemde preview-class="markdown-body" v-model="article.content" :configs="configs"></blog-simplemde>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -87,15 +87,15 @@
 
 <script>
 import { ElInput, ElSelect, ElOption, ElRadio, ElForm, ElFormItem, ElRow, ElCol, ElDialog, ElUpload, ElButton, ElMessage, ElMessageBox }  from 'element-plus'
-import VueSimplemde from "vue-simplemde";
 import AdminHeader from "src/components/admin-header/index.vue";
+import BlogSimplemde from "src/components/blog-simplemde/index.vue";
 
 import markMixin from "src/mixin/mark";
 
 import Api from "src/api/admin";
 
 export default {
-  name: 'article-edit',
+  name: 'blog-edit',
   mixins: [markMixin],
   components: {
     ElInput,
@@ -111,7 +111,7 @@ export default {
     ElCol,
 
     AdminHeader,
-    VueSimplemde,
+    BlogSimplemde,
   },
   props: {
     isEdit: {
@@ -253,9 +253,6 @@ export default {
 @import "highlight.js/styles/googlecode";
 @import "~src/assets/styles/markdown-body.scss";
 
-.vue-simplemde .CodeMirror, .CodeMirror-scroll{
-  max-height: 800px;
-}
 .el-upload__tip {
   display: inline-block;
   margin-left: 10px;

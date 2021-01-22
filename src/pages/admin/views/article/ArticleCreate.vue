@@ -1,10 +1,10 @@
 <template>
-  <article-edit :article="article" :breadcrumbs="breadcrumbs" @submit="handlePublish"></article-edit>
+  <blog-edit :article="article" :breadcrumbs="breadcrumbs" @submit="handlePublish"></blog-edit>
 </template>
 
 <script>
 import { ElMessage } from 'element-plus';
-import ArticleEdit from "src/components/article-edit/index.vue";
+import BlogEdit from "src/components/blog-edit/index.vue";
 
 import { ActionName, MutationName } from "../../store/types";
 
@@ -12,7 +12,7 @@ import Api from "src/api/admin";
 
 export default {
   components: {
-    ArticleEdit
+    BlogEdit
   },
   data() {
     return {
