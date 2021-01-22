@@ -38,11 +38,7 @@
             <el-row>
               <el-col :span="23" :push="1">
                 <el-form-item label="文章内容：" label-width="100px" class="show" prop="content" >
-                  <vue-simplemde 
-                    preview-class="markdown-body" 
-                    v-model="article.content" 
-                    :configs="configs"
-                  />
+                  <vue-simplemde preview-class="markdown-body" v-model="article.content" :configs="configs"></vue-simplemde>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -257,6 +253,9 @@ export default {
 @import "highlight.js/styles/googlecode";
 @import "~src/assets/styles/markdown-body.scss";
 
+.vue-simplemde .CodeMirror, .CodeMirror-scroll{
+  max-height: 800px;
+}
 .el-upload__tip {
   display: inline-block;
   margin-left: 10px;
