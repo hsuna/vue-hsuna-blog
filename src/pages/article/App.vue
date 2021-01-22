@@ -19,8 +19,8 @@
           <div class="markdown-body" v-html="markdownToHtml(article.content)"></div>
         </div>
         <div class="article-footer">
-          <p>版权声明：本文为博主思考总结而得，欢迎大家转载指导</p>
-          <a :href="href" alt="转载路径">{{href}}</a>
+          <a :href="href" alt="转载链接">链接：{{href}}</a>
+          <p>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
         </div>
       </div>
       <div class="article-main" v-show="relateArticle.length">
