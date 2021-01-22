@@ -50,8 +50,8 @@ export default {
     },
   },
   setup(props, ctx) {
+    let simplemde = null;
     const instance = getCurrentInstance()
-    const simplemde = ref(null);
     const isValueUpdateFromInner = ref(false);
 
     const handleInput = (val) => {
@@ -65,18 +65,18 @@ export default {
     }
 
     const bindingEvents = () => {
-      simplemde.value.codemirror.on('change', (instance, changeObj) => {
+      simplemde.codemirror.on('change', (instance, changeObj) => {
         if (changeObj.origin === 'setValue') return;
-        handleInput(simplemde.value.value());
+        handleInput(simplemde.value());
       });
 
-      simplemde.value.codemirror.on('blur', () => {
-        handleBlur(simplemde.value.value());
+      simplemde.codemirror.on('blur', () => {
+        handleBlur(simplemde.value());
       });
     }
 
     const addPreviewClass = (className) => {
-      const wrapper = simplemde.value.codemirror.getWrapperElement();
+      const wrapper = simplemde.codemirror.getWrapperElement();
       const preview = document.createElement('div');
       wrapper.nextSibling.className += ` ${className}`;
       preview.className = `editor-preview ${className}`;
@@ -105,7 +105,7 @@ export default {
       marked.setOptions({ sanitize: props.sanitize });
 
       // 实例化编辑器
-      simplemde.value = new SimpleMDE(configs);
+      simplemde = new SimpleMDE(configs);
 
       // 添加自定义 previewClass
       const className = props.previewClass || '';
@@ -116,7 +116,7 @@ export default {
 
       // 初始化完成
       nextTick(() => {
-        ctx.emit('initialized', simplemde.value);
+        ctx.emit('initialized', simplemde);
       })
     }
 
@@ -124,7 +124,7 @@ export default {
       if (isValueUpdateFromInner.value) {
         isValueUpdateFromInner.value = false;
       } else {
-        simplemde.value.value(val);
+        simplemde.value(val);
       }
     })
 
@@ -133,8 +133,8 @@ export default {
     })
 
     onUnmounted(() => {
-      if(simplemde.value) {
-        simplemde.value = null;
+      if(simplemde) {
+        simplemde = null;
       }
     })
 
