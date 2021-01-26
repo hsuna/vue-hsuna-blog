@@ -1,6 +1,6 @@
 <template>
   <div id="app" style="height: 100%;">
-    <blog-main v-loading="loading" :activeIndex="'article'">
+    <blog-main v-loading="loading" :activeIndex="'article'" :showMore="false">
       <div class="article-main">
         <div class="article-header">
           <h1 class="title">{{article.title}}</h1>

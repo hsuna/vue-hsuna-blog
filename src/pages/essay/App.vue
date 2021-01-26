@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <blog-main :activeIndex="'essay'">
+    <blog-main :activeIndex="'essay'" v-model:openMore="openMore">
       <div class="blog-profile">
-        <div class="profile-side">
+        <profile-side v-model:visible="openMore">
           <profile-side-link></profile-side-link>
           <profile-side-inventory></profile-side-inventory>
-        </div>
+        </profile-side>
         <div class="profile-main" v-loading="loading">
           <profile-essay
             :profileList="essayList"
@@ -22,15 +22,24 @@
 <script>
 import BlogMain from "src/components/blog-main/index.vue";
 import ProfileEssay from "src/components/profile-essay/index.vue";
-import { ProfileSideInventory, ProfileSideLink } from "src/components/profile-side";
+import { ProfileSide, ProfileSideInventory, ProfileSideLink } from "src/components/profile-side";
 
 import * as utils from 'src/utils/search.js'
 import Api from "src/api/blog";
 
 export default {
   name: "App",
-   data() {
+  components: {
+    BlogMain,
+    ProfileSide, 
+    ProfileEssay,
+    ProfileSideInventory,
+    ProfileSideLink
+  },
+  data() {
     return {
+      openMore: false,
+      
       loading: true,
       essayTotal: 0,
       essayList: []
@@ -64,12 +73,6 @@ export default {
       }
     }
   },
-  components: {
-    BlogMain,
-    ProfileEssay,
-    ProfileSideInventory,
-    ProfileSideLink
-  }
 };
 </script>
 

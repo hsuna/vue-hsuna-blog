@@ -1,6 +1,6 @@
 <template>
   <div id="app" style="height: 100%;">
-    <blog-main :activeIndex="'home'">
+    <blog-main :activeIndex="'home'" v-model:openMore="openMore">
       <div class="blog-personal">
         <div class="personal-top" :style="`background-image:url(${banner})`"></div>
         <div class="personal-bottom">
@@ -20,11 +20,11 @@
         </div>
       </div>
       <div class="blog-profile">
-        <div class="profile-side">
+        <profile-side v-model:visible="openMore">
           <profile-side-hot></profile-side-hot>
           <profile-side-classify></profile-side-classify>
           <profile-side-comment></profile-side-comment>
-        </div>
+        </profile-side>
         <div class="profile-main" v-loading="loading">
           <profile-card
             :profileList="profileList"
@@ -44,6 +44,7 @@ import { ElTooltip } from 'element-plus';
 import BlogMain from "src/components/blog-main/index.vue";
 import ProfileCard from "src/components/profile-card/index.vue";
 import {
+  ProfileSide, 
   ProfileSideHot,
   ProfileSideClassify,
   ProfileSideComment
@@ -59,6 +60,7 @@ export default {
     ElTooltip,
 
     BlogMain,
+    ProfileSide, 
     ProfileCard,
     ProfileSideHot,
     ProfileSideClassify,
@@ -66,6 +68,8 @@ export default {
   },
   data() {
     return {
+      openMore: false,
+      
       loading: true,
       nickname: "Hsuna",
       job: "WEB前端工程师",

@@ -1,6 +1,6 @@
 <template>
   <div class="blog">
-      <blog-header :activeIndex="activeIndex" @scroll-fixed="handleScrollFixed"></blog-header>
+      <blog-header :activeIndex="activeIndex" :showMore="showMore" :openMore="openMore" @scroll-fixed="handleScrollFixed" @update:openMore="$emit('update:openMore', $event)"></blog-header>
       <div class="blog-body"><slot></slot></div>
       <blog-footer></blog-footer>
       <float-menu :class="showFloatMenu?'is-show':''"></float-menu>
@@ -20,6 +20,14 @@ export default {
     FloatMenu
   },
   props: {
+    showMore: {
+      type: Boolean,
+      default: true,
+    },
+    openMore: {
+      type: Boolean,
+      default: false,
+    },
     activeIndex: {
       type: String,
       default: 'home'
@@ -41,10 +49,11 @@ export default {
 
 <style lang="scss">
 .blog-body {
-  width: 1024px;
+  width: 100%;
+  max-width: 1024px;
   min-height: 800px;
-  margin: 0 auto;
-  margin-top: 60px;
+  min-height: calc(100vh - 110px);
+  margin: 60px auto 0;
 
   &:after {
     content: "";

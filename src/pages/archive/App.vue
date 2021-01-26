@@ -1,15 +1,11 @@
 <template>
   <div id="app" style="height: 100%;">
-    <blog-main :activeIndex="'archive'">
+    <blog-main :activeIndex="'archive'" v-model:openMore="openMore">
       <div class="blog-profile">
-        <div class="profile-side">
-          <profile-side-archive 
-            :archiveIndex="archiveIndex" 
-            @init="handleArchiveInit" 
-            @search="handleArchiveSearch"
-          />
-          <profile-side-hot/>
-        </div>
+        <profile-side v-model:visible="openMore">
+          <profile-side-archive :archiveIndex="archiveIndex" @init="handleArchiveInit" @search="handleArchiveSearch"></profile-side-archive>
+          <profile-side-hot></profile-side-hot>
+        </profile-side>
         <div class="profile-main" v-loading="loading">
           <profile-card
             :profileList="archiveList"
@@ -26,7 +22,7 @@
 <script>
 import BlogMain from "src/components/blog-main/index.vue";
 import ProfileCard from "src/components/profile-card/index.vue";
-import { ProfileSideHot, ProfileSideArchive } from "src/components/profile-side/index.js";
+import { ProfileSide, ProfileSideHot, ProfileSideArchive } from "src/components/profile-side/index.js";
 
 import * as utils from 'src/utils/search.js'
 
@@ -34,8 +30,17 @@ import Api from "src/api/blog";
 
 export default {
   name: "App",
-   data() {
+  components: {
+    BlogMain,
+    ProfileSide, 
+    ProfileCard,
+    ProfileSideHot,
+    ProfileSideArchive
+  },
+  data() {
     return {
+      openMore: false,
+
       loading: false,
       archiveIndex: -1,
       archiveTotal: 0,
@@ -96,12 +101,6 @@ export default {
          });
       }
     }
-  },
-  components: {
-    BlogMain,
-    ProfileCard,
-    ProfileSideHot,
-    ProfileSideArchive
   }
 };
 </script>

@@ -1,22 +1,20 @@
 <template>
   <div class="blog-header" :class="isFixed?'':'fixed-hidden'">
     <div class="header-inner">
-      <!-- <div class="header-logo">
-          <a>HSUNA</a>
-      </div> -->
-      <el-menu :default-active="activeIndex" class="header-nav" mode="horizontal" @select="handleSelect">
-          <el-menu-item index="home"><i class="fa fa-home"></i>首页</el-menu-item>
-          <el-menu-item index="archive"><i class="fa fa-archive"></i>档案</el-menu-item>
-          <el-menu-item index="about"><i class="fa fa-user"></i>关于</el-menu-item>
-          <el-menu-item index="essay"><i class="fa fa-pencil"></i>手札</el-menu-item>
-          <el-menu-item index="admin" v-if="isLogin"><i class="fa fa-cog"></i>管理</el-menu-item>
-      </el-menu>
       <div class="header-search">
-        <el-input placeholder="搜索" v-model="inputSearch"><!-- prefix-icon="el-icon-search" -->
-          <template #append>
-            <el-button icon="el-icon-search" @click="handleSearch"></el-button>
-          </template>
-        </el-input>
+        <i v-if="showMenu" class="el-icon-menu" @click="openMenu = true;"></i>
+        <el-input placeholder="搜索" v-model="inputSearch" prefix-icon="el-icon-search" @change="handleSearch"></el-input>
+        <i v-if="showMore" class="el-icon-more" @click="$emit('update:openMore', true);"></i>
+      </div>
+      <div class="header-nav" :class="{'is-active': openMenu}">
+        <i class="el-icon-close" @click="openMenu = false;"></i>
+        <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect">
+            <el-menu-item index="home"><i class="fa fa-home"></i>首页</el-menu-item>
+            <el-menu-item index="archive"><i class="fa fa-archive"></i>档案</el-menu-item>
+            <el-menu-item index="about"><i class="fa fa-user"></i>关于</el-menu-item>
+            <el-menu-item index="essay"><i class="fa fa-pencil"></i>手札</el-menu-item>
+            <el-menu-item index="admin" v-if="isLogin"><i class="fa fa-cog"></i>管理</el-menu-item>
+        </el-menu>
       </div>
     </div>
   </div>
@@ -36,6 +34,18 @@ export default {
     ElMenuItem,
   },
   props: {
+    showMenu: {
+      type: Boolean,
+      default: true,
+    },
+    showMore: {
+      type: Boolean,
+      default: true,
+    },
+    openMore: {
+      type: Boolean,
+      default: false,
+    },
     activeIndex: {
       type: String,
       default: "home"
@@ -43,6 +53,8 @@ export default {
   },
   data() {
     return {
+      openMenu: false,
+
       isFixed: true,
       inputSearch: ""
     };
@@ -91,8 +103,10 @@ export default {
       }
     },
     handleSearch(){
-      console.log(this.inputSearch);
-      ElMessage('该功能正在建设中～');
+      if(this.inputSearch) {
+        console.log(this.inputSearch);
+        ElMessage('该功能正在建设中～');
+      }
     }
   }
 };
@@ -116,9 +130,14 @@ export default {
   .header-inner {
     position: relative;
     overflow: hidden;
-    width: 1024px;
+    max-width: 1024px;
+    width: 100%;
     height: 52px;
     margin: 0 auto;
+
+    .el-icon-close {
+      display: none;
+    }
   }
 
   .header-logo {
@@ -131,6 +150,12 @@ export default {
     position: absolute;
     top: 10px;
     right: 4px;
+    z-index: 2;
+
+    .el-icon-menu,
+    .el-icon-more {
+      display: none;
+    }
   }
 
   .header-nav {
@@ -167,5 +192,98 @@ export default {
       }
     }
   }
+}
+
+@media screen and (max-width: 750px) {
+  .blog-header {
+    .header-search {
+      position: static;
+      padding: 10px 52px;
+
+      .el-icon-menu,
+      .el-icon-more {
+        display: block;
+        position: absolute;
+        top: 14px;
+        z-index: 2;
+        font-size: 24px;
+        color: #555;
+      }
+
+      .el-icon-menu {
+        left: 18px;
+      }
+      .el-icon-more {
+        right: 18px;
+      }
+    }
+
+    .header-nav {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+      height: auto;
+      background: rgba(255, 255, 255, 0.9);
+
+      &.is-active {
+        display: block;
+      }
+
+      .el-icon-close {
+        display: block;
+        position: absolute;
+        top: 14px;
+        left: 18px;  
+        font-size: 24px;
+        color: #555;
+      }
+
+      .el-menu {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        margin-top: -200px;
+        border-bottom: none;
+        animation: header-inner__wrap .3s ease-out;
+      }
+
+      .el-menu-item {
+        float: none;
+        display: block;
+        font-size: 16px;
+        text-align: center;
+        margin: 10px 50px;
+        height: 60px;
+        line-height: 60px;
+        border-bottom: none;
+        color: #555;
+
+        &+.el-menu-item {
+          border-top: 1px solid #eee !important;
+        }
+
+        &.is-active {
+          color: #555 !important;
+        }
+
+        i {
+          margin-right: 10px;
+          color: #555 !important;
+        }
+      }
+
+    }
+  }
+}
+
+@keyframes header-inner__wrap {
+  0% { transform: translateY(-200px); }
+  60% { transform: translateY(20px); }
+  100% { transform: translateY(0); }
 }
 </style>

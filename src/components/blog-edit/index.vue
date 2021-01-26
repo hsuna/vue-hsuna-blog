@@ -251,7 +251,6 @@ export default {
 <style lang="scss">
 @import 'simplemde/dist/simplemde.min';
 @import "highlight.js/styles/googlecode";
-@import "~src/assets/styles/markdown-body.scss";
 
 .el-upload__tip {
   display: inline-block;

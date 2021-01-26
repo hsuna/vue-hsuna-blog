@@ -6,6 +6,7 @@
  * @Last Modified time: 2018-04-25 12:36:11
  */
 
+import ProfileSide from "./index.vue";
 import ProfileSideAbout from "./about.vue";
 import ProfileSideArchive from "./archive.vue";
 import ProfileSideClassify from "./classify.vue";
@@ -16,6 +17,7 @@ import ProfileSideLink from "./link.vue";
 import "./index.scss";
 
 export {
+  ProfileSide,
   ProfileSideAbout,
   ProfileSideArchive,
   ProfileSideClassify,

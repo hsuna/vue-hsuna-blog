@@ -1,11 +1,11 @@
 <template>
   <div id="app" style="height: 100%;">
-    <blog-main :activeIndex="'about'">
+    <blog-main :activeIndex="'about'" v-model:openMore="openMore">
       <div class="blog-profile">
-        <div class="profile-side">
+        <profile-side v-model:visible="openMore">
           <profile-side-hot></profile-side-hot>
           <profile-side-about></profile-side-about>
-        </div>
+        </profile-side>
         <div class="profile-main">
           <div class="about-header">关于我</div>
           <div class="about-body">
@@ -69,17 +69,20 @@
 
 <script>
 import BlogMain from "src/components/blog-main/index.vue";
-import { ProfileSideAbout, ProfileSideHot } from "src/components/profile-side/index.js";
+import { ProfileSide, ProfileSideAbout, ProfileSideHot } from "src/components/profile-side/index.js";
 
 export default {
   name: "App",
   components: {
     BlogMain,
+    ProfileSide,
     ProfileSideAbout,
     ProfileSideHot
   },
   data() {
-    return {};
+    return {
+      openMore: false,
+    };
   },
   created() {},
   methods: {},

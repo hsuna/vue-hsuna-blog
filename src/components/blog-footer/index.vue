@@ -39,7 +39,8 @@ export default {
   box-shadow: 0 1px 3px rgba(26, 26, 26, 0.1);
 
   .footer-inner {
-    width: 1024px;
+    max-width: 1024px;
+    width: 100%;
     height: 40px;
     margin: 0 auto;
   }
