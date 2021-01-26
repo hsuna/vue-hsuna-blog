@@ -94,11 +94,9 @@ export default {
       window.location.href = '/archive.html?' + utils.query({ year, month })
     },
     handlePaginChange(type, val) {
-      if ("page" == type) {
-         window.location.href = '/archive.html?' + utils.query({
-           ...archive,
-           page: val
-         });
+      const params = utils.params();
+      if ("page" == type && val != params.page) {
+        window.location.href = '/archive.html?' + utils.query({ ...params, page: val })
       }
     }
   }

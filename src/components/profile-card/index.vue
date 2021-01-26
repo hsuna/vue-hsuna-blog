@@ -110,6 +110,7 @@ export default {
     line-height: 2;
     font-size: 16px;
     word-break: break-all;
+    text-align: justify;
 
     a {
       float: right;
@@ -131,5 +132,22 @@ export default {
   padding: 10px;
   border-top: 1px solid #dadada;
   text-align: center;
+}
+
+@media screen and (max-width: 750px) {
+  .profile-card {
+    padding-bottom: 30px;
+
+    .card-title {
+      text-align: justify;
+      padding-right: 0;
+    }
+    .card-date {
+      top: auto;
+      bottom: 5px;
+      right: auto;
+      color: #bbb;
+    }
+  }
 }
 </style>

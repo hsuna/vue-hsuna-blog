@@ -8,14 +8,15 @@
             <img :src="portrait" />
           </div>
           <div class="user-info clearfix">
-            <span class="name">{{nickname}}</span>{{job}}
+            <span class="name">{{nickname}}</span>
+            <span class="job">{{job}}</span>
             <div class="social">
               <el-tooltip content="微博"><a class="icon" href="http://weibo.com/" target="_blank" ><i class="fa fa-weibo" style="background-color: rgb(221, 75, 57);"></i></a></el-tooltip>
               <el-tooltip content="github"><a class="icon" href="https://github.com/hsuna" target="_blank" ><i class="fa fa-github" style="background-color: rgb(85, 172, 238);"></i></a></el-tooltip>
               <el-tooltip content="邮箱"><a class="icon" href="mailto:me@hsuna.com" target="_blank" ><i class="fa fa-envelope" style="background-color: rgb(59, 89, 152);"></i></a></el-tooltip>
               <el-tooltip content="简历"><a class="icon" href="http://resume.hsuna.com" target="_blank" ><i class="fa fa-address-card-o" style="background-color: rgb(128, 185, 83);"></i></a></el-tooltip>
             </div>
-            <div class="introduction">简介：{{introduction}}</div>
+            <div class="introduction">{{introduction}}</div>
           </div>
         </div>
       </div>
@@ -119,11 +120,9 @@ export default {
       });
     },
     handlePaginChange(type, val) {
-      if ("page" == type) {
-        window.location.href = '/index.html?' + utils.query({
-          ...utils.params(),
-          page: val
-        })
+      const params = utils.params();
+      if ("page" == type && val != params.page) {
+        window.location.href = '/index.html?' + utils.query({ ...params, page: val })
       }
     }
   },
@@ -153,7 +152,7 @@ export default {
 
   .user-portrait {
     overflow: hidden;
-    position: absolute;
+    position: absolute !important;
     top: -80px;
     left: 0;
     width: 160px;
@@ -206,6 +205,49 @@ export default {
     .introduction {
       padding-top: 10px;
       color: #999;
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .blog-personal {
+    .personal-bottom {
+      padding-left: 0;
+    }
+    .user-portrait {
+      position: static !important;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: -160px auto 0;
+    }
+
+    .user-info {
+      padding-top: 0;
+      padding-left: 0;
+
+      .name,
+      .job,
+      .social,
+      .introduction {
+        display: block;
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .name {
+        margin-right: 0;
+        font-size: 28px;
+      }
+
+      .social {
+        float: none;
+      }
+
+      .introduction {
+        padding-top: 15px;
+        margin: 0 40px;
+      }
     }
   }
 }

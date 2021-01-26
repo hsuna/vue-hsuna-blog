@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-header" :class="isFixed?'':'fixed-hidden'">
+  <div class="blog-header" :class="classes">
     <div class="header-inner">
       <div class="header-search">
         <i v-if="showMenu" class="el-icon-menu" @click="openMenu = true;"></i>
@@ -60,6 +60,13 @@ export default {
     };
   },
   computed: {
+    classes() {
+      return [
+        { 'fixed-hidden': !this.isFixed },
+        { 'has-menu': this.showMenu },
+        { 'has-more': this.showMore },
+      ]
+    },
     isLogin(){
       let { token } = storage.get(StorageKey.USER);
       return Boolean(token)
@@ -196,26 +203,39 @@ export default {
 
 @media screen and (max-width: 750px) {
   .blog-header {
+    &.fixed-hidden {
+      top: 0;
+    }
+
     .header-search {
       position: static;
-      padding: 10px 52px;
+      padding: 10px 15px;
 
       .el-icon-menu,
       .el-icon-more {
         display: block;
         position: absolute;
-        top: 14px;
         z-index: 2;
         font-size: 24px;
         color: #555;
       }
 
       .el-icon-menu {
+        top: 14px;
         left: 18px;
       }
       .el-icon-more {
+        top: 13px;
         right: 18px;
       }
+    }
+    
+    &.has-menu {
+      .header-search { padding-left: 52px; }
+    }
+    
+    &.has-more {
+      .header-search { padding-right: 52px; }
     }
 
     .header-nav {

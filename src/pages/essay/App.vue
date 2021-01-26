@@ -65,11 +65,9 @@ export default {
       });
     },
     handlePaginChange(type, val) {
-      if ("page" == type) {
-        window.location.href = '/essay.html?'+utils.query({
-          ...utils.params(),
-          page: val
-        })
+      const params = utils.params();
+      if ("page" == type && val != params.page) {
+        window.location.href = '/essay.html?' + utils.query({ ...params, page: val })
       }
     }
   },

@@ -1,10 +1,10 @@
 <template>
     <div class="float-menu">
-        <a href="/" title="首页" v-if="isShowMenuByName('home')"><i class="fa fa-home"></i></a>
-        <a href="/archive.html" title="档案" v-if="isShowMenuByName('archive')"><i class="fa fa-archive"></i></a>
-        <a href="/about.html" title="关于" v-if="isShowMenuByName('about')"><i class="fa fa-user"></i></a>
-        <a href="/essay.html" title="手札" v-if="isShowMenuByName('essay')"><i class="fa fa-pencil"></i></a>
-        <a href="/admin.html" title="管理" v-if="isLogin"><i class="fa fa-cog"></i></a>
+        <a class="menu" href="/" title="首页" v-if="isShowMenuByName('home')"><i class="fa fa-home"></i></a>
+        <a class="menu" href="/archive.html" title="档案" v-if="isShowMenuByName('archive')"><i class="fa fa-archive"></i></a>
+        <a class="menu" href="/about.html" title="关于" v-if="isShowMenuByName('about')"><i class="fa fa-user"></i></a>
+        <a class="menu" href="/essay.html" title="手札" v-if="isShowMenuByName('essay')"><i class="fa fa-pencil"></i></a>
+        <a class="menu" href="/admin.html" title="管理" v-if="isLogin"><i class="fa fa-cog"></i></a>
         <a href="javascript:;" title="返回顶部" @click="handleBackTop"><i class="fa fa-arrow-up"></i></a>
     </div>
 </template>
@@ -55,6 +55,7 @@ export default {
     text-align: center;
     border: 1px solid #dadada;
     background-color: #fff;
+    text-decoration: none;
     color: #0084ff;
 
     .fa{
@@ -68,6 +69,31 @@ export default {
     &:hover {
       background-color: #0084ff;
       color: #fff;
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .float-menu {
+    left: auto;
+    right: 20px;
+    margin-left: 0;
+
+    &.is-show {
+      bottom: 50px;
+    }
+
+    a {
+      border-radius: 50%;
+
+      &:hover {
+        background-color: #fff;
+        color: #0084ff;
+      }
+    }
+
+    .menu {
+      display: none;
     }
   }
 }
