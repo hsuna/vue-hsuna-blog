@@ -146,7 +146,7 @@ export default {
   .personal-bottom {
     position: relative;
     min-height: 80px;
-    padding-left: 180px;
+    padding-left: 200px;
     margin: 0 20px 20px;
   }
 
@@ -154,7 +154,7 @@ export default {
     overflow: hidden;
     position: absolute !important;
     top: -80px;
-    left: 0;
+    left: 20px;
     width: 160px;
     height: 160px;
     border-radius: 4px;
@@ -216,6 +216,7 @@ export default {
     }
     .user-portrait {
       position: static !important;
+      left: auto;
       width: 120px;
       height: 120px;
       border-radius: 50%;
