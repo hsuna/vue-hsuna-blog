@@ -33,6 +33,11 @@ export default {
   created() {
     this.$emit('update')
   },
+  watch: {
+    $route: function() {
+      this.$emit('update')
+    }
+  },
   methods: {
     handleSizeChange(val) {
       this.$router.push({
@@ -43,7 +48,6 @@ export default {
           limit: val
         }
       })
-      this.$emit('update')
     },
     handleCurrentChange(val) {
       this.$router.push({
@@ -53,7 +57,6 @@ export default {
           page: val
         }
       })
-      this.$emit('update')
     }
   },
 };
