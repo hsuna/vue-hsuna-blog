@@ -57,4 +57,3 @@ jobs:
           rm -rf dist
           wget https://github.com/hsuna/vue-hsuna-blog/releases/latest/download/release.tgz -O release.tgz
           tar zxvf release.tgz
-          tar zxvf release.tgz
