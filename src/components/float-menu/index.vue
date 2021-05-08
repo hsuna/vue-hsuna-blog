@@ -4,7 +4,6 @@
         <a class="menu" href="/archive.html" title="档案" v-if="isShowMenuByName('archive')"><i class="fa fa-archive"></i></a>
         <a class="menu" href="/about.html" title="关于" v-if="isShowMenuByName('about')"><i class="fa fa-user"></i></a>
         <a class="menu" href="/essay.html" title="手札" v-if="isShowMenuByName('essay')"><i class="fa fa-pencil"></i></a>
-        <a class="menu" href="/admin.html" title="管理" v-if="isLogin"><i class="fa fa-cog"></i></a>
         <a href="javascript:;" title="返回顶部" @click="handleBackTop"><i class="fa fa-arrow-up"></i></a>
     </div>
 </template>
@@ -17,11 +16,6 @@ export default {
   name: 'float-menu',
   data() {
     return {};
-  },
-  computed: {
-    isLogin(){
-      return Boolean(storage.get(StorageKey.TOKEN))
-    }
   },
   methods: {
     isShowMenuByName(name) {
