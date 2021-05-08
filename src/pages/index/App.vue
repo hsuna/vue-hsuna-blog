@@ -2,21 +2,48 @@
   <div id="app" style="height: 100%;">
     <blog-main :activeIndex="'home'" v-model:openMore="openMore">
       <div class="blog-personal">
-        <div class="personal-top" :style="`background-image:url(${banner})`"></div>
+        <div
+          class="personal-top"
+          :style="`background-image:url(${banner})`"
+        ></div>
         <div class="personal-bottom">
           <div class="user-portrait" v-loading="!portrait">
             <img :src="portrait" />
           </div>
           <div class="user-info clearfix">
-            <span class="name">{{nickname}}</span>
-            <span class="job">{{job}}</span>
+            <span class="name">{{ nickname }}</span>
+            <span class="job">{{ job }}</span>
             <div class="social">
-              <el-tooltip content="微博"><a class="icon" href="http://weibo.com/" target="_blank" ><i class="fa fa-weibo" style="background-color: rgb(221, 75, 57);"></i></a></el-tooltip>
-              <el-tooltip content="github"><a class="icon" href="https://github.com/hsuna" target="_blank" ><i class="fa fa-github" style="background-color: rgb(85, 172, 238);"></i></a></el-tooltip>
-              <el-tooltip content="邮箱"><a class="icon" href="mailto:me@hsuna.com" target="_blank" ><i class="fa fa-envelope" style="background-color: rgb(59, 89, 152);"></i></a></el-tooltip>
-              <el-tooltip content="简历"><a class="icon" href="http://resume.hsuna.com" target="_blank" ><i class="fa fa-address-card-o" style="background-color: rgb(128, 185, 83);"></i></a></el-tooltip>
+              <el-tooltip content="微博"
+                ><a class="icon" href="http://weibo.com/" target="_blank"
+                  ><i
+                    class="fa fa-weibo"
+                    style="background-color: rgb(221, 75, 57);"
+                  ></i></a
+              ></el-tooltip>
+              <el-tooltip content="github"
+                ><a class="icon" href="https://github.com/hsuna" target="_blank"
+                  ><i
+                    class="fa fa-github"
+                    style="background-color: rgb(85, 172, 238);"
+                  ></i></a
+              ></el-tooltip>
+              <el-tooltip content="邮箱"
+                ><a class="icon" href="mailto:me@hsuna.com" target="_blank"
+                  ><i
+                    class="fa fa-envelope"
+                    style="background-color: rgb(59, 89, 152);"
+                  ></i></a
+              ></el-tooltip>
+              <el-tooltip content="简历"
+                ><a class="icon" href="http://resume.hsuna.com" target="_blank"
+                  ><i
+                    class="fa fa-address-card-o"
+                    style="background-color: rgb(128, 185, 83);"
+                  ></i></a
+              ></el-tooltip>
             </div>
-            <div class="introduction">{{introduction}}</div>
+            <div class="introduction">{{ introduction }}</div>
           </div>
         </div>
       </div>
@@ -31,7 +58,8 @@
             :profileList="profileList"
             :curPage="profilePage"
             :total="profileTotal"
-            @change="handlePaginChange">
+            @change="handlePaginChange"
+          >
           </profile-card>
         </div>
       </div>
@@ -40,18 +68,18 @@
 </template>
 
 <script>
-import { ElTooltip } from 'element-plus';
+import { ElTooltip } from "element-plus";
 
 import BlogMain from "src/components/blog-main/index.vue";
 import ProfileCard from "src/components/profile-card/index.vue";
 import {
-  ProfileSide, 
+  ProfileSide,
   ProfileSideHot,
   ProfileSideClassify,
-  ProfileSideComment
+  ProfileSideComment,
 } from "src/components/profile-side/index.js";
 
-import * as utils from 'src/utils/search.js'
+import * as utils from "src/utils/search.js";
 import Api from "src/api/blog.js";
 
 export default {
@@ -60,7 +88,7 @@ export default {
     ElTooltip,
 
     BlogMain,
-    ProfileSide, 
+    ProfileSide,
     ProfileCard,
     ProfileSideHot,
     ProfileSideClassify,
@@ -69,7 +97,7 @@ export default {
   data() {
     return {
       openMore: false,
-      
+
       loading: true,
       nickname: "Hsuna",
       job: "WEB前端工程师",
@@ -79,36 +107,40 @@ export default {
 
       profilePage: 1,
       profileTotal: 0,
-      profileList: []
+      profileList: [],
     };
   },
   created() {
     this.getUserInfo();
 
     this.getProfileList({
-      page:1,
+      page: 1,
       ...utils.params(),
     });
   },
   methods: {
     getUserInfo() {
-      Api.getUserInfo().then(res => {
+      Api.getUserInfo({
+        params: {
+          userName: "hsuna",
+        },
+      }).then((res) => {
         if (200 == res.code) {
           let user = res.data;
           this.nickname = user.nickname || "";
           this.job = user.job || "";
           this.introduction = user.introduction || "";
           this.portrait = user.portrait || "";
-          this.banner = user.banner  || "";
+          this.banner = user.banner || "";
         }
       });
     },
     getProfileList(params) {
-      Api.getArticle({ params }).then(res => {
+      Api.getArticle({ params }).then((res) => {
         if (200 == res.code) {
           this.profileList = res.data.list;
           this.profileTotal = res.data.total;
-          this.profilePage = Number(params.page)
+          this.profilePage = Number(params.page);
         }
         this.loading = false;
       });
@@ -116,13 +148,13 @@ export default {
     handlePaginChange(type, val) {
       const params = utils.params();
       if ("page" == type && val != params.page) {
-        window.location.href = '/index.html?' + utils.query({ ...params, page: val })
+        window.location.href =
+          "/index.html?" + utils.query({ ...params, page: val });
       }
-    }
+    },
   },
 };
 </script>
-
 
 <style lang="scss">
 .blog-personal {
