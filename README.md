@@ -25,7 +25,6 @@
 ├── config                      // 配置目录
 ├── server                      // 服务端目录
 ├── src                         // 项目目录
-│   ├── admin                   // 后台页面目录
 │   ├── api                     // API目录
 │   ├── assets                  // 动态资源目录
 │   ├── axios                   // 通信代理

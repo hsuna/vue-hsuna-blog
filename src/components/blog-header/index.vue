@@ -99,7 +99,6 @@ export default {
         case "archive":
         case "about":
         case "essay":
-        case "admin":
           window.location.href = `/${index}.html`;
           break;
       }
