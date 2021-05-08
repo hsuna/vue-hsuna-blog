@@ -2,10 +2,8 @@
  * 浏览器storage缓存的key
  */
 const StorageKey = {
-  USER: "HSUNA_BLOG_USER", //用户信息
-  ARTICLE: "HSUNA_BLOG_ARTICLE", //文章缓存
+  TOKEN: "HSUNA_ADMIN_TOKEN", //用户信息
   VISITOR: "HSUNA_BLOG_VISITOR", //访客者信息
-  TAGS: "HSUNA_BLOG_TAGS" //标签列表
 };
 
 const storage = {

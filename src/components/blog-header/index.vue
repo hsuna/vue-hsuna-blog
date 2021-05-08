@@ -68,8 +68,7 @@ export default {
       ]
     },
     isLogin(){
-      let { token } = storage.get(StorageKey.USER);
-      return Boolean(token)
+      return Boolean(storage.get(StorageKey.TOKEN))
     }
   },
   mounted() {

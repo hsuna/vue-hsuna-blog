@@ -8,7 +8,6 @@ function resolve(dir) {
 module.exports = {
     pages: [
         { name: 'about', title: '关于我 | HSUAN' },
-        { name: 'admin', title: '后台管理 | HSUAN' },
         { name: 'archive', title: '归档 | HSUAN' },
         { name: 'article', title: '文章详情 | HSUAN' },
         { name: 'essay', title: '手札 | HSUAN' },

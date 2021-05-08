@@ -3,13 +3,11 @@
  * @Author: Hsuan
  * @Date: 2018-03-17 10:09:18
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-20 10:27:42
+ * @Last Modified time: 2021-05-08 18:42:54
  */
 import Axios from "axios"
 
 import { ElMessage } from "element-plus";
-
-import storage, { StorageKey } from 'src/utils/storage.js'
 
 Axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '//api.hsuna.com/blog/' : `//${location.host}/api/blog/`
 Axios.defaults.timeout = 600000000;
@@ -21,11 +19,6 @@ Axios.header = {
 //添加请求拦截器
 Axios.interceptors.request.use(
   config => {
-    let { token } = storage.get(StorageKey.USER);
-    if (token) {
-      // 判断是否存在token，如果存在的话，则每个http header都加上token
-      config.headers.Authorization = token;
-    }
     //在发送请求之前做某事
     // if (config.method === "post") {//序列化了，使用RESTful
     //   //POST传参序列化
@@ -48,11 +41,7 @@ Axios.interceptors.response.use(
         break;
       case 401:
         // 这里写清除token的代码
-        storage.remove(StorageKey.USER);
-        /* router.replace({
-          path: "/login",
-          query: { redirect: router.currentRoute.fullPath } //登录成功后跳入浏览的当前页面
-        }); */
+        // 没有权限
         break;
       default:
         ElMessage.error(res.data.message);

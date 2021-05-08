@@ -52,7 +52,6 @@ import {
 } from "src/components/profile-side/index.js";
 
 import * as utils from 'src/utils/search.js'
-import storage, { StorageKey } from 'src/utils/storage.js'
 import Api from "src/api/blog.js";
 
 export default {
@@ -93,12 +92,7 @@ export default {
   },
   methods: {
     getUserInfo() {
-      const user = storage.get(StorageKey.USER);
-      Api.getUserInfo({
-        params: {
-          userName: user.name || 'hsuna'
-        }
-      }).then(res => {
+      Api.getUserInfo().then(res => {
         if (200 == res.code) {
           let user = res.data;
           this.nickname = user.nickname || "";
