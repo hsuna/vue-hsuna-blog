@@ -3,13 +3,13 @@
  * @Author: Hsuan
  * @Date: 2018-03-26 14:42:22
  * @Last Modified by: Hsuna
- * @Last Modified time: 2018-04-26 00:27:37
+ * @Last Modified time: 2021-05-12 00:01:03
  */
 import Axios from './axios'
 
 export default {
   //////// 用户模块 ////////
-  getUserInfo: d => Axios.get("user/userInfo", d), //获取用户信息
+  getUserInfo: d => Axios.get("user/user/info", d), //获取用户信息
 
   //////// 分类模块 ////////
   getClassify: d => Axios.get("classify", d), //查询分类
