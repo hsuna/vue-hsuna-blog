@@ -15,7 +15,7 @@
             <span class="job">{{ job }}</span>
             <div class="social">
               <el-tooltip content="微博"
-                ><a class="icon" href="http://weibo.com/" target="_blank"
+                ><a class="icon" href="https://weibo.com/u/7888172222" target="_blank"
                   ><i
                     class="fa fa-weibo"
                     style="background-color: rgb(221, 75, 57);"
@@ -35,8 +35,8 @@
                     style="background-color: rgb(59, 89, 152);"
                   ></i></a
               ></el-tooltip>
-              <el-tooltip content="简历"
-                ><a class="icon" href="http://resume.hsuna.com" target="_blank"
+              <el-tooltip content="巽阁"
+                ><a class="icon" href="//video.hsuna.com" target="_blank"
                   ><i
                     class="fa fa-address-card-o"
                     style="background-color: rgb(128, 185, 83);"
@@ -126,7 +126,7 @@ export default {
         },
       }).then((res) => {
         if (200 == res.code) {
-          let user = res.data;
+          const user = res.data || {};
           this.nickname = user.nickname || "";
           this.job = user.job || "";
           this.introduction = user.introduction || "";

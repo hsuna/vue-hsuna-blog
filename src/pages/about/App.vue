@@ -11,7 +11,7 @@
           <div class="about-body">
             <!-- 简介 -->
             <h4 id="aboutIntroduce">简介</h4>
-            <p>陈阳志 男 91年天秤座一枚 毕业于2013.6</p>
+            <p>Hsuna 男 90后天秤座一枚</p>
             <p>重度强迫症码农，浅度流浪型驴友</p>
 
             <!-- 技能清单 -->
@@ -20,7 +20,7 @@
               <li>
                 <h5>前端</h5>
                 <p>HTLM/HTML5, Javascript, ES6, css/css3, scss/sass</p>
-                <p>jQuery, bootstrap, Requirejs, angularjs, vue/vue-cli</p>
+                <p>vue，react，next.js，nest.js</p>
               </li>
               <li>
                 <h5>后端</h5>
@@ -28,18 +28,17 @@
               </li>
               <li>
                 <h5>数据库</h5>
-                <p>mongodb, mysql</p>
+                <p>mongodb, mysql，redis</p>
               </li>
               <li>
                 <h5>代码管理及自动化工具</h5>
-                <p>git/svn, gulp, webpack</p>
+                <p>git/svn, gulp, webpack，vite</p>
               </li>
             </ul>
 
             <!-- 联系我 -->
             <h4 id="aboutContact">联系我</h4>
             <p><strong>个人邮箱：</strong><a href="mailto:me@hsuna.com" alt="个人邮箱">me@hsuna.com</a></p>
-            <p><strong>个人简历：</strong><a href="http://resume.hsuna.com" alt="个人简历">http://resume.hsuna.com</a></p>
             <p><strong>Github：</strong><a href="https://github.com/hsuna" alt="github">https://github.com/hsuna</a></p>
 
             <!-- 博客技术栈 -->
