@@ -1,9 +1,9 @@
 import 'src/assets/styles/element-variables.scss'
 
 // 设置语言
-import 'dayjs/locale/zh-cn'
 import lang from 'element-plus/lib/locale/lang/zh-cn'
 import locale from 'element-plus/lib/locale'
+import 'dayjs/locale/zh-cn'
 
 /* 引用-element-plus */
 import { ElLoading } from 'element-plus'

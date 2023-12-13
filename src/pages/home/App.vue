@@ -36,7 +36,7 @@
                   ></i></a
               ></el-tooltip>
               <el-tooltip content="巽阁"
-                ><a class="icon" href="//video.hsuna.com" target="_blank"
+                ><a class="icon" href="https://video.hsuna.com" target="_blank"
                   ><i
                     class="fa fa-address-card-o"
                     style="background-color: rgb(128, 185, 83);"

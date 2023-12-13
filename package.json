@@ -7,26 +7,24 @@
   "private": true,
   "scripts": {
     "start": "npm run dev",
-    "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "analyzer": "set use_analyzer=true && npm run build"
+    "dev": "vite",
+    "build": "vite build --mode production"
   },
   "dependencies": {
     "axios": "0.21.1",
     "element-plus": "v1.0.1-beta.24",
     "highlight.js": "10.4.1",
     "marked": "^1.2.7",
-    "vue": "^3.0.5",
-    "vuex": "^4.0.0-rc.2"
+    "vue": "^3.2.31"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.3.0",
-    "@vue/cli-service": "^4.3.0",
-    "@vue/compiler-sfc": "^3.0.5",
-    "babel-plugin-component": "^1.1.1",
-    "node-sass": "^5.0.0",
-    "sass-loader": "^10.1.1",
-    "webpack": "4.3.0"
+    "@babel/standalone": "^7.23.6",
+    "@vitejs/plugin-legacy": "^5.2.0",
+    "@vitejs/plugin-vue": "^2.2.2",
+    "less": "^4.1.2",
+    "sass": "^1.69.5",
+    "vite": "^2.8.4",
+    "vite-plugin-html": "^2.1.2"
   },
   "engines": {
     "node": ">= 12.0.0",

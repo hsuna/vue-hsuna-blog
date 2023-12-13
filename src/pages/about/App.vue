@@ -46,7 +46,7 @@
             <ul>
               <li>
                 <h5>前端</h5>
-                <p>vue3.0, vue-router, axios, vuex</p>
+                <p>vue3.0, vue-router, axios</p>
                 <p>element-plus, markdown, highlight, webpack</p>
               </li>
               <li>

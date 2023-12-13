@@ -9,7 +9,7 @@ import Axios from "axios"
 
 import { ElMessage } from "element-plus";
 
-Axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '//api.hsuna.com/' : `//${location.host}/api/`
+Axios.defaults.baseURL = import.meta.env.VITE_BFF_API;
 Axios.defaults.timeout = 600000000;
 Axios.defaults.withCredentials = true;
 Axios.header = {
