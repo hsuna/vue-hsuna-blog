@@ -18,10 +18,8 @@
     "vue": "^3.2.31"
   },
   "devDependencies": {
-    "@babel/standalone": "^7.23.6",
     "@vitejs/plugin-legacy": "^5.2.0",
     "@vitejs/plugin-vue": "^2.2.2",
-    "less": "^4.1.2",
     "sass": "^1.69.5",
     "vite": "^2.8.4",
     "vite-plugin-html": "^2.1.2"
