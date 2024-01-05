@@ -11,7 +11,7 @@
     "build": "vite build --mode production"
   },
   "dependencies": {
-    "axios": "0.21.1",
+    "axios": "1.6.0",
     "core-js": "^3.35.0",
     "element-plus": "v1.0.1-beta.24",
     "highlight.js": "10.4.1",
