@@ -36,12 +36,8 @@ Axios.interceptors.request.use(
 //添加响应拦截器
 Axios.interceptors.response.use(
   res => {
-    switch (res.data.code) { //对响应数据做些事
+    switch (res.data.statusCode) { //对响应数据做些事
       case 200:
-        break;
-      case 401:
-        // 这里写清除token的代码
-        // 没有权限
         break;
       default:
         ElMessage.error(res.data.message);
@@ -50,8 +46,14 @@ Axios.interceptors.response.use(
     return res.data;
   },
   err => {
+    switch (err.response.status) {
+      case 401:
+        // 这里写清除token的代码
+        store.dispatch("user/RESET_TOKEN");
+        break;
+    }
     //请求错误时做些事
-    ElMessage.error(err);
+    ElMessage.error(err.response.statusText);
     return Promise.reject(err);
   }
 )

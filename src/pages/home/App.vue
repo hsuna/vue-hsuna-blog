@@ -2,10 +2,7 @@
   <div id="app" style="height: 100%;">
     <blog-main :activeIndex="'home'" v-model:openMore="openMore">
       <div class="blog-personal">
-        <div
-          class="personal-top"
-          :style="`background-image:url(${banner})`"
-        ></div>
+        <div class="personal-top" :style="`background-image:url(${banner})`"></div>
         <div class="personal-bottom">
           <div class="user-portrait" v-loading="!portrait">
             <img :src="portrait" />
@@ -14,54 +11,30 @@
             <span class="name">{{ nickname }}</span>
             <span class="job">{{ job }}</span>
             <div class="social">
-              <el-tooltip content="微博"
-                ><a class="icon" href="https://weibo.com/u/7888172222" target="_blank"
-                  ><i
-                    class="fa fa-weibo"
-                    style="background-color: rgb(221, 75, 57);"
-                  ></i></a
-              ></el-tooltip>
-              <el-tooltip content="github"
-                ><a class="icon" href="https://github.com/hsuna" target="_blank"
-                  ><i
-                    class="fa fa-github"
-                    style="background-color: rgb(85, 172, 238);"
-                  ></i></a
-              ></el-tooltip>
-              <el-tooltip content="邮箱"
-                ><a class="icon" href="mailto:me@hsuna.com" target="_blank"
-                  ><i
-                    class="fa fa-envelope"
-                    style="background-color: rgb(59, 89, 152);"
-                  ></i></a
-              ></el-tooltip>
-              <el-tooltip content="巽阁"
-                ><a class="icon" href="https://video.hsuna.com" target="_blank"
-                  ><i
-                    class="fa fa-address-card-o"
-                    style="background-color: rgb(128, 185, 83);"
-                  ></i></a
-              ></el-tooltip>
+              <el-tooltip content="微博"><a class="icon" href="https://weibo.com/u/7888172222" target="_blank"><i
+                    class="fa fa-weibo" style="background-color: rgb(221, 75, 57);"></i></a></el-tooltip>
+              <el-tooltip content="github"><a class="icon" href="https://github.com/hsuna" target="_blank"><i
+                    class="fa fa-github" style="background-color: rgb(85, 172, 238);"></i></a></el-tooltip>
+              <el-tooltip content="邮箱"><a class="icon" href="mailto:me@hsuna.com" target="_blank"><i
+                    class="fa fa-envelope" style="background-color: rgb(59, 89, 152);"></i></a></el-tooltip>
+              <el-tooltip content="巽阁"><a class="icon" href="https://video.hsuna.com" target="_blank"><i
+                    class="fa fa-address-card-o" style="background-color: rgb(128, 185, 83);"></i></a></el-tooltip>
             </div>
             <div class="introduction">{{ introduction }}</div>
           </div>
         </div>
       </div>
       <div class="blog-profile">
+        <profile-main :loading="loading">
+          <profile-card :profileList="profileList" :curPage="profilePage" :total="profileTotal"
+            @change="handlePaginChange">
+          </profile-card>
+        </profile-main>
         <profile-side v-model:visible="openMore">
           <profile-side-hot></profile-side-hot>
           <profile-side-classify></profile-side-classify>
           <profile-side-comment></profile-side-comment>
         </profile-side>
-        <div class="profile-main" v-loading="loading">
-          <profile-card
-            :profileList="profileList"
-            :curPage="profilePage"
-            :total="profileTotal"
-            @change="handlePaginChange"
-          >
-          </profile-card>
-        </div>
       </div>
     </blog-main>
   </div>
@@ -71,6 +44,7 @@
 import { ElTooltip } from "element-plus";
 
 import BlogMain from "src/components/blog-main/index.vue";
+import ProfileMain from "src/components/profile-main/index.vue";
 import ProfileCard from "src/components/profile-card/index.vue";
 import {
   ProfileSide,
@@ -88,6 +62,8 @@ export default {
     ElTooltip,
 
     BlogMain,
+
+    ProfileMain,
     ProfileSide,
     ProfileCard,
     ProfileSideHot,
@@ -125,7 +101,7 @@ export default {
           userName: "hsuna",
         },
       }).then((res) => {
-        if (200 == res.code) {
+        if (200 == res.statusCode) {
           const user = res.data || {};
           this.nickname = user.nickname || "";
           this.job = user.job || "";
@@ -137,9 +113,9 @@ export default {
     },
     getProfileList(params) {
       Api.getArticle({ params }).then((res) => {
-        if (200 == res.code) {
-          this.profileList = res.data.list;
-          this.profileTotal = res.data.total;
+        if (200 == res.statusCode) {
+          this.profileList = res.data.rows;
+          this.profileTotal = res.data.count;
           this.profilePage = Number(params.page);
         }
         this.loading = false;
@@ -206,11 +182,13 @@ export default {
 
     .social {
       float: right;
+
       .icon {
         display: inline-block;
         margin-left: 5px;
         text-decoration: none;
       }
+
       .fa {
         display: block;
         font-size: 20px;
@@ -240,6 +218,7 @@ export default {
     .personal-bottom {
       padding-left: 0;
     }
+
     .user-portrait {
       position: static !important;
       left: auto;

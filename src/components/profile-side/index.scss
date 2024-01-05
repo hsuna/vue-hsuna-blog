@@ -1,15 +1,3 @@
 .blog-profile {
-  position: relative; 
-}
-
-.profile-main {
-  margin-right: 310px;
-  background-color: #fff;
-  box-shadow: 0 1px 3px rgba(26, 26, 26, 0.1);
-}
-
-@media screen and (max-width: 750px) {
-  .profile-main {
-    margin-right: 0;
-  }
+  display: flex;
 }

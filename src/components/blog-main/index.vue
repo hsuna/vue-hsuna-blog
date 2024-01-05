@@ -1,9 +1,12 @@
 <template>
   <div class="blog">
-      <blog-header :activeIndex="activeIndex" :showMore="showMore" :openMore="openMore" @scroll-fixed="handleScrollFixed" @update:openMore="$emit('update:openMore', $event)"></blog-header>
-      <div class="blog-body"><slot></slot></div>
-      <blog-footer></blog-footer>
-      <float-menu :class="showFloatMenu?'is-show':''"></float-menu>
+    <blog-header :activeIndex="activeIndex" :showMore="showMore" :openMore="openMore" @scroll-fixed="handleScrollFixed"
+      @update:openMore="$emit('update:openMore', $event)"></blog-header>
+    <div class="blog-body">
+      <slot></slot>
+    </div>
+    <blog-footer></blog-footer>
+    <float-menu :class="showFloatMenu ? 'is-show' : ''"></float-menu>
   </div>
 </template>
 
@@ -53,12 +56,12 @@ export default {
   max-width: 1024px;
   min-height: 800px;
   min-height: calc(100vh - 110px);
-  margin: 60px auto 0;
+  margin: 0 auto;
+  padding: 60px 0;
 
   &:after {
     content: "";
     display: table;
     clear: both;
   }
-}
-</style>
+}</style>

@@ -2,18 +2,14 @@
   <div id="app">
     <blog-main :activeIndex="'essay'" v-model:openMore="openMore">
       <div class="blog-profile">
+        <profile-main :loading="loading">
+          <profile-essay :profileList="essayList" :curPage="curPage" :total="essayTotal" @change="handlePaginChange">
+          </profile-essay>
+        </profile-main>
         <profile-side v-model:visible="openMore">
           <profile-side-link></profile-side-link>
           <profile-side-inventory></profile-side-inventory>
         </profile-side>
-        <div class="profile-main" v-loading="loading">
-          <profile-essay
-            :profileList="essayList"
-            :curPage="curPage"
-            :total="essayTotal"
-            @change="handlePaginChange">
-          </profile-essay>
-        </div>
       </div>
     </blog-main>
   </div>
@@ -21,6 +17,7 @@
 
 <script>
 import BlogMain from "src/components/blog-main/index.vue";
+import ProfileMain from "src/components/profile-main/index.vue";
 import ProfileEssay from "src/components/profile-essay/index.vue";
 import { ProfileSide, ProfileSideInventory, ProfileSideLink } from "src/components/profile-side";
 
@@ -31,7 +28,9 @@ export default {
   name: "App",
   components: {
     BlogMain,
-    ProfileSide, 
+
+    ProfileMain,
+    ProfileSide,
     ProfileEssay,
     ProfileSideInventory,
     ProfileSideLink
@@ -39,14 +38,14 @@ export default {
   data() {
     return {
       openMore: false,
-      
+
       loading: true,
       essayTotal: 0,
       essayList: []
     };
   },
   computed: {
-    curPage(){
+    curPage() {
       return Number(utils.params('page') || 1)
     }
   },
@@ -56,8 +55,8 @@ export default {
   methods: {
     getEssayList(params) {
       Api.getEssay({ params }).then(res => {
-        if (200 == res.code) {
-          let { list, total } = res.data;
+        if (200 == res.statusCode) {
+          let { rows: list, count: total } = res.data;
           this.essayList = list;
           this.essayTotal = total;
         }
@@ -74,6 +73,5 @@ export default {
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>
 

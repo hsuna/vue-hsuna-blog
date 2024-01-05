@@ -2,7 +2,7 @@
   <div class="blog-footer">
     <div class="footer-inner">
       <div class="footer-content">
-        {{curYear}} © <a title="电子邮件" href="mailto:me@husna.com">我的邮件</a>
+        {{ curYear }} © <a title="电子邮件" href="mailto:me@husna.com">我的邮件</a>
         | <a title="简历" target="_blank" href="http://resume.hsuna.com">简历</a>
         | <a title="GitHub" target="_blank" href="https://github.com/hsuna">GitHub</a>
       </div>
@@ -13,7 +13,7 @@
 
 <script>
 import { timeStampFormat } from 'src/utils/date.js'
- 
+
 export default {
   name: 'blog-footer',
   data() {
@@ -24,7 +24,7 @@ export default {
       return timeStampFormat(Date.now(), 'yyyy')
     }
   },
-  created() {},
+  created() { },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
@@ -34,6 +34,10 @@ export default {
 
 <style lang="scss" scoped>
 .blog-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   margin-top: 10px;
   background-color: #fff;
   box-shadow: 0 1px 3px rgba(26, 26, 26, 0.1);
@@ -44,6 +48,7 @@ export default {
     height: 40px;
     margin: 0 auto;
   }
+
   .footer-content {
     float: right;
     margin-right: 10px;

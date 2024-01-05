@@ -2,11 +2,7 @@
   <div id="app" style="height: 100%;">
     <blog-main :activeIndex="'about'" v-model:openMore="openMore">
       <div class="blog-profile">
-        <profile-side v-model:visible="openMore">
-          <profile-side-hot></profile-side-hot>
-          <profile-side-about></profile-side-about>
-        </profile-side>
-        <div class="profile-main">
+        <profile-main>
           <div class="about-header">关于我</div>
           <div class="about-body">
             <!-- 简介 -->
@@ -56,11 +52,16 @@
               </li>
               <li>
                 <h5>Github：</h5>
-                <p><a href="https://github.com/hsuna/vue-hsuna-blog" alt="github">https://github.com/hsuna/vue-hsuna-blog</a></p>
+                <p><a href="https://github.com/hsuna/vue-hsuna-blog"
+                    alt="github">https://github.com/hsuna/vue-hsuna-blog</a></p>
               </li>
             </ul>
           </div>
-        </div>
+        </profile-main>
+        <profile-side v-model:visible="openMore">
+          <profile-side-hot></profile-side-hot>
+          <profile-side-about></profile-side-about>
+        </profile-side>
       </div>
     </blog-main>
   </div>
@@ -68,12 +69,14 @@
 
 <script>
 import BlogMain from "src/components/blog-main/index.vue";
+import ProfileMain from "src/components/profile-main/index.vue";
 import { ProfileSide, ProfileSideAbout, ProfileSideHot } from "src/components/profile-side/index.js";
 
 export default {
   name: "App",
   components: {
     BlogMain,
+    ProfileMain,
     ProfileSide,
     ProfileSideAbout,
     ProfileSideHot
@@ -83,7 +86,7 @@ export default {
       openMore: false,
     };
   },
-  created() {},
+  created() { },
   methods: {},
 };
 </script>
@@ -95,8 +98,10 @@ export default {
   border-bottom: 1px solid #dadada;
   color: #2b3f52;
 }
+
 .about-body {
   padding: 24px;
+
   h4 {
     margin-top: 30px;
     line-height: 28px;
@@ -140,6 +145,7 @@ export default {
 
     li {
       list-style: circle;
+
       h5 {
         margin-top: 20px;
         margin-bottom: 10px;

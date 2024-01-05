@@ -5,14 +5,14 @@
       <!-- <a href="/comment" class="more">更多<i class="fa fa-angle-double-right"></i></a> -->
     </div>
     <div class="side-body">
-      <template v-if="commentList.length>0">
+      <template v-if="commentList.length > 0">
         <ul class="new-comment">
           <li v-for="comment in commentList" :key="comment.id">
             <p>
-              <a class="name" :href="`/article.html?id=${comment.articleId}#c-${comment.id}`">{{comment.name}}</a>
-              <span class="time">{{timeAgoFormat(comment.createdAt)}}</span>
+              <a class="name" :href="`/article.html?id=${comment.articleId}#c-${comment.id}`">{{ comment.name }}</a>
+              <span class="time">{{ timeAgoFormat(comment.createdAt) }}</span>
             </p>
-            <p class="content">{{comment.content}}</p>
+            <p class="content">{{ comment.content }}</p>
           </li>
         </ul>
       </template>
@@ -43,8 +43,8 @@ export default {
     //////////////////////////////
     getNewComment() {
       Api.getCommentNew().then(res => {
-        if (200 == res.code) {
-          this.commentList = res.data;
+        if (200 == res.statusCode) {
+          this.commentList = res.data?.rows || [];
         }
       });
     }
@@ -60,7 +60,7 @@ export default {
     padding-top: 6px;
     padding-bottom: 6px;
 
-    & + li {
+    &+li {
       border-top: 1px dashed #eee;
     }
 
@@ -68,9 +68,11 @@ export default {
       font-size: 16px;
       font-weight: bold;
     }
+
     .time {
       float: right;
     }
+
     .content {
       overflow: hidden;
       text-overflow: ellipsis;

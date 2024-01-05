@@ -6,13 +6,13 @@
         <el-input placeholder="搜索" v-model="inputSearch" prefix-icon="el-icon-search" @change="handleSearch"></el-input>
         <i v-if="showMore" class="el-icon-more" @click="$emit('update:openMore', true);"></i>
       </div>
-      <div class="header-nav" :class="{'is-active': openMenu}">
+      <div class="header-nav" :class="{ 'is-active': openMenu }">
         <i class="el-icon-close" @click="openMenu = false;"></i>
         <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect">
-            <el-menu-item index="home"><i class="fa fa-home"></i>首页</el-menu-item>
-            <el-menu-item index="archive"><i class="fa fa-archive"></i>档案</el-menu-item>
-            <el-menu-item index="about"><i class="fa fa-user"></i>关于</el-menu-item>
-            <el-menu-item index="essay"><i class="fa fa-pencil"></i>手札</el-menu-item>
+          <el-menu-item index="home"><i class="fa fa-home"></i>首页</el-menu-item>
+          <el-menu-item index="archive"><i class="fa fa-archive"></i>档案</el-menu-item>
+          <el-menu-item index="about"><i class="fa fa-user"></i>关于</el-menu-item>
+          <el-menu-item index="essay"><i class="fa fa-pencil"></i>手札</el-menu-item>
         </el-menu>
       </div>
     </div>
@@ -70,7 +70,7 @@ export default {
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
-  beforeUnmount(){
+  beforeUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
@@ -94,7 +94,7 @@ export default {
           break;
         case "classify":
           //二级
-          window.location.href = `/index.html?classify=${indexPath[1]}`;
+          window.location.href = `/index.html?classifyId=${indexPath[1]}`;
           break;
         case "archive":
         case "about":
@@ -103,8 +103,8 @@ export default {
           break;
       }
     },
-    handleSearch(){
-      if(this.inputSearch) {
+    handleSearch() {
+      if (this.inputSearch) {
         console.log(this.inputSearch);
         ElMessage('该功能正在建设中～');
       }
@@ -160,6 +160,7 @@ export default {
   }
 
   .header-nav {
+
     .el-menu-item,
     .el-submenu__title {
       display: inline-block;
@@ -218,18 +219,23 @@ export default {
         top: 14px;
         left: 18px;
       }
+
       .el-icon-more {
         top: 13px;
         right: 18px;
       }
     }
-    
+
     &.has-menu {
-      .header-search { padding-left: 52px; }
+      .header-search {
+        padding-left: 52px;
+      }
     }
-    
+
     &.has-more {
-      .header-search { padding-right: 52px; }
+      .header-search {
+        padding-right: 52px;
+      }
     }
 
     .header-nav {
@@ -251,7 +257,7 @@ export default {
         display: block;
         position: absolute;
         top: 14px;
-        left: 18px;  
+        left: 18px;
         font-size: 24px;
         color: #555;
       }
@@ -296,8 +302,15 @@ export default {
 }
 
 @keyframes header-inner__wrap {
-  0% { transform: translateY(-200px); }
-  60% { transform: translateY(20px); }
-  100% { transform: translateY(0); }
-}
-</style>
+  0% {
+    transform: translateY(-200px);
+  }
+
+  60% {
+    transform: translateY(20px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}</style>

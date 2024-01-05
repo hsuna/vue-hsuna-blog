@@ -19,9 +19,9 @@
             @current-change="handleCurrentChange"
             v-model:current-page="inventoryQuery.page"
             :total="inventoryTotal"
-            :page-size="inventoryQuery.limit"
+            :page-size="inventoryQuery.pageSize"
             layout="prev, next, slot">
-            <span style="line-height: 28px;">{{inventoryQuery.page}}/{{Math.ceil(inventoryTotal/inventoryQuery.limit)}}</span>
+            <span style="line-height: 28px;">{{inventoryQuery.page}}/{{Math.ceil(inventoryTotal/inventoryQuery.pageSize)}}</span>
           </el-pagination>
         </div>
     </div>
@@ -45,7 +45,7 @@ export default {
       inventoryName: "1",
       inventoryQuery: {
         page: 1,
-        limit: 5
+        pageSize: 5
       },
       inventoryTotal: 1,
       inventoryList: []
@@ -58,8 +58,8 @@ export default {
     getInventoryList() {
       Api.getInventory({ params: this.inventoryQuery })
         .then(res => {
-          if (200 == res.code) {
-            let { list, total } = res.data;
+          if (200 == res. statusCode) {
+            let { rows:list, count:total } = res.data;
             this.inventoryList = list;
             this.inventoryTotal = total;
           }

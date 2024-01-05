@@ -4,8 +4,9 @@
     <div class="side-body">
       <ul class="article-achive">
         <li v-for="(archive, index) in archiveList" :key="index">
-          <span :class="archiveIndex==index?'is-active':''" @click="handleArchive(archive, index)">{{archive.year}}年{{archive.month}}月</span>
-          <em class="count">({{archive.count}})</em>
+          <span :class="archiveIndex == index ? 'is-active' : ''"
+            @click="handleArchive(archive, index)">{{ archive.year }}年{{ archive.month }}月</span>
+          <em class="count">({{ archive.count }})</em>
         </li>
       </ul>
       <!-- <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick" accordion></el-tree> -->
@@ -34,11 +35,8 @@ export default {
   methods: {
     getAchiveCount() {
       Api.getAchiveCount().then(res => {
-        if (200 == res.code) {
-          this.archiveList = res.data.map(group => {
-            let { _id: { year, month }, count } = group;
-            return { year, month, count };
-          });
+        if (200 == res.statusCode) {
+          this.archiveList = res.data || [];
           this.$emit("init", this.archiveList);
         }
       });
@@ -55,19 +53,19 @@ export default {
   li {
     padding: 4px;
 
-    span{
+    span {
       cursor: pointer;
 
       &:hover {
         color: #0084ff;
       }
-  
+
       &.is-active {
         position: relative;
         font-weight: bold;
         text-decoration: none;
         color: #0084ff;
-  
+
         &:after {
           content: "";
           display: block;

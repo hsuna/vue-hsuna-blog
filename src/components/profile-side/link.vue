@@ -19,9 +19,9 @@
             @current-change="handleCurrentChange"
             v-model:current-page="linkQuery.page"
             :total="linkTotal"
-            :page-size="linkQuery.limit"
+            :page-size="linkQuery.pageSize"
             layout="prev, next, slot">
-            <span style="line-height: 28px;">{{linkQuery.page}}/{{Math.ceil(linkTotal/linkQuery.limit)}}</span>
+            <span style="line-height: 28px;">{{linkQuery.page}}/{{Math.ceil(linkTotal/linkQuery.pageSize)}}</span>
           </el-pagination>
         </div>
     </div>
@@ -43,7 +43,7 @@ export default {
       linkName: "1",
       linkQuery: {
         page: 1,
-        limit: 5
+        pageSize: 5
       },
       linkTotal: 1,
       linkList: []
@@ -55,8 +55,8 @@ export default {
   methods: {
     getLinkList() {
       Api.getLink({ params: this.linkQuery }).then(res => {
-        if (200 == res.code) {
-          let { list, total } = res.data;
+        if (200 == res. statusCode) {
+          let { rows:list, count:total } = res.data;
           this.linkList = list;
           this.linkTotal = total;
         }

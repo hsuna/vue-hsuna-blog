@@ -2,30 +2,23 @@
   <div>
     <div class="profile-card" v-for="profile in profileList" :key="profile.id">
       <div class="card-title">
-        <a :href="`/article.html?id=${profile.id}`">{{profile.title}}</a>
+        <a :href="`/article.html?id=${profile.id}`">{{ profile.title }}</a>
       </div>
       <div class="card-date" :data-date="timeStampFormat(profile.publishAt)">
-        {{timeAgoFormat(profile.publishAt)}}
+        {{ timeAgoFormat(profile.publishAt) }}
       </div>
       <div class="card-tags">
-        <span class="card-count">分类：{{profile.classify}}</span>
-        <span class="card-count">评论({{profile.commentCount}}) | 浏览({{profile.viewCount}})</span>
-        <el-tag size="mini" v-for="tag in profile.tags" :key="tag">{{tag}}</el-tag>
+        <span class="card-count">分类：{{ profile.classify?.title || '' }}</span>
+        <span class="card-count">评论({{ profile.comments?.length || 0 }}) | 浏览({{ profile.viewCount }})</span>
+        <el-tag size="mini" v-for="tag in profile.tags" :key="tag">{{ tag }}</el-tag>
       </div>
       <div class="card-content clearfix">
         <span v-html="`&nbsp;&nbsp;&nbsp;&nbsp;${profile.about}`"></span>
         <a :href="`/article.html?id=${profile.id}`">阅读全文<i class="el-icon-arrow-right"></i></a>
       </div>
     </div>
-    <el-pagination 
-      v-if="-1 != total"
-      layout="prev, pager, next" 
-      :background="true"
-      :total="total"
-      :current-page="curPage"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange" 
-    />
+    <el-pagination v-if="-1 != total" layout="prev, pager, next" :background="true" :total="total" :current-page="curPage"
+      @size-change="handleSizeChange" @current-change="handleCurrentChange" />
   </div>
 </template>
 
@@ -75,7 +68,7 @@ export default {
   padding: 20px 10px;
   line-height: 1.6;
 
-  & + .profile-card {
+  &+.profile-card {
     border-top: 1px solid #dadada;
   }
 
@@ -127,6 +120,7 @@ export default {
     }
   }
 }
+
 .el-pagination {
   margin-top: 15px;
   padding: 10px;
@@ -142,6 +136,7 @@ export default {
       text-align: justify;
       padding-right: 0;
     }
+
     .card-date {
       top: auto;
       bottom: 5px;

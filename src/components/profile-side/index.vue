@@ -1,39 +1,35 @@
 <template>
-    <div :class="classes">
-        <div class="profile-side__mask" @click="$emit('update:visible', false)"></div>
-        <div class="profile-side__wrap">
-            <slot></slot>
-        </div>
+  <div :class="classes">
+    <div class="profile-side__mask" @click="$emit('update:visible', false)"></div>
+    <div class="profile-side__wrap">
+      <slot></slot>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
-    props: {
-        visible: {
-            type: Boolean,
-            defalut: false,
-        }
-    },
-    computed: {
-        classes() {
-            return [
-                'profile-side',
-                { 'is-open': this.visible },
-            ]
-
-        }
+  props: {
+    visible: {
+      type: Boolean,
+      defalut: false,
     }
+  },
+  computed: {
+    classes() {
+      return [
+        'profile-side',
+        { 'is-open': this.visible },
+      ]
+
+    }
+  }
 }
 </script>
 
 <style lang="scss">
 .profile-side {
-  position: absolute;
-  right: 0;
-  top: 0;
   width: 300px;
-  box-shadow: 0 1px 3px rgba(26, 26, 26, 0.1);
 
   &__mask {
     display: none;
@@ -49,6 +45,8 @@ export default {
   .item-side {
     margin-bottom: 10px;
     padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(26, 26, 26, 0.1);
 
     .side-header {
       padding-left: 4px;
@@ -65,6 +63,7 @@ export default {
         font-weight: normal;
       }
     }
+
     .side-body {
       padding: 10px 6px 0;
     }
@@ -87,11 +86,11 @@ export default {
     z-index: 9999;
 
     &__wrap {
-        position: relative;
-        z-index: 3;
-        padding: 15px 10px;
-        background: #fff;
-        height: 100%;
+      position: relative;
+      z-index: 3;
+      padding: 15px 10px;
+      background: #fff;
+      height: 100%;
     }
 
     &.is-open {
@@ -110,12 +109,22 @@ export default {
 }
 
 @keyframes profile-side__wrap {
-  0% { transform: translateX(300px); }
-100% { transform: translateX(0); }
+  0% {
+    transform: translateX(300px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
 
 @keyframes profile-side__mask {
-    0% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 </style>
