@@ -1,5 +1,5 @@
 import path from 'path';
-import { defineConfig } from 'vite';
+import { loadEnv, defineConfig } from 'vite';
 import { minifyHtml, injectHtml } from 'vite-plugin-html';
 import vue from '@vitejs/plugin-vue';
 import legacy from './plugins/legacy'; // 自定义插件调整
