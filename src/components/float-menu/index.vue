@@ -1,15 +1,14 @@
 <template>
-    <div class="float-menu">
-        <a class="menu" href="/" title="首页" v-if="isShowMenuByName('home')"><i class="fa fa-home"></i></a>
-        <a class="menu" href="/archive.html" title="档案" v-if="isShowMenuByName('archive')"><i class="fa fa-archive"></i></a>
-        <a class="menu" href="/about.html" title="关于" v-if="isShowMenuByName('about')"><i class="fa fa-user"></i></a>
-        <a class="menu" href="/essay.html" title="手札" v-if="isShowMenuByName('essay')"><i class="fa fa-pencil"></i></a>
-        <a href="javascript:;" title="返回顶部" @click="handleBackTop"><i class="fa fa-arrow-up"></i></a>
-    </div>
+  <div class="float-menu">
+    <a class="menu" href="/" title="首页" v-if="isShowMenuByName('home')"><i class="fa fa-home"></i></a>
+    <a class="menu" href="/archive.html" title="档案" v-if="isShowMenuByName('archive')"><i class="fa fa-archive"></i></a>
+    <a class="menu" href="/about.html" title="关于" v-if="isShowMenuByName('about')"><i class="fa fa-user"></i></a>
+    <a class="menu" href="/essay.html" title="手札" v-if="isShowMenuByName('essay')"><i class="fa fa-pencil"></i></a>
+    <a href="javascript:;" title="返回顶部" @click="handleBackTop"><i class="fa fa-arrow-up"></i></a>
+  </div>
 </template>
 
 <script>
-import { params } from 'src/utils/search.js'
 import storage, { StorageKey } from 'src/utils/storage.js'
 
 export default {
@@ -19,7 +18,7 @@ export default {
   },
   methods: {
     isShowMenuByName(name) {
-      return name !== params('name')
+      return name !== this.$route.query.name;
     },
     handleBackTop() {
       document.documentElement.scrollTop = document.body.scrollTop = 0;
@@ -51,11 +50,11 @@ export default {
     text-decoration: none;
     color: #0084ff;
 
-    .fa{
+    .fa {
       font-size: 24px;
     }
 
-    & + a {
+    &+a {
       margin-top: -1px;
     }
 

@@ -121,7 +121,6 @@ import { setDocumentTitle } from "src/utils/title.js";
 
 import storage, { StorageKey } from 'src/utils/storage.js'
 import { timeAgoFormat, timeStampFormat } from 'src/utils/date.js'
-import { params } from 'src/utils/search.js'
 import markMixin from "src/mixin/mark.js";
 
 import Api from "src/api/blog.js";
@@ -147,7 +146,7 @@ export default {
       href: window.location.href,
       loading: true,
       article: {
-        id: params('id'),
+        id: this.$route.query.id,
         content: '',
         comments: []
       },
