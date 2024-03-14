@@ -1,18 +1,16 @@
 <template>
-  <div id="app">
-    <blog-main :activeIndex="'essay'" v-model:openMore="openMore">
-      <div class="blog-profile">
-        <profile-main :loading="loading">
-          <profile-essay :profileList="essayList" :curPage="curPage" :total="essayTotal" @change="handlePaginChange">
-          </profile-essay>
-        </profile-main>
-        <profile-side v-model:visible="openMore">
-          <profile-side-link></profile-side-link>
-          <profile-side-inventory></profile-side-inventory>
-        </profile-side>
-      </div>
-    </blog-main>
-  </div>
+  <blog-main :activeIndex="'essay'" v-model:openMore="openMore">
+    <div class="blog-profile">
+      <profile-main :loading="loading">
+        <profile-essay :profileList="essayList" :curPage="curPage" :total="essayTotal" @change="handlePaginChange">
+        </profile-essay>
+      </profile-main>
+      <profile-side v-model:visible="openMore">
+        <profile-side-link></profile-side-link>
+        <profile-side-inventory></profile-side-inventory>
+      </profile-side>
+    </div>
+  </blog-main>
 </template>
 
 <script>

@@ -21,16 +21,6 @@ export default ({ mode }) => {
     },
     build: {
       // assetsInlineLimit: 1024,
-      rollupOptions: {
-        input: {
-          index: path.resolve(__dirname, 'index.html'),
-          article: path.resolve(__dirname, 'article.html'),
-          archive: path.resolve(__dirname, 'archive.html'),
-          essay: path.resolve(__dirname, 'essay.html'),
-          about: path.resolve(__dirname, 'about.html'),
-          404: path.resolve(__dirname, '404.html'),
-        },
-      },
       cssCodeSplit: false,
       minify: 'terser',
       cssTarget: 'chrome61',
@@ -56,8 +46,6 @@ export default ({ mode }) => {
         targets: ['Android > 39', 'Chrome >= 60', 'Safari >= 10.1', 'iOS >= 10.3', 'Firefox >= 54', 'Edge >= 15'],
       }),
     ],
-    css: {
-    },
     resolve: {
       alias: {
         'src': path.resolve(__dirname, 'src'),

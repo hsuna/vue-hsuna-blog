@@ -14,6 +14,7 @@ import App from './App.vue'
 /** element-ui */
 import elementInit from 'src/plugins/element-init'
 
-createApp(App)
-    .use(elementInit)
-    .mount('#app')
+/**添加-vue路由器 */
+import router from "./router";
+
+createApp(App).use(router).use(elementInit).mount("#app");

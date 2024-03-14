@@ -4,8 +4,9 @@
     <div class="side-body">
       <ul class="article-achive">
         <li v-for="(archive, index) in archiveList" :key="index">
-          <span :class="archiveIndex == index ? 'is-active' : ''"
-            @click="handleArchive(archive, index)">{{ archive.year }}年{{ archive.month }}月</span>
+          <span :class="archiveSelect.year == archive.year && archiveSelect.month == archive.month ? 'is-active' : ''"
+            @click="handleArchive(archive, index)">{{ archive.year
+            }}年{{ archive.month }}月</span>
           <em class="count">({{ archive.count }})</em>
         </li>
       </ul>
@@ -26,6 +27,7 @@ export default {
   },
   data() {
     return {
+      archiveSelect: {},
       archiveList: []
     };
   },
@@ -33,16 +35,20 @@ export default {
     this.getAchiveCount();
   },
   methods: {
-    getAchiveCount() {
-      Api.getAchiveCount().then(res => {
-        if (200 == res.statusCode) {
-          this.archiveList = res.data || [];
-          this.$emit("init", this.archiveList);
-        }
-      });
+    async getAchiveCount() {
+      const res = await Api.getAchiveCount();
+      if (200 == res.statusCode) {
+        this.archiveList = res.data || [];
+        this.handleArchive({
+          init: true,
+          ...this.archiveList[0],
+          ...this.$route.query,
+        })
+      }
     },
-    handleArchive(archive, index) {
-      this.$emit("search", archive);
+    handleArchive(archive) {
+      this.archiveSelect = { ...archive };
+      this.$emit("change", archive);
     }
   }
 };

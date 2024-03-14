@@ -1,116 +1,114 @@
 <template>
-  <div id="app" style="height: 100%;">
-    <blog-main v-loading="loading" :activeIndex="'article'" :showMore="false">
-      <div class="article-main">
-        <div class="article-header">
-          <h1 class="title">{{ article.title }}</h1>
-          <div class="info">
-            <div class="tags"><a class="tag" href="javascript:;" v-for="tag in article.tags" :key="tag">{{ tag }}</a>
-            </div>
-            <div class="classify">{{ article.classify.title }}</div>
+  <blog-main v-loading="loading" :activeIndex="'article'" :showMore="false">
+    <div class="article-main">
+      <div class="article-header">
+        <h1 class="title">{{ article.title }}</h1>
+        <div class="info">
+          <div class="tags"><a class="tag" href="javascript:;" v-for="tag in article.tags" :key="tag">{{ tag }}</a>
+          </div>
+          <div class="classify">{{ article.classify?.title }}</div>
+          <div class="time">
+            <span>发布于{{ timeStampFormat(article.publishAt, 'yyyy-MM-dd') }}</span>
+            <span>{{ article.viewCount }}次浏览</span>
+            <span>最后一次编辑 {{ timeAgoFormat(article.updatedAt) }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="article-body">
+        <div class="article-about" v-html="article.about"></div>
+        <div class="markdown-body" v-html="markdownToHtml(article.content)"></div>
+      </div>
+      <div class="article-footer">
+        <a :href="href" alt="转载链接">链接：{{ href }}</a>
+        <p>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+      </div>
+    </div>
+    <div class="article-main" v-show="relateArticle.length">
+      <div class="article-title">相关文章</div>
+      <div class="article-body">
+        <ul class="article-relate">
+          <li v-for="relate in relateArticle" :key="relate.id">
+            <span class="title">《<a :href="`/article/${relate.id}`">{{ relate.title }}</a>》</span>
+            <div class="tags"><span class="tag" v-for="tag in relate.tags" :key="tag">{{ tag }}</span></div>
             <div class="time">
-              <span>发布于{{ timeStampFormat(article.publishAt, 'yyyy-MM-dd') }}</span>
-              <span>{{ article.viewCount }}次浏览</span>
-              <span>最后一次编辑 {{ timeAgoFormat(article.updatedAt) }}</span>
+              <span>{{ timeStampFormat(relate.publishAt, 'yyyy-MM-dd') }}</span>
+              <span>{{ relate.viewCount }}次浏览</span>
             </div>
-          </div>
-        </div>
-        <div class="article-body">
-          <div class="article-about" v-html="article.about"></div>
-          <div class="markdown-body" v-html="markdownToHtml(article.content)"></div>
-        </div>
-        <div class="article-footer">
-          <a :href="href" alt="转载链接">链接：{{ href }}</a>
-          <p>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-        </div>
+            <p class="about">简介：{{ relate.about }}</p>
+          </li>
+        </ul>
       </div>
-      <div class="article-main" v-show="relateArticle.length">
-        <div class="article-title">相关文章</div>
-        <div class="article-body">
-          <ul class="article-relate">
-            <li v-for="relate in relateArticle" :key="relate.id">
-              <span class="title">《<a :href="`/article.html?id=${relate.id}`">{{ relate.title }}</a>》</span>
-              <div class="tags"><span class="tag" v-for="tag in relate.tags" :key="tag">{{ tag }}</span></div>
-              <div class="time">
-                <span>{{ timeStampFormat(relate.publishAt, 'yyyy-MM-dd') }}</span>
-                <span>{{ relate.viewCount }}次浏览</span>
+    </div>
+    <div class="article-main">
+      <div class="article-title">留言<span class="num-title" v-if="article.comments?.length">（{{
+    article.comments?.length
+    || 0 }}条）</span></div>
+      <div class="article-body">
+        <ul class="article-comments">
+          <template v-if="article.comments?.length">
+            <li v-for="(comment, index) in article.comments" :key="index" :id="`c-${comment.id}`">
+              <div class="comment-floor">
+                <div class="comment-name"><i class="fa fa-vimeo" v-show="comment.admin"></i>{{ comment.name }}&nbsp;说：
+                </div>
+                <div class="comment-layer">第<span class="num-layer">{{ index + 1 }}</span>楼</div>
               </div>
-              <p class="about">简介：{{ relate.about }}</p>
+              <div class="comment-content" v-html="comment.content"></div>
+              <div class="comment-reply">
+                <span class="mark-view-time">{{ timeStampFormat(comment.createdAt) }}</span>
+                |
+                <a :href="`#c-${comment.id}`">#</a>
+                |
+                <a href="javascript:;" @click="handleAddReply(comment, index)">回复</a>
+              </div>
             </li>
-          </ul>
+          </template>
+          <template v-else>
+            <li>还没有人评论，赶紧抢沙发～</li>
+          </template>
+        </ul>
+      </div>
+      <div class="article-footer">
+        <div class="title">发表评论</div>
+        <div style="padding-top: 20px;">
+          <el-form ref="commentRef" :model="comment" :rules="commentRules">
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="昵称：" label-width="80px" prop="name">
+                  <el-input v-model="comment.name" placeholder="请输入昵称"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="邮箱：" label-width="80px" prop="email">
+                  <el-input v-model="comment.email" placeholder="请输入邮箱"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="24">
+                <el-form-item label="评论：" label-width="80px" prop="content">
+                  <el-tag v-for="(reply, index) in replys" :key="reply.index" closable
+                    @close="handleRemoveReply(index)">{{ 1
+    + reply.index }}楼</el-tag>
+                  <el-input ref="textarea" type="textarea" :rows="6" :autosize="false" v-model="comment.content"
+                    placeholder="请输入评论"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="24">
+                <el-form-item label="" label-width="80px" prop="checked">
+                  <el-button type="primary" :loading="commentLoading" @click="handleComment">{{ commentLoading ? '提交中'
+    :
+                    '提　交' }}</el-button>
+                  <el-checkbox v-model="comment.checked" style="padding-left: 10px;">记住个人信息？</el-checkbox>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
         </div>
       </div>
-      <div class="article-main">
-        <div class="article-title">留言<span class="num-title" v-if="article.comments?.length">（{{
-      article.comments?.length
-      || 0 }}条）</span></div>
-        <div class="article-body">
-          <ul class="article-comments">
-            <template v-if="article.comments?.length">
-              <li v-for="(comment, index) in article.comments" :key="index" :id="`c-${comment.id}`">
-                <div class="comment-floor">
-                  <div class="comment-name"><i class="fa fa-vimeo" v-show="comment.admin"></i>{{ comment.name }}&nbsp;说：
-                  </div>
-                  <div class="comment-layer">第<span class="num-layer">{{ index + 1 }}</span>楼</div>
-                </div>
-                <div class="comment-content" v-html="comment.content"></div>
-                <div class="comment-reply">
-                  <span class="mark-view-time">{{ timeStampFormat(comment.createdAt) }}</span>
-                  |
-                  <a :href="`#c-${comment.id}`">#</a>
-                  |
-                  <a href="javascript:;" @click="handleAddReply(comment, index)">回复</a>
-                </div>
-              </li>
-            </template>
-            <template v-else>
-              <li>还没有人评论，赶紧抢沙发～</li>
-            </template>
-          </ul>
-        </div>
-        <div class="article-footer">
-          <div class="title">发表评论</div>
-          <div style="padding-top: 20px;">
-            <el-form ref="commentRef" :model="comment" :rules="commentRules">
-              <el-row>
-                <el-col :span="12">
-                  <el-form-item label="昵称：" label-width="80px" prop="name">
-                    <el-input v-model="comment.name" placeholder="请输入昵称"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                  <el-form-item label="邮箱：" label-width="80px" prop="email">
-                    <el-input v-model="comment.email" placeholder="请输入邮箱"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="24">
-                  <el-form-item label="评论：" label-width="80px" prop="content">
-                    <el-tag v-for="(reply, index) in replys" :key="reply.index" closable
-                      @close="handleRemoveReply(index)">{{ 1
-      + reply.index }}楼</el-tag>
-                    <el-input ref="textarea" type="textarea" :rows="6" :autosize="false" v-model="comment.content"
-                      placeholder="请输入评论"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="24">
-                  <el-form-item label="" label-width="80px" prop="checked">
-                    <el-button type="primary" :loading="commentLoading" @click="handleComment">{{ commentLoading ? '提交中'
-      :
-                      '提　交' }}</el-button>
-                    <el-checkbox v-model="comment.checked" style="padding-left: 10px;">记住个人信息？</el-checkbox>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-            </el-form>
-          </div>
-        </div>
-      </div>
-    </blog-main>
-  </div>
+    </div>
+  </blog-main>
 </template>
 
 <script>
@@ -146,7 +144,7 @@ export default {
       href: window.location.href,
       loading: true,
       article: {
-        id: this.$route.query.id,
+        id: this.$route.params.id,
         content: '',
         comments: []
       },
@@ -180,7 +178,7 @@ export default {
     timeStampFormat,
     //////////////////////////////
     async getArticleDetail() {
-      let res = await Api.getArticleDetail({ id: this.article.id })
+      const res = await Api.getArticleDetail({ id: this.article.id })
       if (200 == res.statusCode) {
         this.article = {
           ...this.article,

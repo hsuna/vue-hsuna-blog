@@ -1,43 +1,41 @@
 <template>
-  <div id="app" style="height: 100%;">
-    <blog-main :activeIndex="'home'" v-model:openMore="openMore">
-      <div class="blog-personal">
-        <div class="personal-top" :style="`background-image:url(${banner})`"></div>
-        <div class="personal-bottom">
-          <div class="user-portrait" v-loading="!portrait">
-            <img :src="portrait" />
+  <blog-main :activeIndex="'home'" v-model:openMore="openMore">
+    <div class="blog-personal">
+      <div class="personal-top" :style="`background-image:url(${banner})`"></div>
+      <div class="personal-bottom">
+        <div class="user-portrait" v-loading="!portrait">
+          <img :src="portrait" />
+        </div>
+        <div class="user-info clearfix">
+          <span class="name">{{ nickname }}</span>
+          <span class="job">{{ job }}</span>
+          <div class="social">
+            <el-tooltip content="微博"><a class="icon" href="https://weibo.com/u/7888172222" target="_blank"><i
+                  class="fa fa-weibo" style="background-color: rgb(221, 75, 57);"></i></a></el-tooltip>
+            <el-tooltip content="github"><a class="icon" href="https://github.com/hsuna" target="_blank"><i
+                  class="fa fa-github" style="background-color: rgb(85, 172, 238);"></i></a></el-tooltip>
+            <el-tooltip content="邮箱"><a class="icon" href="mailto:me@hsuna.com" target="_blank"><i
+                  class="fa fa-envelope" style="background-color: rgb(59, 89, 152);"></i></a></el-tooltip>
+            <el-tooltip content="巽阁"><a class="icon" href="https://video.hsuna.com" target="_blank"><i
+                  class="fa fa-address-card-o" style="background-color: rgb(128, 185, 83);"></i></a></el-tooltip>
           </div>
-          <div class="user-info clearfix">
-            <span class="name">{{ nickname }}</span>
-            <span class="job">{{ job }}</span>
-            <div class="social">
-              <el-tooltip content="微博"><a class="icon" href="https://weibo.com/u/7888172222" target="_blank"><i
-                    class="fa fa-weibo" style="background-color: rgb(221, 75, 57);"></i></a></el-tooltip>
-              <el-tooltip content="github"><a class="icon" href="https://github.com/hsuna" target="_blank"><i
-                    class="fa fa-github" style="background-color: rgb(85, 172, 238);"></i></a></el-tooltip>
-              <el-tooltip content="邮箱"><a class="icon" href="mailto:me@hsuna.com" target="_blank"><i
-                    class="fa fa-envelope" style="background-color: rgb(59, 89, 152);"></i></a></el-tooltip>
-              <el-tooltip content="巽阁"><a class="icon" href="https://video.hsuna.com" target="_blank"><i
-                    class="fa fa-address-card-o" style="background-color: rgb(128, 185, 83);"></i></a></el-tooltip>
-            </div>
-            <div class="introduction">{{ introduction }}</div>
-          </div>
+          <div class="introduction">{{ introduction }}</div>
         </div>
       </div>
-      <div class="blog-profile">
-        <profile-main :loading="loading">
-          <profile-card :profileList="profileList" :curPage="profilePage" :total="profileTotal"
-            @change="handlePaginChange">
-          </profile-card>
-        </profile-main>
-        <profile-side v-model:visible="openMore">
-          <profile-side-hot></profile-side-hot>
-          <profile-side-classify></profile-side-classify>
-          <profile-side-comment></profile-side-comment>
-        </profile-side>
-      </div>
-    </blog-main>
-  </div>
+    </div>
+    <div class="blog-profile">
+      <profile-main :loading="loading">
+        <profile-card :profileList="profileList" :curPage="profilePage" :total="profileTotal"
+          @change="handlePaginChange">
+        </profile-card>
+      </profile-main>
+      <profile-side v-model:visible="openMore">
+        <profile-side-hot></profile-side-hot>
+        <profile-side-classify></profile-side-classify>
+        <profile-side-comment></profile-side-comment>
+      </profile-side>
+    </div>
+  </blog-main>
 </template>
 
 <script>
