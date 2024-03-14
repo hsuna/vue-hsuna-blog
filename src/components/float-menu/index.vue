@@ -9,8 +9,6 @@
 </template>
 
 <script>
-import storage, { StorageKey } from 'src/utils/storage.js'
-
 export default {
   name: 'float-menu',
   data() {
