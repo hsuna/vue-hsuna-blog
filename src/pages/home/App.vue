@@ -53,7 +53,6 @@ import {
   ProfileSideComment,
 } from "src/components/profile-side/index.js";
 
-import * as utils from "src/utils/search.js";
 import Api from "src/api/blog.js";
 
 export default {
@@ -91,7 +90,7 @@ export default {
 
     this.getProfileList({
       page: 1,
-      ...utils.params(),
+      ...this.$route.query,
     });
   },
   methods: {
@@ -122,10 +121,9 @@ export default {
       });
     },
     handlePaginChange(type, val) {
-      const params = utils.params();
+      const params = this.$route.query;
       if ("page" == type && val != params.page) {
-        window.location.href =
-          "/index.html?" + utils.query({ ...params, page: val });
+        this.$router.push({ path: '/', query: { ...params, page: val } });
       }
     },
   },

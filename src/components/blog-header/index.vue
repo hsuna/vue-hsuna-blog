@@ -90,16 +90,16 @@ export default {
       switch (indexPath[0]) {
         //一级
         case "home":
-          window.location.href = `/index.html`;
+          this.$router.push({ path: '/' });
           break;
         case "classify":
           //二级
-          window.location.href = `/index.html?classifyId=${indexPath[1]}`;
+          this.$router.push({ path: '/', query: { classifyId: indexPath[1] } });
           break;
         case "archive":
         case "about":
         case "essay":
-          window.location.href = `/${index}.html`;
+          this.$router.push({ path: `/${index}` });
           break;
       }
     },
@@ -313,4 +313,5 @@ export default {
   100% {
     transform: translateY(0);
   }
-}</style>
+}
+</style>

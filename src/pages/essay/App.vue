@@ -21,7 +21,6 @@ import ProfileMain from "src/components/profile-main/index.vue";
 import ProfileEssay from "src/components/profile-essay/index.vue";
 import { ProfileSide, ProfileSideInventory, ProfileSideLink } from "src/components/profile-side";
 
-import * as utils from 'src/utils/search.js'
 import Api from "src/api/blog";
 
 export default {
@@ -46,11 +45,11 @@ export default {
   },
   computed: {
     curPage() {
-      return Number(utils.params('page') || 1)
+      return Number(this.$route.query.page || 1)
     }
   },
   created() {
-    this.getEssayList(utils.params());
+    this.getEssayList(this.$route.query);
   },
   methods: {
     getEssayList(params) {
@@ -64,9 +63,9 @@ export default {
       });
     },
     handlePaginChange(type, val) {
-      const params = utils.params();
+      const params = this.$route.query;
       if ("page" == type && val != params.page) {
-        window.location.href = '/essay.html?' + utils.query({ ...params, page: val })
+        this.$router.push({ path: '/essay', query: { ...params, page: val } });
       }
     }
   },
@@ -74,4 +73,3 @@ export default {
 </script>
 
 <style lang="scss"></style>
-

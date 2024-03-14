@@ -22,8 +22,6 @@ import ProfileMain from "src/components/profile-main/index.vue";
 import ProfileCard from "src/components/profile-card/index.vue";
 import { ProfileSide, ProfileSideHot, ProfileSideArchive } from "src/components/profile-side/index.js";
 
-import * as utils from 'src/utils/search.js'
-
 import Api from "src/api/blog";
 
 export default {
@@ -49,7 +47,7 @@ export default {
   },
   computed: {
     curPage() {
-      return Number(utils.params('page') || 1)
+      return Number(this.$route.query.page || 1)
     }
   },
   methods: {
@@ -67,8 +65,7 @@ export default {
       }
     },
     handleArchiveInit(list) {
-      let params = utils.params()
-
+      let params = utthis.$route.query;
       let index = 0;
       if (params.year && params.month) {
         for (let i = 0, len = list.length; i < len; i++) {
@@ -90,16 +87,15 @@ export default {
       }
     },
     handleArchiveSearch(archive) {
-      let { year, month } = archive
-      window.location.href = '/archive.html?' + utils.query({ year, month })
+      const { year, month } = archive;
+      this.$router.push({ path: '/archive', query: { year, month } });
     },
     handlePaginChange(type, val) {
-      const params = utils.params();
+      const params = this.$route.query;
       if ("page" == type && val != params.page) {
-        window.location.href = '/archive.html?' + utils.query({ ...params, page: val })
+        this.$router.push({ path: '/archive', query: { ...params, page: val } });
       }
     }
   }
 };
 </script>
-

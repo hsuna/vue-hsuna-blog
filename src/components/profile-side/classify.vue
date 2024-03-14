@@ -6,7 +6,7 @@
         <ul class="article-classify clearfix">
           <li v-for="item in classifyList" :key="item.id">
             <a href="javascript:;" @click="handlerClick(item)"><span class="count">{{ item.count }}篇</span>{{ item.title
-            }}</a>
+              }}</a>
           </li>
         </ul>
       </template>
@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     handlerClick(item) {
-      window.location.href = `/index.html?classifyId=${item.id}`;
+      this.$router.push({ path: '/', query: { classifyId: item.id } });
     },
     getClassifyCount() {
       Api.getClassifyCount().then(res => {

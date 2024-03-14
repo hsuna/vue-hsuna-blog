@@ -41,8 +41,9 @@
         </div>
       </div>
       <div class="article-main">
-        <div class="article-title">留言<span class="num-title" v-if="article.comments?.length">（{{ article.comments?.length
-          || 0 }}条）</span></div>
+        <div class="article-title">留言<span class="num-title" v-if="article.comments?.length">（{{
+      article.comments?.length
+      || 0 }}条）</span></div>
         <div class="article-body">
           <ul class="article-comments">
             <template v-if="article.comments?.length">
@@ -87,7 +88,8 @@
                 <el-col :span="24">
                   <el-form-item label="评论：" label-width="80px" prop="content">
                     <el-tag v-for="(reply, index) in replys" :key="reply.index" closable
-                      @close="handleRemoveReply(index)">{{ 1 + reply.index }}楼</el-tag>
+                      @close="handleRemoveReply(index)">{{ 1
+      + reply.index }}楼</el-tag>
                     <el-input ref="textarea" type="textarea" :rows="6" :autosize="false" v-model="comment.content"
                       placeholder="请输入评论"></el-input>
                   </el-form-item>
@@ -96,7 +98,8 @@
               <el-row>
                 <el-col :span="24">
                   <el-form-item label="" label-width="80px" prop="checked">
-                    <el-button type="primary" :loading="commentLoading" @click="handleComment">{{ commentLoading ? '提交中' :
+                    <el-button type="primary" :loading="commentLoading" @click="handleComment">{{ commentLoading ? '提交中'
+      :
                       '提　交' }}</el-button>
                     <el-checkbox v-model="comment.checked" style="padding-left: 10px;">记住个人信息？</el-checkbox>
                   </el-form-item>
@@ -190,7 +193,7 @@ export default {
         this.loading = false;
         setDocumentTitle(`${this.article.title} | 文章详情 | HSUAN`);
       } else {
-        window.location.href = '/index.html';
+        this.$router.push({ path: '/' });
       }
     },
     async getArticleRelate() {
@@ -540,4 +543,3 @@ export default {
   }
 }
 </style>
-
