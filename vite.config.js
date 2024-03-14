@@ -8,7 +8,7 @@ import legacy from './plugins/legacy'; // 自定义插件调整
 export default ({ mode }) => {
   const env = loadEnv(mode, process.cwd(), ['VITE']);
   return defineConfig({
-    base: import.meta.env.VITE_BASE_URL,
+    base: env.VITE_BASE_URL,
     server: {
       host: '0.0.0.0',
       port: 8080,
