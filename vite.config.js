@@ -6,8 +6,9 @@ import legacy from './plugins/legacy'; // 自定义插件调整
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), ['VITE']);
   return defineConfig({
-    base: './',
+    base: import.meta.env.VITE_BASE_URL,
     server: {
       host: '0.0.0.0',
       port: 8080,

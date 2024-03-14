@@ -1,5 +1,5 @@
 <template>
-    <img class="img-404" src="src/assets/images/404.png" alt="404" />
+    <img class="img-404" src="../../assets/images/404.png" alt="404" />
 </template>
 
 <style lang="scss" scoped>
