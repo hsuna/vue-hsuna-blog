@@ -24,7 +24,7 @@
     "@babel/standalone": "^7.23.7",
     "@vitejs/plugin-vue": "^2.2.2",
     "sass": "^1.69.5",
-    "vite": "^2.8.4",
+    "vite": "^2.9.18",
     "vite-plugin-html": "^2.1.2"
   },
   "engines": {
