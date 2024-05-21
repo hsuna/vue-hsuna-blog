@@ -28,7 +28,7 @@
       <div class="article-body">
         <ul class="article-relate">
           <li v-for="relate in relateArticle" :key="relate.id">
-            <span class="title">《<a :href="`/article/${relate.id}`">{{ relate.title }}</a>》</span>
+            <span class="title">《<a :href="`/blog/article/${relate.id}`">{{ relate.title }}</a>》</span>
             <div class="tags"><span class="tag" v-for="tag in relate.tags" :key="tag">{{ tag }}</span></div>
             <div class="time">
               <span>{{ timeStampFormat(relate.publishAt, 'yyyy-MM-dd') }}</span>
