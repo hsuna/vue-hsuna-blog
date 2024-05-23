@@ -2,7 +2,7 @@
   <div>
     <div class="profile-card" v-for="profile in profileList" :key="profile.id">
       <div class="card-title">
-        <a :href="`/article/${profile.id}`">{{ profile.title }}</a>
+        <a :href="`/blog/article/${profile.id}`">{{ profile.title }}</a>
       </div>
       <div class="card-date" :data-date="timeStampFormat(profile.publishAt)">
         {{ timeAgoFormat(profile.publishAt) }}
@@ -14,7 +14,7 @@
       </div>
       <div class="card-content clearfix">
         <span v-html="`&nbsp;&nbsp;&nbsp;&nbsp;${profile.about}`"></span>
-        <a :href="`/article/${profile.id}`">阅读全文<i class="el-icon-arrow-right"></i></a>
+        <a :href="`/blog/article/${profile.id}`">阅读全文<i class="el-icon-arrow-right"></i></a>
       </div>
     </div>
     <el-pagination v-if="-1 != total" layout="prev, pager, next" :background="true" :total="total"
